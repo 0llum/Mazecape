@@ -26,7 +26,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -34,6 +33,9 @@ import java.util.List;
 
 public class Level extends AppCompatActivity {
 
+    public static int width;
+    public static int height;
+    public static boolean swipe = false;
     final int VIBRATE_SHORT = 10;
     final int VIBRATE_MEDIUM = 500;
     final int VIBRATE_LONG = 1000;
@@ -47,12 +49,12 @@ public class Level extends AppCompatActivity {
     Point size;
     MediaPlayer bgm;
     MediaPlayer fire;
-    public static int width;
-    public static int height;
     int statusBarHeight;
     int level = 0;
-    int x = LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][0];
-    int y = LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][1];
+    String[][] currentLevel;
+    int x;
+    int y;
+    String scene;
     int darkness = 0;
     int stepCount = 0;
     int time = 0;
@@ -60,12 +62,11 @@ public class Level extends AppCompatActivity {
     int score = 0;
     Point position;
     ArrayList<Point> stepsMade;
-    public static boolean swipe = false;
     boolean stopTime = false;
     boolean allowInput = true;
-    private Handler handler;
     boolean hasSword = false;
     ImageView imgSword;
+    private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
@@ -79,6 +80,11 @@ public class Level extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.level);
+
+        currentLevel = copyLevel(LevelArrays.LEVEL[level]);
+        x = Integer.parseInt(currentLevel[currentLevel.length - 1][0]);
+        y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
+        scene = currentLevel[currentLevel.length - 1][2];
 
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
@@ -134,7 +140,15 @@ public class Level extends AppCompatActivity {
 
         stepsMade = new ArrayList<>();
         position = new Point(x, y);
+        stepsMade.add(new Point(x - 1, y - 1));
+        stepsMade.add(new Point(x, y - 1));
+        stepsMade.add(new Point(x + 1, y - 1));
+        stepsMade.add(new Point(x - 1, y));
         stepsMade.add(position);
+        stepsMade.add(new Point(x + 1, y));
+        stepsMade.add(new Point(x - 1, y + 1));
+        stepsMade.add(new Point(x, y + 1));
+        stepsMade.add(new Point(x + 1, y + 1));
 
         resetLevel = (Button) findViewById(R.id.resetLevel);
 
@@ -150,6 +164,26 @@ public class Level extends AppCompatActivity {
                         gridViewLevel.getLayoutParams().height = width;
                         setMargins(gridViewLevel, 0, 0, 0, width / 3);
                         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
+
+                        stepsMade.add(new Point(x - 2, y - 2));
+                        stepsMade.add(new Point(x - 1, y - 2));
+                        stepsMade.add(new Point(x, y - 2));
+                        stepsMade.add(new Point(x + 1, y - 2));
+                        stepsMade.add(new Point(x + 2, y - 2));
+                        stepsMade.add(new Point(x - 2, y - 1));
+                        stepsMade.add(new Point(x + 2, y - 1));
+                        stepsMade.add(new Point(x - 2, y));
+                        stepsMade.add(new Point(x + 2, y));
+                        stepsMade.add(new Point(x - 2, y + 1));
+                        stepsMade.add(new Point(x + 2, y + 1));
+                        stepsMade.add(new Point(x - 2, y + 2));
+                        stepsMade.add(new Point(x - 1, y + 2));
+                        stepsMade.add(new Point(x, y + 2));
+                        stepsMade.add(new Point(x + 1, y + 2));
+                        stepsMade.add(new Point(x + 2, y + 2));
+
+                        gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+
                         break;
                     case MotionEvent.ACTION_UP:
                         gridViewLevel.getLayoutParams().width = width * 5 / 3;
@@ -168,17 +202,22 @@ public class Level extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     swipe = true;
-                    Log.d("debug", "swipe: " + swipe);
                 } else {
                     swipe = false;
-                    Log.d("debug", "swipe: " + swipe);
                 }
             }
         });
 
         vibrator = (Vibrator) this.getSystemService(VIBRATOR_SERVICE);
 
-        bgm = MediaPlayer.create(getApplicationContext(), LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 1][0]);
+        switch (scene) {
+            case "f":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
+                break;
+            case "c":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.grand_cave);
+                break;
+        }
         bgm.setLooping(true);
 
         fire = MediaPlayer.create(getApplicationContext(), R.raw.campfire);
@@ -189,7 +228,7 @@ public class Level extends AppCompatActivity {
 
         relativeLayout_UI.setOnTouchListener(new OnSwipeTouchListener(Level.this) {
             public void onSwipeTop() {
-                if (contains(LevelArrays.MOVE_DOWN, LevelArrays.LEVEL[level][y][x])) {
+                if (contains(LevelArrays.MOVE_DOWN, currentLevel[y][x])) {
                     if (allowInput == true) {
                         y++;
                         move();
@@ -208,7 +247,7 @@ public class Level extends AppCompatActivity {
             }
 
             public void onSwipeRight() {
-                if (contains(LevelArrays.MOVE_LEFT, LevelArrays.LEVEL[level][y][x])) {
+                if (contains(LevelArrays.MOVE_LEFT, currentLevel[y][x])) {
                     if (allowInput == true) {
                         x--;
                         move();
@@ -227,7 +266,7 @@ public class Level extends AppCompatActivity {
             }
 
             public void onSwipeLeft() {
-                if (contains(LevelArrays.MOVE_RIGHT, LevelArrays.LEVEL[level][y][x])) {
+                if (contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x])) {
                     if (allowInput == true) {
                         x++;
                         move();
@@ -246,7 +285,7 @@ public class Level extends AppCompatActivity {
             }
 
             public void onSwipeBottom() {
-                if (contains(LevelArrays.MOVE_UP, LevelArrays.LEVEL[level][y][x])) {
+                if (contains(LevelArrays.MOVE_UP, currentLevel[y][x])) {
                     if (allowInput == true) {
                         y--;
                         move();
@@ -264,23 +303,29 @@ public class Level extends AppCompatActivity {
                 }
             }
         });
+
+        loadGame();
     }
 
     public void move() {
         stepCount++;
         position = new Point(x, y);
-        /*if (position.x == LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][0] && position.y == LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][1]) {
-            Toast.makeText(this, "This is where I started...", Toast.LENGTH_SHORT).show();
-        } else if (stepsMade.contains(position)) {
-            Toast.makeText(this, "I've been here before...", Toast.LENGTH_SHORT).show();
-        }*/
+
+        stepsMade.add(new Point(x - 1, y - 1));
+        stepsMade.add(new Point(x, y - 1));
+        stepsMade.add(new Point(x + 1, y - 1));
+        stepsMade.add(new Point(x - 1, y));
         stepsMade.add(position);
+        stepsMade.add(new Point(x + 1, y));
+        stepsMade.add(new Point(x - 1, y + 1));
+        stepsMade.add(new Point(x, y + 1));
+        stepsMade.add(new Point(x + 1, y + 1));
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
         playSound(R.raw.sand1);
 
-        if (darkness < 15 && stepCount % LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][3] == 0) {
+        if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 1][3]) == 0) {
             darkness++;
             gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
         }
@@ -290,7 +335,6 @@ public class Level extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        loadGame();
         try {
             bgm.start();
         } catch (Exception e) {
@@ -354,28 +398,28 @@ public class Level extends AppCompatActivity {
     }
 
     public void checkFire() {
-        if (contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x])) {
+        if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             darkness = 0;
             gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
-            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), LevelArrays.NORMAL[getIndex(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x])]));
+            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.FIRE, currentLevel[y][x])], "drawable", getPackageName())));
         }
-        if (contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x])) {
+        if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             fire.setVolume(1, 1);
             if (!fire.isPlaying()) {
                 fire.start();
             }
-        } else if (contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x+1]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x+1]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x+1])) {
+        } else if (contains(LevelArrays.FIRE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 1]) ||
+                contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) ||
+                contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1])) {
             fire.setVolume(0.66f, 0.66f);
             if (!fire.isPlaying()) {
                 fire.start();
             }
-        } else if (contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-2][x-2]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-2][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-2][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-2][x+1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-2][x+2]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x-2]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x+1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y-1][x+2]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x-2]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x+1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y][x+2]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x-2]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x+1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+1][x+2]) ||
-                contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+2][x-2]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+2][x-1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+2][x]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+2][x+1]) || contains(LevelArrays.FIRE, LevelArrays.LEVEL[level][y+2][x+2])) {
+        } else if (contains(LevelArrays.FIRE, currentLevel[y - 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 2]) ||
+                contains(LevelArrays.FIRE, currentLevel[y - 1][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 2]) ||
+                contains(LevelArrays.FIRE, currentLevel[y][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y][x + 2]) ||
+                contains(LevelArrays.FIRE, currentLevel[y + 1][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 2]) ||
+                contains(LevelArrays.FIRE, currentLevel[y + 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 2])) {
             fire.setVolume(0.33f, 0.33f);
             if (!fire.isPlaying()) {
                 fire.start();
@@ -388,9 +432,9 @@ public class Level extends AppCompatActivity {
     }
 
     public void checkSword() {
-        if (contains(LevelArrays.SWORD, LevelArrays.LEVEL[level][y][x])) {
-            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, LevelArrays.LEVEL[level][y][x])]));
-            LevelArrays.LEVEL[level][y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, LevelArrays.LEVEL[level][y][x])];
+        if (contains(LevelArrays.SWORD, currentLevel[y][x])) {
+            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])], "drawable", getPackageName())));
+            currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])];
             hasSword = true;
         }
         if (hasSword) {
@@ -400,13 +444,43 @@ public class Level extends AppCompatActivity {
         }
     }
 
+    public void checkPortal() {
+        if (contains(LevelArrays.PORTAL, currentLevel[y][x])) {
+            for (int i = 0; i < currentLevel.length - 1; i++) {
+                for (int k = 0; k < currentLevel[i].length; k++) {
+                    if (contains(LevelArrays.PORTAL, currentLevel[i][k]) && !(i == y && k == x)) {
+                        Log.d("debug", "y = " + y);
+                        Log.d("debug", "x = " + x);
+                        Log.d("debug", "i = " + i);
+                        Log.d("debug", "k = " + k);
+                        x = k;
+                        y = i;
+                        position = new Point(x, y);
+                        stepsMade.add(new Point(x - 1, y - 1));
+                        stepsMade.add(new Point(x, y - 1));
+                        stepsMade.add(new Point(x + 1, y - 1));
+                        stepsMade.add(new Point(x - 1, y));
+                        stepsMade.add(position);
+                        stepsMade.add(new Point(x + 1, y));
+                        stepsMade.add(new Point(x - 1, y + 1));
+                        stepsMade.add(new Point(x, y + 1));
+                        stepsMade.add(new Point(x + 1, y + 1));
+                        gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
+                        gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
     public void checkMonster() {
-        if (contains(LevelArrays.MONSTER, LevelArrays.LEVEL[level][y][x])) {
+        if (contains(LevelArrays.MONSTER, currentLevel[y][x])) {
             if (!hasSword) {
                 gameOver();
             } else {
-                gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, LevelArrays.LEVEL[level][y][x])]));
-                LevelArrays.LEVEL[level][y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, LevelArrays.LEVEL[level][y][x])];
+                gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])], "drawable", getPackageName())));
+                currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])];
             }
         }
     }
@@ -451,9 +525,9 @@ public class Level extends AppCompatActivity {
     }
 
     public void checkWin() {
-        if (contains(LevelArrays.GOAL, LevelArrays.LEVEL[level][y][x])) {
+        if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
             stopTime = true;
-            int minSteps = LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][4];
+            int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 1][4]);
             score = 5000 - (stepCount - minSteps) * 100 + 5000 - ((time * 2 - minSteps) * 100) - cheat * 1000;
             if (score < 0) {
                 score = 0;
@@ -549,6 +623,7 @@ public class Level extends AppCompatActivity {
                 gridViewLevel.startAnimation(animation);
                 gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
                 gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                checkPortal();
                 checkMonster();
                 checkFire();
                 checkSword();
@@ -566,8 +641,8 @@ public class Level extends AppCompatActivity {
         gridViewLevel.startAnimation(translateAnimation);
     }
 
-    public boolean contains(int[] array, int resource) {
-        for (int element : array) {
+    public boolean contains(String[] array, String resource) {
+        for (String element : array) {
             if (element == resource) {
                 return true;
             }
@@ -575,7 +650,7 @@ public class Level extends AppCompatActivity {
         return false;
     }
 
-    public int getIndex(int[] array, int resource) {
+    public int getIndex(String[] array, String resource) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] == resource) {
                 return i;
@@ -584,17 +659,36 @@ public class Level extends AppCompatActivity {
         return -1;
     }
 
+    public String[][] copyLevel(String[][] oldArray) {
+        String[][] newArray = new String[oldArray.length][];
+        for (int i = 0; i < oldArray.length; i++) {
+            newArray[i] = oldArray[i].clone();
+        }
+        return newArray;
+    }
+
     public void reset() {
+        currentLevel = copyLevel(LevelArrays.LEVEL[level]);
         stepsMade.clear();
         darkness = 0;
         stepCount = 0;
         time = 0;
         cheat = 0;
         stopTime = false;
-        x = LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][0];
-        y = LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][1];
+        x = Integer.parseInt(currentLevel[currentLevel.length - 1][0]);
+        y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
+        scene = currentLevel[currentLevel.length - 1][2];
         position = new Point(x, y);
         stepsMade.add(position);
+        stepsMade.add(new Point(x - 1, y - 1));
+        stepsMade.add(new Point(x, y - 1));
+        stepsMade.add(new Point(x + 1, y - 1));
+        stepsMade.add(new Point(x - 1, y));
+        stepsMade.add(position);
+        stepsMade.add(new Point(x + 1, y));
+        stepsMade.add(new Point(x - 1, y + 1));
+        stepsMade.add(new Point(x, y + 1));
+        stepsMade.add(new Point(x + 1, y + 1));
         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
         gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
@@ -606,7 +700,15 @@ public class Level extends AppCompatActivity {
         hasSword = false;
         imgSword.setVisibility(View.INVISIBLE);
 
-        bgm = MediaPlayer.create(getApplicationContext(), LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 1][0]);
+        switch (scene) {
+            case "f":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
+                break;
+            case "c":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.grand_cave);
+                break;
+        }
+
         bgm.setLooping(true);
         bgm.start();
 
@@ -676,6 +778,29 @@ public class Level extends AppCompatActivity {
         handler.postDelayed(runnable, 1000);
     }
 
+    public void saveGame() {
+        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("level", level);
+        editor.putBoolean("swipe", swipe);
+        if (controlButton.isChecked()) {
+            editor.putBoolean("isChecked", true);
+        } else {
+            editor.putBoolean("isChecked", false);
+        }
+        editor.apply();
+    }
+
+    public void loadGame() {
+        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+
+        level = sharedPreferences.getInt("level", 0);
+        swipe = sharedPreferences.getBoolean("swipe", false);
+        controlButton.setChecked(sharedPreferences.getBoolean("isChecked", false));
+
+        reset();
+    }
+
     private class LevelAdapter extends BaseAdapter {
         private List<Item> items = new ArrayList<Item>();
         private LayoutInflater inflater;
@@ -683,37 +808,37 @@ public class Level extends AppCompatActivity {
         public LevelAdapter(Context context, int center) {
             inflater = LayoutInflater.from(context);
 
-            items.add(new Item("1-1", LevelArrays.LEVEL[level][y - 2][x - 2]));
-            items.add(new Item("1-2", LevelArrays.LEVEL[level][y - 2][x - 1]));
-            items.add(new Item("1-3", LevelArrays.LEVEL[level][y - 2][x]));
-            items.add(new Item("1-4", LevelArrays.LEVEL[level][y - 2][x + 1]));
-            items.add(new Item("1-5", LevelArrays.LEVEL[level][y - 2][x + 2]));
-            items.add(new Item("1-1", LevelArrays.LEVEL[level][y - 1][x - 2]));
-            items.add(new Item("2-2", LevelArrays.LEVEL[level][y - 1][x - 1]));
-            items.add(new Item("2-3", LevelArrays.LEVEL[level][y - 1][x]));
-            items.add(new Item("2-4", LevelArrays.LEVEL[level][y - 1][x + 1]));
-            items.add(new Item("2-5", LevelArrays.LEVEL[level][y - 1][x + 2]));
-            items.add(new Item("3-1", LevelArrays.LEVEL[level][y][x - 2]));
-            items.add(new Item("3-2", LevelArrays.LEVEL[level][y][x - 1]));
+            items.add(new Item("1-1", getResources().getIdentifier(scene + currentLevel[y - 2][x - 2], "drawable", getPackageName())));
+            items.add(new Item("1-2", getResources().getIdentifier(scene + currentLevel[y - 2][x - 1], "drawable", getPackageName())));
+            items.add(new Item("1-3", getResources().getIdentifier(scene + currentLevel[y - 2][x], "drawable", getPackageName())));
+            items.add(new Item("1-4", getResources().getIdentifier(scene + currentLevel[y - 2][x + 1], "drawable", getPackageName())));
+            items.add(new Item("1-5", getResources().getIdentifier(scene + currentLevel[y - 2][x + 2], "drawable", getPackageName())));
+            items.add(new Item("1-1", getResources().getIdentifier(scene + currentLevel[y - 1][x - 2], "drawable", getPackageName())));
+            items.add(new Item("2-2", getResources().getIdentifier(scene + currentLevel[y - 1][x - 1], "drawable", getPackageName())));
+            items.add(new Item("2-3", getResources().getIdentifier(scene + currentLevel[y - 1][x], "drawable", getPackageName())));
+            items.add(new Item("2-4", getResources().getIdentifier(scene + currentLevel[y - 1][x + 1], "drawable", getPackageName())));
+            items.add(new Item("2-5", getResources().getIdentifier(scene + currentLevel[y - 1][x + 2], "drawable", getPackageName())));
+            items.add(new Item("3-1", getResources().getIdentifier(scene + currentLevel[y][x - 2], "drawable", getPackageName())));
+            items.add(new Item("3-2", getResources().getIdentifier(scene + currentLevel[y][x - 1], "drawable", getPackageName())));
 
             if (center == 0) {
-                items.add(new Item("3-3", LevelArrays.LEVEL[level][y][x]));
+                items.add(new Item("3-3", getResources().getIdentifier(scene + currentLevel[y][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-3", center));
             }
 
-            items.add(new Item("3-4", LevelArrays.LEVEL[level][y][x + 1]));
-            items.add(new Item("3-5", LevelArrays.LEVEL[level][y][x + 2]));
-            items.add(new Item("4-1", LevelArrays.LEVEL[level][y + 1][x - 2]));
-            items.add(new Item("4-2", LevelArrays.LEVEL[level][y + 1][x - 1]));
-            items.add(new Item("4-3", LevelArrays.LEVEL[level][y + 1][x]));
-            items.add(new Item("4-4", LevelArrays.LEVEL[level][y + 1][x + 1]));
-            items.add(new Item("4-5", LevelArrays.LEVEL[level][y + 1][x + 2]));
-            items.add(new Item("5-1", LevelArrays.LEVEL[level][y + 2][x - 2]));
-            items.add(new Item("5-2", LevelArrays.LEVEL[level][y + 2][x - 1]));
-            items.add(new Item("5-3", LevelArrays.LEVEL[level][y + 2][x]));
-            items.add(new Item("5-4", LevelArrays.LEVEL[level][y + 2][x + 1]));
-            items.add(new Item("5-5", LevelArrays.LEVEL[level][y + 2][x + 2]));
+            items.add(new Item("3-4", getResources().getIdentifier(scene + currentLevel[y][x + 1], "drawable", getPackageName())));
+            items.add(new Item("3-5", getResources().getIdentifier(scene + currentLevel[y][x + 2], "drawable", getPackageName())));
+            items.add(new Item("4-1", getResources().getIdentifier(scene + currentLevel[y + 1][x - 2], "drawable", getPackageName())));
+            items.add(new Item("4-2", getResources().getIdentifier(scene + currentLevel[y + 1][x - 1], "drawable", getPackageName())));
+            items.add(new Item("4-3", getResources().getIdentifier(scene + currentLevel[y + 1][x], "drawable", getPackageName())));
+            items.add(new Item("4-4", getResources().getIdentifier(scene + currentLevel[y + 1][x + 1], "drawable", getPackageName())));
+            items.add(new Item("4-5", getResources().getIdentifier(scene + currentLevel[y + 1][x + 2], "drawable", getPackageName())));
+            items.add(new Item("5-1", getResources().getIdentifier(scene + currentLevel[y + 2][x - 2], "drawable", getPackageName())));
+            items.add(new Item("5-2", getResources().getIdentifier(scene + currentLevel[y + 2][x - 1], "drawable", getPackageName())));
+            items.add(new Item("5-3", getResources().getIdentifier(scene + currentLevel[y + 2][x], "drawable", getPackageName())));
+            items.add(new Item("5-4", getResources().getIdentifier(scene + currentLevel[y + 2][x + 1], "drawable", getPackageName())));
+            items.add(new Item("5-5", getResources().getIdentifier(scene + currentLevel[y + 2][x + 2], "drawable", getPackageName())));
         }
 
         @Override
@@ -770,253 +895,253 @@ public class Level extends AppCompatActivity {
             inflater = LayoutInflater.from(context);
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 3))) {
-                items.add(new Item("1-1", LevelArrays.LEVEL[level][y - 3][x - 3]));
+                items.add(new Item("1-1", getResources().getIdentifier("m" + currentLevel[y - 3][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 3))) {
-                items.add(new Item("1-2", LevelArrays.LEVEL[level][y - 3][x - 2]));
+                items.add(new Item("1-2", getResources().getIdentifier("m" + currentLevel[y - 3][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 3))) {
-                items.add(new Item("1-3", LevelArrays.LEVEL[level][y - 3][x - 1]));
+                items.add(new Item("1-3", getResources().getIdentifier("m" + currentLevel[y - 3][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 3))) {
-                items.add(new Item("1-4", LevelArrays.LEVEL[level][y - 3][x]));
+                items.add(new Item("1-4", getResources().getIdentifier("m" + currentLevel[y - 3][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 3))) {
-                items.add(new Item("1-5", LevelArrays.LEVEL[level][y - 3][x + 1]));
+                items.add(new Item("1-5", getResources().getIdentifier("m" + currentLevel[y - 3][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 3))) {
-                items.add(new Item("1-6", LevelArrays.LEVEL[level][y - 3][x + 2]));
+                items.add(new Item("1-6", getResources().getIdentifier("m" + currentLevel[y - 3][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 3))) {
-                items.add(new Item("1-7", LevelArrays.LEVEL[level][y - 3][x + 3]));
+                items.add(new Item("1-7", getResources().getIdentifier("m" + currentLevel[y - 3][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 2))) {
-                items.add(new Item("2-1", LevelArrays.LEVEL[level][y - 2][x - 3]));
+                items.add(new Item("2-1", getResources().getIdentifier("m" + currentLevel[y - 2][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 2))) {
-                items.add(new Item("2-2", LevelArrays.LEVEL[level][y - 2][x - 2]));
+                items.add(new Item("2-2", getResources().getIdentifier("m" + currentLevel[y - 2][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 2))) {
-                items.add(new Item("2-3", LevelArrays.LEVEL[level][y - 2][x - 1]));
+                items.add(new Item("2-3", getResources().getIdentifier("m" + currentLevel[y - 2][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 2))) {
-                items.add(new Item("2-4", LevelArrays.LEVEL[level][y - 2][x]));
+                items.add(new Item("2-4", getResources().getIdentifier("m" + currentLevel[y - 2][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 2))) {
-                items.add(new Item("2-5", LevelArrays.LEVEL[level][y - 2][x + 1]));
+                items.add(new Item("2-5", getResources().getIdentifier("m" + currentLevel[y - 2][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 2))) {
-                items.add(new Item("2-6", LevelArrays.LEVEL[level][y - 2][x + 2]));
+                items.add(new Item("2-6", getResources().getIdentifier("m" + currentLevel[y - 2][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 2))) {
-                items.add(new Item("2-7", LevelArrays.LEVEL[level][y - 2][x + 3]));
+                items.add(new Item("2-7", getResources().getIdentifier("m" + currentLevel[y - 2][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 1))) {
-                items.add(new Item("3-1", LevelArrays.LEVEL[level][y - 1][x - 3]));
+                items.add(new Item("3-1", getResources().getIdentifier("m" + currentLevel[y - 1][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 1))) {
-                items.add(new Item("3-2", LevelArrays.LEVEL[level][y - 1][x - 2]));
+                items.add(new Item("3-2", getResources().getIdentifier("m" + currentLevel[y - 1][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 1))) {
-                items.add(new Item("3-3", LevelArrays.LEVEL[level][y - 1][x - 1]));
+                items.add(new Item("3-3", getResources().getIdentifier("m" + currentLevel[y - 1][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 1))) {
-                items.add(new Item("3-4", LevelArrays.LEVEL[level][y - 1][x]));
+                items.add(new Item("3-4", getResources().getIdentifier("m" + currentLevel[y - 1][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 1))) {
-                items.add(new Item("3-5", LevelArrays.LEVEL[level][y - 1][x + 1]));
+                items.add(new Item("3-5", getResources().getIdentifier("m" + currentLevel[y - 1][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 1))) {
-                items.add(new Item("3-6", LevelArrays.LEVEL[level][y - 1][x + 2]));
+                items.add(new Item("3-6", getResources().getIdentifier("m" + currentLevel[y - 1][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 1))) {
-                items.add(new Item("3-7", LevelArrays.LEVEL[level][y - 1][x + 3]));
+                items.add(new Item("3-7", getResources().getIdentifier("m" + currentLevel[y - 1][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y))) {
-                items.add(new Item("4-1", LevelArrays.LEVEL[level][y][x - 3]));
+                items.add(new Item("4-1", getResources().getIdentifier("m" + currentLevel[y][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y))) {
-                items.add(new Item("4-2", LevelArrays.LEVEL[level][y][x - 2]));
+                items.add(new Item("4-2", getResources().getIdentifier("m" + currentLevel[y][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y))) {
-                items.add(new Item("4-3", LevelArrays.LEVEL[level][y][x - 1]));
+                items.add(new Item("4-3", getResources().getIdentifier("m" + currentLevel[y][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y))) {
-                items.add(new Item("4-4", LevelArrays.LEVEL[level][y][x]));
+                items.add(new Item("4-4", getResources().getIdentifier("m" + currentLevel[y][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y))) {
-                items.add(new Item("4-5", LevelArrays.LEVEL[level][y][x + 1]));
+                items.add(new Item("4-5", getResources().getIdentifier("m" + currentLevel[y][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y))) {
-                items.add(new Item("4-6", LevelArrays.LEVEL[level][y][x + 2]));
+                items.add(new Item("4-6", getResources().getIdentifier("m" + currentLevel[y][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y))) {
-                items.add(new Item("4-7", LevelArrays.LEVEL[level][y][x + 3]));
+                items.add(new Item("4-7", getResources().getIdentifier("m" + currentLevel[y][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 1))) {
-                items.add(new Item("5-1", LevelArrays.LEVEL[level][y + 1][x - 3]));
+                items.add(new Item("5-1", getResources().getIdentifier("m" + currentLevel[y + 1][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 1))) {
-                items.add(new Item("5-2", LevelArrays.LEVEL[level][y + 1][x - 2]));
+                items.add(new Item("5-2", getResources().getIdentifier("m" + currentLevel[y + 1][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 1))) {
-                items.add(new Item("5-3", LevelArrays.LEVEL[level][y + 1][x - 1]));
+                items.add(new Item("5-3", getResources().getIdentifier("m" + currentLevel[y + 1][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 1))) {
-                items.add(new Item("5-4", LevelArrays.LEVEL[level][y + 1][x]));
+                items.add(new Item("5-4", getResources().getIdentifier("m" + currentLevel[y + 1][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 1))) {
-                items.add(new Item("5-5", LevelArrays.LEVEL[level][y + 1][x + 1]));
+                items.add(new Item("5-5", getResources().getIdentifier("m" + currentLevel[y + 1][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 1))) {
-                items.add(new Item("5-6", LevelArrays.LEVEL[level][y + 1][x + 2]));
+                items.add(new Item("5-6", getResources().getIdentifier("m" + currentLevel[y + 1][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 1))) {
-                items.add(new Item("5-7", LevelArrays.LEVEL[level][y + 1][x + 3]));
+                items.add(new Item("5-7", getResources().getIdentifier("m" + currentLevel[y + 1][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 2))) {
-                items.add(new Item("6-1", LevelArrays.LEVEL[level][y + 2][x - 3]));
+                items.add(new Item("6-1", getResources().getIdentifier("m" + currentLevel[y + 2][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 2))) {
-                items.add(new Item("6-2", LevelArrays.LEVEL[level][y + 2][x - 2]));
+                items.add(new Item("6-2", getResources().getIdentifier("m" + currentLevel[y + 2][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 2))) {
-                items.add(new Item("6-3", LevelArrays.LEVEL[level][y + 2][x - 1]));
+                items.add(new Item("6-3", getResources().getIdentifier("m" + currentLevel[y + 2][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 2))) {
-                items.add(new Item("6-4", LevelArrays.LEVEL[level][y + 2][x]));
+                items.add(new Item("6-4", getResources().getIdentifier("m" + currentLevel[y + 2][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 2))) {
-                items.add(new Item("6-5", LevelArrays.LEVEL[level][y + 2][x + 1]));
+                items.add(new Item("6-5", getResources().getIdentifier("m" + currentLevel[y + 2][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 2))) {
-                items.add(new Item("6-6", LevelArrays.LEVEL[level][y + 2][x + 2]));
+                items.add(new Item("6-6", getResources().getIdentifier("m" + currentLevel[y + 2][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 2))) {
-                items.add(new Item("6-7", LevelArrays.LEVEL[level][y + 2][x + 3]));
+                items.add(new Item("6-7", getResources().getIdentifier("m" + currentLevel[y + 2][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-7", R.drawable.blank));
             }
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 3))) {
-                items.add(new Item("7-1", LevelArrays.LEVEL[level][y + 3][x - 3]));
+                items.add(new Item("7-1", getResources().getIdentifier("m" + currentLevel[y + 3][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 3))) {
-                items.add(new Item("7-2", LevelArrays.LEVEL[level][y + 3][x - 2]));
+                items.add(new Item("7-2", getResources().getIdentifier("m" + currentLevel[y + 3][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 3))) {
-                items.add(new Item("7-3", LevelArrays.LEVEL[level][y + 3][x - 1]));
+                items.add(new Item("7-3", getResources().getIdentifier("m" + currentLevel[y + 3][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 3))) {
-                items.add(new Item("7-4", LevelArrays.LEVEL[level][y + 3][x]));
+                items.add(new Item("7-4", getResources().getIdentifier("m" + currentLevel[y + 3][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 3))) {
-                items.add(new Item("7-5", LevelArrays.LEVEL[level][y + 3][x + 1]));
+                items.add(new Item("7-5", getResources().getIdentifier("m" + currentLevel[y + 3][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 3))) {
-                items.add(new Item("7-6", LevelArrays.LEVEL[level][y + 3][x + 2]));
+                items.add(new Item("7-6", getResources().getIdentifier("m" + currentLevel[y + 3][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 3))) {
-                items.add(new Item("7-7", LevelArrays.LEVEL[level][y + 3][x + 3]));
+                items.add(new Item("7-7", getResources().getIdentifier("m" + currentLevel[y + 3][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-7", R.drawable.blank));
             }
@@ -1088,9 +1213,9 @@ public class Level extends AppCompatActivity {
             items.add(new Item("3-1", R.drawable.black));
             items.add(new Item("3-2", PlayerArrays.F_PLAYER[darkness][3]));
 
-            if (LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][2] == 0) {
+            if (scene.equals("f")) {
                 items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
-            } else if (LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][2] == 1) {
+            } else if (scene.equals("c")) {
                 items.add(new Item("3-3", PlayerArrays.C_PLAYER[darkness][4]));
             }
 
@@ -1152,50 +1277,5 @@ public class Level extends AppCompatActivity {
                 this.drawableId = drawableId;
             }
         }
-    }
-
-    public void saveGame() {
-        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", level);
-        editor.putInt("x", x);
-        editor.putInt("y", y);
-        editor.putInt("stepCount", stepCount);
-        editor.putInt("time", time);
-        editor.putInt("darkness", darkness);
-        editor.putInt("cheat", cheat);
-        editor.putBoolean("swipe", swipe);
-        editor.putBoolean("hasSword", hasSword);
-        if (controlButton.isChecked()) {
-            editor.putBoolean("isChecked", true);
-        } else {
-            editor.putBoolean("isChecked", false);
-        }
-        editor.apply();
-    }
-
-    public void loadGame() {
-        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
-
-        level = sharedPreferences.getInt("level", 0);
-        x = sharedPreferences.getInt("x", LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][0]);
-        y = sharedPreferences.getInt("y", LevelArrays.LEVEL[level][LevelArrays.LEVEL[level].length - 2][1]);
-        stepCount = sharedPreferences.getInt("stepCount", 0);
-        time = sharedPreferences.getInt("time", 0);
-        darkness = sharedPreferences.getInt("darkness", 0);
-        cheat = sharedPreferences.getInt("cheat", 0);
-        swipe = sharedPreferences.getBoolean("swipe", false);
-        hasSword = sharedPreferences.getBoolean("hasSword", false);
-
-        title.setText("Level " + (level + 1));
-        stepCounter.setText("Steps: " + stepCount);
-        timeCounter.setText(("" + time));
-        posX.setText("posX: " + x);
-        posY.setText("posY: " + y);
-
-        gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
-        gridViewMap.setAdapter(new MapAdapter(this, 0));
-        gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
-        controlButton.setChecked(sharedPreferences.getBoolean("isChecked", false));
     }
 }

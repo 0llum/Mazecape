@@ -1,303 +1,288 @@
 package com.ollum.mazecape;
 
 public class LevelArrays {
-    public static final int[] MOVE_DOWN = {
-            R.drawable.fndn, R.drawable.fndl, R.drawable.fntu, R.drawable.fndr, R.drawable.fnud, R.drawable.fntr, R.drawable.fntl, R.drawable.fncr,
-            R.drawable.cndn, R.drawable.cndl, R.drawable.cntu, R.drawable.cndr, R.drawable.cnud, R.drawable.cntr, R.drawable.cntl, R.drawable.cncr,
-            R.drawable.ffdn, R.drawable.ffdl, R.drawable.fftu, R.drawable.ffdr, R.drawable.ffud, R.drawable.fftr, R.drawable.fftl, R.drawable.ffcr,
-            R.drawable.cfdn, R.drawable.cfdl, R.drawable.cftu, R.drawable.cfdr, R.drawable.cfud, R.drawable.cftr, R.drawable.cftl, R.drawable.cfcr,
-            R.drawable.fsdn, R.drawable.fsdl, R.drawable.fstu, R.drawable.fsdr, R.drawable.fsud, R.drawable.fstr, R.drawable.fstl, R.drawable.fscr,
-            R.drawable.csdn, R.drawable.csdl, R.drawable.cstu, R.drawable.csdr, R.drawable.csud, R.drawable.cstr, R.drawable.cstl, R.drawable.cscr,
+    public static final String[] MOVE_DOWN = {
+            "ndn", "ndl", "ntu", "ndr", "nud", "ntr", "ntl", "ncr",
+            "fdn", "fdl", "ftu", "fdr", "fud", "ftr", "ftl", "fcr",
+            "sdn", "sdl", "stu", "sdr", "sud", "str", "stl", "scr",
+            "pdn", "pdl", "ptu", "pdr", "pud", "ptr", "ptl", "pcr"
     };
-    public static final int[] MOVE_LEFT = {
-            R.drawable.fndl, R.drawable.fntu, R.drawable.fnlt, R.drawable.fnlr, R.drawable.fntr, R.drawable.fnul, R.drawable.fntd, R.drawable.fncr,
-            R.drawable.cndl, R.drawable.cntu, R.drawable.cnlt, R.drawable.cnlr, R.drawable.cntr, R.drawable.cnul, R.drawable.cntd, R.drawable.cncr,
-            R.drawable.ffdl, R.drawable.fftu, R.drawable.fflt, R.drawable.fflr, R.drawable.fftr, R.drawable.fful, R.drawable.fftd, R.drawable.ffcr,
-            R.drawable.cfdl, R.drawable.cftu, R.drawable.cflt, R.drawable.cflr, R.drawable.cftr, R.drawable.cful, R.drawable.cftd, R.drawable.cfcr,
-            R.drawable.fsdl, R.drawable.fstu, R.drawable.fslt, R.drawable.fslr, R.drawable.fstr, R.drawable.fsul, R.drawable.fstd, R.drawable.fscr,
-            R.drawable.csdl, R.drawable.cstu, R.drawable.cslt, R.drawable.cslr, R.drawable.cstr, R.drawable.csul, R.drawable.cstd, R.drawable.cscr
+    public static final String[] MOVE_LEFT = {
+            "ndl", "ntu", "nlt", "nlr", "ntr", "nul", "ntd", "ncr",
+            "fdl", "ftu", "flt", "flr", "ftr", "ful", "ftd", "fcr",
+            "sdl", "stu", "slt", "slr", "str", "sul", "std", "scr",
+            "pdl", "ptu", "plt", "plr", "ptr", "pul", "ptd", "pcr"
     };
-    public static final int[] MOVE_RIGHT = {
-            R.drawable.fntu, R.drawable.fndr, R.drawable.fnlr, R.drawable.fnrt, R.drawable.fntl, R.drawable.fntd, R.drawable.fnur, R.drawable.fncr,
-            R.drawable.cntu, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnrt, R.drawable.cntl, R.drawable.cntd, R.drawable.cnur, R.drawable.cncr,
-            R.drawable.fftu, R.drawable.ffdr, R.drawable.fflr, R.drawable.ffrt, R.drawable.fftl, R.drawable.fftd, R.drawable.ffur, R.drawable.ffcr,
-            R.drawable.cftu, R.drawable.cfdr, R.drawable.cflr, R.drawable.cfrt, R.drawable.cftl, R.drawable.cftd, R.drawable.cfur, R.drawable.cfcr,
-            R.drawable.fstu, R.drawable.fsdr, R.drawable.fslr, R.drawable.fsrt, R.drawable.fstl, R.drawable.fstd, R.drawable.fsur, R.drawable.fscr,
-            R.drawable.cstu, R.drawable.csdr, R.drawable.cslr, R.drawable.csrt, R.drawable.cstl, R.drawable.cstd, R.drawable.csur, R.drawable.cscr
+    public static final String[] MOVE_RIGHT = {
+            "ntu", "ndr", "nlr", "nrt", "ntl", "ntd", "nur", "ncr",
+            "ftu", "fdr", "flr", "frt", "ftl", "ftd", "fur", "fcr",
+            "stu", "sdr", "slr", "srt", "stl", "std", "sur", "scr",
+            "ptu", "pdr", "plr", "prt", "ptl", "ptd", "pur", "pcr"
     };
-    public static final int[] MOVE_UP = {
-            R.drawable.fnud, R.drawable.fntr, R.drawable.fntl, R.drawable.fnul, R.drawable.fntd, R.drawable.fnup, R.drawable.fnur, R.drawable.fncr,
-            R.drawable.cnud, R.drawable.cntr, R.drawable.cntl, R.drawable.cnul, R.drawable.cntd, R.drawable.cnup, R.drawable.cnur, R.drawable.cncr,
-            R.drawable.ffud, R.drawable.fftr, R.drawable.fftl, R.drawable.fful, R.drawable.fftd, R.drawable.ffup, R.drawable.ffur, R.drawable.ffcr,
-            R.drawable.cfud, R.drawable.cftr, R.drawable.cftl, R.drawable.cful, R.drawable.cftd, R.drawable.cfup, R.drawable.cfur, R.drawable.cfcr,
-            R.drawable.fsud, R.drawable.fstr, R.drawable.fstl, R.drawable.fsul, R.drawable.fstd, R.drawable.fsup, R.drawable.fsur, R.drawable.fscr,
-            R.drawable.csud, R.drawable.cstr, R.drawable.cstl, R.drawable.csul, R.drawable.cstd, R.drawable.csup, R.drawable.csur, R.drawable.cscr
+    public static final String[] MOVE_UP = {
+            "nud", "ntr", "ntl", "nul", "ntd", "nup", "nur", "ncr",
+            "fud", "ftr", "ftl", "ful", "ftd", "fup", "fur", "fcr",
+            "sud", "str", "stl", "sul", "std", "sup", "sur", "scr",
+            "pud", "ptr", "ptl", "pul", "ptd", "pup", "pur", "pcr"
     };
-    public static final int[] GOAL = {
-            R.drawable.fgdn, R.drawable.fgdl, R.drawable.fgtu, R.drawable.fgdr, R.drawable.fglt, R.drawable.fglr, R.drawable.fgrt, R.drawable.fgud, R.drawable.fgtr, R.drawable.fgtl, R.drawable.fgup, R.drawable.fgul, R.drawable.fgtd, R.drawable.fgur, R.drawable.fgcr,
-            R.drawable.cgdn, R.drawable.cgdl, R.drawable.cgtu, R.drawable.cgdr, R.drawable.cglt, R.drawable.cglr, R.drawable.cgrt, R.drawable.cgud, R.drawable.cgtr, R.drawable.cgtl, R.drawable.cgup, R.drawable.cgul, R.drawable.cgtd, R.drawable.cgur, R.drawable.cgcr
+    public static final String[] GOAL = {
+            "gdn", "gdl", "gtu", "gdr", "glt", "glr", "grt", "gud", "gtr", "gtl", "gup", "gul", "gtd", "gur", "gcr"
     };
-    public static final int[] SWORD = {
-            R.drawable.fsdn, R.drawable.fsdl, R.drawable.fstu, R.drawable.fsdr, R.drawable.fslt, R.drawable.fslr, R.drawable.fsrt, R.drawable.fsud, R.drawable.fstr, R.drawable.fstl, R.drawable.fsup, R.drawable.fsul, R.drawable.fstd, R.drawable.fsur, R.drawable.fscr,
-            R.drawable.csdn, R.drawable.csdl, R.drawable.cstu, R.drawable.csdr, R.drawable.cslt, R.drawable.cslr, R.drawable.csrt, R.drawable.csud, R.drawable.cstr, R.drawable.cstl, R.drawable.csup, R.drawable.csul, R.drawable.cstd, R.drawable.csur, R.drawable.cscr
+    public static final String[] SWORD = {
+            "sdn", "sdl", "stu", "sdr", "slt", "slr", "srt", "sud", "str", "stl", "sup", "sul", "std", "sur", "scr"
     };
-    public static final int[] MONSTER = {
-            R.drawable.fmdn, R.drawable.fmdl, R.drawable.fmtu, R.drawable.fmdr, R.drawable.fmlt, R.drawable.fmlr, R.drawable.fmrt, R.drawable.fmud, R.drawable.fmtr, R.drawable.fmtl, R.drawable.fmup, R.drawable.fmul, R.drawable.fmtd, R.drawable.fmur, R.drawable.fmcr,
-            R.drawable.cmdn, R.drawable.cmdl, R.drawable.cmtu, R.drawable.cmdr, R.drawable.cmlt, R.drawable.cmlr, R.drawable.cmrt, R.drawable.cmud, R.drawable.cmtr, R.drawable.cmtl, R.drawable.cmup, R.drawable.cmul, R.drawable.cmtd, R.drawable.cmur, R.drawable.cmcr
+    public static final String[] MONSTER = {
+            "mdn", "mdl", "mtu", "mdr", "mlt", "mlr", "mrt", "mud", "mtr", "mtl", "mup", "mul", "mtd", "mur", "mcr"
     };
-    public static final int[] FIRE = {
-            R.drawable.ffdn, R.drawable.ffdl, R.drawable.fftu, R.drawable.ffdr, R.drawable.fflt, R.drawable.fflr, R.drawable.ffrt, R.drawable.ffud, R.drawable.fftr, R.drawable.fftl, R.drawable.ffup, R.drawable.fful, R.drawable.fftd, R.drawable.ffur, R.drawable.ffcr,
-            R.drawable.cfdn, R.drawable.cfdl, R.drawable.cftu, R.drawable.cfdr, R.drawable.cflt, R.drawable.cflr, R.drawable.cfrt, R.drawable.cfud, R.drawable.cftr, R.drawable.cftl, R.drawable.cfup, R.drawable.cful, R.drawable.cftd, R.drawable.cfur, R.drawable.cfcr
+    public static final String[] FIRE = {
+            "fdn", "fdl", "ftu", "fdr", "flt", "flr", "frt", "fud", "ftr", "ftl", "fup", "ful", "ftd", "fur", "fcr"
     };
-
-    public static final int[] NORMAL = {
-            R.drawable.fndn, R.drawable.fndl, R.drawable.fntu, R.drawable.fndr, R.drawable.fnlt, R.drawable.fnlr, R.drawable.fnrt, R.drawable.fnud, R.drawable.fntr, R.drawable.fntl, R.drawable.fnup, R.drawable.fnul, R.drawable.fntd, R.drawable.fnur, R.drawable.fncr,
-            R.drawable.cndn, R.drawable.cndl, R.drawable.cntu, R.drawable.cndr, R.drawable.cnlt, R.drawable.cnlr, R.drawable.cnrt, R.drawable.cnud, R.drawable.cntr, R.drawable.cntl, R.drawable.cnup, R.drawable.cnul, R.drawable.cntd, R.drawable.cnur, R.drawable.cncr
+    public static final String[] PORTAL = {
+            "pdn", "pdl", "ptu", "pdr", "plt", "plr", "prt", "pud", "ptr", "ptl", "pup", "pul", "ptd", "pur", "pcr"
     };
-    public static final int[][] LEVEL_1 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnrt, R.drawable.fnlr, R.drawable.fglt, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {2, 2, 0, 100, 2},
-            {R.raw.overworld}
+    public static final String[] NORMAL = {
+            "ndn", "ndl", "ntu", "ndr", "nlt", "nlr", "nrt", "nud", "ntr", "ntl", "nup", "nul", "ntd", "nur", "ncr"
     };
-    public static final int[][] LEVEL_2 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fndl, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnrt, R.drawable.fnul, R.drawable.fgup, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {2, 4, 0, 2, 8},
-            {R.raw.overworld}
+    public static final String[] EDGES = {
+            "etl", "etp", "etr", "elt", "ect", "ert", "ebl", "ebt", "ebr"
     };
-    public static int[][] LEVEL_3 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fntl, R.drawable.fmdl, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnup, R.drawable.fgup, R.drawable.fsup, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {3, 2, 0, 2, 4},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_0 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "nrt", "nlr", "glt", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"2", "2", "f", "100", "2"}
     };
-    public static final int[][] LEVEL_4 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndn, R.drawable.fndr, R.drawable.fntu, R.drawable.fnlt, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fntl, R.drawable.fnul, R.drawable.fnur, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fntu, R.drawable.fnlt, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnrt, R.drawable.fnul, R.drawable.fgrt, R.drawable.fnul, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {3, 2, 0, 2, 6},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_1 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "prt", "nlr", "nlr", "nlr", "plr", "glt", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"4", "2", "f", "100", "3"}
     };
-    public static final int[][] LEVEL_5 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fnlr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fndr, R.drawable.fnlr, R.drawable.fntr, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fnur, R.drawable.fndl, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fnlt, R.drawable.fgup, R.drawable.fnup, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {3, 2, 0, 2, 8},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_2 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ndr", "nlr", "pdl", "ect", "ert"},
+            {"elt", "ect", "nur", "pdl", "nud", "ect", "ert"},
+            {"elt", "ect", "nrt", "nul", "gup", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"2", "4", "f", "2", "8"}
     };
-    public static final int[][] LEVEL_6 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fndr, R.drawable.fnlr, R.drawable.fntu, R.drawable.fntu, R.drawable.fnlr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fnrt, R.drawable.fnul, R.drawable.fnur, R.drawable.fndl, R.drawable.fnur, R.drawable.fntr, R.drawable.fndn, R.drawable.fndr, R.drawable.fnul, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fndl, R.drawable.fndr, R.drawable.fnlt, R.drawable.fntl, R.drawable.fndl, R.drawable.fnur, R.drawable.fnul, R.drawable.fnud, R.drawable.fndn, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fntd, R.drawable.fnul, R.drawable.fndr, R.drawable.fntr, R.drawable.fnur, R.drawable.fflt, R.drawable.fndr, R.drawable.fntd, R.drawable.fnul, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fnlr, R.drawable.fnlr, R.drawable.fnul, R.drawable.fnur, R.drawable.fnlt, R.drawable.fnrt, R.drawable.fntd, R.drawable.fnlr, R.drawable.fglt, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {2, 2, 0, 3, 29},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_3 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ndr", "nlr", "ndl", "ect", "ert"},
+            {"elt", "ect", "ntl", "mdl", "nud", "ect", "ert"},
+            {"elt", "ect", "nup", "gup", "sup", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"3", "2", "f", "2", "4"}
     };
-    public static final int[][] LEVEL_7 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnrt, R.drawable.fndl, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fndr, R.drawable.fndl, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fndr, R.drawable.fnul, R.drawable.fnud, R.drawable.fndr, R.drawable.fnul, R.drawable.fnud, R.drawable.fnur, R.drawable.fnul, R.drawable.fnrt, R.drawable.fntr, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fndr, R.drawable.fnul, R.drawable.fnur, R.drawable.fntu, R.drawable.fntr, R.drawable.ffdn, R.drawable.fndr, R.drawable.fndl, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fnur, R.drawable.fflt, R.drawable.fndr, R.drawable.fnul, R.drawable.fnup, R.drawable.fnur, R.drawable.fnul, R.drawable.fnud, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fndr, R.drawable.fntu, R.drawable.fnul, R.drawable.fndr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fndn, R.drawable.fnud, R.drawable.fgup, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fntl, R.drawable.fnul, R.drawable.fnur, R.drawable.fndl, R.drawable.fntl, R.drawable.fndl, R.drawable.fnur, R.drawable.fnul, R.drawable.fnur, R.drawable.fndl, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fntl, R.drawable.fnlr, R.drawable.fnlt, R.drawable.fnud, R.drawable.fnud, R.drawable.fnur, R.drawable.fnlr, R.drawable.fnlr, R.drawable.fndl, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fndr, R.drawable.fndl, R.drawable.fnur, R.drawable.fncr, R.drawable.fnlr, R.drawable.fnlt, R.drawable.fndr, R.drawable.fnul, R.drawable.fnud, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnud, R.drawable.fnud, R.drawable.fnur, R.drawable.fndl, R.drawable.fnud, R.drawable.fndr, R.drawable.fndl, R.drawable.fnur, R.drawable.fnlr, R.drawable.fnul, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fnur, R.drawable.fnul, R.drawable.ffrt, R.drawable.fnul, R.drawable.fnur, R.drawable.fnul, R.drawable.fnur, R.drawable.fnlr, R.drawable.fnlr, R.drawable.fnlt, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {11, 11, 0, 3, 30},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_4 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ndn", "ndr", "ntu", "nlt", "ect", "ert"},
+            {"elt", "ect", "ntl", "nul", "nur", "ndl", "ect", "ert"},
+            {"elt", "ect", "nur", "ntu", "nlt", "nud", "ect", "ert"},
+            {"elt", "ect", "nrt", "nul", "grt", "nul", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"3", "2", "f", "2", "6"}
     };
-    public static final int[][] LEVEL_8 = {
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cndl, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndn, R.drawable.cndr, R.drawable.cntu, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnup, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cntl, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cntl, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cntr, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnud, R.drawable.cnud, R.drawable.cndr, R.drawable.cndl, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnud, R.drawable.cnud, R.drawable.cntl, R.drawable.cncr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnul, R.drawable.cnur, R.drawable.cntr, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndn, R.drawable.cndr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cncr, R.drawable.cnul, R.drawable.cnud, R.drawable.cnup, R.drawable.cnud, R.drawable.cnup, R.drawable.cgrt, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnrt, R.drawable.cntd, R.drawable.cnlr, R.drawable.cntd, R.drawable.cnlr, R.drawable.cftd, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {6, 6, 1, 4, 52},
-            {R.raw.grand_cave}
+    public static final String[][] LEVEL_5 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ndr", "nlr", "nlr", "ndl", "ect", "ert"},
+            {"elt", "ect", "nud", "ndr", "nlr", "ntr", "ect", "ert"},
+            {"elt", "ect", "nud", "nur", "ndl", "nud", "ect", "ert"},
+            {"elt", "ect", "nur", "nlt", "gup", "nup", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"3", "2", "f", "2", "8"}
     };
-    public static final int[][] LEVEL_9 = {
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cndl, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cntu, R.drawable.cnlr, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cndl, R.drawable.cnup, R.drawable.cnur, R.drawable.cnul, R.drawable.cnrt, R.drawable.cnul, R.drawable.cntl, R.drawable.cnlt, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cntd, R.drawable.cnlt, R.drawable.cndn, R.drawable.cnrt, R.drawable.cndl, R.drawable.cnrt, R.drawable.cnul, R.drawable.cndr, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cntl, R.drawable.cntu, R.drawable.cnlt, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlt, R.drawable.cnud, R.drawable.cnup, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cntd, R.drawable.cndl, R.drawable.cnur, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnrt, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntr, R.drawable.cndn, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndn, R.drawable.cnur, R.drawable.cntr, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cntu, R.drawable.cntd, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cntl, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnup, R.drawable.cntl, R.drawable.cndl, R.drawable.cndn, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntr, R.drawable.cntl, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnrt, R.drawable.cnul, R.drawable.cnur, R.drawable.cnul, R.drawable.cnur, R.drawable.cglt, R.drawable.cnup, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {6, 2, 1, 3, 32},
-            {R.raw.grand_cave}
+    public static final String[][] LEVEL_6 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ndr", "nlr", "ndl", "ndr", "nlr", "ntu", "ntu", "nlr", "nlr", "ndl", "ect", "ert"},
+            {"elt", "ect", "nud", "nrt", "nul", "nur", "ndl", "nur", "ntr", "ndn", "ndr", "nul", "ect", "ert"},
+            {"elt", "ect", "nur", "ndl", "ndr", "nlt", "ntl", "ndl", "nur", "nul", "nud", "ndn", "ect", "ert"},
+            {"elt", "ect", "ndr", "ntd", "nul", "ndr", "ntr", "nur", "flt", "ndr", "ntd", "nul", "ect", "ert"},
+            {"elt", "ect", "nur", "nlr", "nlr", "nul", "nur", "nlt", "nrt", "ntd", "nlr", "glt", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"2", "2", "f", "3", "29"}
     };
-    public static final int[][] LEVEL_10 = {
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlt, R.drawable.cndr, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntd, R.drawable.cnlt, R.drawable.cndn, R.drawable.cnur, R.drawable.cncr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cntd, R.drawable.cnlt, R.drawable.cnup, R.drawable.cndr, R.drawable.cntr, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cntu, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntr, R.drawable.cnrt, R.drawable.cntr, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnup, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnrt, R.drawable.cntd, R.drawable.cntu, R.drawable.cnlr, R.drawable.cncr, R.drawable.cnlt, R.drawable.cntl, R.drawable.cnlt, R.drawable.cnup, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntd, R.drawable.cntr, R.drawable.cndr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cndn, R.drawable.cndr, R.drawable.cntd, R.drawable.cnlt, R.drawable.cndr, R.drawable.cncr, R.drawable.cntr, R.drawable.cndn, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnup, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntr, R.drawable.cnud, R.drawable.cnur, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cntr, R.drawable.cnrt, R.drawable.cndl, R.drawable.cnur, R.drawable.cntu, R.drawable.cnul, R.drawable.cndr, R.drawable.cntr, R.drawable.cnup, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cntl, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cnup, R.drawable.cndr, R.drawable.cntr, R.drawable.cndr, R.drawable.cnul, R.drawable.cntl, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cntl, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnul, R.drawable.cndr, R.drawable.cndl, R.drawable.cnup, R.drawable.cntl, R.drawable.cnul, R.drawable.cndr, R.drawable.cntr, R.drawable.cnup, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cntd, R.drawable.cndl, R.drawable.cnud, R.drawable.cndn, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntr, R.drawable.cnur, R.drawable.cnlt, R.drawable.cntl, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cndn, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cnlr, R.drawable.cntr, R.drawable.cntl, R.drawable.cntr, R.drawable.cntl, R.drawable.cnlt, R.drawable.cntl, R.drawable.cnlt, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cnud, R.drawable.cnur, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndr, R.drawable.cntd, R.drawable.cnul, R.drawable.cnur, R.drawable.cntr, R.drawable.cndr, R.drawable.cnul, R.drawable.cndn, R.drawable.cnud, R.drawable.cndn, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cglt, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnud, R.drawable.cndr, R.drawable.cntu, R.drawable.cndl, R.drawable.cnur, R.drawable.cntr, R.drawable.cndr, R.drawable.cntr, R.drawable.cnur, R.drawable.cntd, R.drawable.cncr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndn, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cntl, R.drawable.cntd, R.drawable.cnul, R.drawable.cnud, R.drawable.cnur, R.drawable.cndl, R.drawable.cnur, R.drawable.cntr, R.drawable.cnur, R.drawable.cndl, R.drawable.cndn, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cntd, R.drawable.cnlt, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnur, R.drawable.cntd, R.drawable.cntd, R.drawable.cnlr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {2, 4, 1, 8, 53},
-            {R.raw.grand_cave}
+    public static final String[][] LEVEL_7 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "nrt", "ndl", "ndr", "nlr", "ndl", "ndr", "ndl", "ndr", "nlr", "ndl", "ect", "ert"},
+            {"elt", "ect", "ndr", "nul", "nud", "ndr", "nul", "nud", "nur", "nul", "nrt", "ntr", "ect", "ert"},
+            {"elt", "ect", "nud", "ndr", "nul", "nur", "ntu", "ntr", "fdn", "ndr", "ndl", "nud", "ect", "ert"},
+            {"elt", "ect", "nud", "nur", "flt", "ndr", "nul", "nup", "nur", "nul", "nud", "nud", "ect", "ert"},
+            {"elt", "ect", "nud", "ndr", "ntu", "nul", "ndr", "nlr", "ndl", "ndn", "nud", "gup", "ect", "ert"},
+            {"elt", "ect", "ntl", "nul", "nur", "ndl", "ntl", "ndl", "nur", "nul", "nur", "ndl", "ect", "ert"},
+            {"elt", "ect", "ntl", "nlr", "nlt", "nud", "nud", "nur", "nlr", "nlr", "ndl", "nud", "ect", "ert"},
+            {"elt", "ect", "nud", "ndr", "ndl", "nur", "ncr", "nlr", "nlt", "ndr", "nul", "nud", "ect", "ert"},
+            {"elt", "ect", "nud", "nud", "nur", "ndl", "nud", "ndr", "ndl", "nur", "nlr", "nul", "ect", "ert"},
+            {"elt", "ect", "nur", "nul", "frt", "nul", "nur", "nul", "nur", "nlr", "nlr", "nlt", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"11", "11", "f", "3", "30"}
     };
-    public static final int[][] LEVEL_100 = {
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cntu, R.drawable.cnlt, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnrt, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnup, R.drawable.cndr, R.drawable.cnul, R.drawable.cndr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cndl, R.drawable.cntl, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndn, R.drawable.cnur, R.drawable.cndl, R.drawable.cndr, R.drawable.cnur, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cnul, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cndl, R.drawable.cnup, R.drawable.cnur, R.drawable.cndl, R.drawable.cndn, R.drawable.cnur, R.drawable.cntr, R.drawable.cndn, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cntr, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cntl, R.drawable.cnlt, R.drawable.cnur, R.drawable.cntd, R.drawable.cndl, R.drawable.cndn, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cnud, R.drawable.cnud, R.drawable.cnup, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cntu, R.drawable.cnlr, R.drawable.cntd, R.drawable.cnul, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cndn, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cntl, R.drawable.cntu, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cndn, R.drawable.cnud, R.drawable.cntl, R.drawable.cnlt, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cntr, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnud, R.drawable.cnup, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnud, R.drawable.cnur, R.drawable.cnul, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntd, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnul, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cntr, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cndn, R.drawable.cnur, R.drawable.cntr, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndr, R.drawable.cndl, R.drawable.cndr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnup, R.drawable.cntl, R.drawable.cnul, R.drawable.cnrt, R.drawable.cntu, R.drawable.cntr, R.drawable.cnur, R.drawable.cntu, R.drawable.cndl, R.drawable.cnur, R.drawable.cndl, R.drawable.cntl, R.drawable.cndl, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndr, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cnup, R.drawable.cnur, R.drawable.cntd, R.drawable.cndl, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cndn, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndn, R.drawable.cnud, R.drawable.cndr, R.drawable.cndl, R.drawable.cndr, R.drawable.cndl, R.drawable.cnrt, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cnul, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlt, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cndl, R.drawable.cnud, R.drawable.cnur, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cntl, R.drawable.cntu, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cndl, R.drawable.cntl, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cntu, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cnur, R.drawable.cndl, R.drawable.cndr, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cnud, R.drawable.cnur, R.drawable.cnul, R.drawable.cndr, R.drawable.cnul, R.drawable.cnrt, R.drawable.cntu, R.drawable.cnul, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cnud, R.drawable.cndn, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cndr, R.drawable.cntd, R.drawable.cndl, R.drawable.cnud, R.drawable.cndn, R.drawable.cndr, R.drawable.cnul, R.drawable.cndr, R.drawable.cndl, R.drawable.cnur, R.drawable.cndl, R.drawable.cndr, R.drawable.cndl, R.drawable.cnud, R.drawable.cnud, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cndr, R.drawable.cnul, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cndr, R.drawable.cnul, R.drawable.cnur, R.drawable.cntr, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnur, R.drawable.cndl, R.drawable.cnur, R.drawable.cnul, R.drawable.cnur, R.drawable.cnul, R.drawable.cnud, R.drawable.cnud, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnup, R.drawable.cnud, R.drawable.cndr, R.drawable.cnlt, R.drawable.cnud, R.drawable.cnrt, R.drawable.cntu, R.drawable.cndl, R.drawable.cndr, R.drawable.cnul, R.drawable.cndr, R.drawable.cnlr, R.drawable.cnlr, R.drawable.cndl, R.drawable.cnur, R.drawable.cntr, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cnur, R.drawable.cnul, R.drawable.cnrt, R.drawable.cntd, R.drawable.cnlr, R.drawable.cnul, R.drawable.cnur, R.drawable.cnlr, R.drawable.cntd, R.drawable.cnlr, R.drawable.cgul, R.drawable.cnup, R.drawable.cnur, R.drawable.cnlr, R.drawable.cntd, R.drawable.cnlr, R.drawable.cnlt, R.drawable.cnur, R.drawable.cnlr, R.drawable.cnul, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect, R.drawable.cect},
-            {11, 2, 1, 20, 224},
-            {R.raw.grand_cave}
+    public static final String[][] LEVEL_8 = {
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ndr", "ndl", "ndr", "nlr", "ndl", "ndn", "ndr", "ntu", "ndl", "ect", "ect"},
+            {"ect", "ect", "nud", "nup", "nud", "ndr", "nul", "nud", "ntl", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "ntl", "ndl", "nud", "nur", "nlr", "ntr", "nur", "ndl", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nud", "nud", "ndr", "ndl", "nud", "ndr", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nud", "nud", "ntl", "ncr", "nul", "nud", "ndr", "ntr", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nul", "nur", "ntr", "ndr", "nul", "nud", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "ndn", "ndr", "ndl", "nud", "nud", "ndr", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nur", "ncr", "nul", "nud", "nup", "nud", "nup", "grt", "nul", "ect", "ect"},
+            {"ect", "ect", "nrt", "ntd", "nlr", "ntd", "nlr", "ftd", "nlr", "nlr", "nlt", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"6", "6", "c", "4", "52"}
     };
-    public static final int[][][] LEVEL = {
-            LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8, LEVEL_9, LEVEL_10, LEVEL_100
+    public static final String[][] LEVEL_9 = {
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ndr", "nlr", "ntu", "ndl", "ndr", "nlr", "ntu", "ntu", "nlr", "ndl", "ect", "ect"},
+            {"ect", "ect", "nur", "ndl", "nup", "nur", "nul", "nrt", "nul", "ntl", "nlt", "nud", "ect", "ect"},
+            {"ect", "ect", "ndr", "ntd", "nlt", "ndn", "nrt", "ndl", "nrt", "nul", "ndr", "ntr", "ect", "ect"},
+            {"ect", "ect", "ntl", "ntu", "nlt", "nur", "ndl", "nud", "ndr", "nlt", "nud", "nup", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nlr", "ndl", "nud", "nur", "ntd", "ndl", "nur", "ndl", "ect", "ect"},
+            {"ect", "ect", "nud", "nrt", "nlr", "nul", "nud", "ndr", "nlr", "ntr", "ndn", "nud", "ect", "ect"},
+            {"ect", "ect", "nur", "nlr", "ndl", "ndr", "nul", "nud", "ndn", "nur", "ntr", "nud", "ect", "ect"},
+            {"ect", "ect", "ndr", "ntu", "ntd", "nul", "ndr", "nul", "ntl", "ndl", "nud", "nud", "ect", "ect"},
+            {"ect", "ect", "nup", "ntl", "ndl", "ndn", "nud", "nrt", "ntr", "ntl", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nrt", "nul", "nur", "nul", "nur", "glt", "nup", "nur", "nlr", "nul", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"6", "2", "c", "3", "32"}
     };
-    public static final int[][] TEMPLATE_3x3 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {0, 0, 0, 100, 100},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_10 = {
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ndr", "nlr", "ntu", "nlr", "nlr", "ndl", "ndr", "nlr", "nlr", "ntu", "nlr", "ntu", "nlt", "ndr", "ndl", "ect", "ect"},
+            {"ect", "ect", "nud", "nrt", "ntd", "nlt", "ndn", "nur", "ncr", "nlr", "ntu", "ntd", "nlt", "nup", "ndr", "ntr", "nud", "ect", "ect"},
+            {"ect", "ect", "nur", "ntu", "nlr", "nlt", "nud", "nrt", "ntr", "nrt", "ntr", "ndr", "nlr", "ndl", "nud", "nup", "nud", "ect", "ect"},
+            {"ect", "ect", "nrt", "ntd", "ntu", "nlr", "ncr", "nlt", "ntl", "nlt", "nup", "nud", "nrt", "ntd", "ntr", "ndr", "nul", "ect", "ect"},
+            {"ect", "ect", "ndr", "nlr", "nul", "nrt", "nul", "ndr", "nul", "ndn", "ndr", "ntd", "nlt", "ndr", "ncr", "ntr", "ndn", "ect", "ect"},
+            {"ect", "ect", "nup", "ndr", "nlr", "nlr", "ntu", "nul", "ndr", "nul", "nud", "ndr", "nlr", "ntr", "nud", "nur", "ntr", "ect", "ect"},
+            {"ect", "ect", "ndr", "ntr", "nrt", "ndl", "nur", "ntu", "nul", "ndr", "ntr", "nup", "ndr", "nul", "nud", "ndr", "nul", "ect", "ect"},
+            {"ect", "ect", "nud", "ntl", "nlr", "nul", "nrt", "nul", "ndr", "nul", "nup", "ndr", "ntr", "ndr", "nul", "ntl", "ndl", "ect", "ect"},
+            {"ect", "ect", "nud", "ntl", "nlr", "ntu", "nlr", "ntu", "nul", "ndr", "ndl", "nup", "ntl", "nul", "ndr", "ntr", "nup", "ect", "ect"},
+            {"ect", "ect", "nur", "ntd", "ndl", "nud", "ndn", "nud", "nrt", "ntr", "nur", "nlt", "ntl", "ndl", "nud", "nud", "ndn", "ect", "ect"},
+            {"ect", "ect", "ndr", "nlr", "ntr", "ntl", "ntr", "ntl", "nlt", "ntl", "nlt", "ndr", "nul", "nud", "nud", "nur", "nul", "ect", "ect"},
+            {"ect", "ect", "nud", "ndr", "ntd", "nul", "nur", "ntr", "ndr", "nul", "ndn", "nud", "ndn", "nud", "nur", "nlr", "glt", "ect", "ect"},
+            {"ect", "ect", "nud", "nud", "ndr", "ntu", "ndl", "nur", "ntr", "ndr", "ntr", "nur", "ntd", "ncr", "nlr", "ndl", "ndn", "ect", "ect"},
+            {"ect", "ect", "ntl", "ntd", "nul", "nud", "nur", "ndl", "nur", "ntr", "nur", "ndl", "ndn", "nud", "ndr", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nur", "nlr", "nlr", "nul", "nrt", "ntd", "nlt", "nur", "nlr", "nul", "nur", "ntd", "ntd", "nlr", "nul", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"2", "4", "c", "8", "53"}
     };
-    public static final int[][] TEMPLATE_5x5 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {0, 0, 0, 100, 100},
-            {R.raw.overworld}
+    public static final String[][] LEVEL_100 = {
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ndr", "ntu", "nlt", "ndr", "nlr", "nlr", "nlr", "nlr", "ndl", "nrt", "nlr", "ndl", "ndr", "nlr", "nlr", "nlr", "ntu", "nlr", "nlr", "nlt", "ect", "ect"},
+            {"ect", "ect", "nud", "nup", "ndr", "nul", "ndr", "ntu", "nlr", "ndl", "ntl", "nlr", "ndl", "nud", "nur", "nlr", "ndl", "ndn", "nur", "ndl", "ndr", "nur", "ect", "ect"},
+            {"ect", "ect", "nud", "ndr", "nul", "nrt", "nul", "nur", "ndl", "nud", "nur", "ndl", "nup", "nur", "ndl", "ndn", "nur", "ntr", "ndn", "nur", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nlr", "nlr", "nlr", "nlr", "nul", "nud", "ndr", "ntr", "ndr", "nlr", "nul", "ntl", "nlt", "nur", "ntd", "ndl", "ndn", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "ndr", "nlr", "nlr", "ntu", "nlr", "nlt", "nud", "nud", "nup", "nur", "nlr", "ndl", "nur", "nlr", "ntu", "nlr", "ntd", "nul", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nlr", "ndl", "nur", "nlr", "nlr", "nul", "nud", "ndr", "nlr", "ndl", "nur", "nlr", "ndl", "nud", "ndn", "ndr", "nlr", "nul", "ect", "ect"},
+            {"ect", "ect", "ntl", "ntu", "ndl", "nur", "nlr", "nlr", "ndl", "ndn", "nud", "ntl", "nlt", "nur", "nlr", "ndl", "nud", "nur", "ntr", "nur", "nlr", "ndl", "ect", "ect"},
+            {"ect", "ect", "nud", "nud", "nup", "ndr", "nlr", "nlr", "nul", "nud", "nur", "nul", "ndr", "nlr", "ndl", "nud", "nud", "nrt", "ntd", "nlr", "nlt", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nlr", "nul", "ndr", "nlr", "nlr", "ntr", "ndr", "nlr", "nul", "ndn", "nur", "ntr", "nur", "nlr", "nlr", "nlr", "ndl", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "ndr", "ndl", "ndr", "nul", "nrt", "ndl", "nud", "nur", "nlr", "ndl", "nur", "ndl", "nur", "nlr", "nlr", "nlr", "ndl", "nur", "ntr", "ect", "ect"},
+            {"ect", "ect", "nud", "nup", "ntl", "nul", "nrt", "ntu", "ntr", "nur", "ntu", "ndl", "nur", "ndl", "ntl", "ndl", "ndr", "nlr", "ndr", "nud", "ndr", "nul", "ect", "ect"},
+            {"ect", "ect", "nur", "ndl", "nur", "nlr", "nlr", "nul", "nur", "ndl", "nud", "nur", "ndl", "nud", "nup", "nur", "ntd", "ndl", "nur", "nul", "nud", "ndn", "ect", "ect"},
+            {"ect", "ect", "ndn", "nud", "ndr", "ndl", "ndr", "ndl", "nrt", "nul", "nud", "ndr", "nul", "nur", "nlr", "nlr", "ndl", "nur", "nlr", "ndl", "nud", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "nul", "nur", "nul", "nud", "ndr", "nlr", "nul", "nud", "ndr", "nlt", "ndr", "nlr", "nul", "nrt", "ndl", "nud", "nur", "ntr", "ect", "ect"},
+            {"ect", "ect", "ntl", "ntu", "nlr", "nlt", "ndr", "nul", "nud", "ndr", "ndl", "ntl", "nul", "ndr", "nul", "nrt", "ntu", "ndl", "nud", "nud", "ndr", "nul", "ect", "ect"},
+            {"ect", "ect", "nud", "nur", "ndl", "ndr", "nul", "ndr", "nul", "nud", "nur", "nul", "ndr", "nul", "nrt", "ntu", "nul", "nur", "nul", "nud", "nud", "ndn", "ect", "ect"},
+            {"ect", "ect", "nur", "ndl", "nud", "nud", "ndr", "ntd", "ndl", "nud", "ndn", "ndr", "nul", "ndr", "ndl", "nur", "ndl", "ndr", "ndl", "nud", "nud", "nud", "ect", "ect"},
+            {"ect", "ect", "ndr", "nul", "nur", "nul", "nud", "ndr", "nul", "nur", "ntr", "nur", "nlr", "nul", "nur", "ndl", "nur", "nul", "nur", "nul", "nud", "nud", "ect", "ect"},
+            {"ect", "ect", "nud", "ndr", "nlr", "ndl", "nup", "nud", "ndr", "nlt", "nud", "nrt", "ntu", "ndl", "ndr", "nul", "ndr", "nlr", "nlr", "ndl", "nur", "ntr", "ect", "ect"},
+            {"ect", "ect", "nur", "nul", "nrt", "ntd", "nlr", "nul", "nur", "nlr", "ntd", "nlr", "gul", "nup", "nur", "nlr", "ntd", "nlr", "nlt", "nur", "nlr", "nul", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
+            {"11", "2", "c", "20", "224"},
     };
-    public static final int[][] TEMPLATE_10x10 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {0, 0, 0, 100, 100},
-            {R.raw.overworld}
+    public static final String[][][] LEVEL = {
+            LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8, LEVEL_9, LEVEL_10, LEVEL_100
     };
-    public static final int[][] TEMPLATE_20x20 = {
-            {R.drawable.fetl, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetp, R.drawable.fetr},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.felt, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fect, R.drawable.fert},
-            {R.drawable.febl, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febt, R.drawable.febr},
-            {0, 0, 0, 100, 100},
-            {R.raw.overworld}
+    public static final String[][] TEMPLATE_3x3 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"0", "0", "f", "100", "100"}
+    };
+    public static final String[][] TEMPLATE_5x5 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"0", "0", "f", "100", "100"}
+    };
+    public static final String[][] TEMPLATE_10x10 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"0", "0", "f", "100", "100"}
+    };
+    public static final String[][] TEMPLATE_20x20 = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"0", "0", "f", "100", "100"},
     };
 }
