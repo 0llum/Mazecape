@@ -5,25 +5,33 @@ public class LevelArrays {
             "ndn", "ndl", "ntu", "ndr", "nud", "ntr", "ntl", "ncr",
             "fdn", "fdl", "ftu", "fdr", "fud", "ftr", "ftl", "fcr",
             "sdn", "sdl", "stu", "sdr", "sud", "str", "stl", "scr",
-            "pdn", "pdl", "ptu", "pdr", "pud", "ptr", "ptl", "pcr"
+            "pdn", "pdl", "ptu", "pdr", "pud", "ptr", "ptl", "pcr",
+            "hdn", "hdl", "htu", "hdr", "hud", "htr", "htl", "hcr",
+            "bud"
     };
     public static final String[] MOVE_LEFT = {
             "ndl", "ntu", "nlt", "nlr", "ntr", "nul", "ntd", "ncr",
             "fdl", "ftu", "flt", "flr", "ftr", "ful", "ftd", "fcr",
             "sdl", "stu", "slt", "slr", "str", "sul", "std", "scr",
-            "pdl", "ptu", "plt", "plr", "ptr", "pul", "ptd", "pcr"
+            "pdl", "ptu", "plt", "plr", "ptr", "pul", "ptd", "pcr",
+            "hdl", "htu", "hlt", "hlr", "htr", "hul", "htd", "hcr",
+            "blr"
     };
     public static final String[] MOVE_RIGHT = {
             "ntu", "ndr", "nlr", "nrt", "ntl", "ntd", "nur", "ncr",
             "ftu", "fdr", "flr", "frt", "ftl", "ftd", "fur", "fcr",
             "stu", "sdr", "slr", "srt", "stl", "std", "sur", "scr",
-            "ptu", "pdr", "plr", "prt", "ptl", "ptd", "pur", "pcr"
+            "ptu", "pdr", "plr", "prt", "ptl", "ptd", "pur", "pcr",
+            "htu", "hdr", "hlr", "hrt", "htl", "htd", "hur", "hcr",
+            "blr"
     };
     public static final String[] MOVE_UP = {
             "nud", "ntr", "ntl", "nul", "ntd", "nup", "nur", "ncr",
             "fud", "ftr", "ftl", "ful", "ftd", "fup", "fur", "fcr",
             "sud", "str", "stl", "sul", "std", "sup", "sur", "scr",
-            "pud", "ptr", "ptl", "pul", "ptd", "pup", "pur", "pcr"
+            "pud", "ptr", "ptl", "pul", "ptd", "pup", "pur", "pcr",
+            "hud", "htr", "htl", "hul", "htd", "huh", "hur", "hcr",
+            "bud"
     };
     public static final String[] GOAL = {
             "gdn", "gdl", "gtu", "gdr", "glt", "glr", "grt", "gud", "gtr", "gtl", "gup", "gul", "gtd", "gur", "gcr"
@@ -43,13 +51,31 @@ public class LevelArrays {
     public static final String[] NORMAL = {
             "ndn", "ndl", "ntu", "ndr", "nlt", "nlr", "nrt", "nud", "ntr", "ntl", "nup", "nul", "ntd", "nur", "ncr"
     };
+    public static final String[] HOLES = {
+            "hdh", "hdl", "htu", "hdr", "hlt", "hlr", "hrt", "hud", "htr", "htl", "hup", "hul", "htd", "hur", "hcr"
+    };
+    public static final String[] TRAP = {
+            "tdt", "tdl", "ttu", "tdr", "tlt", "tlr", "trt", "tud", "ttr", "ttl", "tup", "tul", "ttd", "tur", "tcr"
+    };
     public static final String[] EDGES = {
             "etl", "etp", "etr", "elt", "ect", "ert", "ebl", "ebt", "ebr"
+    };
+    public static final String[][] LEVEL_A = {
+            {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"elt", "ect", "gdn", "ndr", "nlt", "wdn", "ndn", "ect", "ert"},
+            {"elt", "ect", "nud", "nud", "wdr", "wul", "nud", "ect", "ert"},
+            {"elt", "ect", "ntl", "ntd", "blr", "nlr", "ntr", "ect", "ert"},
+            {"elt", "ect", "nup", "wdr", "wul", "ndr", "nul", "ect", "ert"},
+            {"elt", "ect", "wrt", "wul", "nrt", "ntd", "nlt", "ect", "ert"},
+            {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
+            {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
+            {"6", "6", "f", "100", "100"}
     };
     public static final String[][] LEVEL_0 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
-            {"elt", "ect", "nrt", "nlr", "glt", "ect", "ert"},
+            {"elt", "ect", "nrt", "tlr", "glt", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
             {"2", "2", "f", "100", "2"}
@@ -57,7 +83,7 @@ public class LevelArrays {
     public static final String[][] LEVEL_1 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
-            {"elt", "ect", "prt", "nlr", "nlr", "nlr", "plr", "glt", "ect", "ert"},
+            {"elt", "ect", "prt", "hlr", "nlr", "tlr", "plr", "glt", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
             {"4", "2", "f", "100", "3"}
@@ -216,7 +242,7 @@ public class LevelArrays {
             {"11", "2", "c", "20", "224"},
     };
     public static final String[][][] LEVEL = {
-            LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8, LEVEL_9, LEVEL_10, LEVEL_100
+            LEVEL_A, LEVEL_0, LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4, LEVEL_5, LEVEL_6, LEVEL_7, LEVEL_8, LEVEL_9, LEVEL_10, LEVEL_100
     };
     public static final String[][] TEMPLATE_3x3 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},

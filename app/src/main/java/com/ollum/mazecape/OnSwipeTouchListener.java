@@ -1,7 +1,6 @@
 package com.ollum.mazecape;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -40,8 +39,6 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            Log.d("debug", "x: " + e.getX());
-            Log.d("debug", "y: " + e.getY());
 
             if ((!Level.swipe) && e.getX() > Level.width * 2 / 3 && e.getY() < Level.height - Level.width / 3 && e.getY() > Level.height - Level.width * 2 / 3) {
                 onSwipeLeft();

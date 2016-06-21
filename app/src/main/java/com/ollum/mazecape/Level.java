@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +40,7 @@ public class Level extends AppCompatActivity {
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
     GridView gridViewLevel, gridViewPlayer, gridViewMap;
+    ImageView needle;
     TextView title, stepCounter, timeCounter, posX, posY;
     Button resetLevel, cheatButton;
     ToggleButton controlButton;
@@ -62,6 +62,8 @@ public class Level extends AppCompatActivity {
     int score = 0;
     Point position;
     ArrayList<Point> stepsMade;
+    ArrayList<Point> discovered;
+    boolean isAnimating = false;
     boolean stopTime = false;
     boolean allowInput = true;
     boolean hasSword = false;
@@ -123,6 +125,8 @@ public class Level extends AppCompatActivity {
 
         gridViewMap = (GridView) findViewById(R.id.gridViewMap);
 
+        needle = (ImageView) findViewById(R.id.needle);
+
         title = (TextView) findViewById(R.id.title);
         title.setText("Level " + (level + 1));
 
@@ -139,16 +143,19 @@ public class Level extends AppCompatActivity {
         posY.setText("posY: " + y);
 
         stepsMade = new ArrayList<>();
+        discovered = new ArrayList<>();
         position = new Point(x, y);
-        stepsMade.add(new Point(x - 1, y - 1));
-        stepsMade.add(new Point(x, y - 1));
-        stepsMade.add(new Point(x + 1, y - 1));
-        stepsMade.add(new Point(x - 1, y));
+        discovered.add(new Point(x - 1, y - 1));
+        discovered.add(new Point(x, y - 1));
+        discovered.add(new Point(x + 1, y - 1));
+        discovered.add(new Point(x - 1, y));
+        discovered.add(position);
+        discovered.add(new Point(x + 1, y));
+        discovered.add(new Point(x - 1, y + 1));
+        discovered.add(new Point(x, y + 1));
+        discovered.add(new Point(x + 1, y + 1));
+
         stepsMade.add(position);
-        stepsMade.add(new Point(x + 1, y));
-        stepsMade.add(new Point(x - 1, y + 1));
-        stepsMade.add(new Point(x, y + 1));
-        stepsMade.add(new Point(x + 1, y + 1));
 
         resetLevel = (Button) findViewById(R.id.resetLevel);
 
@@ -165,22 +172,22 @@ public class Level extends AppCompatActivity {
                         setMargins(gridViewLevel, 0, 0, 0, width / 3);
                         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
 
-                        stepsMade.add(new Point(x - 2, y - 2));
-                        stepsMade.add(new Point(x - 1, y - 2));
-                        stepsMade.add(new Point(x, y - 2));
-                        stepsMade.add(new Point(x + 1, y - 2));
-                        stepsMade.add(new Point(x + 2, y - 2));
-                        stepsMade.add(new Point(x - 2, y - 1));
-                        stepsMade.add(new Point(x + 2, y - 1));
-                        stepsMade.add(new Point(x - 2, y));
-                        stepsMade.add(new Point(x + 2, y));
-                        stepsMade.add(new Point(x - 2, y + 1));
-                        stepsMade.add(new Point(x + 2, y + 1));
-                        stepsMade.add(new Point(x - 2, y + 2));
-                        stepsMade.add(new Point(x - 1, y + 2));
-                        stepsMade.add(new Point(x, y + 2));
-                        stepsMade.add(new Point(x + 1, y + 2));
-                        stepsMade.add(new Point(x + 2, y + 2));
+                        discovered.add(new Point(x - 2, y - 2));
+                        discovered.add(new Point(x - 1, y - 2));
+                        discovered.add(new Point(x, y - 2));
+                        discovered.add(new Point(x + 1, y - 2));
+                        discovered.add(new Point(x + 2, y - 2));
+                        discovered.add(new Point(x - 2, y - 1));
+                        discovered.add(new Point(x + 2, y - 1));
+                        discovered.add(new Point(x - 2, y));
+                        discovered.add(new Point(x + 2, y));
+                        discovered.add(new Point(x - 2, y + 1));
+                        discovered.add(new Point(x + 2, y + 1));
+                        discovered.add(new Point(x - 2, y + 2));
+                        discovered.add(new Point(x - 1, y + 2));
+                        discovered.add(new Point(x, y + 2));
+                        discovered.add(new Point(x + 1, y + 2));
+                        discovered.add(new Point(x + 2, y + 2));
 
                         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
 
@@ -305,21 +312,23 @@ public class Level extends AppCompatActivity {
         });
 
         loadGame();
+        createHandler();
     }
 
     public void move() {
         stepCount++;
         position = new Point(x, y);
 
-        stepsMade.add(new Point(x - 1, y - 1));
-        stepsMade.add(new Point(x, y - 1));
-        stepsMade.add(new Point(x + 1, y - 1));
-        stepsMade.add(new Point(x - 1, y));
+        discovered.add(new Point(x - 1, y - 1));
+        discovered.add(new Point(x, y - 1));
+        discovered.add(new Point(x + 1, y - 1));
+        discovered.add(new Point(x - 1, y));
+        discovered.add(position);
+        discovered.add(new Point(x + 1, y));
+        discovered.add(new Point(x - 1, y + 1));
+        discovered.add(new Point(x, y + 1));
+        discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
-        stepsMade.add(new Point(x + 1, y));
-        stepsMade.add(new Point(x - 1, y + 1));
-        stepsMade.add(new Point(x, y + 1));
-        stepsMade.add(new Point(x + 1, y + 1));
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
@@ -336,12 +345,12 @@ public class Level extends AppCompatActivity {
         super.onResume();
 
         try {
+            bgm.setVolume(0.5f, 0.5f);
             bgm.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
         stopTime = false;
-        createHandler();
     }
 
     @Override
@@ -401,7 +410,6 @@ public class Level extends AppCompatActivity {
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             darkness = 0;
             gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
-            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.FIRE, currentLevel[y][x])], "drawable", getPackageName())));
         }
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             fire.setVolume(1, 1);
@@ -433,9 +441,9 @@ public class Level extends AppCompatActivity {
 
     public void checkSword() {
         if (contains(LevelArrays.SWORD, currentLevel[y][x])) {
-            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])], "drawable", getPackageName())));
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])];
             hasSword = true;
+            playSound(R.raw.sword);
         }
         if (hasSword) {
             imgSword.setVisibility(View.VISIBLE);
@@ -449,24 +457,20 @@ public class Level extends AppCompatActivity {
             for (int i = 0; i < currentLevel.length - 1; i++) {
                 for (int k = 0; k < currentLevel[i].length; k++) {
                     if (contains(LevelArrays.PORTAL, currentLevel[i][k]) && !(i == y && k == x)) {
-                        Log.d("debug", "y = " + y);
-                        Log.d("debug", "x = " + x);
-                        Log.d("debug", "i = " + i);
-                        Log.d("debug", "k = " + k);
                         x = k;
                         y = i;
                         position = new Point(x, y);
-                        stepsMade.add(new Point(x - 1, y - 1));
-                        stepsMade.add(new Point(x, y - 1));
-                        stepsMade.add(new Point(x + 1, y - 1));
-                        stepsMade.add(new Point(x - 1, y));
+                        discovered.add(new Point(x - 1, y - 1));
+                        discovered.add(new Point(x, y - 1));
+                        discovered.add(new Point(x + 1, y - 1));
+                        discovered.add(new Point(x - 1, y));
+                        discovered.add(position);
+                        discovered.add(new Point(x + 1, y));
+                        discovered.add(new Point(x - 1, y + 1));
+                        discovered.add(new Point(x, y + 1));
+                        discovered.add(new Point(x + 1, y + 1));
                         stepsMade.add(position);
-                        stepsMade.add(new Point(x + 1, y));
-                        stepsMade.add(new Point(x - 1, y + 1));
-                        stepsMade.add(new Point(x, y + 1));
-                        stepsMade.add(new Point(x + 1, y + 1));
-                        gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
-                        gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                        playSound(R.raw.portal);
                         return;
                     }
                 }
@@ -479,13 +483,18 @@ public class Level extends AppCompatActivity {
             if (!hasSword) {
                 gameOver();
             } else {
-                gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), getResources().getIdentifier(scene + LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])], "drawable", getPackageName())));
                 currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])];
             }
         }
     }
 
-    public void checkDeath() {
+    public void checkTrap() {
+        if (contains(LevelArrays.TRAP, currentLevel[y][x])) {
+            gameOver();
+        }
+    }
+
+    public void checkDarkness() {
         if (darkness > 14) {
             gameOver();
         }
@@ -494,15 +503,20 @@ public class Level extends AppCompatActivity {
     public void gameOver() {
         stopTime = true;
 
-        if (bgm.isPlaying()) {
-            bgm.stop();
-            bgm.release();
+        try {
+            if (bgm.isPlaying()) {
+                bgm.stop();
+                bgm.release();
+            }
+
+            if (fire.isPlaying()) {
+                fire.stop();
+                fire.release();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        if (fire.isPlaying()) {
-            fire.stop();
-            fire.release();
-        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
         builder.setTitle("You died!");
@@ -592,7 +606,29 @@ public class Level extends AppCompatActivity {
                 }
             });
             builder.show();
-        } else checkDeath();
+        } else checkDarkness();
+    }
+
+    public void setNeedle() {
+        int goalX = 0;
+        int goalY = 0;
+        for (int i = 0; i < currentLevel.length - 1; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(LevelArrays.GOAL, currentLevel[i][k])) {
+                    goalX = k;
+                    goalY = i;
+                }
+            }
+        }
+        float y = goalY - position.y;
+        float x = goalX - position.x;
+        float angleRad = (float) Math.atan2(y, x);
+        float angleDeg = (float) Math.toDegrees(angleRad);
+        float angle = angleDeg + 90;
+
+        if (!(y == 0 && x == 0)) {
+            needle.setRotation(angle);
+        }
     }
 
     public void playSound(int sound) {
@@ -614,24 +650,27 @@ public class Level extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 allowInput = false;
+                isAnimating = true;
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
-                animation.setDuration(1);
-                gridViewLevel.startAnimation(animation);
-                gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
-                gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                checkTrap();
                 checkPortal();
                 checkMonster();
                 checkFire();
                 checkSword();
                 checkWin();
-                if (hasSword) {
 
-                }
+                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
+                animation.setDuration(1);
+                gridViewLevel.startAnimation(animation);
+                gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
+                gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                setNeedle();
+
                 allowInput = true;
+                isAnimating = false;
             }
 
             @Override
@@ -669,6 +708,7 @@ public class Level extends AppCompatActivity {
 
     public void reset() {
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
+        discovered.clear();
         stepsMade.clear();
         darkness = 0;
         stepCount = 0;
@@ -679,19 +719,20 @@ public class Level extends AppCompatActivity {
         y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
         scene = currentLevel[currentLevel.length - 1][2];
         position = new Point(x, y);
+        discovered.add(new Point(x - 1, y - 1));
+        discovered.add(new Point(x, y - 1));
+        discovered.add(new Point(x + 1, y - 1));
+        discovered.add(new Point(x - 1, y));
+        discovered.add(position);
+        discovered.add(new Point(x + 1, y));
+        discovered.add(new Point(x - 1, y + 1));
+        discovered.add(new Point(x, y + 1));
+        discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
-        stepsMade.add(new Point(x - 1, y - 1));
-        stepsMade.add(new Point(x, y - 1));
-        stepsMade.add(new Point(x + 1, y - 1));
-        stepsMade.add(new Point(x - 1, y));
-        stepsMade.add(position);
-        stepsMade.add(new Point(x + 1, y));
-        stepsMade.add(new Point(x - 1, y + 1));
-        stepsMade.add(new Point(x, y + 1));
-        stepsMade.add(new Point(x + 1, y + 1));
         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
         gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
+        setNeedle();
         title.setText("Level " + (level + 1));
         stepCounter.setText("Steps: " + stepCount);
         timeCounter.setText("" + time);
@@ -710,12 +751,13 @@ public class Level extends AppCompatActivity {
         }
 
         bgm.setLooping(true);
+        bgm.setVolume(0.5f, 0.5f);
         bgm.start();
 
         fire = MediaPlayer.create(getApplicationContext(), R.raw.campfire);
         fire.setLooping(true);
 
-        createHandler();
+        //createHandler();
     }
 
     public void resetLevel(View v) {
@@ -768,10 +810,34 @@ public class Level extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (stopTime == false) {
+                boolean containsTrap = false;
+                if (!stopTime) {
                     time += 1;
                     timeCounter.setText("" + time);
                     handler.postDelayed(this, 1000);
+
+                    //Time-Based changes like traps
+                    for (int i = 0; i < currentLevel.length - 1; i++) {
+                        for (int k = 0; k < currentLevel[i].length; k++) {
+                            if (contains(LevelArrays.TRAP, currentLevel[i][k])) {
+                                currentLevel[i][k] = LevelArrays.HOLES[getIndex(LevelArrays.TRAP, currentLevel[i][k])];
+                                playSound(R.raw.trap_deactivate);
+                                containsTrap = true;
+                            } else if (contains(LevelArrays.HOLES, currentLevel[i][k])) {
+                                currentLevel[i][k] = LevelArrays.TRAP[getIndex(LevelArrays.HOLES, currentLevel[i][k])];
+                                playSound(R.raw.trap_activate);
+                                containsTrap = true;
+                            }
+                        }
+                    }
+
+                    if (!isAnimating && containsTrap) {
+                        gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
+                        gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                    }
+                    checkTrap();
+                } else {
+                    createHandler();
                 }
             }
         };
@@ -896,35 +962,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 3))) {
                 items.add(new Item("1-1", getResources().getIdentifier("m" + currentLevel[y - 3][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y - 3))) {
+                items.add(new Item("1-1", getResources().getIdentifier("m" + currentLevel[y - 3][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 3))) {
+                items.add(new Item("1-2", getResources().getIdentifier("m" + currentLevel[y - 3][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y - 3))) {
                 items.add(new Item("1-2", getResources().getIdentifier("m" + currentLevel[y - 3][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 3))) {
                 items.add(new Item("1-3", getResources().getIdentifier("m" + currentLevel[y - 3][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y - 3))) {
+                items.add(new Item("1-3", getResources().getIdentifier("m" + currentLevel[y - 3][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 3))) {
+                items.add(new Item("1-4", getResources().getIdentifier("m" + currentLevel[y - 3][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y - 3))) {
                 items.add(new Item("1-4", getResources().getIdentifier("m" + currentLevel[y - 3][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 3))) {
                 items.add(new Item("1-5", getResources().getIdentifier("m" + currentLevel[y - 3][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y - 3))) {
+                items.add(new Item("1-5", getResources().getIdentifier("m" + currentLevel[y - 3][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 3))) {
                 items.add(new Item("1-6", getResources().getIdentifier("m" + currentLevel[y - 3][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y - 3))) {
+                items.add(new Item("1-6", getResources().getIdentifier("m" + currentLevel[y - 3][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 3))) {
+                items.add(new Item("1-7", getResources().getIdentifier("m" + currentLevel[y - 3][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y - 3))) {
                 items.add(new Item("1-7", getResources().getIdentifier("m" + currentLevel[y - 3][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("1-7", R.drawable.blank));
@@ -932,35 +1012,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 2))) {
                 items.add(new Item("2-1", getResources().getIdentifier("m" + currentLevel[y - 2][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y - 2))) {
+                items.add(new Item("2-1", getResources().getIdentifier("m" + currentLevel[y - 2][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 2))) {
+                items.add(new Item("2-2", getResources().getIdentifier("m" + currentLevel[y - 2][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y - 2))) {
                 items.add(new Item("2-2", getResources().getIdentifier("m" + currentLevel[y - 2][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 2))) {
                 items.add(new Item("2-3", getResources().getIdentifier("m" + currentLevel[y - 2][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y - 2))) {
+                items.add(new Item("2-3", getResources().getIdentifier("m" + currentLevel[y - 2][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 2))) {
+                items.add(new Item("2-4", getResources().getIdentifier("m" + currentLevel[y - 2][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y - 2))) {
                 items.add(new Item("2-4", getResources().getIdentifier("m" + currentLevel[y - 2][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 2))) {
                 items.add(new Item("2-5", getResources().getIdentifier("m" + currentLevel[y - 2][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y - 2))) {
+                items.add(new Item("2-5", getResources().getIdentifier("m" + currentLevel[y - 2][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 2))) {
                 items.add(new Item("2-6", getResources().getIdentifier("m" + currentLevel[y - 2][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y - 2))) {
+                items.add(new Item("2-6", getResources().getIdentifier("m" + currentLevel[y - 2][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 2))) {
+                items.add(new Item("2-7", getResources().getIdentifier("m" + currentLevel[y - 2][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y - 2))) {
                 items.add(new Item("2-7", getResources().getIdentifier("m" + currentLevel[y - 2][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("2-7", R.drawable.blank));
@@ -968,35 +1062,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y - 1))) {
                 items.add(new Item("3-1", getResources().getIdentifier("m" + currentLevel[y - 1][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y - 1))) {
+                items.add(new Item("3-1", getResources().getIdentifier("m" + currentLevel[y - 1][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y - 1))) {
+                items.add(new Item("3-2", getResources().getIdentifier("m" + currentLevel[y - 1][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y - 1))) {
                 items.add(new Item("3-2", getResources().getIdentifier("m" + currentLevel[y - 1][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y - 1))) {
                 items.add(new Item("3-3", getResources().getIdentifier("m" + currentLevel[y - 1][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y - 1))) {
+                items.add(new Item("3-3", getResources().getIdentifier("m" + currentLevel[y - 1][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y - 1))) {
+                items.add(new Item("3-4", getResources().getIdentifier("m" + currentLevel[y - 1][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y - 1))) {
                 items.add(new Item("3-4", getResources().getIdentifier("m" + currentLevel[y - 1][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y - 1))) {
                 items.add(new Item("3-5", getResources().getIdentifier("m" + currentLevel[y - 1][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y - 1))) {
+                items.add(new Item("3-5", getResources().getIdentifier("m" + currentLevel[y - 1][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y - 1))) {
                 items.add(new Item("3-6", getResources().getIdentifier("m" + currentLevel[y - 1][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y - 1))) {
+                items.add(new Item("3-6", getResources().getIdentifier("m" + currentLevel[y - 1][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y - 1))) {
+                items.add(new Item("3-7", getResources().getIdentifier("m" + currentLevel[y - 1][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y - 1))) {
                 items.add(new Item("3-7", getResources().getIdentifier("m" + currentLevel[y - 1][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("3-7", R.drawable.blank));
@@ -1004,35 +1112,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y))) {
                 items.add(new Item("4-1", getResources().getIdentifier("m" + currentLevel[y][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y))) {
+                items.add(new Item("4-1", getResources().getIdentifier("m" + currentLevel[y][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y))) {
+                items.add(new Item("4-2", getResources().getIdentifier("m" + currentLevel[y][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y))) {
                 items.add(new Item("4-2", getResources().getIdentifier("m" + currentLevel[y][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y))) {
                 items.add(new Item("4-3", getResources().getIdentifier("m" + currentLevel[y][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y))) {
+                items.add(new Item("4-3", getResources().getIdentifier("m" + currentLevel[y][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y))) {
+                items.add(new Item("4-4", getResources().getIdentifier("m" + currentLevel[y][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y))) {
                 items.add(new Item("4-4", getResources().getIdentifier("m" + currentLevel[y][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y))) {
                 items.add(new Item("4-5", getResources().getIdentifier("m" + currentLevel[y][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y))) {
+                items.add(new Item("4-5", getResources().getIdentifier("m" + currentLevel[y][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y))) {
                 items.add(new Item("4-6", getResources().getIdentifier("m" + currentLevel[y][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y))) {
+                items.add(new Item("4-6", getResources().getIdentifier("m" + currentLevel[y][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y))) {
+                items.add(new Item("4-7", getResources().getIdentifier("m" + currentLevel[y][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y))) {
                 items.add(new Item("4-7", getResources().getIdentifier("m" + currentLevel[y][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("4-7", R.drawable.blank));
@@ -1040,35 +1162,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 1))) {
                 items.add(new Item("5-1", getResources().getIdentifier("m" + currentLevel[y + 1][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y + 1))) {
+                items.add(new Item("5-1", getResources().getIdentifier("m" + currentLevel[y + 1][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 1))) {
+                items.add(new Item("5-2", getResources().getIdentifier("m" + currentLevel[y + 1][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y + 1))) {
                 items.add(new Item("5-2", getResources().getIdentifier("m" + currentLevel[y + 1][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 1))) {
                 items.add(new Item("5-3", getResources().getIdentifier("m" + currentLevel[y + 1][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y + 1))) {
+                items.add(new Item("5-3", getResources().getIdentifier("m" + currentLevel[y + 1][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 1))) {
+                items.add(new Item("5-4", getResources().getIdentifier("m" + currentLevel[y + 1][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y + 1))) {
                 items.add(new Item("5-4", getResources().getIdentifier("m" + currentLevel[y + 1][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 1))) {
                 items.add(new Item("5-5", getResources().getIdentifier("m" + currentLevel[y + 1][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y + 1))) {
+                items.add(new Item("5-5", getResources().getIdentifier("m" + currentLevel[y + 1][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 1))) {
                 items.add(new Item("5-6", getResources().getIdentifier("m" + currentLevel[y + 1][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y + 1))) {
+                items.add(new Item("5-6", getResources().getIdentifier("m" + currentLevel[y + 1][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 1))) {
+                items.add(new Item("5-7", getResources().getIdentifier("m" + currentLevel[y + 1][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y + 1))) {
                 items.add(new Item("5-7", getResources().getIdentifier("m" + currentLevel[y + 1][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("5-7", R.drawable.blank));
@@ -1076,35 +1212,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 2))) {
                 items.add(new Item("6-1", getResources().getIdentifier("m" + currentLevel[y + 2][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y + 2))) {
+                items.add(new Item("6-1", getResources().getIdentifier("m" + currentLevel[y + 2][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 2))) {
+                items.add(new Item("6-2", getResources().getIdentifier("m" + currentLevel[y + 2][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y + 2))) {
                 items.add(new Item("6-2", getResources().getIdentifier("m" + currentLevel[y + 2][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 2))) {
                 items.add(new Item("6-3", getResources().getIdentifier("m" + currentLevel[y + 2][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y + 2))) {
+                items.add(new Item("6-3", getResources().getIdentifier("m" + currentLevel[y + 2][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 2))) {
+                items.add(new Item("6-4", getResources().getIdentifier("m" + currentLevel[y + 2][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y + 2))) {
                 items.add(new Item("6-4", getResources().getIdentifier("m" + currentLevel[y + 2][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 2))) {
                 items.add(new Item("6-5", getResources().getIdentifier("m" + currentLevel[y + 2][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y + 2))) {
+                items.add(new Item("6-5", getResources().getIdentifier("m" + currentLevel[y + 2][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 2))) {
                 items.add(new Item("6-6", getResources().getIdentifier("m" + currentLevel[y + 2][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y + 2))) {
+                items.add(new Item("6-6", getResources().getIdentifier("m" + currentLevel[y + 2][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 2))) {
+                items.add(new Item("6-7", getResources().getIdentifier("m" + currentLevel[y + 2][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y + 2))) {
                 items.add(new Item("6-7", getResources().getIdentifier("m" + currentLevel[y + 2][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("6-7", R.drawable.blank));
@@ -1112,35 +1262,49 @@ public class Level extends AppCompatActivity {
 
             if (stepsMade.contains(new Point(position.x - 3, position.y + 3))) {
                 items.add(new Item("7-1", getResources().getIdentifier("m" + currentLevel[y + 3][x - 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 3, position.y + 3))) {
+                items.add(new Item("7-1", getResources().getIdentifier("m" + currentLevel[y + 3][x - 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-1", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 2, position.y + 3))) {
+                items.add(new Item("7-2", getResources().getIdentifier("m" + currentLevel[y + 3][x - 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 2, position.y + 3))) {
                 items.add(new Item("7-2", getResources().getIdentifier("m" + currentLevel[y + 3][x - 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-2", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x - 1, position.y + 3))) {
                 items.add(new Item("7-3", getResources().getIdentifier("m" + currentLevel[y + 3][x - 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x - 1, position.y + 3))) {
+                items.add(new Item("7-3", getResources().getIdentifier("m" + currentLevel[y + 3][x - 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-3", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x, position.y + 3))) {
+                items.add(new Item("7-4", getResources().getIdentifier("m" + currentLevel[y + 3][x], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x, position.y + 3))) {
                 items.add(new Item("7-4", getResources().getIdentifier("m" + currentLevel[y + 3][x], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-4", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 1, position.y + 3))) {
                 items.add(new Item("7-5", getResources().getIdentifier("m" + currentLevel[y + 3][x + 1], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 1, position.y + 3))) {
+                items.add(new Item("7-5", getResources().getIdentifier("m" + currentLevel[y + 3][x + 1], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-5", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 2, position.y + 3))) {
                 items.add(new Item("7-6", getResources().getIdentifier("m" + currentLevel[y + 3][x + 2], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 2, position.y + 3))) {
+                items.add(new Item("7-6", getResources().getIdentifier("m" + currentLevel[y + 3][x + 2], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-6", R.drawable.blank));
             }
             if (stepsMade.contains(new Point(position.x + 3, position.y + 3))) {
+                items.add(new Item("7-7", getResources().getIdentifier("m" + currentLevel[y + 3][x + 3], "drawable", getPackageName())));
+            } else if (discovered.contains(new Point(position.x + 3, position.y + 3))) {
                 items.add(new Item("7-7", getResources().getIdentifier("m" + currentLevel[y + 3][x + 3], "drawable", getPackageName())));
             } else {
                 items.add(new Item("7-7", R.drawable.blank));

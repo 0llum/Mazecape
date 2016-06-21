@@ -59,10 +59,11 @@
 
         <GridView
             android:id="@+id/gridViewMap"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/title"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="bottom"
             android:layout_marginTop="20dp"
             android:background="@drawable/map"
@@ -74,9 +75,10 @@
             android:id="@+id/minimapPosition"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="118dp"
+            android:layout_alignLeft="@+id/gridViewMap"
+            android:layout_alignTop="@+id/gridViewMap"
+            android:layout_marginLeft="72dp"
+            android:layout_marginTop="72dp"
             android:src="@drawable/red_dot"/>
 
         <TextView
@@ -182,6 +184,24 @@
             android:layout_alignStart="@+id/gridViewMap"
             android:layout_below="@+id/gridViewMap"
             android:src="@drawable/sword"/>
+
+        <ImageView
+            android:id="@+id/compass"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/title"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/compass"/>
+
+        <ImageView
+            android:id="@+id/needle"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/compass"
+            android:src="@drawable/needle"/>
 
     </RelativeLayout>
 
