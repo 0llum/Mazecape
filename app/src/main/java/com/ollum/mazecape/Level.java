@@ -55,6 +55,7 @@ public class Level extends AppCompatActivity {
     int x;
     int y;
     String scene;
+    int stars = 0;
     int darkness = 0;
     int stepCount = 0;
     int time = 0;
@@ -332,7 +333,7 @@ public class Level extends AppCompatActivity {
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
-        playSound(R.raw.sand1);
+        playSound(R.raw.sand1, 1);
 
         if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 1][3]) == 0) {
             darkness++;
@@ -443,7 +444,7 @@ public class Level extends AppCompatActivity {
         if (contains(LevelArrays.SWORD, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])];
             hasSword = true;
-            playSound(R.raw.sword);
+            playSound(R.raw.sword, 1);
         }
         if (hasSword) {
             imgSword.setVisibility(View.VISIBLE);
@@ -470,7 +471,7 @@ public class Level extends AppCompatActivity {
                         discovered.add(new Point(x, y + 1));
                         discovered.add(new Point(x + 1, y + 1));
                         stepsMade.add(position);
-                        playSound(R.raw.portal);
+                        playSound(R.raw.portal, 1);
                         return;
                     }
                 }
@@ -484,6 +485,7 @@ public class Level extends AppCompatActivity {
                 gameOver();
             } else {
                 currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])];
+                playSound(R.raw.monster_death, 1);
             }
         }
     }
@@ -500,8 +502,17 @@ public class Level extends AppCompatActivity {
         }
     }
 
+    public void checkStar() {
+        if (contains(LevelArrays.STAR, currentLevel[y][x])) {
+            currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
+            stars++;
+            playSound(R.raw.star, 1);
+        }
+    }
+
     public void gameOver() {
         stopTime = true;
+        playSound(R.raw.death, 1);
 
         try {
             if (bgm.isPlaying()) {
@@ -542,24 +553,51 @@ public class Level extends AppCompatActivity {
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
             stopTime = true;
             int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 1][4]);
-            score = 5000 - (stepCount - minSteps) * 100 + 5000 - ((time * 2 - minSteps) * 100) - cheat * 1000;
+
+            score = stars;
+
+            if (stepCount - minSteps <= 0) {
+                score++;
+            }
+
+            if (time - minSteps * 2 <= 0) {
+                score++;
+            }
+
+            score = score - cheat;
+
+            if (score < 0) {
+                score = 0;
+            }
+
+            ImageView image = new ImageView(this);
+            switch (score) {
+                case 0:
+                    image.setImageResource(R.drawable.stars_0);
+                    break;
+                case 1:
+                    image.setImageResource(R.drawable.stars_1);
+                    break;
+                case 2:
+                    image.setImageResource(R.drawable.stars_2);
+                    break;
+                case 3:
+                    image.setImageResource(R.drawable.stars_3);
+                    break;
+                case 4:
+                    image.setImageResource(R.drawable.stars_4);
+                    break;
+                case 5:
+                    image.setImageResource(R.drawable.stars_5);
+                    break;
+            }
+
+            /*score = 5000 - (stepCount - minSteps) * 100 + 5000 - ((time * 2 - minSteps) * 100) - cheat * 1000;
             if (score < 0) {
                 score = 0;
             } else if (score > 10000) {
                 score = 10000;
             }
-
-            if (bgm.isPlaying()) {
-                bgm.stop();
-                bgm.release();
-            }
-
-            if (fire.isPlaying()) {
-                fire.stop();
-                fire.release();
-            }
-
-            playSound(R.raw.win);
 
             ImageView image = new ImageView(this);
             if (score == 0) {
@@ -574,11 +612,11 @@ public class Level extends AppCompatActivity {
                 image.setImageResource(R.drawable.stars_4);
             } else if (score <= 10000) {
                 image.setImageResource(R.drawable.stars_5);
-            }
+            }*/
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
             builder.setTitle("You win!");
-            builder.setMessage("Steps: " + stepCount + "\n" + "Time: " + time + "\n" + "Score: " + score + "\n");
+            builder.setMessage("Steps: " + stepCount + "\n" + "Time: " + time + "\n");
             builder.setView(image);
             builder.setCancelable(false);
             if (level < LevelArrays.LEVEL.length - 1) {
@@ -606,6 +644,18 @@ public class Level extends AppCompatActivity {
                 }
             });
             builder.show();
+
+            if (bgm.isPlaying()) {
+                bgm.stop();
+                bgm.release();
+            }
+
+            if (fire.isPlaying()) {
+                fire.stop();
+                fire.release();
+            }
+
+            playSound(R.raw.win, 0.5f);
         } else checkDarkness();
     }
 
@@ -631,8 +681,9 @@ public class Level extends AppCompatActivity {
         }
     }
 
-    public void playSound(int sound) {
+    public void playSound(int sound, float volume) {
         MediaPlayer stepSound = MediaPlayer.create(getApplicationContext(), sound);
+        stepSound.setVolume(volume, volume);
         stepSound.start();
         stepSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -660,6 +711,7 @@ public class Level extends AppCompatActivity {
                 checkMonster();
                 checkFire();
                 checkSword();
+                checkStar();
                 checkWin();
 
                 animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
@@ -682,7 +734,7 @@ public class Level extends AppCompatActivity {
 
     public boolean contains(String[] array, String resource) {
         for (String element : array) {
-            if (element == resource) {
+            if (element.equals(resource)) {
                 return true;
             }
         }
@@ -710,6 +762,7 @@ public class Level extends AppCompatActivity {
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
         discovered.clear();
         stepsMade.clear();
+        stars = 0;
         darkness = 0;
         stepCount = 0;
         time = 0;
@@ -820,13 +873,41 @@ public class Level extends AppCompatActivity {
                     for (int i = 0; i < currentLevel.length - 1; i++) {
                         for (int k = 0; k < currentLevel[i].length; k++) {
                             if (contains(LevelArrays.TRAP, currentLevel[i][k])) {
+                                if (contains(LevelArrays.TRAP, currentLevel[y][x])) {
+                                    playSound(R.raw.trap_deactivate, 1);
+                                    containsTrap = true;
+                                } else if (contains(LevelArrays.TRAP, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 1]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y][x]) || contains(LevelArrays.TRAP, currentLevel[y][x + 1]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 1])) {
+                                    playSound(R.raw.trap_deactivate, 0.66f);
+                                    containsTrap = true;
+                                } else if (contains(LevelArrays.TRAP, currentLevel[y - 2][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x + 2]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y - 1][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 2]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y][x]) || contains(LevelArrays.TRAP, currentLevel[y][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y][x + 2]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y + 1][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 2]) ||
+                                        contains(LevelArrays.TRAP, currentLevel[y + 2][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x + 2])) {
+                                    playSound(R.raw.trap_deactivate, 0.33f);
+                                    containsTrap = true;
+                                }
                                 currentLevel[i][k] = LevelArrays.HOLES[getIndex(LevelArrays.TRAP, currentLevel[i][k])];
-                                playSound(R.raw.trap_deactivate);
-                                containsTrap = true;
                             } else if (contains(LevelArrays.HOLES, currentLevel[i][k])) {
+                                if (contains(LevelArrays.HOLES, currentLevel[y][x])) {
+                                    playSound(R.raw.trap_activate, 1);
+                                    containsTrap = true;
+                                } else if (contains(LevelArrays.HOLES, currentLevel[y - 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 1]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y][x]) || contains(LevelArrays.HOLES, currentLevel[y][x + 1]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y + 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 1])) {
+                                    playSound(R.raw.trap_activate, 0.66f);
+                                    containsTrap = true;
+                                } else if (contains(LevelArrays.HOLES, currentLevel[y - 2][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x + 2]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y - 1][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 2]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y][x]) || contains(LevelArrays.HOLES, currentLevel[y][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y][x + 2]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y + 1][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 2]) ||
+                                        contains(LevelArrays.HOLES, currentLevel[y + 2][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x + 2])) {
+                                    playSound(R.raw.trap_activate, 0.33f);
+                                    containsTrap = true;
+                                }
                                 currentLevel[i][k] = LevelArrays.TRAP[getIndex(LevelArrays.HOLES, currentLevel[i][k])];
-                                playSound(R.raw.trap_activate);
-                                containsTrap = true;
                             }
                         }
                     }
