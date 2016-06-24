@@ -49,6 +49,7 @@ public class Level extends AppCompatActivity {
     Point size;
     MediaPlayer bgm;
     MediaPlayer fire;
+    MediaPlayer heartbeat;
     int statusBarHeight;
     int level = 0;
     String[][] currentLevel;
@@ -69,6 +70,10 @@ public class Level extends AppCompatActivity {
     boolean allowInput = true;
     boolean hasSword = false;
     ImageView imgSword;
+    float volumeBGM = 0.5f;
+    float volumeFire = 0;
+    float volumeHeart = 0;
+    float volumeFX = 1;
     private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
@@ -231,81 +236,77 @@ public class Level extends AppCompatActivity {
         fire = MediaPlayer.create(getApplicationContext(), R.raw.campfire);
         fire.setLooping(true);
 
+        heartbeat = MediaPlayer.create(getApplicationContext(), R.raw.heartbeat_breathing);
+        heartbeat.setLooping(true);
+
+
         imgSword = (ImageView) findViewById(R.id.imgSword);
         imgSword.setVisibility(View.INVISIBLE);
 
         relativeLayout_UI.setOnTouchListener(new OnSwipeTouchListener(Level.this) {
             public void onSwipeTop() {
-                if (contains(LevelArrays.MOVE_DOWN, currentLevel[y][x])) {
-                    if (allowInput == true) {
-                        y++;
-                        move();
+                if (contains(LevelArrays.MOVE_DOWN, currentLevel[y][x]) && allowInput) {
+                    y++;
+                    move();
 
-                        //3x3 View
-                        startAnimation(0, 0, 0, -width / 3);
+                    //3x3 View
+                    startAnimation(0, 0, 0, -width / 3);
 
-                        //5x5 View
+                    //5x5 View
                         /*startAnimation(0, 0, 0, -width / 5);*/
 
-                        vibrator.vibrate(VIBRATE_SHORT);
-                    }
+                    vibrator.vibrate(VIBRATE_SHORT);
                 } else {
                     vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeRight() {
-                if (contains(LevelArrays.MOVE_LEFT, currentLevel[y][x])) {
-                    if (allowInput == true) {
-                        x--;
-                        move();
+                if (contains(LevelArrays.MOVE_LEFT, currentLevel[y][x]) && allowInput) {
+                    x--;
+                    move();
 
-                        //3x3 View
-                        startAnimation(0, width / 3, 0, 0);
+                    //3x3 View
+                    startAnimation(0, width / 3, 0, 0);
 
-                        //5x5 View
+                    //5x5 View
                         /*startAnimation(0, width / 5, 0, 0);*/
 
-                        vibrator.vibrate(VIBRATE_SHORT);
-                    }
+                    vibrator.vibrate(VIBRATE_SHORT);
                 } else {
                     vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeLeft() {
-                if (contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x])) {
-                    if (allowInput == true) {
-                        x++;
-                        move();
+                if (contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x]) && allowInput) {
+                    x++;
+                    move();
 
-                        //3x3 View
-                        startAnimation(0, -width / 3, 0, 0);
+                    //3x3 View
+                    startAnimation(0, -width / 3, 0, 0);
 
-                        //5x5 View
+                    //5x5 View
                         /*startAnimation(0, -width / 5, 0, 0);*/
 
-                        vibrator.vibrate(VIBRATE_SHORT);
-                    }
+                    vibrator.vibrate(VIBRATE_SHORT);
                 } else {
                     vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeBottom() {
-                if (contains(LevelArrays.MOVE_UP, currentLevel[y][x])) {
-                    if (allowInput == true) {
-                        y--;
-                        move();
+                if (contains(LevelArrays.MOVE_UP, currentLevel[y][x]) && allowInput) {
+                    y--;
+                    move();
 
-                        //3x3 View
-                        startAnimation(0, 0, 0, width / 3);
+                    //3x3 View
+                    startAnimation(0, 0, 0, width / 3);
 
-                        //5x5 View
+                    //5x5 View
                         /*startAnimation(0, 0, 0, width / 5);*/
 
-                        vibrator.vibrate(VIBRATE_SHORT);
-                    }
+                    vibrator.vibrate(VIBRATE_SHORT);
                 } else {
                     vibrator.vibrate(VIBRATE_MEDIUM);
                 }
@@ -317,6 +318,7 @@ public class Level extends AppCompatActivity {
     }
 
     public void move() {
+        allowInput = false;
         stepCount++;
         position = new Point(x, y);
 
@@ -333,7 +335,7 @@ public class Level extends AppCompatActivity {
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
-        playSound(R.raw.sand1, 1);
+        playSound(R.raw.sand1, volumeFX);
 
         if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 1][3]) == 0) {
             darkness++;
@@ -346,8 +348,12 @@ public class Level extends AppCompatActivity {
         super.onResume();
 
         try {
-            bgm.setVolume(0.5f, 0.5f);
+            bgm.setVolume(volumeBGM, volumeBGM);
             bgm.start();
+            fire.setVolume(volumeFire, volumeFire);
+            fire.start();
+            heartbeat.setVolume(volumeHeart, volumeHeart);
+            heartbeat.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -362,6 +368,7 @@ public class Level extends AppCompatActivity {
         try {
             bgm.pause();
             fire.pause();
+            heartbeat.pause();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -413,14 +420,16 @@ public class Level extends AppCompatActivity {
             gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
         }
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
-            fire.setVolume(1, 1);
+            volumeFire = 1;
+            fire.setVolume(volumeFire, volumeFire);
             if (!fire.isPlaying()) {
                 fire.start();
             }
         } else if (contains(LevelArrays.FIRE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 1]) ||
                 contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1])) {
-            fire.setVolume(0.66f, 0.66f);
+            volumeFire = 0.66f;
+            fire.setVolume(volumeFire, volumeFire);
             if (!fire.isPlaying()) {
                 fire.start();
             }
@@ -429,7 +438,8 @@ public class Level extends AppCompatActivity {
                 contains(LevelArrays.FIRE, currentLevel[y][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 1][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 2])) {
-            fire.setVolume(0.33f, 0.33f);
+            volumeFire = 0.33f;
+            fire.setVolume(volumeFire, volumeFire);
             if (!fire.isPlaying()) {
                 fire.start();
             }
@@ -444,7 +454,7 @@ public class Level extends AppCompatActivity {
         if (contains(LevelArrays.SWORD, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])];
             hasSword = true;
-            playSound(R.raw.sword, 1);
+            playSound(R.raw.sword, volumeFX);
         }
         if (hasSword) {
             imgSword.setVisibility(View.VISIBLE);
@@ -471,7 +481,7 @@ public class Level extends AppCompatActivity {
                         discovered.add(new Point(x, y + 1));
                         discovered.add(new Point(x + 1, y + 1));
                         stepsMade.add(position);
-                        playSound(R.raw.portal, 1);
+                        playSound(R.raw.portal, volumeFX);
                         return;
                     }
                 }
@@ -485,7 +495,7 @@ public class Level extends AppCompatActivity {
                 gameOver();
             } else {
                 currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])];
-                playSound(R.raw.monster_death, 1);
+                playSound(R.raw.monster_death, volumeFX);
             }
         }
     }
@@ -499,6 +509,44 @@ public class Level extends AppCompatActivity {
     public void checkDarkness() {
         if (darkness > 14) {
             gameOver();
+        } else if (darkness < 12) {
+            volumeBGM = 0.5f;
+            bgm.setVolume(volumeBGM, volumeBGM);
+            volumeHeart = 0;
+            heartbeat.setVolume(volumeHeart, volumeHeart);
+            if (!heartbeat.isPlaying()) {
+                heartbeat.start();
+            }
+        }
+
+        switch (darkness) {
+            case 12:
+                volumeHeart = 0.33f;
+                heartbeat.setVolume(volumeHeart, volumeHeart);
+                volumeBGM = 0.4f;
+                bgm.setVolume(volumeBGM, volumeBGM);
+                if (!heartbeat.isPlaying()) {
+                    heartbeat.start();
+                }
+                break;
+            case 13:
+                volumeHeart = 0.66f;
+                heartbeat.setVolume(volumeHeart, volumeHeart);
+                volumeBGM = 0.2f;
+                bgm.setVolume(volumeBGM, volumeBGM);
+                if (!heartbeat.isPlaying()) {
+                    heartbeat.start();
+                }
+                break;
+            case 14:
+                volumeHeart = 1;
+                heartbeat.setVolume(volumeHeart, volumeHeart);
+                volumeBGM = 0;
+                bgm.setVolume(volumeBGM, volumeBGM);
+                if (!heartbeat.isPlaying()) {
+                    heartbeat.start();
+                }
+                break;
         }
     }
 
@@ -506,13 +554,13 @@ public class Level extends AppCompatActivity {
         if (contains(LevelArrays.STAR, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
             stars++;
-            playSound(R.raw.star, 1);
+            playSound(R.raw.star, volumeFX);
         }
     }
 
     public void gameOver() {
         stopTime = true;
-        playSound(R.raw.death, 1);
+        playSound(R.raw.death, volumeFX);
 
         try {
             if (bgm.isPlaying()) {
@@ -523,6 +571,11 @@ public class Level extends AppCompatActivity {
             if (fire.isPlaying()) {
                 fire.stop();
                 fire.release();
+            }
+
+            if (heartbeat.isPlaying()) {
+                heartbeat.stop();
+                heartbeat.release();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -592,28 +645,6 @@ public class Level extends AppCompatActivity {
                     break;
             }
 
-            /*score = 5000 - (stepCount - minSteps) * 100 + 5000 - ((time * 2 - minSteps) * 100) - cheat * 1000;
-            if (score < 0) {
-                score = 0;
-            } else if (score > 10000) {
-                score = 10000;
-            }
-
-            ImageView image = new ImageView(this);
-            if (score == 0) {
-                image.setImageResource(R.drawable.stars_0);
-            } else if (score < 2000) {
-                image.setImageResource(R.drawable.stars_1);
-            } else if (score < 4000) {
-                image.setImageResource(R.drawable.stars_2);
-            } else if (score < 6000) {
-                image.setImageResource(R.drawable.stars_3);
-            } else if (score < 8000) {
-                image.setImageResource(R.drawable.stars_4);
-            } else if (score <= 10000) {
-                image.setImageResource(R.drawable.stars_5);
-            }*/
-
             AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
             builder.setTitle("You win!");
             builder.setMessage("Steps: " + stepCount + "\n" + "Time: " + time + "\n");
@@ -655,7 +686,12 @@ public class Level extends AppCompatActivity {
                 fire.release();
             }
 
-            playSound(R.raw.win, 0.5f);
+            if (heartbeat.isPlaying()) {
+                heartbeat.stop();
+                heartbeat.release();
+            }
+
+            playSound(R.raw.win, volumeFX / 2);
         } else checkDarkness();
     }
 
@@ -695,7 +731,7 @@ public class Level extends AppCompatActivity {
 
     public void startAnimation(float fromX, float toX, float fromY, float toY) {
         TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
-        translateAnimation.setDuration(300);
+        translateAnimation.setDuration(200);
         translateAnimation.setInterpolator(getApplicationContext(), android.R.anim.accelerate_decelerate_interpolator);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -743,7 +779,7 @@ public class Level extends AppCompatActivity {
 
     public int getIndex(String[] array, String resource) {
         for (int i = 0; i < array.length; i++) {
-            if (array[i] == resource) {
+            if (array[i].equals(resource)) {
                 return i;
             }
         }
@@ -768,6 +804,10 @@ public class Level extends AppCompatActivity {
         time = 0;
         cheat = 0;
         stopTime = false;
+        volumeBGM = 0.5f;
+        volumeFire = 0;
+        volumeHeart = 0;
+        volumeFX = 1;
         x = Integer.parseInt(currentLevel[currentLevel.length - 1][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
         scene = currentLevel[currentLevel.length - 1][2];
@@ -804,19 +844,25 @@ public class Level extends AppCompatActivity {
         }
 
         bgm.setLooping(true);
-        bgm.setVolume(0.5f, 0.5f);
+        bgm.setVolume(volumeBGM, volumeBGM);
         bgm.start();
 
         fire = MediaPlayer.create(getApplicationContext(), R.raw.campfire);
         fire.setLooping(true);
+        fire.setVolume(volumeFire, volumeFire);
+        fire.start();
 
-        //createHandler();
+        heartbeat = MediaPlayer.create(getApplicationContext(), R.raw.heartbeat_breathing);
+        heartbeat.setLooping(true);
+        heartbeat.setVolume(volumeHeart, volumeHeart);
+        heartbeat.start();
     }
 
     public void resetLevel(View v) {
         try {
             bgm.pause();
             fire.pause();
+            heartbeat.pause();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -836,6 +882,8 @@ public class Level extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 stopTime = false;
                 bgm.start();
+                fire.start();
+                heartbeat.start();
                 createHandler();
             }
         });
@@ -874,49 +922,49 @@ public class Level extends AppCompatActivity {
                         for (int k = 0; k < currentLevel[i].length; k++) {
                             if (contains(LevelArrays.TRAP, currentLevel[i][k])) {
                                 if (contains(LevelArrays.TRAP, currentLevel[y][x])) {
-                                    playSound(R.raw.trap_deactivate, 1);
+                                    playSound(R.raw.trap_deactivate, volumeFX);
                                     containsTrap = true;
                                 } else if (contains(LevelArrays.TRAP, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 1]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y][x]) || contains(LevelArrays.TRAP, currentLevel[y][x + 1]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 1])) {
-                                    playSound(R.raw.trap_deactivate, 0.66f);
+                                    playSound(R.raw.trap_deactivate, volumeFX * 2 / 3);
                                     containsTrap = true;
                                 } else if (contains(LevelArrays.TRAP, currentLevel[y - 2][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y - 2][x + 2]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y - 1][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y - 1][x + 2]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y][x]) || contains(LevelArrays.TRAP, currentLevel[y][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y][x + 2]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y + 1][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y + 1][x + 2]) ||
                                         contains(LevelArrays.TRAP, currentLevel[y + 2][x - 2]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x - 1]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x + 1]) || contains(LevelArrays.TRAP, currentLevel[y + 2][x + 2])) {
-                                    playSound(R.raw.trap_deactivate, 0.33f);
+                                    playSound(R.raw.trap_deactivate, volumeFX / 3);
                                     containsTrap = true;
                                 }
                                 currentLevel[i][k] = LevelArrays.HOLES[getIndex(LevelArrays.TRAP, currentLevel[i][k])];
                             } else if (contains(LevelArrays.HOLES, currentLevel[i][k])) {
                                 if (contains(LevelArrays.HOLES, currentLevel[y][x])) {
-                                    playSound(R.raw.trap_activate, 1);
+                                    playSound(R.raw.trap_activate, volumeFX);
                                     containsTrap = true;
                                 } else if (contains(LevelArrays.HOLES, currentLevel[y - 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 1]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y][x]) || contains(LevelArrays.HOLES, currentLevel[y][x + 1]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y + 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 1])) {
-                                    playSound(R.raw.trap_activate, 0.66f);
+                                    playSound(R.raw.trap_activate, volumeFX * 2 / 3);
                                     containsTrap = true;
                                 } else if (contains(LevelArrays.HOLES, currentLevel[y - 2][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y - 2][x + 2]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y - 1][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y - 1][x + 2]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y][x]) || contains(LevelArrays.HOLES, currentLevel[y][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y][x + 2]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y + 1][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y + 1][x + 2]) ||
                                         contains(LevelArrays.HOLES, currentLevel[y + 2][x - 2]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x - 1]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x + 1]) || contains(LevelArrays.HOLES, currentLevel[y + 2][x + 2])) {
-                                    playSound(R.raw.trap_activate, 0.33f);
+                                    playSound(R.raw.trap_activate, volumeFX / 3);
                                     containsTrap = true;
                                 }
                                 currentLevel[i][k] = LevelArrays.TRAP[getIndex(LevelArrays.HOLES, currentLevel[i][k])];
                             }
                         }
-                    }
 
-                    if (!isAnimating && containsTrap) {
-                        gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
-                        gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                        if (!isAnimating && containsTrap) {
+                            gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
+                            gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
+                            checkTrap();
+                        }
                     }
-                    checkTrap();
                 } else {
                     createHandler();
                 }
