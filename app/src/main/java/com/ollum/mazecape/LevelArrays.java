@@ -98,7 +98,7 @@ public class LevelArrays {
             {"elt", "ect", "nrt", "tlr", "glt", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
-            {"2", "2", "f", "100", "2"}
+            {"2", "2", "s", "100", "2"}
     };
     public static final String[][] LEVEL_1 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
@@ -116,7 +116,7 @@ public class LevelArrays {
             {"elt", "ect", "nrt", "nul", "gup", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
-            {"2", "4", "f", "2", "8"}
+            {"2", "4", "s", "2", "8"}
     };
     public static final String[][] LEVEL_3 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etr"},
@@ -126,18 +126,18 @@ public class LevelArrays {
             {"elt", "ect", "nup", "gup", "sup", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
-            {"3", "2", "f", "2", "4"}
+            {"3", "2", "s", "2", "4"}
     };
     public static final String[][] LEVEL_4 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
-            {"elt", "ect", "ndn", "ndr", "ntu", "nlt", "ect", "ert"},
+            {"elt", "ect", "cdn", "ndr", "ntu", "nlt", "ect", "ert"},
             {"elt", "ect", "ntl", "nul", "nur", "ndl", "ect", "ert"},
-            {"elt", "ect", "nur", "ntu", "nlt", "nud", "ect", "ert"},
-            {"elt", "ect", "nrt", "nul", "grt", "nul", "ect", "ert"},
+            {"elt", "ect", "nur", "ntu", "clt", "nud", "ect", "ert"},
+            {"elt", "ect", "crt", "nul", "grt", "nul", "ect", "ert"},
             {"elt", "ect", "ect", "ect", "ect", "ect", "ect", "ert"},
             {"ebl", "ebt", "ebt", "ebt", "ebt", "ebt", "ebt", "ebr"},
-            {"3", "2", "f", "2", "6"}
+            {"3", "2", "f", "2", "22"}
     };
     public static final String[][] LEVEL_5 = {
             {"etl", "etp", "etp", "etp", "etp", "etp", "etp", "etr"},
@@ -193,7 +193,7 @@ public class LevelArrays {
             {"ect", "ect", "nrt", "ntd", "nlr", "ntd", "nlr", "ftd", "nlr", "nlr", "nlt", "ect", "ect"},
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
-            {"6", "6", "c", "4", "52"}
+            {"6", "6", "s", "4", "52"}
     };
     public static final String[][] LEVEL_9 = {
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
@@ -232,7 +232,7 @@ public class LevelArrays {
             {"ect", "ect", "nur", "nlr", "nlr", "nul", "nrt", "ntd", "nlt", "nur", "nlr", "nul", "nur", "ntd", "ntd", "nlr", "nul", "ect", "ect"},
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
-            {"2", "4", "c", "8", "53"}
+            {"2", "4", "s", "8", "53"}
     };
     public static final String[][] LEVEL_100 = {
             {"ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect", "ect"},
