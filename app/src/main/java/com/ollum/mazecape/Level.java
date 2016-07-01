@@ -41,7 +41,7 @@ public class Level extends AppCompatActivity {
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
     GridView gridViewLevel, gridViewPlayer, gridViewMap;
-    ImageView needle;
+    ImageView compass, needle, mapPosition;
     TextView title, stepCounter, timeCounter, posX, posY;
     Button resetLevel, cheatButton;
     ToggleButton controlButton;
@@ -96,9 +96,9 @@ public class Level extends AppCompatActivity {
         discovered = new ArrayList<>();
 
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
-        x = Integer.parseInt(currentLevel[currentLevel.length - 1][0]);
-        y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
-        scene = currentLevel[currentLevel.length - 1][2];
+        x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
+        y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
+        scene = currentLevel[currentLevel.length - 2][2];
 
         position = new Point(x, y);
         discovered.add(new Point(x - 1, y - 1));
@@ -128,6 +128,23 @@ public class Level extends AppCompatActivity {
         relativeLayout_UI.getLayoutParams().width = width;
         relativeLayout_UI.getLayoutParams().height = height;
 
+        compass = (ImageView) findViewById(R.id.compass);
+        compass.getLayoutParams().width = width / 2;
+        compass.getLayoutParams().height = width / 2;
+
+        needle = (ImageView) findViewById(R.id.needle);
+        needle.getLayoutParams().width = width / 2;
+        needle.getLayoutParams().height = width / 2;
+
+        gridViewMap = (GridView) findViewById(R.id.gridViewMap);
+        gridViewMap.getLayoutParams().width = width / 2;
+        gridViewMap.getLayoutParams().height = width / 2;
+
+        mapPosition = (ImageView) findViewById(R.id.minimapPosition);
+        mapPosition.setX(gridViewMap.getLayoutParams().width / 10);
+        mapPosition.setY(gridViewMap.getLayoutParams().height / 10);
+        Log.d("debug", "mapPosition: " + mapPosition.getX() + ", " + mapPosition.getY());
+
         gridViewLevel = (GridView) findViewById(R.id.gridViewLevel);
 
         //3x3 View
@@ -147,10 +164,6 @@ public class Level extends AppCompatActivity {
         gridViewPlayer.getLayoutParams().height = width * 5 / 3;
         setMargins(gridViewPlayer, -width / 3, 0, 0, 0);
         gridViewPlayer.setAdapter(new PlayerAdapter(this));
-
-        gridViewMap = (GridView) findViewById(R.id.gridViewMap);
-
-        needle = (ImageView) findViewById(R.id.needle);
 
         title = (TextView) findViewById(R.id.title);
         title.setText("Level " + (level + 1));
@@ -234,6 +247,12 @@ public class Level extends AppCompatActivity {
             case "c":
                 bgm = MediaPlayer.create(getApplicationContext(), R.raw.grand_cave);
                 break;
+            case "s":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
+                break;
+            case "d":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
+                break;
         }
         bgm.setLooping(true);
 
@@ -248,26 +267,46 @@ public class Level extends AppCompatActivity {
 
         relativeLayout_UI.setOnTouchListener(new OnSwipeTouchListener(Level.this) {
             public void onSwipeTop() {
-                if (allowInput) {
+                if (allowInput && contains(LevelArrays.MOVE_DOWN, currentLevel[y][x])) {
+                    stepCount++;
                     moveDown();
+                    playSound(R.raw.sand1, volumeFX);
+                    vibrator.vibrate(VIBRATE_SHORT);
+                } else {
+                    vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeRight() {
-                if (allowInput) {
+                if (allowInput && contains(LevelArrays.MOVE_LEFT, currentLevel[y][x])) {
+                    stepCount++;
                     moveLeft();
+                    playSound(R.raw.sand1, volumeFX);
+                    vibrator.vibrate(VIBRATE_SHORT);
+                } else {
+                    vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeLeft() {
-                if (allowInput) {
+                if (allowInput && contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x])) {
+                    stepCount++;
                     moveRight();
+                    playSound(R.raw.sand1, volumeFX);
+                    vibrator.vibrate(VIBRATE_SHORT);
+                } else {
+                    vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
             public void onSwipeBottom() {
-                if (allowInput) {
+                if (allowInput && contains(LevelArrays.MOVE_UP, currentLevel[y][x])) {
+                    stepCount++;
                     moveUp();
+                    playSound(R.raw.sand1, volumeFX);
+                    vibrator.vibrate(VIBRATE_SHORT);
+                } else {
+                    vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
         });
@@ -279,9 +318,9 @@ public class Level extends AppCompatActivity {
     public void reset() {
         Log.d("debug", "reset");
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
-        x = Integer.parseInt(currentLevel[currentLevel.length - 1][0]);
-        y = Integer.parseInt(currentLevel[currentLevel.length - 1][1]);
-        scene = currentLevel[currentLevel.length - 1][2];
+        x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
+        y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
+        scene = currentLevel[currentLevel.length - 2][2];
 
         discovered.clear();
         stepsMade.clear();
@@ -306,6 +345,7 @@ public class Level extends AppCompatActivity {
         discovered.add(new Point(x, y + 1));
         discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
+
         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
         gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
@@ -324,6 +364,12 @@ public class Level extends AppCompatActivity {
                 break;
             case "c":
                 bgm = MediaPlayer.create(getApplicationContext(), R.raw.grand_cave);
+                break;
+            case "s":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
+                break;
+            case "d":
+                bgm = MediaPlayer.create(getApplicationContext(), R.raw.overworld);
                 break;
         }
 
@@ -345,7 +391,7 @@ public class Level extends AppCompatActivity {
     public void move() {
         Log.d("debug", "move");
         allowInput = false;
-        stepCount++;
+
         position = new Point(x, y);
 
         discovered.add(new Point(x - 1, y - 1));
@@ -361,9 +407,8 @@ public class Level extends AppCompatActivity {
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
-        playSound(R.raw.sand1, volumeFX);
 
-        if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 1][3]) == 0) {
+        if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 2][3]) == 0) {
             darkness++;
             gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
         }
@@ -379,11 +424,7 @@ public class Level extends AppCompatActivity {
             startAnimation(0, 0, 0, -width / 3);
 
             //5x5 View
-                        /*startAnimation(0, 0, 0, -width / 5);*/
-
-            vibrator.vibrate(VIBRATE_SHORT);
-        } else {
-            vibrator.vibrate(VIBRATE_MEDIUM);
+            /*startAnimation(0, 0, 0, -width / 5);*/
         }
     }
 
@@ -398,10 +439,6 @@ public class Level extends AppCompatActivity {
 
             //5x5 View
             /*startAnimation(0, 0, 0, width / 5);*/
-
-            vibrator.vibrate(VIBRATE_SHORT);
-        } else {
-            vibrator.vibrate(VIBRATE_MEDIUM);
         }
     }
 
@@ -416,10 +453,6 @@ public class Level extends AppCompatActivity {
 
             //5x5 View
             /*startAnimation(0, width / 5, 0, 0);*/
-
-            vibrator.vibrate(VIBRATE_SHORT);
-        } else {
-            vibrator.vibrate(VIBRATE_MEDIUM);
         }
     }
 
@@ -434,10 +467,6 @@ public class Level extends AppCompatActivity {
 
             //5x5 View
             /*startAnimation(0, -width / 5, 0, 0);*/
-
-            vibrator.vibrate(VIBRATE_SHORT);
-        } else {
-            vibrator.vibrate(VIBRATE_MEDIUM);
         }
     }
 
@@ -543,6 +572,9 @@ public class Level extends AppCompatActivity {
                 fire.start();
             }
             return false;
+        } else {
+            volumeFire = 0;
+            fire.setVolume(volumeFire, volumeFire);
         }
         return false;
     }
@@ -571,7 +603,7 @@ public class Level extends AppCompatActivity {
 
     public boolean checkPortal() {
         Log.d("debug", "checkPortal");
-        if (contains(LevelArrays.PORTAL, currentLevel[y][x])) {
+        /*if (contains(LevelArrays.PORTAL, currentLevel[y][x])) {
             for (int i = 0; i < currentLevel.length - 1; i++) {
                 for (int k = 0; k < currentLevel[i].length; k++) {
                     if (contains(LevelArrays.PORTAL, currentLevel[i][k]) && !(i == y && k == x)) {
@@ -593,7 +625,52 @@ public class Level extends AppCompatActivity {
                     }
                 }
             }
+        }*/
+
+        for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
+            String str = currentLevel[currentLevel.length - 1][i];
+            String[] result = str.split(",");
+            if ((x == Integer.parseInt(result[0])) && (y == Integer.parseInt(result[1]))) {
+                if (i % 2 == 0) {
+                    Log.d("debug", currentLevel[currentLevel.length - 1][i + 1]);
+                    String[] even = currentLevel[currentLevel.length - 1][i + 1].split(",");
+                    x = Integer.parseInt(even[0]);
+                    y = Integer.parseInt(even[1]);
+                    position = new Point(x, y);
+                    discovered.add(new Point(x - 1, y - 1));
+                    discovered.add(new Point(x, y - 1));
+                    discovered.add(new Point(x + 1, y - 1));
+                    discovered.add(new Point(x - 1, y));
+                    discovered.add(position);
+                    discovered.add(new Point(x + 1, y));
+                    discovered.add(new Point(x - 1, y + 1));
+                    discovered.add(new Point(x, y + 1));
+                    discovered.add(new Point(x + 1, y + 1));
+                    stepsMade.add(position);
+                    playSound(R.raw.portal, volumeFX);
+                    return true;
+                } else {
+                    Log.d("debug", currentLevel[currentLevel.length - 1][i - 1]);
+                    String[] odd = currentLevel[currentLevel.length - 1][i - 1].split(",");
+                    x = Integer.parseInt(odd[0]);
+                    y = Integer.parseInt(odd[1]);
+                    position = new Point(x, y);
+                    discovered.add(new Point(x - 1, y - 1));
+                    discovered.add(new Point(x, y - 1));
+                    discovered.add(new Point(x + 1, y - 1));
+                    discovered.add(new Point(x - 1, y));
+                    discovered.add(position);
+                    discovered.add(new Point(x + 1, y));
+                    discovered.add(new Point(x - 1, y + 1));
+                    discovered.add(new Point(x, y + 1));
+                    discovered.add(new Point(x + 1, y + 1));
+                    stepsMade.add(position);
+                    playSound(R.raw.portal, volumeFX);
+                    return true;
+                }
+            }
         }
+
         return false;
     }
 
@@ -724,7 +801,7 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "checkWin");
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
             stopTime = true;
-            int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 1][4]);
+            int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 2][4]);
 
             score = stars;
 
@@ -732,7 +809,7 @@ public class Level extends AppCompatActivity {
                 score++;
             }
 
-            if (time - minSteps * 2 <= 0) {
+            if (time - minSteps * 5 <= 0) {
                 score++;
             }
 
@@ -817,7 +894,7 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "setNeedle");
         int goalX = 0;
         int goalY = 0;
-        for (int i = 0; i < currentLevel.length - 1; i++) {
+        for (int i = 0; i < currentLevel.length - 2; i++) {
             for (int k = 0; k < currentLevel[i].length; k++) {
                 if (contains(LevelArrays.GOAL, currentLevel[i][k])) {
                     goalX = k;
@@ -853,7 +930,7 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "startAnimation");
         TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
         translateAnimation.setDuration(200);
-        translateAnimation.setInterpolator(getApplicationContext(), android.R.anim.accelerate_decelerate_interpolator);
+        translateAnimation.setInterpolator(getApplicationContext(), android.R.anim.linear_interpolator);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -871,12 +948,10 @@ public class Level extends AppCompatActivity {
                                 checkSword();
                                 checkStar();
                                 checkPortal();
-
                             }
                         }
                     }
                 }
-
 
                 animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
                 animation.setDuration(1);
@@ -887,6 +962,7 @@ public class Level extends AppCompatActivity {
                 allowInput = true;
                 isAnimating = false;
 
+                //Slippery Ground
                 if (scene.equals("s")) {
                     switch (direction) {
                         case "up":
@@ -1004,7 +1080,7 @@ public class Level extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
 
                     //Time-Based changes like traps
-                    for (int i = 0; i < currentLevel.length - 1; i++) {
+                    for (int i = 0; i < currentLevel.length - 2; i++) {
                         for (int k = 0; k < currentLevel[i].length; k++) {
                             if (contains(LevelArrays.TRAP, currentLevel[i][k])) {
                                 if (contains(LevelArrays.TRAP, currentLevel[y][x])) {
@@ -1604,6 +1680,9 @@ public class Level extends AppCompatActivity {
                     items.add(new Item("3-3", PlayerArrays.C_PLAYER[darkness][4]));
                     break;
                 case "s":
+                    items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
+                    break;
+                case "d":
                     items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
                     break;
             }
