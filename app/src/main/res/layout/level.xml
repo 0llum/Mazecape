@@ -25,31 +25,34 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="0dp"/>
 
-    <GridView
-        android:id="@+id/gridViewPlayer"
+    <ImageView
+        android:id="@+id/imageViewPlayer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="false"
-        android:layout_gravity="bottom"
-        android:horizontalSpacing="0dp"
-        android:numColumns="5"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="0dp"/>
+        android:src="@drawable/pfup"/>
+
+    <ImageView
+        android:id="@+id/imageViewDarkness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/darkness_00"/>
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/gridViewPlayer"
+        android:layout_above="@+id/imageViewDarkness"
         android:background="#000"/>
 
     <RelativeLayout
         android:id="@+id/footer_black"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/gridViewPlayer"
+        android:layout_below="@+id/gridViewLevel"
         android:background="#000"></RelativeLayout>
 
     <RelativeLayout
@@ -174,7 +177,8 @@
             android:layout_centerHorizontal="true"
             android:background="#00000000"
             android:text="Cheat"
-            android:textColor="#fff"/>
+            android:textColor="#fff"
+            android:visibility="invisible"/>
 
         <ImageView
             android:id="@+id/imgSword"
@@ -202,6 +206,17 @@
             android:layout_alignParentStart="true"
             android:layout_alignTop="@+id/compass"
             android:src="@drawable/needle"/>
+
+        <TextView
+            android:id="@+id/stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/stepCounter"
+            android:text="Stars"
+            android:textColor="#ffffff"
+            android:textSize="16dp"/>
 
     </RelativeLayout>
 

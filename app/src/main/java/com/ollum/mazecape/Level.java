@@ -29,7 +29,9 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Level extends AppCompatActivity {
 
@@ -40,9 +42,9 @@ public class Level extends AppCompatActivity {
     final int VIBRATE_MEDIUM = 500;
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
-    GridView gridViewLevel, gridViewPlayer, gridViewMap;
-    ImageView compass, needle, mapPosition;
-    TextView title, stepCounter, timeCounter, posX, posY;
+    GridView gridViewLevel, gridViewMap;
+    ImageView imageViewPlayer, imageViewDarkness, compass, needle, mapPosition;
+    TextView title, stepCounter, timeCounter, posX, posY, starsSum;
     Button resetLevel, cheatButton;
     ToggleButton controlButton;
     Vibrator vibrator;
@@ -66,6 +68,8 @@ public class Level extends AppCompatActivity {
     Point position;
     ArrayList<Point> stepsMade;
     ArrayList<Point> discovered;
+    HashSet<String> starsList;
+    HashSet<String> currentStars;
     boolean isAnimating = false;
     boolean stopTime = false;
     boolean allowInput = true;
@@ -75,7 +79,7 @@ public class Level extends AppCompatActivity {
     float volumeFire = 0;
     float volumeHeart = 0;
     float volumeFX = 1;
-    String direction = "";
+    String direction = "up";
     private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
@@ -94,6 +98,8 @@ public class Level extends AppCompatActivity {
 
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
+        starsList = new HashSet<>();
+        currentStars = new HashSet<>();
 
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
         x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
@@ -136,6 +142,18 @@ public class Level extends AppCompatActivity {
         needle.getLayoutParams().width = width / 2;
         needle.getLayoutParams().height = width / 2;
 
+        imageViewPlayer = (ImageView) findViewById(R.id.imageViewPlayer);
+        imageViewPlayer.getLayoutParams().width = width * 5 / 3;
+        imageViewPlayer.getLayoutParams().height = width * 5 / 3;
+        setMargins(imageViewPlayer, -width / 3, 0, 0, 0);
+        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+
+        imageViewDarkness = (ImageView) findViewById(R.id.imageViewDarkness);
+        imageViewDarkness.getLayoutParams().width = width * 5 / 3;
+        imageViewDarkness.getLayoutParams().height = width * 5 / 3;
+        setMargins(imageViewDarkness, -width / 3, 0, 0, 0);
+        imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+
         gridViewMap = (GridView) findViewById(R.id.gridViewMap);
         gridViewMap.getLayoutParams().width = width / 2;
         gridViewMap.getLayoutParams().height = width / 2;
@@ -159,12 +177,6 @@ public class Level extends AppCompatActivity {
 
         gridViewLevel.setAdapter(new LevelAdapter(this, 0));
 
-        gridViewPlayer = (GridView) findViewById(R.id.gridViewPlayer);
-        gridViewPlayer.getLayoutParams().width = width * 5 / 3;
-        gridViewPlayer.getLayoutParams().height = width * 5 / 3;
-        setMargins(gridViewPlayer, -width / 3, 0, 0, 0);
-        gridViewPlayer.setAdapter(new PlayerAdapter(this));
-
         title = (TextView) findViewById(R.id.title);
         title.setText("Level " + (level + 1));
 
@@ -172,7 +184,10 @@ public class Level extends AppCompatActivity {
         stepCounter.setText("Steps: " + stepCount);
 
         timeCounter = (TextView) findViewById(R.id.timeCounter);
-        timeCounter.setText(("" + time));
+        timeCounter.setText(("Time: " + time));
+
+        starsSum = (TextView) findViewById(R.id.stars);
+        starsSum.setText("Stars: " + starsList.size());
 
         posX = (TextView) findViewById(R.id.posX);
         posY = (TextView) findViewById(R.id.posY);
@@ -322,6 +337,7 @@ public class Level extends AppCompatActivity {
         y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
         scene = currentLevel[currentLevel.length - 2][2];
 
+        currentStars.clear();
         discovered.clear();
         stepsMade.clear();
         stars = 0;
@@ -329,6 +345,7 @@ public class Level extends AppCompatActivity {
         stepCount = 0;
         time = 0;
         cheat = 0;
+        direction = "up";
         stopTime = false;
         volumeBGM = 0.5f;
         volumeFire = 0;
@@ -348,11 +365,13 @@ public class Level extends AppCompatActivity {
 
         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
-        gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
+        imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+
         setNeedle();
         title.setText("Level " + (level + 1));
         stepCounter.setText("Steps: " + stepCount);
-        timeCounter.setText("" + time);
+        timeCounter.setText("Time: " + time);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
         hasSword = false;
@@ -392,6 +411,8 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "move");
         allowInput = false;
 
+        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+
         position = new Point(x, y);
 
         discovered.add(new Point(x - 1, y - 1));
@@ -410,13 +431,13 @@ public class Level extends AppCompatActivity {
 
         if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 2][3]) == 0) {
             darkness++;
-            gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
+            imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
         }
     }
 
     public void moveDown() {
         if (contains(LevelArrays.MOVE_DOWN, currentLevel[y][x])) {
-            direction = "down";
+            direction = "dn";
             y++;
             move();
 
@@ -444,7 +465,7 @@ public class Level extends AppCompatActivity {
 
     public void moveLeft() {
         if (contains(LevelArrays.MOVE_LEFT, currentLevel[y][x])) {
-            direction = "left";
+            direction = "lt";
             x--;
             move();
 
@@ -458,7 +479,7 @@ public class Level extends AppCompatActivity {
 
     public void moveRight() {
         if (contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x])) {
-            direction = "right";
+            direction = "rt";
             x++;
             move();
 
@@ -516,10 +537,6 @@ public class Level extends AppCompatActivity {
             gridViewLevel.getLayoutParams().width = width * 5 / 3;
             gridViewLevel.getLayoutParams().height = width * 5 / 3;
             setMargins(gridViewLevel, -width / 3, 0, 0, 0);
-
-            gridViewPlayer.getLayoutParams().width = width * 5 / 3;
-            gridViewPlayer.getLayoutParams().height = width * 5 / 3;
-            setMargins(gridViewPlayer, -width / 3, 0, 0, 0);
         } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             relativeLayout_Container.getLayoutParams().height = width + height / 3;
             relativeLayout_Container.getLayoutParams().width = height * 5 / 3;
@@ -530,22 +547,18 @@ public class Level extends AppCompatActivity {
             gridViewLevel.getLayoutParams().width = height * 5 / 3;
             gridViewLevel.getLayoutParams().height = height * 5 / 3;
             setMargins(gridViewLevel, 0, -height / 3, 0, 0);
-
-            gridViewPlayer.getLayoutParams().width = height * 5 / 3;
-            gridViewPlayer.getLayoutParams().height = height * 5 / 3;
-            setMargins(gridViewPlayer, 0, -height / 3, 0, 0);
         }
 
         gridViewLevel.setAdapter(new LevelAdapter(this, 0));
         gridViewMap.setAdapter(new MapAdapter(this, 0));
-        gridViewPlayer.setAdapter(new PlayerAdapter(this));
+        imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
     }
 
     public boolean checkFire() {
         Log.d("debug", "checkFire");
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             darkness = 0;
-            gridViewPlayer.setAdapter(new PlayerAdapter(getApplicationContext()));
+            imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
             volumeFire = 1;
             fire.setVolume(volumeFire, volumeFire);
             if (!fire.isPlaying()) {
@@ -747,6 +760,9 @@ public class Level extends AppCompatActivity {
     public boolean checkStar() {
         Log.d("debug", "checkStar");
         if (contains(LevelArrays.STAR, currentLevel[y][x])) {
+            currentStars.add(level + ", " + x + ", " + y);
+            Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
+
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
             stars++;
             playSound(R.raw.star, volumeFX);
@@ -807,11 +823,19 @@ public class Level extends AppCompatActivity {
 
             if (stepCount - minSteps <= 0) {
                 score++;
+                currentStars.add(level + ", " + 1 + ", " + 0);
+                Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
             }
 
             if (time - minSteps * 5 <= 0) {
                 score++;
+                currentStars.add(level + ", " + 0 + ", " + 1);
+                Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
             }
+
+            starsList.addAll(currentStars);
+            Log.d("list", "starsList: " + starsList.toString());
+            starsSum.setText("Stars: " + starsList.size());
 
             score = score - cheat;
 
@@ -969,15 +993,15 @@ public class Level extends AppCompatActivity {
                             Log.d("debug", "up");
                             moveUp();
                             break;
-                        case "down":
+                        case "dn":
                             Log.d("debug", "down");
                             moveDown();
                             break;
-                        case "left":
+                        case "lt":
                             Log.d("debug", "left");
                             moveLeft();
                             break;
-                        case "right":
+                        case "rt":
                             Log.d("debug", "right");
                             moveRight();
                             break;
@@ -1076,7 +1100,7 @@ public class Level extends AppCompatActivity {
                 boolean containsTrap = false;
                 if (!stopTime) {
                     time += 1;
-                    timeCounter.setText("" + time);
+                    timeCounter.setText("Time: " + time);
                     handler.postDelayed(this, 1000);
 
                     //Time-Based changes like traps
@@ -1136,9 +1160,12 @@ public class Level extends AppCompatActivity {
 
     public void saveGame() {
         Log.d("debug", "saveGame");
+        Set<String> set = new HashSet<String>();
+        set.addAll(starsList);
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("level", level);
+        editor.putStringSet("stars", starsList);
         editor.putBoolean("swipe", swipe);
         if (controlButton.isChecked()) {
             editor.putBoolean("isChecked", true);
@@ -1154,6 +1181,9 @@ public class Level extends AppCompatActivity {
 
         level = sharedPreferences.getInt("level", 0);
         swipe = sharedPreferences.getBoolean("swipe", false);
+        Set<String> set = sharedPreferences.getStringSet("stars", null);
+        starsList.addAll(set);
+        starsSum.setText("Stars: " + starsList.size());
         controlButton.setChecked(sharedPreferences.getBoolean("isChecked", false));
 
         reset();
@@ -1603,102 +1633,6 @@ public class Level extends AppCompatActivity {
             } else {
                 items.add(new Item("7-7", R.drawable.blank));
             }
-        }
-
-        @Override
-        public int getCount() {
-            return items.size();
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return items.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return items.get(i).drawableId;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            View v = view;
-            ImageView picture;
-
-            if (v == null) {
-                v = inflater.inflate(R.layout.gridview_item, viewGroup, false);
-                v.setTag(R.id.picture, v.findViewById(R.id.picture));
-                v.setTag(R.id.text, v.findViewById(R.id.text));
-            }
-
-            picture = (ImageView) v.getTag(R.id.picture);
-
-            Item item = (Item) getItem(i);
-
-            picture.setImageResource(item.drawableId);
-
-            return v;
-        }
-
-        private class Item {
-            final String name;
-            final int drawableId;
-
-            Item(String name, int drawableId) {
-                this.name = name;
-                this.drawableId = drawableId;
-            }
-        }
-    }
-
-    private class PlayerAdapter extends BaseAdapter {
-        private List<Item> items = new ArrayList<Item>();
-        private LayoutInflater inflater;
-
-        public PlayerAdapter(Context context) {
-            Log.d("debug", "PlayerAdapter");
-            inflater = LayoutInflater.from(context);
-
-            items.add(new Item("1-1", R.drawable.black));
-            items.add(new Item("1-2", R.drawable.black));
-            items.add(new Item("1-3", R.drawable.black));
-            items.add(new Item("1-4", R.drawable.black));
-            items.add(new Item("1-5", R.drawable.black));
-            items.add(new Item("1-1", R.drawable.black));
-            items.add(new Item("2-2", PlayerArrays.F_PLAYER[darkness][0]));
-            items.add(new Item("2-3", PlayerArrays.F_PLAYER[darkness][1]));
-            items.add(new Item("2-4", PlayerArrays.F_PLAYER[darkness][2]));
-            items.add(new Item("2-5", R.drawable.black));
-            items.add(new Item("3-1", R.drawable.black));
-            items.add(new Item("3-2", PlayerArrays.F_PLAYER[darkness][3]));
-
-            switch (scene) {
-                case "f":
-                    items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
-                    break;
-                case "c":
-                    items.add(new Item("3-3", PlayerArrays.C_PLAYER[darkness][4]));
-                    break;
-                case "s":
-                    items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
-                    break;
-                case "d":
-                    items.add(new Item("3-3", PlayerArrays.F_PLAYER[darkness][4]));
-                    break;
-            }
-
-            items.add(new Item("3-4", PlayerArrays.F_PLAYER[darkness][5]));
-            items.add(new Item("3-5", R.drawable.black));
-            items.add(new Item("4-1", R.drawable.black));
-            items.add(new Item("4-2", PlayerArrays.F_PLAYER[darkness][6]));
-            items.add(new Item("4-3", PlayerArrays.F_PLAYER[darkness][7]));
-            items.add(new Item("4-4", PlayerArrays.F_PLAYER[darkness][8]));
-            items.add(new Item("4-5", R.drawable.black));
-            items.add(new Item("5-1", R.drawable.black));
-            items.add(new Item("5-2", R.drawable.black));
-            items.add(new Item("5-3", R.drawable.black));
-            items.add(new Item("5-4", R.drawable.black));
-            items.add(new Item("5-5", R.drawable.black));
         }
 
         @Override
