@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -37,13 +38,13 @@ public class Level extends AppCompatActivity {
 
     public static int width;
     public static int height;
-    public static boolean swipe = false;
+    public static boolean swipe = true;
     final int VIBRATE_SHORT = 10;
     final int VIBRATE_MEDIUM = 500;
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
     GridView gridViewLevel, gridViewMap;
-    ImageView imageViewPlayer, imageViewDarkness, compass, needle, mapPosition;
+    ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needle, mapPosition;
     TextView title, stepCounter, timeCounter, posX, posY, starsSum;
     Button resetLevel, cheatButton;
     ToggleButton controlButton;
@@ -55,11 +56,13 @@ public class Level extends AppCompatActivity {
     MediaPlayer heartbeat;
     int statusBarHeight;
     int level = 0;
+    int maxLevel = 0;
     String[][] currentLevel;
     int x;
     int y;
     String scene;
     int stars = 0;
+    int allStars = 0;
     int darkness = 0;
     int stepCount = 0;
     int time = 0;
@@ -69,7 +72,6 @@ public class Level extends AppCompatActivity {
     ArrayList<Point> stepsMade;
     ArrayList<Point> discovered;
     HashSet<String> starsList;
-    HashSet<String> currentStars;
     boolean isAnimating = false;
     boolean stopTime = false;
     boolean allowInput = true;
@@ -99,7 +101,6 @@ public class Level extends AppCompatActivity {
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
         starsList = new HashSet<>();
-        currentStars = new HashSet<>();
 
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
         x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
@@ -107,7 +108,7 @@ public class Level extends AppCompatActivity {
         scene = currentLevel[currentLevel.length - 2][2];
 
         position = new Point(x, y);
-        discovered.add(new Point(x - 1, y - 1));
+        /*discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -115,7 +116,7 @@ public class Level extends AppCompatActivity {
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));
+        discovered.add(new Point(x + 1, y + 1));*/
 
         stepsMade.add(position);
 
@@ -146,13 +147,22 @@ public class Level extends AppCompatActivity {
         imageViewPlayer.getLayoutParams().width = width * 5 / 3;
         imageViewPlayer.getLayoutParams().height = width * 5 / 3;
         setMargins(imageViewPlayer, -width / 3, 0, 0, 0);
-        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
-
+        if (!scene.equals("s")) {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+        } else {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getPackageName()));
+        }
         imageViewDarkness = (ImageView) findViewById(R.id.imageViewDarkness);
         imageViewDarkness.getLayoutParams().width = width * 5 / 3;
         imageViewDarkness.getLayoutParams().height = width * 5 / 3;
         setMargins(imageViewDarkness, -width / 3, 0, 0, 0);
         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+
+        imageViewSandstorm = (ImageView) findViewById(R.id.imageViewSandstorm);
+        imageViewSandstorm.getLayoutParams().width = width;
+        imageViewSandstorm.getLayoutParams().height = width;
+        setMargins(imageViewSandstorm, 0, 0, 0, width / 3);
+        imageViewSandstorm.setVisibility(View.INVISIBLE);
 
         gridViewMap = (GridView) findViewById(R.id.gridViewMap);
         gridViewMap.getLayoutParams().width = width / 2;
@@ -332,12 +342,21 @@ public class Level extends AppCompatActivity {
 
     public void reset() {
         Log.d("debug", "reset");
+
+        System.out.println(x + ", " + y);
         currentLevel = copyLevel(LevelArrays.LEVEL[level]);
+
+        scene = currentLevel[currentLevel.length - 2][2];
         x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
-        scene = currentLevel[currentLevel.length - 2][2];
 
-        currentStars.clear();
+        int randRotation = (int) (Math.random() * 3);
+        for (int i = 0; i < randRotation; i++) {
+            currentLevel = rotateLevel(currentLevel);
+        }
+
+        System.out.println(x + ", " + y);
+
         discovered.clear();
         stepsMade.clear();
         stars = 0;
@@ -352,7 +371,7 @@ public class Level extends AppCompatActivity {
         volumeHeart = 0;
         volumeFX = 1;
         position = new Point(x, y);
-        discovered.add(new Point(x - 1, y - 1));
+        /*discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -360,13 +379,17 @@ public class Level extends AppCompatActivity {
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));
+        discovered.add(new Point(x + 1, y + 1));*/
         stepsMade.add(position);
 
         gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
-        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+        if (!scene.equals("s")) {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+        } else {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getPackageName()));
+        }
 
         setNeedle();
         title.setText("Level " + (level + 1));
@@ -405,17 +428,23 @@ public class Level extends AppCompatActivity {
         heartbeat.setLooping(true);
         heartbeat.setVolume(volumeHeart, volumeHeart);
         heartbeat.start();
+
+        checkDialog();
     }
 
     public void move() {
         Log.d("debug", "move");
         allowInput = false;
 
-        imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+        if (!scene.equals("s")) {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getPackageName()));
+        } else {
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getPackageName()));
+        }
 
         position = new Point(x, y);
 
-        discovered.add(new Point(x - 1, y - 1));
+        /*discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -423,13 +452,13 @@ public class Level extends AppCompatActivity {
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));
+        discovered.add(new Point(x + 1, y + 1));*/
         stepsMade.add(position);
         stepCounter.setText("Steps: " + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
 
-        if (darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 2][3]) == 0) {
+        if (scene.equals("c") && darkness < 15 && stepCount % Integer.parseInt(currentLevel[currentLevel.length - 2][3]) == 0) {
             darkness++;
             imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
         }
@@ -616,30 +645,6 @@ public class Level extends AppCompatActivity {
 
     public boolean checkPortal() {
         Log.d("debug", "checkPortal");
-        /*if (contains(LevelArrays.PORTAL, currentLevel[y][x])) {
-            for (int i = 0; i < currentLevel.length - 1; i++) {
-                for (int k = 0; k < currentLevel[i].length; k++) {
-                    if (contains(LevelArrays.PORTAL, currentLevel[i][k]) && !(i == y && k == x)) {
-                        x = k;
-                        y = i;
-                        position = new Point(x, y);
-                        discovered.add(new Point(x - 1, y - 1));
-                        discovered.add(new Point(x, y - 1));
-                        discovered.add(new Point(x + 1, y - 1));
-                        discovered.add(new Point(x - 1, y));
-                        discovered.add(position);
-                        discovered.add(new Point(x + 1, y));
-                        discovered.add(new Point(x - 1, y + 1));
-                        discovered.add(new Point(x, y + 1));
-                        discovered.add(new Point(x + 1, y + 1));
-                        stepsMade.add(position);
-                        playSound(R.raw.portal, volumeFX);
-                        return true;
-                    }
-                }
-            }
-        }*/
-
         for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
             String str = currentLevel[currentLevel.length - 1][i];
             String[] result = str.split(",");
@@ -650,7 +655,7 @@ public class Level extends AppCompatActivity {
                     x = Integer.parseInt(even[0]);
                     y = Integer.parseInt(even[1]);
                     position = new Point(x, y);
-                    discovered.add(new Point(x - 1, y - 1));
+                    /*discovered.add(new Point(x - 1, y - 1));
                     discovered.add(new Point(x, y - 1));
                     discovered.add(new Point(x + 1, y - 1));
                     discovered.add(new Point(x - 1, y));
@@ -658,7 +663,7 @@ public class Level extends AppCompatActivity {
                     discovered.add(new Point(x + 1, y));
                     discovered.add(new Point(x - 1, y + 1));
                     discovered.add(new Point(x, y + 1));
-                    discovered.add(new Point(x + 1, y + 1));
+                    discovered.add(new Point(x + 1, y + 1));*/
                     stepsMade.add(position);
                     playSound(R.raw.portal, volumeFX);
                     return true;
@@ -668,7 +673,7 @@ public class Level extends AppCompatActivity {
                     x = Integer.parseInt(odd[0]);
                     y = Integer.parseInt(odd[1]);
                     position = new Point(x, y);
-                    discovered.add(new Point(x - 1, y - 1));
+                    /*discovered.add(new Point(x - 1, y - 1));
                     discovered.add(new Point(x, y - 1));
                     discovered.add(new Point(x + 1, y - 1));
                     discovered.add(new Point(x - 1, y));
@@ -676,7 +681,7 @@ public class Level extends AppCompatActivity {
                     discovered.add(new Point(x + 1, y));
                     discovered.add(new Point(x - 1, y + 1));
                     discovered.add(new Point(x, y + 1));
-                    discovered.add(new Point(x + 1, y + 1));
+                    discovered.add(new Point(x + 1, y + 1));*/
                     stepsMade.add(position);
                     playSound(R.raw.portal, volumeFX);
                     return true;
@@ -760,9 +765,6 @@ public class Level extends AppCompatActivity {
     public boolean checkStar() {
         Log.d("debug", "checkStar");
         if (contains(LevelArrays.STAR, currentLevel[y][x])) {
-            currentStars.add(level + ", " + x + ", " + y);
-            Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
-
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
             stars++;
             playSound(R.raw.star, volumeFX);
@@ -817,25 +819,22 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "checkWin");
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
             stopTime = true;
+
+            if (level + 1 > maxLevel) {
+                maxLevel = level + 1;
+            }
+
             int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 2][4]);
 
             score = stars;
 
             if (stepCount - minSteps <= 0) {
                 score++;
-                currentStars.add(level + ", " + 1 + ", " + 0);
-                Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
             }
 
             if (time - minSteps * 5 <= 0) {
                 score++;
-                currentStars.add(level + ", " + 0 + ", " + 1);
-                Log.d("list", "level: " + level + ", x: " + x + ", y: " + y + ", list: " + currentStars.toString());
             }
-
-            starsList.addAll(currentStars);
-            Log.d("list", "starsList: " + starsList.toString());
-            starsSum.setText("Stars: " + starsList.size());
 
             score = score - cheat;
 
@@ -847,23 +846,93 @@ public class Level extends AppCompatActivity {
             switch (score) {
                 case 0:
                     image.setImageResource(R.drawable.stars_0);
+
                     break;
                 case 1:
+                    if (starsList.contains(level + ", " + 5)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 4)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 3)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 2)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 1)) {
+                        allStars = allStars;
+                    } else {
+                        allStars = allStars + 1;
+                    }
                     image.setImageResource(R.drawable.stars_1);
                     break;
                 case 2:
+                    if (starsList.contains(level + ", " + 5)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 4)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 3)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 2)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 1)) {
+                        allStars = allStars + 1;
+                    } else {
+                        allStars = allStars + 2;
+                    }
                     image.setImageResource(R.drawable.stars_2);
                     break;
                 case 3:
+                    if (starsList.contains(level + ", " + 5)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 4)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 3)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 2)) {
+                        allStars = allStars + 1;
+                    } else if (starsList.contains(level + ", " + 1)) {
+                        allStars = allStars + 2;
+                    } else {
+                        allStars = allStars + 3;
+                    }
                     image.setImageResource(R.drawable.stars_3);
                     break;
                 case 4:
+                    if (starsList.contains(level + ", " + 5)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 4)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 3)) {
+                        allStars = allStars + 1;
+                    } else if (starsList.contains(level + ", " + 2)) {
+                        allStars = allStars + 2;
+                    } else if (starsList.contains(level + ", " + 1)) {
+                        allStars = allStars + 3;
+                    } else {
+                        allStars = allStars + 4;
+                    }
                     image.setImageResource(R.drawable.stars_4);
                     break;
                 case 5:
+                    if (starsList.contains(level + ", " + 5)) {
+                        allStars = allStars;
+                    } else if (starsList.contains(level + ", " + 4)) {
+                        allStars = allStars + 1;
+                    } else if (starsList.contains(level + ", " + 3)) {
+                        allStars = allStars + 2;
+                    } else if (starsList.contains(level + ", " + 2)) {
+                        allStars = allStars + 3;
+                    } else if (starsList.contains(level + ", " + 1)) {
+                        allStars = allStars + 4;
+                    } else {
+                        allStars = allStars + 5;
+                    }
                     image.setImageResource(R.drawable.stars_5);
                     break;
             }
+
+            starsSum.setText("Stars: " + allStars);
+            starsList.add(level + ", " + score);
+            Log.d("starsList", starsList.toString());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
             builder.setTitle("You win!");
@@ -914,6 +983,167 @@ public class Level extends AppCompatActivity {
         return false;
     }
 
+    public void checkDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
+        if (maxLevel == level) {
+            switch (level) {
+                case 0:
+                    stopTime = true;
+                    builder.setTitle("Welcome to Mazecape");
+                    builder.setMessage("You find yourself lost in a terrifying maze. You need to get back home before sunset. " +
+                            "Move around by swiping or change the input mode to touch at the bottom of the screen. " +
+                            "At each stage you will find 3 stars that will help you to proceed later on. Good luck!");
+                    builder.setPositiveButton("Let's get started!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                    break;
+                case 3:
+                    stopTime = true;
+                    builder.setTitle("Monster");
+                    builder.setMessage("Oh no a monster is blocking your path. You must find a sword first in order to proceed.");
+                    builder.setPositiveButton("I can handle that!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                    break;
+                case 5:
+                    stopTime = true;
+                    builder.setTitle("Cave");
+                    builder.setMessage("You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a campfire.");
+                    builder.setPositiveButton("Sure!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                    break;
+                case 6:
+                    stopTime = true;
+                    builder.setTitle("Snow");
+                    builder.setMessage("It got cold. The path is frozen and slippery. Watch out!");
+                    builder.setPositiveButton("Alright!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                    break;
+            }
+        }
+    }
+
+    public String[][] rotateLevel(String[][] oldArray) {
+        String[][] newArray = new String[oldArray[0].length + 2][oldArray.length - 2];
+        for (int i = 0; i < oldArray.length - 2; i++) {
+            for (int k = 0; k < oldArray[i].length; k++) {
+                switch (oldArray[i][k].substring(1, 3)) {
+                    case "lt":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "up";
+                        break;
+                    case "rt":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "dn";
+                        break;
+                    case "up":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "rt";
+                        break;
+                    case "dn":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "lt";
+                        break;
+                    case "lr":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "ud";
+                        break;
+                    case "ud":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "lr";
+                        break;
+                    case "ur":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "dr";
+                        break;
+                    case "ul":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "ur";
+                        break;
+                    case "dr":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "dl";
+                        break;
+                    case "dl":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "ul";
+                        break;
+                    case "tu":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "tr";
+                        break;
+                    case "td":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "tl";
+                        break;
+                    case "tl":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "tu";
+                        break;
+                    case "tr":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "td";
+                        break;
+                    case "cr":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "cr";
+                        break;
+                    case "xx":
+                        newArray[k][oldArray.length - 3 - i] = oldArray[i][k].substring(0, 1) + "xx";
+                        break;
+                }
+            }
+        }
+        newArray[newArray.length - 2] = oldArray[oldArray.length - 2].clone();
+        newArray[newArray.length - 1] = oldArray[oldArray.length - 1].clone();
+
+        int newX = x;
+        int newY = y;
+        newY = x;
+        newX = newArray[0].length - 1 - y;
+        x = newX;
+        y = newY;
+
+        for (int i = 0; i < stepsMade.size(); i++) {
+            newX = stepsMade.get(i).x;
+            newY = stepsMade.get(i).y;
+            newY = stepsMade.get(i).x;
+            newX = newArray[0].length - 1 - stepsMade.get(i).y;
+            stepsMade.get(i).x = newX;
+            stepsMade.get(i).y = newY;
+        }
+
+        for (int i = 0; i < discovered.size(); i++) {
+            newX = discovered.get(i).x;
+            newY = discovered.get(i).y;
+            newY = discovered.get(i).x;
+            newX = newArray[0].length - 1 - discovered.get(i).y;
+            discovered.get(i).x = newX;
+            discovered.get(i).y = newY;
+        }
+
+        for (int i = 0; i < newArray[newArray.length - 1].length; i++) {
+            String str = newArray[newArray.length - 1][i];
+            String[] result = str.split(",");
+            newY = Integer.parseInt(result[0]);
+            newX = newArray[0].length - 1 - Integer.parseInt(result[1]);
+            newArray[newArray.length - 1][i] = newX + "," + newY;
+        }
+
+        return newArray;
+    }
+
     public void setNeedle() {
         Log.d("debug", "setNeedle");
         int goalX = 0;
@@ -952,7 +1182,7 @@ public class Level extends AppCompatActivity {
 
     public void startAnimation(float fromX, float toX, float fromY, float toY) {
         Log.d("debug", "startAnimation");
-        TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
+        final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
         translateAnimation.setDuration(200);
         translateAnimation.setInterpolator(getApplicationContext(), android.R.anim.linear_interpolator);
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -964,6 +1194,7 @@ public class Level extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                allowInput = true;
                 if (!checkDarkness()) {
                     if (!checkTrap()) {
                         if (!checkMonster()) {
@@ -972,6 +1203,37 @@ public class Level extends AppCompatActivity {
                                 checkSword();
                                 checkStar();
                                 checkPortal();
+                                if (scene.equals("d")) {
+                                    int randStep = (int) (Math.random() * 5) + 5;
+                                    if (stepCount % randStep == 0) {
+                                        int randRotation = (int) (Math.random() * 2) + 1;
+                                        for (int i = 0; i < randRotation; i++) {
+                                            currentLevel = rotateLevel(currentLevel);
+                                        }
+                                        RotateAnimation rotateAnimation = new RotateAnimation(0, 360, width / 2, width / 2);
+                                        rotateAnimation.setDuration(1000);
+                                        rotateAnimation.setInterpolator(getApplicationContext(), android.R.anim.linear_interpolator);
+                                        rotateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                                            @Override
+                                            public void onAnimationStart(Animation animation) {
+                                                allowInput = false;
+                                                imageViewSandstorm.setVisibility(View.VISIBLE);
+                                            }
+
+                                            @Override
+                                            public void onAnimationEnd(Animation animation) {
+                                                allowInput = true;
+                                                imageViewSandstorm.setVisibility(View.INVISIBLE);
+                                            }
+
+                                            @Override
+                                            public void onAnimationRepeat(Animation animation) {
+
+                                            }
+                                        });
+                                        imageViewSandstorm.startAnimation(rotateAnimation);
+                                    }
+                                }
                             }
                         }
                     }
@@ -983,7 +1245,6 @@ public class Level extends AppCompatActivity {
                 gridViewLevel.setAdapter(new LevelAdapter(getApplicationContext(), 0));
                 gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
                 setNeedle();
-                allowInput = true;
                 isAnimating = false;
 
                 //Slippery Ground
@@ -1069,7 +1330,6 @@ public class Level extends AppCompatActivity {
                 bgm.start();
                 fire.start();
                 heartbeat.start();
-                createHandler();
             }
         });
         builder.setNeutralButton("Back to level 1", new DialogInterface.OnClickListener() {
@@ -1097,11 +1357,11 @@ public class Level extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                handler.postDelayed(this, 1000);
                 boolean containsTrap = false;
                 if (!stopTime) {
                     time += 1;
                     timeCounter.setText("Time: " + time);
-                    handler.postDelayed(this, 1000);
 
                     //Time-Based changes like traps
                     for (int i = 0; i < currentLevel.length - 2; i++) {
@@ -1150,8 +1410,11 @@ public class Level extends AppCompatActivity {
                         gridViewMap.setAdapter(new MapAdapter(getApplicationContext(), 0));
                         checkTrap();
                     }
-                } else {
-                    createHandler();
+                    if (scene.equals("f") && (time % 4 == 0)) {
+                        darkness++;
+                        imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+                        checkDarkness();
+                    }
                 }
             }
         };
@@ -1165,7 +1428,9 @@ public class Level extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("level", level);
+        editor.putInt("maxLevel", maxLevel);
         editor.putStringSet("stars", starsList);
+        editor.putInt("allStars", allStars);
         editor.putBoolean("swipe", swipe);
         if (controlButton.isChecked()) {
             editor.putBoolean("isChecked", true);
@@ -1180,11 +1445,13 @@ public class Level extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
 
         level = sharedPreferences.getInt("level", 0);
-        swipe = sharedPreferences.getBoolean("swipe", false);
-        Set<String> set = sharedPreferences.getStringSet("stars", null);
+        maxLevel = sharedPreferences.getInt("maxLevel", 0);
+        allStars = sharedPreferences.getInt("allStars", 0);
+        swipe = sharedPreferences.getBoolean("swipe", true);
+        Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
         starsList.addAll(set);
-        starsSum.setText("Stars: " + starsList.size());
-        controlButton.setChecked(sharedPreferences.getBoolean("isChecked", false));
+        starsSum.setText("Stars: " + allStars);
+        controlButton.setChecked(sharedPreferences.getBoolean("isChecked", true));
 
         reset();
     }
