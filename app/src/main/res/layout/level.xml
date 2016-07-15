@@ -153,15 +153,27 @@
             android:textColor="#fff"/>
 
         <TextView
-            android:id="@+id/timeCounter"
+            android:id="@+id/lives"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:text="Lives"
+            android:textColor="#ffffff"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/timeCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/lives"
             android:text="Time"
             android:textColor="#ffffff"
-            android:textSize="16dp"/>
+            android:textSize="16dp" />
 
         <ToggleButton
             android:id="@+id/controlButton"

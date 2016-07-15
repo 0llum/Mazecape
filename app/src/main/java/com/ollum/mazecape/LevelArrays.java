@@ -102,7 +102,7 @@ public class LevelArrays {
                 {"4", "3", "f", "100", "22"},
                 {}
     };
-        public static final String[][] FOREST_4 = {
+        public static final String[][] MONSTER_1 = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -115,7 +115,7 @@ public class LevelArrays {
                 {"4", "3", "f", "100", "12"},
                 {}
     };
-        public static final String[][] FOREST_5 = {
+        public static final String[][] MONSTER_2 = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -129,6 +129,37 @@ public class LevelArrays {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"7", "7", "f", "100", "24"},
                 {}
+    };
+        public static final String[][] PORTAL_1 = {
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "wdr", "wlr", "wtu", "wlr", "wdl", "xxx", "xxx"},
+                {"xxx", "xxx", "wud", "gdn", "wud", "cdn", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wud", "pup", "wud", "sud", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wtl", "wlr", "wtr", "nud", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wud", "pdn", "wud", "nud", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wud", "cud", "wup", "cud", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wud", "mur", "nlr", "nul", "wud", "xxx", "xxx"},
+                {"xxx", "xxx", "wur", "wlr", "wlr", "wlr", "wul", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"5", "8", "f", "100", "15"},
+                {"3,4", "3,6"}
+        };
+        public static final String[][] PORTAL_2 = {
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "prt", "nlr", "slt", "ndn", "prt", "ntu", "nlt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "crt", "ndl", "prt", "ntd", "plt", "ntl", "nlt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "prt", "ntd", "ntu", "mtu", "ntu", "ntd", "plt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nrt", "ntu", "nul", "nud", "nur", "ntu", "nlt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "prt", "ntd", "clt", "gup", "crt", "ntd", "plt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"6", "3", "f", "100", "33"},
+                {"5,4", "3,7", "7,4", "9,7", "3,3", "9,5", "3,5", "7,3"}
     };
         public static final String[][] CAVE_1 = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -190,53 +221,7 @@ public class LevelArrays {
                 {"12", "12", "d", "3", "31"},
                 {}
     };
-        public static final String[][] LEVEL_B = {
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "wdr", "wlr", "wtu", "wlr", "wdl", "xxx", "xxx"},
-                {"xxx", "xxx", "wud", "gdn", "wud", "cdn", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wud", "pup", "wud", "sud", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wtl", "wlr", "wtr", "tud", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wud", "pdn", "wud", "nud", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wud", "cud", "wup", "cud", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wud", "mur", "nlr", "nul", "wud", "xxx", "xxx"},
-                {"xxx", "xxx", "wur", "wlr", "wlr", "wlr", "wul", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"5", "8", "d", "100", "15"},
-                {"2,3", "2,5"}
-    };
-        public static final String[][] LEVEL_D = {
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "prt", "hlr", "nlr", "tlr", "plr", "glt", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"5", "3", "d", "100", "3"},
-                {"2,2", "6,2"}
-    };
-        public static final String[][] LEVEL_K = {
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "ndr", "ndl", "ndr", "nlr", "ndl", "ndn", "ndr", "ntu", "ndl", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nud", "nup", "nud", "ndr", "nul", "nud", "ntl", "nul", "nud", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "ntl", "ndl", "nud", "nur", "nlr", "ntr", "nur", "ndl", "nud", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nud", "nud", "nud", "ndr", "ndl", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nud", "nud", "nud", "ntl", "ncr", "nul", "nud", "ndr", "ntr", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nud", "nur", "nul", "nur", "ntr", "ndr", "nul", "nud", "nud", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nud", "ndn", "ndr", "ndl", "nud", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nur", "ncr", "nul", "nud", "nup", "nud", "nup", "grt", "nul", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "nrt", "ntd", "nlr", "ntd", "nlr", "ftd", "nlr", "nlr", "nlt", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"7", "7", "d", "4", "52"},
-                {}
-    };
-        public static final String[][] LEVEL_L = {
+        public static final String[][] DESERT_2 = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -253,9 +238,40 @@ public class LevelArrays {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"7", "3", "c", "3", "32"},
+                {"7", "3", "d", "3", "32"},
                 {}
-    };
+        };
+        public static final String[][] LEVEL_D = {
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "prt", "hlr", "nlr", "tlr", "plr", "glt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"5", "3", "f", "100", "3"},
+                {"3,3", "7,3"}
+        };
+        public static final String[][] LEVEL_K = {
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "ndr", "ndl", "ndr", "nlr", "ndl", "ndn", "ndr", "ntu", "ndl", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nud", "nup", "nud", "ndr", "nul", "nud", "ntl", "nul", "nud", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "ntl", "ndl", "nud", "nur", "nlr", "ntr", "nur", "ndl", "nud", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nud", "nud", "nud", "ndr", "ndl", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nud", "nud", "nud", "ntl", "ncr", "nul", "nud", "ndr", "ntr", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nud", "nur", "nul", "nur", "ntr", "ndr", "nul", "nud", "nud", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nud", "ndn", "ndr", "ndl", "nud", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nur", "ncr", "nul", "nud", "nup", "nud", "nup", "grt", "nul", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "nrt", "ntd", "nlr", "ntd", "nlr", "ftd", "nlr", "nlr", "nlt", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+                {"7", "7", "c", "4", "52"},
+                {}
+        };
+
         public static final String[][] LEVEL_M = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -278,9 +294,9 @@ public class LevelArrays {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-                {"3", "5", "s", "8", "53"},
+                {"3", "5", "c", "8", "53"},
                 {}
-    };
+        };
         public static final String[][] LEVEL_N = {
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
                 {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -312,7 +328,7 @@ public class LevelArrays {
                 {}
         };
     public static final String[][][] LEVEL = {
-            FOREST_1, FOREST_2, FOREST_3, FOREST_4, FOREST_5, CAVE_1, SNOW_1, SNOW_2, DESERT_1
+            FOREST_1, FOREST_2, FOREST_3, MONSTER_1, MONSTER_2, PORTAL_1, PORTAL_2, CAVE_1, SNOW_1, SNOW_2, DESERT_1, DESERT_2, LEVEL_D, LEVEL_K, LEVEL_M, LEVEL_N, FOREST_1, FOREST_2, FOREST_3, MONSTER_1, MONSTER_2, PORTAL_1, PORTAL_2, CAVE_1, SNOW_1, SNOW_2, DESERT_1, DESERT_2, LEVEL_D, LEVEL_K, LEVEL_M, LEVEL_N
     };
     public static final String[][] TEMPLATE_3x3 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},

@@ -3,6 +3,7 @@ package com.ollum.mazecape;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ToggleButton;
@@ -39,13 +41,13 @@ public class Level extends AppCompatActivity {
     public static int width;
     public static int height;
     public static boolean swipe = true;
+    static TextView title, stepCounter, timeCounter, posX, posY, starsSum, livesCounter;
     final int VIBRATE_SHORT = 10;
     final int VIBRATE_MEDIUM = 500;
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
     GridView gridViewLevel, gridViewMap;
     ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needle, mapPosition;
-    TextView title, stepCounter, timeCounter, posX, posY, starsSum;
     Button resetLevel, cheatButton;
     ToggleButton controlButton;
     Vibrator vibrator;
@@ -55,8 +57,6 @@ public class Level extends AppCompatActivity {
     MediaPlayer fire;
     MediaPlayer heartbeat;
     int statusBarHeight;
-    int level = 0;
-    int maxLevel = 0;
     String[][] currentLevel;
     int x;
     int y;
@@ -71,7 +71,6 @@ public class Level extends AppCompatActivity {
     Point position;
     ArrayList<Point> stepsMade;
     ArrayList<Point> discovered;
-    HashSet<String> starsList;
     boolean isAnimating = false;
     boolean stopTime = false;
     boolean allowInput = true;
@@ -100,9 +99,8 @@ public class Level extends AppCompatActivity {
 
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
-        starsList = new HashSet<>();
 
-        currentLevel = copyLevel(LevelArrays.LEVEL[level]);
+        currentLevel = copyLevel(LevelArrays.LEVEL[StartScreen.level]);
         x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
         scene = currentLevel[currentLevel.length - 2][2];
@@ -188,7 +186,7 @@ public class Level extends AppCompatActivity {
         gridViewLevel.setAdapter(new LevelAdapter(this, 0));
 
         title = (TextView) findViewById(R.id.title);
-        title.setText("Level " + (level + 1));
+        title.setText("Level " + (StartScreen.level + 1));
 
         stepCounter = (TextView) findViewById(R.id.stepCounter);
         stepCounter.setText("Steps: " + stepCount);
@@ -197,7 +195,10 @@ public class Level extends AppCompatActivity {
         timeCounter.setText(("Time: " + time));
 
         starsSum = (TextView) findViewById(R.id.stars);
-        starsSum.setText("Stars: " + starsList.size());
+        starsSum.setText("Stars: " + StartScreen.starsList.size());
+
+        livesCounter = (TextView) findViewById(R.id.lives);
+        livesCounter.setText("Lives: " + (StartScreen.lives + 1));
 
         posX = (TextView) findViewById(R.id.posX);
         posY = (TextView) findViewById(R.id.posY);
@@ -340,17 +341,61 @@ public class Level extends AppCompatActivity {
         createHandler();
     }
 
+    @Override
+    public void onBackPressed() {
+        try {
+            bgm.pause();
+            fire.pause();
+            heartbeat.pause();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        stopTime = true;
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
+        builder.setTitle("");
+        builder.setMessage("Do you really want to go back to the level select screen? You will lose all your progress in the current level!");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(getApplicationContext(), LevelSelect.class));
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                stopTime = false;
+                bgm.start();
+                fire.start();
+                heartbeat.start();
+            }
+        });
+        builder.setCancelable(false);
+        builder.create();
+        builder.show();
+    }
+
     public void reset() {
         Log.d("debug", "reset");
 
+        if (StartScreen.lives > 0) {
+            StartScreen.lives--;
+        } else {
+            startActivity(new Intent(getApplicationContext(), StartScreen.class));
+            overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        }
+
         System.out.println(x + ", " + y);
-        currentLevel = copyLevel(LevelArrays.LEVEL[level]);
+        currentLevel = copyLevel(LevelArrays.LEVEL[StartScreen.level]);
 
         scene = currentLevel[currentLevel.length - 2][2];
         x = Integer.parseInt(currentLevel[currentLevel.length - 2][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 2][1]);
 
-        int randRotation = (int) (Math.random() * 3);
+        int randRotation = 0 + (int) (Math.random() * ((3 - 0) + 1));
         for (int i = 0; i < randRotation; i++) {
             currentLevel = rotateLevel(currentLevel);
         }
@@ -392,11 +437,12 @@ public class Level extends AppCompatActivity {
         }
 
         setNeedle();
-        title.setText("Level " + (level + 1));
+        title.setText("Level " + (StartScreen.level + 1));
         stepCounter.setText("Steps: " + stepCount);
         timeCounter.setText("Time: " + time);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
+        livesCounter.setText("Lives: " + (StartScreen.lives + 1));
         hasSword = false;
         imgSword.setVisibility(View.INVISIBLE);
 
@@ -775,6 +821,7 @@ public class Level extends AppCompatActivity {
 
     public void gameOver() {
         Log.d("debug", "gameOver");
+
         stopTime = true;
         playSound(R.raw.death, volumeFX);
 
@@ -794,10 +841,33 @@ public class Level extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        ImageView image2 = new ImageView(this);
+        switch (StartScreen.lives) {
+            case 0:
+                image2.setImageResource(R.drawable.hearts_0);
+                break;
+            case 1:
+                image2.setImageResource(R.drawable.hearts_1);
+                break;
+            case 2:
+                image2.setImageResource(R.drawable.hearts_2);
+                break;
+            case 3:
+                image2.setImageResource(R.drawable.hearts_3);
+                break;
+            case 4:
+                image2.setImageResource(R.drawable.hearts_4);
+                break;
+            case 5:
+                image2.setImageResource(R.drawable.hearts_5);
+                break;
+        }
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
         builder.setTitle("You died!");
         builder.setMessage("You died after: " + stepCount + " steps.");
+        builder.setView(image2);
         builder.setCancelable(false);
         builder.setPositiveButton("Replay", new DialogInterface.OnClickListener() {
             @Override
@@ -808,7 +878,7 @@ public class Level extends AppCompatActivity {
         builder.setNegativeButton("Previous", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                level--;
+                StartScreen.level--;
                 reset();
             }
         });
@@ -818,10 +888,14 @@ public class Level extends AppCompatActivity {
     public boolean checkWin() {
         Log.d("debug", "checkWin");
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
+            if (StartScreen.lives < 5) {
+                StartScreen.lives++;
+            }
+
             stopTime = true;
 
-            if (level + 1 > maxLevel) {
-                maxLevel = level + 1;
+            if (StartScreen.level + 1 > StartScreen.maxLevel) {
+                StartScreen.maxLevel = StartScreen.level + 1;
             }
 
             int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 2][4]);
@@ -846,18 +920,17 @@ public class Level extends AppCompatActivity {
             switch (score) {
                 case 0:
                     image.setImageResource(R.drawable.stars_0);
-
                     break;
                 case 1:
-                    if (starsList.contains(level + ", " + 5)) {
+                    if (StartScreen.starsList.contains(StartScreen.level + ", " + 5)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 4)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 4)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 3)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 3)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 2)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 2)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 1)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 1)) {
                         allStars = allStars;
                     } else {
                         allStars = allStars + 1;
@@ -865,15 +938,15 @@ public class Level extends AppCompatActivity {
                     image.setImageResource(R.drawable.stars_1);
                     break;
                 case 2:
-                    if (starsList.contains(level + ", " + 5)) {
+                    if (StartScreen.starsList.contains(StartScreen.level + ", " + 5)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 4)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 4)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 3)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 3)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 2)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 2)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 1)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 1)) {
                         allStars = allStars + 1;
                     } else {
                         allStars = allStars + 2;
@@ -881,15 +954,15 @@ public class Level extends AppCompatActivity {
                     image.setImageResource(R.drawable.stars_2);
                     break;
                 case 3:
-                    if (starsList.contains(level + ", " + 5)) {
+                    if (StartScreen.starsList.contains(StartScreen.level + ", " + 5)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 4)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 4)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 3)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 3)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 2)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 2)) {
                         allStars = allStars + 1;
-                    } else if (starsList.contains(level + ", " + 1)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 1)) {
                         allStars = allStars + 2;
                     } else {
                         allStars = allStars + 3;
@@ -897,15 +970,15 @@ public class Level extends AppCompatActivity {
                     image.setImageResource(R.drawable.stars_3);
                     break;
                 case 4:
-                    if (starsList.contains(level + ", " + 5)) {
+                    if (StartScreen.starsList.contains(StartScreen.level + ", " + 5)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 4)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 4)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 3)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 3)) {
                         allStars = allStars + 1;
-                    } else if (starsList.contains(level + ", " + 2)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 2)) {
                         allStars = allStars + 2;
-                    } else if (starsList.contains(level + ", " + 1)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 1)) {
                         allStars = allStars + 3;
                     } else {
                         allStars = allStars + 4;
@@ -913,15 +986,15 @@ public class Level extends AppCompatActivity {
                     image.setImageResource(R.drawable.stars_4);
                     break;
                 case 5:
-                    if (starsList.contains(level + ", " + 5)) {
+                    if (StartScreen.starsList.contains(StartScreen.level + ", " + 5)) {
                         allStars = allStars;
-                    } else if (starsList.contains(level + ", " + 4)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 4)) {
                         allStars = allStars + 1;
-                    } else if (starsList.contains(level + ", " + 3)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 3)) {
                         allStars = allStars + 2;
-                    } else if (starsList.contains(level + ", " + 2)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 2)) {
                         allStars = allStars + 3;
-                    } else if (starsList.contains(level + ", " + 1)) {
+                    } else if (StartScreen.starsList.contains(StartScreen.level + ", " + 1)) {
                         allStars = allStars + 4;
                     } else {
                         allStars = allStars + 5;
@@ -930,33 +1003,58 @@ public class Level extends AppCompatActivity {
                     break;
             }
 
+            ImageView image2 = new ImageView(this);
+            switch (StartScreen.lives) {
+                case 0:
+                    image2.setImageResource(R.drawable.hearts_0);
+                    break;
+                case 1:
+                    image2.setImageResource(R.drawable.hearts_1);
+                    break;
+                case 2:
+                    image2.setImageResource(R.drawable.hearts_2);
+                    break;
+                case 3:
+                    image2.setImageResource(R.drawable.hearts_3);
+                    break;
+                case 4:
+                    image2.setImageResource(R.drawable.hearts_4);
+                    break;
+                case 5:
+                    image2.setImageResource(R.drawable.hearts_5);
+                    break;
+            }
+
+            LinearLayout linearLayout = new LinearLayout(this);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.addView(image);
+            linearLayout.addView(image2);
+
             starsSum.setText("Stars: " + allStars);
-            starsList.add(level + ", " + score);
-            Log.d("starsList", starsList.toString());
+            StartScreen.starsList.add(StartScreen.level + ", " + score);
+            Log.d("starsList", StartScreen.starsList.toString());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
             builder.setTitle("You win!");
             builder.setMessage("Steps: " + stepCount + "\n" + "Time: " + time + "\n");
-            builder.setView(image);
+            builder.setView(linearLayout);
             builder.setCancelable(false);
-            if (level < LevelArrays.LEVEL.length - 1) {
+            if (StartScreen.level < LevelArrays.LEVEL.length - 1) {
                 builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        level++;
+                        StartScreen.level++;
                         reset();
                     }
                 });
             }
-            if (level > 0) {
-                builder.setNeutralButton("Previous", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        level--;
-                        reset();
-                    }
-                });
-            }
+            builder.setNeutralButton("Level Select", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(getApplicationContext(), LevelSelect.class));
+                    overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+                }
+            });
             builder.setNegativeButton("Replay", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -985,8 +1083,8 @@ public class Level extends AppCompatActivity {
 
     public void checkDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(Level.this);
-        if (maxLevel == level) {
-            switch (level) {
+        if (StartScreen.maxLevel == StartScreen.level) {
+            switch (StartScreen.level) {
                 case 0:
                     stopTime = true;
                     builder.setTitle("Welcome to Mazecape");
@@ -1000,6 +1098,7 @@ public class Level extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+                    builder.setCancelable(false);
                     builder.create();
                     builder.show();
                     break;
@@ -1014,10 +1113,26 @@ public class Level extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+                    builder.setCancelable(false);
                     builder.create();
                     builder.show();
                     break;
                 case 5:
+                    stopTime = true;
+                    builder.setTitle("Portal");
+                    builder.setMessage("Look, there's a portal somewhere. You have to find it. It will take you to unreachable places!");
+                    builder.setPositiveButton("Awesome!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.create();
+                    builder.show();
+                    break;
+                case 7:
                     stopTime = true;
                     builder.setTitle("Cave");
                     builder.setMessage("You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a campfire.");
@@ -1028,10 +1143,11 @@ public class Level extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+                    builder.setCancelable(false);
                     builder.create();
                     builder.show();
                     break;
-                case 6:
+                case 8:
                     stopTime = true;
                     builder.setTitle("Snow");
                     builder.setMessage("It got cold. The path is frozen and slippery. Watch out!");
@@ -1042,6 +1158,22 @@ public class Level extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+                    builder.setCancelable(false);
+                    builder.create();
+                    builder.show();
+                    break;
+                case 10:
+                    stopTime = true;
+                    builder.setTitle("Desert");
+                    builder.setMessage("You entered a wide desert. Try not not to lose your orientation and watch out for sandstorms!");
+                    builder.setPositiveButton("Let's not get lost!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            stopTime = false;
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setCancelable(false);
                     builder.create();
                     builder.show();
                     break;
@@ -1204,9 +1336,9 @@ public class Level extends AppCompatActivity {
                                 checkStar();
                                 checkPortal();
                                 if (scene.equals("d")) {
-                                    int randStep = (int) (Math.random() * 5) + 5;
+                                    int randStep = 5 + (int) (Math.random() * ((10 - 5) + 1));
                                     if (stepCount % randStep == 0) {
-                                        int randRotation = (int) (Math.random() * 2) + 1;
+                                        int randRotation = 1 + (int) (Math.random() * ((3 - 1) + 1));
                                         for (int i = 0; i < randRotation; i++) {
                                             currentLevel = rotateLevel(currentLevel);
                                         }
@@ -1332,13 +1464,15 @@ public class Level extends AppCompatActivity {
                 heartbeat.start();
             }
         });
-        builder.setNeutralButton("Back to level 1", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton("Level Select", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                level = 0;
-                reset();
+                startActivity(new Intent(getApplicationContext(), LevelSelect.class));
+                overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
             }
         });
+        builder.setCancelable(false);
+        builder.create();
         builder.show();
     }
 
@@ -1424,12 +1558,13 @@ public class Level extends AppCompatActivity {
     public void saveGame() {
         Log.d("debug", "saveGame");
         Set<String> set = new HashSet<String>();
-        set.addAll(starsList);
+        set.addAll(StartScreen.starsList);
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", level);
-        editor.putInt("maxLevel", maxLevel);
-        editor.putStringSet("stars", starsList);
+        editor.putInt("level", StartScreen.level);
+        editor.putInt("lives", StartScreen.lives);
+        editor.putInt("maxLevel", StartScreen.maxLevel);
+        editor.putStringSet("stars", StartScreen.starsList);
         editor.putInt("allStars", allStars);
         editor.putBoolean("swipe", swipe);
         if (controlButton.isChecked()) {
@@ -1444,12 +1579,13 @@ public class Level extends AppCompatActivity {
         Log.d("debug", "loadGame");
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
 
-        level = sharedPreferences.getInt("level", 0);
-        maxLevel = sharedPreferences.getInt("maxLevel", 0);
+        //StartScreen.level = sharedPreferences.getInt("level", 0);
+        StartScreen.lives = sharedPreferences.getInt("lives", 5);
+        StartScreen.maxLevel = sharedPreferences.getInt("maxLevel", 0);
         allStars = sharedPreferences.getInt("allStars", 0);
         swipe = sharedPreferences.getBoolean("swipe", true);
         Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
-        starsList.addAll(set);
+        StartScreen.starsList.addAll(set);
         starsSum.setText("Stars: " + allStars);
         controlButton.setChecked(sharedPreferences.getBoolean("isChecked", true));
 
