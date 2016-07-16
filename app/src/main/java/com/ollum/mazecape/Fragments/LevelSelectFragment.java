@@ -1,9 +1,10 @@
-package com.ollum.mazecape;
+package com.ollum.mazecape.Fragments;
+
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,39 +14,43 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.ollum.mazecape.Activities.MainActivity;
+import com.ollum.mazecape.Arrays.LevelArrays;
+import com.ollum.mazecape.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class LevelSelect extends AppCompatActivity {
+public class LevelSelectFragment extends Fragment {
 
     GridView gridViewLevels;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.level_select);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_level_select, container, false);
 
-        gridViewLevels = (GridView) findViewById(R.id.gridViewLevels);
-        gridViewLevels.setAdapter(new LevelsAdapter(this, 0));
+        gridViewLevels = (GridView) view.findViewById(R.id.gridViewLevels);
+        gridViewLevels.setAdapter(new LevelsAdapter(getContext(), 0));
         gridViewLevels.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position <= StartScreen.maxLevel) {
-                    StartScreen.level = position;
-                    if (StartScreen.lives > 0) {
-                        startActivity(new Intent(getApplicationContext(), Level.class));
-                        overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                if (position <= MainActivity.maxLevel) {
+                    MainActivity.level = position;
+                    if (MainActivity.lives > 0) {
+                        GameFragment gameFragment = new GameFragment();
+                        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                        transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                        transaction.replace(R.id.content, gameFragment, "GameFragment");
+                        transaction.addToBackStack("GameFragment");
+                        transaction.commit();
                     }
                 }
             }
         });
-        gridViewLevels.smoothScrollToPositionFromTop(StartScreen.maxLevel, 0, 500);
-    }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, StartScreen.class));
-        overridePendingTransition(R.anim.in_from_left, R.anim.out_to_right);
+        gridViewLevels.setSelection(MainActivity.maxLevel);
+
+        return view;
     }
 
     private class LevelsAdapter extends BaseAdapter {
@@ -57,10 +62,10 @@ public class LevelSelect extends AppCompatActivity {
 
             for (int i = 0; i < LevelArrays.LEVEL.length; i++) {
                 String scene = LevelArrays.LEVEL[i][LevelArrays.LEVEL[i].length - 2][2];
-                if (i <= StartScreen.maxLevel) {
-                    items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getPackageName()), i + 1));
+                if (i <= MainActivity.maxLevel) {
+                    items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
                 } else {
-                    items.add(new Item("" + i, getResources().getIdentifier(scene + "blk", "drawable", getPackageName()), i + 1));
+                    items.add(new Item("" + i, getResources().getIdentifier(scene + "blk", "drawable", getContext().getPackageName()), i + 1));
                 }
             }
         }
@@ -101,15 +106,15 @@ public class LevelSelect extends AppCompatActivity {
             Item item = (Item) getItem(position);
 
             picture.setImageResource(item.drawableId);
-            if (StartScreen.starsList.contains(position + ", " + 5)) {
+            if (MainActivity.starsList.contains(position + ", " + 5)) {
                 score.setImageResource(R.drawable.stars_5);
-            } else if (StartScreen.starsList.contains(position + ", " + 4)) {
+            } else if (MainActivity.starsList.contains(position + ", " + 4)) {
                 score.setImageResource(R.drawable.stars_4);
-            } else if (StartScreen.starsList.contains(position + ", " + 3)) {
+            } else if (MainActivity.starsList.contains(position + ", " + 3)) {
                 score.setImageResource(R.drawable.stars_3);
-            } else if (StartScreen.starsList.contains(position + ", " + 2)) {
+            } else if (MainActivity.starsList.contains(position + ", " + 2)) {
                 score.setImageResource(R.drawable.stars_2);
-            } else if (StartScreen.starsList.contains(position + ", " + 1)) {
+            } else if (MainActivity.starsList.contains(position + ", " + 1)) {
                 score.setImageResource(R.drawable.stars_1);
             } else {
                 score.setImageResource(R.drawable.stars_0);
@@ -131,4 +136,5 @@ public class LevelSelect extends AppCompatActivity {
             }
         }
     }
+
 }
