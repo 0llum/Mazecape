@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Fragments.GameFragment;
 
 public class OnSwipeTouchListener implements OnTouchListener {
@@ -42,13 +43,13 @@ public class OnSwipeTouchListener implements OnTouchListener {
         @Override
         public boolean onDown(MotionEvent e) {
 
-            if ((!GameFragment.swipe) && e.getX() > GameFragment.width * 2 / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
+            if ((!MainActivity.swipe) && e.getX() > GameFragment.width * 2 / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
                 onSwipeLeft();
-            } else if ((!GameFragment.swipe) && e.getX() < GameFragment.width / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
+            } else if ((!MainActivity.swipe) && e.getX() < GameFragment.width / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
                 onSwipeRight();
-            } else if ((!GameFragment.swipe) && e.getY() < GameFragment.height - GameFragment.width * 2 / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
+            } else if ((!MainActivity.swipe) && e.getY() < GameFragment.height - GameFragment.width * 2 / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
                 onSwipeBottom();
-            } else if ((!GameFragment.swipe) && e.getY() > GameFragment.height - GameFragment.width / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
+            } else if ((!MainActivity.swipe) && e.getY() > GameFragment.height - GameFragment.width / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
                 onSwipeTop();
             }
             return true;
@@ -60,7 +61,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
             try {
                 float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
-                if ((GameFragment.swipe) && Math.abs(diffX) > Math.abs(diffY)) {
+                if ((MainActivity.swipe) && Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
                             onSwipeRight();
@@ -69,7 +70,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
                         }
                     }
                     result = true;
-                } else if ((GameFragment.swipe) && Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                } else if ((MainActivity.swipe) && Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         onSwipeBottom();
                     } else {

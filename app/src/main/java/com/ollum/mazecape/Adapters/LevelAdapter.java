@@ -1,7 +1,6 @@
 package com.ollum.mazecape.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ public class LevelAdapter extends BaseAdapter {
     private LayoutInflater inflater;
 
     public LevelAdapter(Context context, int center) {
-        Log.d("debug", "LevelAdapter");
         inflater = LayoutInflater.from(context);
 
         items.add(new Item("1-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x - 2], "drawable", context.getPackageName())));

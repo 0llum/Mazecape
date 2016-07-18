@@ -27,10 +27,13 @@ public class MainActivity extends AppCompatActivity {
     public static int maxLevel = 0;
     public static int level = 0;
     public static int lives = 5;
+    public static boolean swipe = true;
     public static HashSet<String> starsList;
+    public static int allStars = 0;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
+    public long logOffTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,18 +111,51 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveGame();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadGame();
+    }
+
     public void loadGame() {
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
 
         level = sharedPreferences.getInt("level", 0);
         lives = sharedPreferences.getInt("lives", 5);
         maxLevel = sharedPreferences.getInt("maxLevel", 0);
+        allStars = sharedPreferences.getInt("allStars", 0);
+        swipe = sharedPreferences.getBoolean("swipe", true);
+        logOffTime = sharedPreferences.getLong("logOffTime", 0);
         Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
         starsList.addAll(set);
+
+        for (int i = 0; i < 5; i++) {
+            if ((currentTimeMillis() - logOffTime > 300000) && lives < 5) {
+                lives++;
+                logOffTime += 300000;
+            }
+        }
     }
 
     public void saveGame() {
-
+        Set<String> set = new HashSet<String>();
+        set.addAll(starsList);
+        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("level", level);
+        editor.putInt("lives", lives);
+        editor.putInt("maxLevel", maxLevel);
+        editor.putStringSet("stars", starsList);
+        editor.putInt("allStars", allStars);
+        editor.putBoolean("swipe", swipe);
+        editor.putLong("logOffTime", currentTimeMillis());
+        editor.apply();
     }
 
     public void createHandler() {
@@ -131,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 endMillis = currentTimeMillis();
                 if (lives < 5) {
-                    if (endMillis - startMillis > 60000) {
+                    if (endMillis - startMillis > 300000) {
                         lives++;
                         startMillis = currentTimeMillis();
                         try {
                             MainMenuFragment.livesCounter.setText("Lives: " + lives);
-                            GameFragment.livesCounter.setText("Lives: " + lives);
+                            GameFragment.livesCounter.setText("" + lives);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -13,7 +13,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -40,14 +39,11 @@ import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GameFragment extends Fragment implements View.OnClickListener {
 
     public static int width;
     public static int height;
-    public static boolean swipe = true;
     public static TextView title, stepCounter, timeCounter, posX, posY, starsSum, livesCounter;
     public static MediaPlayer bgm;
     public static MediaPlayer fire;
@@ -65,6 +61,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     final int VIBRATE_MEDIUM = 500;
     final int VIBRATE_LONG = 1000;
     RelativeLayout relativeLayout_Container, relativeLayout_UI;
+    LinearLayout levelTitle, stats, navigation;
     GridView gridViewLevel, gridViewMap;
     ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needle, mapPosition;
     Button resetLevel, cheatButton;
@@ -74,7 +71,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     Point size;
     int statusBarHeight;
     int stars = 0;
-    int allStars = 0;
     int darkness = 0;
     int time = 0;
     int cheat = 0;
@@ -82,6 +78,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     boolean isAnimating = false;
     boolean allowInput = true;
     boolean hasSword = false;
+    boolean hasDialog = false;
     ImageView imgSword;
     float volumeBGM = 0.5f;
     float volumeFire = 0;
@@ -138,13 +135,18 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         relativeLayout_UI.getLayoutParams().width = width;
         relativeLayout_UI.getLayoutParams().height = height;
 
+        levelTitle = (LinearLayout) view.findViewById(R.id.levelTitel);
+        levelTitle.getLayoutParams().height = height / 16;
+
+        stats = (LinearLayout) view.findViewById(R.id.stats);
+        stats.getLayoutParams().height = height / 16;
+
+        navigation = (LinearLayout) view.findViewById(R.id.navigation);
+        navigation.getLayoutParams().height = (int) (height / 3.55555555);
+
         compass = (ImageView) view.findViewById(R.id.compass);
-        compass.getLayoutParams().width = width / 2;
-        compass.getLayoutParams().height = width / 2;
 
         needle = (ImageView) view.findViewById(R.id.needle);
-        needle.getLayoutParams().width = width / 2;
-        needle.getLayoutParams().height = width / 2;
 
         imageViewPlayer = (ImageView) view.findViewById(R.id.imageViewPlayer);
         imageViewPlayer.getLayoutParams().width = width * 5 / 3;
@@ -168,13 +170,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         imageViewSandstorm.setVisibility(View.INVISIBLE);
 
         gridViewMap = (GridView) view.findViewById(R.id.gridViewMap);
-        gridViewMap.getLayoutParams().width = width / 2;
-        gridViewMap.getLayoutParams().height = width / 2;
 
         mapPosition = (ImageView) view.findViewById(R.id.minimapPosition);
-        mapPosition.setX(gridViewMap.getLayoutParams().width / 10);
-        mapPosition.setY(gridViewMap.getLayoutParams().height / 10);
-        Log.d("debug", "mapPosition: " + mapPosition.getX() + ", " + mapPosition.getY());
 
         gridViewLevel = (GridView) view.findViewById(R.id.gridViewLevel);
 
@@ -194,13 +191,13 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         title.setText("Level " + (MainActivity.level + 1));
 
         stepCounter = (TextView) view.findViewById(R.id.stepCounter);
-        stepCounter.setText("Steps: " + stepCount);
+        stepCounter.setText("" + stepCount);
 
         timeCounter = (TextView) view.findViewById(R.id.timeCounter);
-        timeCounter.setText(("Time: " + time));
+        timeCounter.setText(("" + time));
 
         starsSum = (TextView) view.findViewById(R.id.stars);
-        starsSum.setText("Stars: " + MainActivity.starsList.size());
+        starsSum.setText("" + MainActivity.allStars);
 
         livesCounter = (TextView) view.findViewById(R.id.lives);
 
@@ -262,9 +259,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    swipe = true;
+                    MainActivity.swipe = true;
                 } else {
-                    swipe = false;
+                    MainActivity.swipe = false;
                 }
             }
         });
@@ -302,9 +299,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     stepCount++;
                     moveDown();
                     playSound(R.raw.sand1, volumeFX);
-                    vibrator.vibrate(VIBRATE_SHORT);
+                    //vibrator.vibrate(VIBRATE_SHORT);
                 } else {
-                    vibrator.vibrate(VIBRATE_MEDIUM);
+                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -313,9 +310,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     stepCount++;
                     moveLeft();
                     playSound(R.raw.sand1, volumeFX);
-                    vibrator.vibrate(VIBRATE_SHORT);
+                    //vibrator.vibrate(VIBRATE_SHORT);
                 } else {
-                    vibrator.vibrate(VIBRATE_MEDIUM);
+                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -324,9 +321,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     stepCount++;
                     moveRight();
                     playSound(R.raw.sand1, volumeFX);
-                    vibrator.vibrate(VIBRATE_SHORT);
+                    //vibrator.vibrate(VIBRATE_SHORT);
                 } else {
-                    vibrator.vibrate(VIBRATE_MEDIUM);
+                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -335,9 +332,9 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     stepCount++;
                     moveUp();
                     playSound(R.raw.sand1, volumeFX);
-                    vibrator.vibrate(VIBRATE_SHORT);
+                    //vibrator.vibrate(VIBRATE_SHORT);
                 } else {
-                    vibrator.vibrate(VIBRATE_MEDIUM);
+                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
         });
@@ -347,10 +344,43 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public void reset() {
-        Log.d("debug", "reset");
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            bgm.setVolume(volumeBGM, volumeBGM);
+            bgm.start();
+            fire.setVolume(volumeFire, volumeFire);
+            fire.start();
+            heartbeat.setVolume(volumeHeart, volumeHeart);
+            heartbeat.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!hasDialog) {
+            stopTime = false;
+        }
+        createHandler();
+    }
 
-        livesCounter.setText("Lives: " + (MainActivity.lives));
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveGame();
+        handler.removeCallbacksAndMessages(null);
+        try {
+            bgm.pause();
+            fire.pause();
+            heartbeat.pause();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        stopTime = true;
+    }
+
+    public void reset() {
+        livesCounter.setText("" + (MainActivity.lives));
+        starsSum.setText("" + MainActivity.allStars);
 
         if (MainActivity.lives > 0) {
             MainActivity.lives--;
@@ -413,8 +443,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
 
         setNeedle();
         title.setText("Level " + (MainActivity.level + 1));
-        stepCounter.setText("Steps: " + stepCount);
-        timeCounter.setText("Time: " + time);
+        stepCounter.setText("" + stepCount);
+        timeCounter.setText("" + time);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
         hasSword = false;
@@ -453,7 +483,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void move() {
-        Log.d("debug", "move");
         allowInput = false;
 
         if (!scene.equals("s")) {
@@ -474,7 +503,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
         discovered.add(new Point(x, y + 1));
         discovered.add(new Point(x + 1, y + 1));*/
         stepsMade.add(position);
-        stepCounter.setText("Steps: " + stepCount);
+        stepCounter.setText("" + stepCount);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
 
@@ -541,43 +570,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Log.d("debug", "onResume");
-        try {
-            bgm.setVolume(volumeBGM, volumeBGM);
-            bgm.start();
-            fire.setVolume(volumeFire, volumeFire);
-            fire.start();
-            heartbeat.setVolume(volumeHeart, volumeHeart);
-            heartbeat.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        stopTime = false;
-        createHandler();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d("debug", "onPause");
-        handler.removeCallbacksAndMessages(null);
-        saveGame();
-        try {
-            bgm.pause();
-            fire.pause();
-            heartbeat.pause();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        stopTime = true;
-    }
-
-    @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        Log.d("debug", "onConfigurationChanged");
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             relativeLayout_Container.getLayoutParams().height = height + width / 3;
             relativeLayout_Container.getLayoutParams().width = width * 5 / 3;
@@ -606,7 +600,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkFire() {
-        Log.d("debug", "checkFire");
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             darkness = 0;
             imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
@@ -644,7 +637,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkSword() {
-        Log.d("debug", "checkSword");
         if (contains(LevelArrays.SWORD, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.SWORD, currentLevel[y][x])];
             hasSword = true;
@@ -666,13 +658,11 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkPortal() {
-        Log.d("debug", "checkPortal");
         for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
             String str = currentLevel[currentLevel.length - 1][i];
             String[] result = str.split(",");
             if ((x == Integer.parseInt(result[0])) && (y == Integer.parseInt(result[1]))) {
                 if (i % 2 == 0) {
-                    Log.d("debug", currentLevel[currentLevel.length - 1][i + 1]);
                     String[] even = currentLevel[currentLevel.length - 1][i + 1].split(",");
                     x = Integer.parseInt(even[0]);
                     y = Integer.parseInt(even[1]);
@@ -690,7 +680,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     playSound(R.raw.portal, volumeFX);
                     return true;
                 } else {
-                    Log.d("debug", currentLevel[currentLevel.length - 1][i - 1]);
                     String[] odd = currentLevel[currentLevel.length - 1][i - 1].split(",");
                     x = Integer.parseInt(odd[0]);
                     y = Integer.parseInt(odd[1]);
@@ -715,7 +704,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkMonster() {
-        Log.d("debug", "checkMonster");
         if (contains(LevelArrays.MONSTER, currentLevel[y][x])) {
             if (!hasSword) {
                 gameOver();
@@ -729,7 +717,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkTrap() {
-        Log.d("debug", "checkTrap");
         if (contains(LevelArrays.TRAP, currentLevel[y][x])) {
             gameOver();
             return true;
@@ -738,7 +725,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkDarkness() {
-        Log.d("debug", "checkDarkness");
         if (darkness > 14) {
             gameOver();
             return true;
@@ -785,7 +771,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkStar() {
-        Log.d("debug", "checkStar");
         if (contains(LevelArrays.STAR, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
             stars++;
@@ -796,8 +781,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void gameOver() {
-        Log.d("debug", "gameOver");
-
         stopTime = true;
         playSound(R.raw.death, volumeFX);
 
@@ -868,7 +851,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean checkWin() {
-        Log.d("debug", "checkWin");
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
             if (MainActivity.lives < 5) {
                 MainActivity.lives++;
@@ -905,81 +887,81 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 1:
                     if (MainActivity.starsList.contains(MainActivity.level + ", " + 5)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 4)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 3)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 2)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 1)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else {
-                        allStars = allStars + 1;
+                        MainActivity.allStars = MainActivity.allStars + 1;
                     }
                     image.setImageResource(R.drawable.stars_1);
                     break;
                 case 2:
                     if (MainActivity.starsList.contains(MainActivity.level + ", " + 5)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 4)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 3)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 2)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 1)) {
-                        allStars = allStars + 1;
+                        MainActivity.allStars = MainActivity.allStars + 1;
                     } else {
-                        allStars = allStars + 2;
+                        MainActivity.allStars = MainActivity.allStars + 2;
                     }
                     image.setImageResource(R.drawable.stars_2);
                     break;
                 case 3:
                     if (MainActivity.starsList.contains(MainActivity.level + ", " + 5)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 4)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 3)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 2)) {
-                        allStars = allStars + 1;
+                        MainActivity.allStars = MainActivity.allStars + 1;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 1)) {
-                        allStars = allStars + 2;
+                        MainActivity.allStars = MainActivity.allStars + 2;
                     } else {
-                        allStars = allStars + 3;
+                        MainActivity.allStars = MainActivity.allStars + 3;
                     }
                     image.setImageResource(R.drawable.stars_3);
                     break;
                 case 4:
                     if (MainActivity.starsList.contains(MainActivity.level + ", " + 5)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 4)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 3)) {
-                        allStars = allStars + 1;
+                        MainActivity.allStars = MainActivity.allStars + 1;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 2)) {
-                        allStars = allStars + 2;
+                        MainActivity.allStars = MainActivity.allStars + 2;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 1)) {
-                        allStars = allStars + 3;
+                        MainActivity.allStars = MainActivity.allStars + 3;
                     } else {
-                        allStars = allStars + 4;
+                        MainActivity.allStars = MainActivity.allStars + 4;
                     }
                     image.setImageResource(R.drawable.stars_4);
                     break;
                 case 5:
                     if (MainActivity.starsList.contains(MainActivity.level + ", " + 5)) {
-                        allStars = allStars;
+                        MainActivity.allStars = MainActivity.allStars;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 4)) {
-                        allStars = allStars + 1;
+                        MainActivity.allStars = MainActivity.allStars + 1;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 3)) {
-                        allStars = allStars + 2;
+                        MainActivity.allStars = MainActivity.allStars + 2;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 2)) {
-                        allStars = allStars + 3;
+                        MainActivity.allStars = MainActivity.allStars + 3;
                     } else if (MainActivity.starsList.contains(MainActivity.level + ", " + 1)) {
-                        allStars = allStars + 4;
+                        MainActivity.allStars = MainActivity.allStars + 4;
                     } else {
-                        allStars = allStars + 5;
+                        MainActivity.allStars = MainActivity.allStars + 5;
                     }
                     image.setImageResource(R.drawable.stars_5);
                     break;
@@ -1012,9 +994,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             linearLayout.addView(image);
             linearLayout.addView(image2);
 
-            starsSum.setText("Stars: " + allStars);
+            starsSum.setText("" + MainActivity.allStars);
             MainActivity.starsList.add(MainActivity.level + ", " + score);
-            Log.d("starsList", MainActivity.starsList.toString());
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("You win!");
@@ -1073,6 +1054,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
             switch (MainActivity.level) {
                 case 0:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Welcome to Mazecape");
                     builder.setMessage("You find yourself lost in a terrifying maze. You need to get back home before sunset. " +
                             "Move around by swiping or change the input mode to touch at the bottom of the screen. " +
@@ -1090,6 +1072,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 3:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Monster");
                     builder.setMessage("Oh no a monster is blocking your path. You must find a sword first in order to proceed.");
                     builder.setPositiveButton("I can handle that!", new DialogInterface.OnClickListener() {
@@ -1105,6 +1088,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 5:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Portal");
                     builder.setMessage("Look, there's a portal somewhere. You have to find it. It will take you to unreachable places!");
                     builder.setPositiveButton("Awesome!", new DialogInterface.OnClickListener() {
@@ -1120,6 +1104,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 7:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Cave");
                     builder.setMessage("You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a campfire.");
                     builder.setPositiveButton("Sure!", new DialogInterface.OnClickListener() {
@@ -1135,6 +1120,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 8:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Snow");
                     builder.setMessage("It got cold. The path is frozen and slippery. Watch out!");
                     builder.setPositiveButton("Alright!", new DialogInterface.OnClickListener() {
@@ -1150,6 +1136,7 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                     break;
                 case 10:
                     stopTime = true;
+                    hasDialog = true;
                     builder.setTitle("Desert");
                     builder.setMessage("You entered a wide desert. Try not not to lose your orientation and watch out for sandstorms!");
                     builder.setPositiveButton("Let's not get lost!", new DialogInterface.OnClickListener() {
@@ -1263,7 +1250,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void setNeedle() {
-        Log.d("debug", "setNeedle");
         int goalX = 0;
         int goalY = 0;
         for (int i = 0; i < currentLevel.length - 2; i++) {
@@ -1286,7 +1272,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void playSound(int sound, float volume) {
-        Log.d("debug", "playSound");
         MediaPlayer stepSound = MediaPlayer.create(getContext(), sound);
         stepSound.setVolume(volume, volume);
         stepSound.start();
@@ -1299,7 +1284,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void startAnimation(float fromX, float toX, float fromY, float toY) {
-        Log.d("debug", "startAnimation");
         final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
         translateAnimation.setDuration(200);
         translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
@@ -1369,19 +1353,15 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 if (scene.equals("s")) {
                     switch (direction) {
                         case "up":
-                            Log.d("debug", "up");
                             moveUp();
                             break;
                         case "dn":
-                            Log.d("debug", "down");
                             moveDown();
                             break;
                         case "lt":
-                            Log.d("debug", "left");
                             moveLeft();
                             break;
                         case "rt":
-                            Log.d("debug", "right");
                             moveRight();
                             break;
                     }
@@ -1422,7 +1402,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void resetLevel() {
-        Log.d("debug", "resetLevel");
         try {
             bgm.pause();
             fire.pause();
@@ -1476,7 +1455,6 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void createHandler() {
-        Log.d("debug", "createHandler");
         handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
@@ -1484,9 +1462,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
                 handler.postDelayed(this, 1000);
                 boolean containsTrap = false;
                 if (!stopTime) {
-                    Log.d("debug", "handlerRun " + time);
                     time += 1;
-                    timeCounter.setText("Time: " + time);
+                    timeCounter.setText("" + time);
 
                     //Time-Based changes like traps
                     for (int i = 0; i < currentLevel.length - 2; i++) {
@@ -1547,17 +1524,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void saveGame() {
-        Log.d("debug", "saveGame");
-        Set<String> set = new HashSet<String>();
-        set.addAll(MainActivity.starsList);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", MainActivity.level);
-        editor.putInt("lives", MainActivity.lives);
-        editor.putInt("maxLevel", MainActivity.maxLevel);
-        editor.putStringSet("stars", MainActivity.starsList);
-        editor.putInt("allStars", allStars);
-        editor.putBoolean("swipe", swipe);
         if (controlButton.isChecked()) {
             editor.putBoolean("isChecked", true);
         } else {
@@ -1567,17 +1535,8 @@ public class GameFragment extends Fragment implements View.OnClickListener {
     }
 
     public void loadGame() {
-        Log.d("debug", "loadGame");
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
 
-        //MainActivity.level = sharedPreferences.getInt("level", 0);
-        //MainActivity.lives = sharedPreferences.getInt("lives", 5);
-        MainActivity.maxLevel = sharedPreferences.getInt("maxLevel", 0);
-        allStars = sharedPreferences.getInt("allStars", 0);
-        swipe = sharedPreferences.getBoolean("swipe", true);
-        Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
-        MainActivity.starsList.addAll(set);
-        starsSum.setText("Stars: " + allStars);
         controlButton.setChecked(sharedPreferences.getBoolean("isChecked", true));
 
         reset();

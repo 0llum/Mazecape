@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "888185991345",
+    "firebase_url": "https://mazecape.firebaseio.com",
+    "project_id": "mazecape",
+    "storage_bucket": "mazecape.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:888185991345:android:5d1f483dda254f90",
+        "android_client_info": {
+          "package_name": "com.ollum.mazecape"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "888185991345-9lbevnc8vkuioebg8cufmaft37u1jkc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPz3a4Q8l_qX6SUFEhYk2qCefQTCSgm1Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

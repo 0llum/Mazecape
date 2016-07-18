@@ -2,7 +2,6 @@ package com.ollum.mazecape.Adapters;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ public class MapAdapter extends BaseAdapter {
 
 
     public MapAdapter(Context context, int center) {
-        Log.d("debug", "MapAdapter");
         inflater = LayoutInflater.from(context);
 
         if (GameFragment.stepsMade.contains(new Point(GameFragment.position.x - 3, GameFragment.position.y - 3))) {
