@@ -36,6 +36,7 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Adapters.LevelAdapter;
 import com.ollum.mazecape.Adapters.MapAdapter;
+import com.ollum.mazecape.Adapters.TestLevelAdapter;
 import com.ollum.mazecape.Arrays.LevelArrays;
 import com.ollum.mazecape.Arrays.PlayerArrays;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
@@ -131,8 +132,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         stepsMade.add(position);
 
         relativeLayout_Container = (RelativeLayout) view.findViewById(R.id.relativeLayout_Container);
-        relativeLayout_Container.getLayoutParams().height = MainActivity.height + MainActivity.width / 3 - MainActivity.height / 8;
-        relativeLayout_Container.getLayoutParams().width = MainActivity.width * 5 / 3;
+        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 9) / 3;
+        relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 6) / 3;
 
         relativeLayout_UI = (RelativeLayout) view.findViewById(R.id.relativeLayout_UI);
         relativeLayout_UI.getLayoutParams().width = MainActivity.width;
@@ -148,18 +149,18 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         needle = (ImageView) view.findViewById(R.id.needle);
 
         imageViewPlayer = (ImageView) view.findViewById(R.id.imageViewPlayer);
-        imageViewPlayer.getLayoutParams().width = MainActivity.width * 5 / 3;
-        imageViewPlayer.getLayoutParams().height = MainActivity.width * 5 / 3;
-        setMargins(imageViewPlayer, -MainActivity.width / 3, 0, 0, 0);
+        //imageViewPlayer.getLayoutParams().width = MainActivity.width * 5 / 3;
+        //imageViewPlayer.getLayoutParams().height = MainActivity.width * 5 / 3;
+        //setMargins(imageViewPlayer, -MainActivity.width / 3, 0, 0, 0);
         if (!scene.equals("s")) {
             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getContext().getPackageName()));
         } else {
             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getContext().getPackageName()));
         }
         imageViewDarkness = (ImageView) view.findViewById(R.id.imageViewDarkness);
-        imageViewDarkness.getLayoutParams().width = MainActivity.width * 5 / 3;
-        imageViewDarkness.getLayoutParams().height = MainActivity.width * 5 / 3;
-        setMargins(imageViewDarkness, -MainActivity.width / 3, 0, 0, 0);
+        //imageViewDarkness.getLayoutParams().width = MainActivity.width * 5 / 3;
+        //imageViewDarkness.getLayoutParams().height = MainActivity.width * 5 / 3;
+        //setMargins(imageViewDarkness, -MainActivity.width / 3, 0, 0, 0);
         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
 
         imageViewSandstorm = (ImageView) view.findViewById(R.id.imageViewSandstorm);
@@ -175,17 +176,24 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         gridViewLevel = (GridView) view.findViewById(R.id.gridViewLevel);
 
+        gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 6) / 3;
+        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 9) / 3;
+        gridViewLevel.setNumColumns(currentLevel[0].length - 6);
+        gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
+        gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));
+        //setMargins(gridViewLevel, 0, 0, 0, MainActivity.width / 3);
+
         //3x3 View
-        gridViewLevel.getLayoutParams().width = MainActivity.width * 5 / 3;
+        /*gridViewLevel.getLayoutParams().width = MainActivity.width * 5 / 3;
         gridViewLevel.getLayoutParams().height = MainActivity.width * 5 / 3;
-        setMargins(gridViewLevel, -MainActivity.width / 3, 0, 0, 0);
+        setMargins(gridViewLevel, -MainActivity.width / 3, 0, 0, 0);*/
 
         //5x5 View
         /*gridViewLevel.getLayoutParams().width = MainActivity.width;
         gridViewLevel.getLayoutParams().height = MainActivity.width;
         setMargins(gridViewLevel, 0, 0, 0, MainActivity.width / 3);*/
 
-        gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
+        gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
 
         MainActivity.title.setText("Level " + (MainActivity.world + 1) + "-" + (MainActivity.level + 1));
@@ -435,12 +443,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             containsTrap = false;
         }
 
-        if (!MainMenuFragment.devMode) {
+        /*if (!MainMenuFragment.devMode) {
             int randRotation = 0 + (int) (Math.random() * ((3 - 0) + 1));
             for (int i = 0; i < randRotation; i++) {
                 currentLevel = rotateLevel(currentLevel);
             }
-        }
+        }*/
 
         discovered.clear();
         stepsMade.clear();
@@ -465,7 +473,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y + 1));*/
         stepsMade.add(position);
 
-        gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
+        gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
         gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
         if (!scene.equals("s")) {
@@ -521,6 +529,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     public void move() {
         allowInput = false;
+
+        /*gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
+        gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));*/
 
         if (!scene.equals("s")) {
             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getContext().getPackageName()));
@@ -874,6 +885,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     imageStar3.setImageResource(R.drawable.star);
                     break;
             }
+            gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
             return true;
         }
         return false;
@@ -1892,7 +1904,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
                 animation.setDuration(1);
                 gridViewLevel.startAnimation(animation);
-                gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
+                //gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
+                gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
+                gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));
                 gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
                 setNeedle();
                 isAnimating = false;
