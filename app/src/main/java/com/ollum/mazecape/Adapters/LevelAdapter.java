@@ -21,37 +21,11 @@ public class LevelAdapter extends BaseAdapter {
     public LevelAdapter(Context context, int center) {
         inflater = LayoutInflater.from(context);
 
-        items.add(new Item("1-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x - 2], "drawable", context.getPackageName())));
-        items.add(new Item("1-2", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x - 1], "drawable", context.getPackageName())));
-        items.add(new Item("1-3", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x], "drawable", context.getPackageName())));
-        items.add(new Item("1-4", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x + 1], "drawable", context.getPackageName())));
-        items.add(new Item("1-5", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 2][GameFragment.x + 2], "drawable", context.getPackageName())));
-        items.add(new Item("1-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 1][GameFragment.x - 2], "drawable", context.getPackageName())));
-        items.add(new Item("2-2", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 1][GameFragment.x - 1], "drawable", context.getPackageName())));
-        items.add(new Item("2-3", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 1][GameFragment.x], "drawable", context.getPackageName())));
-        items.add(new Item("2-4", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 1][GameFragment.x + 1], "drawable", context.getPackageName())));
-        items.add(new Item("2-5", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y - 1][GameFragment.x + 2], "drawable", context.getPackageName())));
-        items.add(new Item("3-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y][GameFragment.x - 2], "drawable", context.getPackageName())));
-        items.add(new Item("3-2", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y][GameFragment.x - 1], "drawable", context.getPackageName())));
-
-        if (center == 0) {
-            items.add(new Item("3-3", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y][GameFragment.x], "drawable", context.getPackageName())));
-        } else {
-            items.add(new Item("3-3", center));
+        for (int i = -2; i <= 2; i++) {
+            for (int k = -2; k <= 2; k++) {
+                items.add(new Item(i + 3 + "-" + k + 3, context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
+            }
         }
-
-        items.add(new Item("3-4", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y][GameFragment.x + 1], "drawable", context.getPackageName())));
-        items.add(new Item("3-5", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y][GameFragment.x + 2], "drawable", context.getPackageName())));
-        items.add(new Item("4-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 1][GameFragment.x - 2], "drawable", context.getPackageName())));
-        items.add(new Item("4-2", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 1][GameFragment.x - 1], "drawable", context.getPackageName())));
-        items.add(new Item("4-3", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 1][GameFragment.x], "drawable", context.getPackageName())));
-        items.add(new Item("4-4", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 1][GameFragment.x + 1], "drawable", context.getPackageName())));
-        items.add(new Item("4-5", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 1][GameFragment.x + 2], "drawable", context.getPackageName())));
-        items.add(new Item("5-1", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 2][GameFragment.x - 2], "drawable", context.getPackageName())));
-        items.add(new Item("5-2", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 2][GameFragment.x - 1], "drawable", context.getPackageName())));
-        items.add(new Item("5-3", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 2][GameFragment.x], "drawable", context.getPackageName())));
-        items.add(new Item("5-4", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 2][GameFragment.x + 1], "drawable", context.getPackageName())));
-        items.add(new Item("5-5", context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + 2][GameFragment.x + 2], "drawable", context.getPackageName())));
     }
 
     @Override

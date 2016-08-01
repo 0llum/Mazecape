@@ -2,4 +2,8 @@
     <string name="app_name">Mazecape</string>
 
     <string name="banner_ad_unit_id">ca-app-pub-7666608930334273/1321226947</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-7666608930334273/3015809346</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

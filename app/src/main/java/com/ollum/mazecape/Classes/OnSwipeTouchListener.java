@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 import com.ollum.mazecape.Activities.MainActivity;
-import com.ollum.mazecape.Fragments.GameFragment;
 
 public class OnSwipeTouchListener implements OnTouchListener {
 
@@ -43,13 +42,13 @@ public class OnSwipeTouchListener implements OnTouchListener {
         @Override
         public boolean onDown(MotionEvent e) {
 
-            if ((!MainActivity.swipe) && e.getX() > GameFragment.width * 2 / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
+            if ((!MainActivity.swipe) && e.getX() > MainActivity.width * 2 / 3 && e.getY() < MainActivity.height - MainActivity.height / 8 - MainActivity.width / 3 && e.getY() > MainActivity.height - MainActivity.height / 8 - MainActivity.width * 2 / 3) {
                 onSwipeLeft();
-            } else if ((!MainActivity.swipe) && e.getX() < GameFragment.width / 3 && e.getY() < GameFragment.height - GameFragment.width / 3 && e.getY() > GameFragment.height - GameFragment.width * 2 / 3) {
+            } else if ((!MainActivity.swipe) && e.getX() < MainActivity.width / 3 && e.getY() < MainActivity.height - MainActivity.height / 8 - MainActivity.width / 3 && e.getY() > MainActivity.height - MainActivity.height / 8 - MainActivity.width * 2 / 3) {
                 onSwipeRight();
-            } else if ((!MainActivity.swipe) && e.getY() < GameFragment.height - GameFragment.width * 2 / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
+            } else if ((!MainActivity.swipe) && e.getY() < MainActivity.height - MainActivity.height / 8 - MainActivity.width * 2 / 3 && e.getX() < MainActivity.width * 2 / 3 && e.getX() > MainActivity.width / 3) {
                 onSwipeBottom();
-            } else if ((!MainActivity.swipe) && e.getY() > GameFragment.height - GameFragment.width / 3 && e.getX() < GameFragment.width * 2 / 3 && e.getX() > GameFragment.width / 3) {
+            } else if ((!MainActivity.swipe) && e.getY() > MainActivity.height - MainActivity.height / 8 - MainActivity.width / 3 && e.getX() < MainActivity.width * 2 / 3 && e.getX() > MainActivity.width / 3) {
                 onSwipeTop();
             }
             return true;

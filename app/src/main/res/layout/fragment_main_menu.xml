@@ -5,24 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.MainMenuFragment">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Mazecape"
-        android:textColor="#FFF"
-        android:textSize="24dp" />
-
     <Button
         android:id="@+id/button_continue"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="Continue"
         android:textColor="#FFF"
         android:textSize="20dp" />
@@ -34,43 +23,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/button_continue"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:text="Level Select"
         android:textColor="#FFF"
         android:textSize="20dp" />
-
-    <ImageButton
-        android:id="@+id/button_settings"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/settings_white" />
 
     <Button
         android:id="@+id/button_help"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_level_select"
+        android:layout_below="@+id/button_shop"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="25dp"
         android:text="Help"
         android:textColor="#FFF"
         android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/lives"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="Lives: 5"
-        android:textColor="#FFF"
-        android:textSize="16dp" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
@@ -80,5 +48,40 @@
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_help"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:checked="false"
+        android:text="Developer Mode"
+        android:textColor="#FFF" />
+
+    <Button
+        android:id="@+id/button_shop"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_level_editor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Shop"
+        android:textColor="#FFF"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/button_level_editor"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_level_select"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="Level Editor"
+        android:textColor="#FFF"
+        android:textSize="20dp" />
 
 </RelativeLayout>

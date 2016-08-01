@@ -2,6 +2,7 @@ package com.ollum.mazecape.Fragments;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,30 +20,53 @@ import com.ollum.mazecape.Arrays.LevelArrays;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LevelSelectFragment extends Fragment {
 
     GridView gridViewLevels;
+    String[][][] currentWorld;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_select, container, false);
+
+        MainActivity.title.setText("Level Select");
+
+        currentWorld = LevelArrays.WORLDS[MainActivity.world];
 
         gridViewLevels = (GridView) view.findViewById(R.id.gridViewLevels);
         gridViewLevels.setAdapter(new LevelsAdapter(getContext(), 0));
         gridViewLevels.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position <= MainActivity.maxLevel) {
+                if (MainMenuFragment.devMode) {
                     MainActivity.level = position;
-                    if (MainActivity.lives > 0) {
+                    GameFragment gameFragment = new GameFragment();
+                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                    transaction.replace(R.id.content, gameFragment, "GameFragment");
+                    transaction.addToBackStack("GameFragment");
+                    transaction.commit();
+                } else {
+                    if (position <= MainActivity.maxLevel) {
+                        MainActivity.level = position;
+                        if (MainActivity.lives > 0) {
                         GameFragment gameFragment = new GameFragment();
                         FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                         transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
                         transaction.replace(R.id.content, gameFragment, "GameFragment");
                         transaction.addToBackStack("GameFragment");
                         transaction.commit();
+                        } else {
+                            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                            transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                            transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
+                            transaction.addToBackStack("ShopFragment");
+                            transaction.commit();
+                            MainActivity.shopVisible = true;
+                        }
                     }
                 }
             }
@@ -60,9 +84,11 @@ public class LevelSelectFragment extends Fragment {
         public LevelsAdapter(Context context, int center) {
             inflater = LayoutInflater.from(context);
 
-            for (int i = 0; i < LevelArrays.LEVEL.length; i++) {
-                String scene = LevelArrays.LEVEL[i][LevelArrays.LEVEL[i].length - 2][2];
-                if (i <= MainActivity.maxLevel) {
+            for (int i = 0; i < currentWorld.length; i++) {
+                String scene = currentWorld[i][currentWorld[i].length - 3][2];
+                if (Arrays.asList(LevelArrays.WORLDS).indexOf(currentWorld) < MainActivity.maxWorld) {
+                    items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
+                } else if (i <= MainActivity.maxLevel) {
                     items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
                 } else {
                     items.add(new Item("" + i, getResources().getIdentifier(scene + "blk", "drawable", getContext().getPackageName()), i + 1));
@@ -106,21 +132,22 @@ public class LevelSelectFragment extends Fragment {
             Item item = (Item) getItem(position);
 
             picture.setImageResource(item.drawableId);
-            if (MainActivity.starsList.contains(position + ", " + 5)) {
+            if (MainActivity.starsList.contains(MainActivity.world + ", " + position + ", " + 5)) {
                 score.setImageResource(R.drawable.stars_5);
-            } else if (MainActivity.starsList.contains(position + ", " + 4)) {
+            } else if (MainActivity.starsList.contains(MainActivity.world + ", " + position + ", " + 4)) {
                 score.setImageResource(R.drawable.stars_4);
-            } else if (MainActivity.starsList.contains(position + ", " + 3)) {
+            } else if (MainActivity.starsList.contains(MainActivity.world + ", " + position + ", " + 3)) {
                 score.setImageResource(R.drawable.stars_3);
-            } else if (MainActivity.starsList.contains(position + ", " + 2)) {
+            } else if (MainActivity.starsList.contains(MainActivity.world + ", " + position + ", " + 2)) {
                 score.setImageResource(R.drawable.stars_2);
-            } else if (MainActivity.starsList.contains(position + ", " + 1)) {
+            } else if (MainActivity.starsList.contains(MainActivity.world + ", " + position + ", " + 1)) {
                 score.setImageResource(R.drawable.stars_1);
             } else {
                 score.setImageResource(R.drawable.stars_0);
             }
 
             level.setText("" + (position + 1));
+            level.setTextColor(Color.BLACK);
 
             return v;
         }

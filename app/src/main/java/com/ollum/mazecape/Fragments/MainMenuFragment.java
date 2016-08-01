@@ -8,24 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.MobileAds;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
 
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
-    public static TextView livesCounter;
-    Button continueButton, levelSelectButton, helpButton;
-    ImageButton settingsButton;
+    public static boolean devMode = false;
+    Button continueButton, levelSelectButton, levelEditorButton, shopButton, helpButton;
+    CheckBox checkBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+        MainActivity.title.setText("Mazecape");
 
         continueButton = (Button) view.findViewById(R.id.button_continue);
         continueButton.setOnClickListener(this);
@@ -39,20 +39,29 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         levelSelectButton = (Button) view.findViewById(R.id.button_level_select);
         levelSelectButton.setOnClickListener(this);
 
+        levelEditorButton = (Button) view.findViewById(R.id.button_level_editor);
+        levelEditorButton.setOnClickListener(this);
+
+        shopButton = (Button) view.findViewById(R.id.button_shop);
+        shopButton.setOnClickListener(this);
+
         helpButton = (Button) view.findViewById(R.id.button_help);
         helpButton.setOnClickListener(this);
 
-        settingsButton = (ImageButton) view.findViewById(R.id.button_settings);
-        settingsButton.setOnClickListener(this);
-
-        livesCounter = (TextView) view.findViewById(R.id.lives);
-        livesCounter.setText("Lives: " + MainActivity.lives);
-
-        MobileAds.initialize(getContext(), "ca-app-pub-7666608930334273~8844493743");
+        checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+        checkBox.setChecked(devMode);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                devMode = isChecked;
+            }
+        });
 
         AdView mAdView = (AdView) view.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        //AdRequest adRequest = new AdRequest.Builder().build();
+        if (MainActivity.showAds) {
+            mAdView.loadAd(MainActivity.adRequest);
+        }
 
         return view;
     }
@@ -69,20 +78,55 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                     transaction.replace(R.id.content, gameFragment, "GameFragment");
                     transaction.addToBackStack("GameFragment");
                     transaction.commit();
+                } else {
+                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                    transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
+                    transaction.addToBackStack("ShopFragment");
+                    transaction.commit();
+                    MainActivity.stopTime = true;
+                    MainActivity.shopVisible = true;
                 }
                 break;
             case R.id.button_level_select:
-                LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
+                /*LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
+                FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
+                transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                transaction2.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
+                transaction2.addToBackStack("LevelSelectFragment");
+                transaction2.commit();*/
+
+                WorldSelectFragment worldSelectFragment = new WorldSelectFragment();
+                FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
+                transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                transaction2.replace(R.id.content, worldSelectFragment, "WorldSelectFragment");
+                transaction2.addToBackStack("WorldSelectFragment");
+                transaction2.commit();
+                break;
+            case R.id.button_shop:
                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
-                transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-                transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
-                transaction.addToBackStack("LevelSelectFragment");
+                transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
+                transaction.addToBackStack("ShopFragment");
                 transaction.commit();
+                MainActivity.shopVisible = true;
                 break;
             case R.id.button_help:
+                HelpFragment helpFragment = new HelpFragment();
+                FragmentTransaction transaction4 = MainActivity.fragmentManager.beginTransaction();
+                transaction4.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                transaction4.add(R.id.content, helpFragment, "HelpFragment");
+                transaction4.addToBackStack("HelpFragment");
+                transaction4.commit();
+                MainActivity.helpVisible = true;
                 break;
-            case R.id.button_settings:
-                break;
+            case R.id.button_level_editor:
+                LevelEditorFragment levelEditorFragment = new LevelEditorFragment();
+                FragmentTransaction transaction5 = MainActivity.fragmentManager.beginTransaction();
+                transaction5.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                transaction5.replace(R.id.content, levelEditorFragment, "LevelEditorFragment");
+                transaction5.addToBackStack("LevelEditorFragment");
+                transaction5.commit();
         }
     }
 }
