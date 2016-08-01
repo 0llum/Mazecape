@@ -100,7 +100,7 @@ public class LevelArrays {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sdr", "nlr", "sdl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sdr", "clr", "sdl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "sdl", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nrt", "nul", "gup", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},

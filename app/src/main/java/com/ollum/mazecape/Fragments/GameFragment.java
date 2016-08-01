@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -82,6 +83,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     boolean containsTrap = false;
     boolean trapVisible = false;
     boolean trapActive = false;
+    boolean crack = false;
     private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
@@ -783,6 +785,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public boolean checkCrack() {
         if (contains(LevelArrays.CRACK, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.HOLE[getIndex(LevelArrays.CRACK, currentLevel[y][x])];
+            Log.d("debug", "CRACK!");
+            playSound(R.raw.monster_death, MainActivity.volumeSound);
             return true;
         }
         return false;
@@ -1845,6 +1849,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     checkSword();
                                     checkStar();
                                     checkPortal();
+                                    if (contains(LevelArrays.CRACK, currentLevel[y][x])) {
+                                        playSound(R.raw.sword, MainActivity.volumeSound);
+                                    }
                                     if (scene.equals("d")) {
                                         int randStep = 5 + (int) (Math.random() * ((10 - 5) + 1));
                                         if (steps % randStep == 0) {
