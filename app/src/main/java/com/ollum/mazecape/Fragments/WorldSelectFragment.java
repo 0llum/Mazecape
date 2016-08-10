@@ -32,7 +32,7 @@ public class WorldSelectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_world_select, container, false);
 
-        MainActivity.title.setText("World Select");
+        MainActivity.title.setText(R.string.world_select);
 
         gridViewWorlds = (GridView) view.findViewById(R.id.gridViewWorlds);
         gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
@@ -63,8 +63,10 @@ public class WorldSelectFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 100) {
                                 MainActivity.allStars -= 100;
+                                MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld++;
-                                MainActivity.maxLevel = 0;
+                                gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
+                                gridViewWorlds.setSelection(MainActivity.maxWorld);
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -93,8 +95,10 @@ public class WorldSelectFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 200) {
                                 MainActivity.allStars -= 200;
-                                MainActivity.maxWorld++;
-                                MainActivity.maxLevel = 0;
+                                MainActivity.starsCounter.setText("" + MainActivity.allStars);
+                                MainActivity.maxWorld += 2;
+                                gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
+                                gridViewWorlds.setSelection(MainActivity.maxWorld);
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -123,8 +127,10 @@ public class WorldSelectFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 300) {
                                 MainActivity.allStars -= 300;
-                                MainActivity.maxWorld++;
-                                MainActivity.maxLevel = 0;
+                                MainActivity.starsCounter.setText("" + MainActivity.allStars);
+                                MainActivity.maxWorld += 3;
+                                gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
+                                gridViewWorlds.setSelection(MainActivity.maxWorld);
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();

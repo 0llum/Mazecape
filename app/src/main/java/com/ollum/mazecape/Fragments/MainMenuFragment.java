@@ -1,6 +1,5 @@
 package com.ollum.mazecape.Fragments;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,26 +17,17 @@ import com.ollum.mazecape.R;
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
     public static boolean devMode = false;
-    Button continueButton, levelSelectButton, levelEditorButton, shopButton, helpButton;
+    Button playButton, levelEditorButton, shopButton, helpButton;
     CheckBox checkBox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        MainActivity.title.setText("Mazecape");
+        MainActivity.title.setText(R.string.app_name);
 
-        continueButton = (Button) view.findViewById(R.id.button_continue);
-        continueButton.setOnClickListener(this);
-
-        if (MainActivity.maxLevel == 0) {
-            continueButton.setText("New Game");
-        } else {
-            continueButton.setText("Continue");
-        }
-
-        levelSelectButton = (Button) view.findViewById(R.id.button_level_select);
-        levelSelectButton.setOnClickListener(this);
+        playButton = (Button) view.findViewById(R.id.button_play);
+        playButton.setOnClickListener(this);
 
         levelEditorButton = (Button) view.findViewById(R.id.button_level_editor);
         levelEditorButton.setOnClickListener(this);
@@ -69,33 +59,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.button_continue:
-                if (MainActivity.lives > 0) {
-                    MainActivity.level = MainActivity.maxLevel;
-                    GameFragment gameFragment = new GameFragment();
-                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
-                    transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-                    transaction.replace(R.id.content, gameFragment, "GameFragment");
-                    transaction.addToBackStack("GameFragment");
-                    transaction.commit();
-                } else {
-                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
-                    transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
-                    transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
-                    transaction.addToBackStack("ShopFragment");
-                    transaction.commit();
-                    MainActivity.stopTime = true;
-                    MainActivity.shopVisible = true;
-                }
-                break;
-            case R.id.button_level_select:
-                /*LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
-                FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
-                transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-                transaction2.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
-                transaction2.addToBackStack("LevelSelectFragment");
-                transaction2.commit();*/
-
+            case R.id.button_play:
                 WorldSelectFragment worldSelectFragment = new WorldSelectFragment();
                 FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
                 transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);
@@ -127,6 +91,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 transaction5.replace(R.id.content, levelEditorFragment, "LevelEditorFragment");
                 transaction5.addToBackStack("LevelEditorFragment");
                 transaction5.commit();
+
         }
     }
 }

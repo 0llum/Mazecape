@@ -7,59 +7,57 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.ollum.mazecape.Classes.Item;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class LevelAdapter extends BaseAdapter {
-    private List<Item> items = new ArrayList<Item>();
-    private LayoutInflater inflater;
+    private Context context;
 
     public LevelAdapter(Context context, int center) {
-        inflater = LayoutInflater.from(context);
-
-        for (int i = -2; i <= 2; i++) {
-            for (int k = -2; k <= 2; k++) {
-                items.add(new Item(i + 3 + "-" + k + 3, context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
-            }
-        }
+        this.context = context;
     }
 
     @Override
     public int getCount() {
-        return items.size();
+        return GameFragment.items.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        return items.get(i);
+    public Integer getItem(int i) {
+        return GameFragment.items.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return items.get(i).drawableId;
+        return GameFragment.items.get(i);
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View v = view;
-        ImageView picture;
+    public View getView(int position, View view, ViewGroup viewGroup) {
 
-        if (v == null) {
-            v = inflater.inflate(R.layout.gridview_item, viewGroup, false);
-            v.setTag(R.id.picture, v.findViewById(R.id.picture));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
+        View row = view;
+        ViewHolder holder = null;
+
+        if (row == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            row = inflater.inflate(R.layout.gridview_item, viewGroup, false);
+            holder = new ViewHolder(row);
+            row.setTag(holder);
+        } else {
+            holder = (ViewHolder) row.getTag();
         }
 
-        picture = (ImageView) v.getTag(R.id.picture);
+        holder.imageView.setImageResource(GameFragment.items.get(position));
 
-        Item item = (Item) getItem(i);
 
-        picture.setImageResource(item.drawableId);
+        return row;
+    }
 
-        return v;
+    class ViewHolder {
+        ImageView imageView;
+
+        ViewHolder(View view) {
+            imageView = (ImageView) view.findViewById(R.id.picture);
+        }
     }
 }

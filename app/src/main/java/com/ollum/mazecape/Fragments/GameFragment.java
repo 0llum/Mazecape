@@ -2,18 +2,14 @@ package com.ollum.mazecape.Fragments;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,33 +19,29 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Adapters.LevelAdapter;
 import com.ollum.mazecape.Adapters.MapAdapter;
-import com.ollum.mazecape.Adapters.TestLevelAdapter;
 import com.ollum.mazecape.Arrays.LevelArrays;
 import com.ollum.mazecape.Arrays.PlayerArrays;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     public static TextView posX, posY;
-    public static MediaPlayer bgm;
-    public static MediaPlayer fire;
-    public static MediaPlayer heartbeat;
+    public static MediaPlayer bgm, fire, heartbeat;
     public static String[][] currentLevel;
     public static int x;
     public static int y;
@@ -58,6 +50,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public static Point position;
     public static ArrayList<Point> stepsMade;
     public static ArrayList<Point> discovered;
+    public static List<Integer> items;
     public static float volumeBGM = MainActivity.volumeMusic;
     public static float volumeFX = MainActivity.volumeSound;
     public static float volumeFire = 0;
@@ -65,10 +58,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     RelativeLayout relativeLayout_Container, relativeLayout_UI, relativeLayoutMap;
     LinearLayout navigation;
     GridView gridViewLevel, gridViewMap;
-    ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needle, mapPosition, imageStar1, imageStar2, imageStar3;
+    ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
     Button resetLevel, cheatButton;
-    ToggleButton controlButton;
-    Vibrator vibrator;
     int stars = 0;
     int darkness = 0;
     int time = 0;
@@ -84,7 +75,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     boolean containsTrap = false;
     boolean trapVisible = false;
     boolean trapActive = false;
-    boolean crack = false;
+    boolean mapRevealed = false;
+    int moveSpeed = 200;
+    LevelAdapter levelAdapter;
     private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
@@ -104,22 +97,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
+        items = new ArrayList<Integer>();
 
         currentLevel = copyLevel(LevelArrays.WORLDS[MainActivity.world][MainActivity.level]);
         x = Integer.parseInt(currentLevel[currentLevel.length - 3][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 3][1]);
         scene = currentLevel[currentLevel.length - 3][2];
 
-        for (int i = 0; i < currentLevel.length - 2; i++) {
-            for (int k = 0; k < currentLevel[i].length; k++) {
-                if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[i][k]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[i][k])) {
-                    containsTrap = true;
-                }
-            }
+        if (!(currentLevel[currentLevel.length - 1].length == 0)) {
+            containsTrap = true;
+        } else {
+            containsTrap = false;
         }
 
         position = new Point(x, y);
-        /*discovered.add(new Point(x - 1, y - 1));
+        discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -127,17 +119,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));*/
+        discovered.add(new Point(x + 1, y + 1));
 
         stepsMade.add(position);
 
         relativeLayout_Container = (RelativeLayout) view.findViewById(R.id.relativeLayout_Container);
-        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 9) / 3;
-        relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 6) / 3;
 
         relativeLayout_UI = (RelativeLayout) view.findViewById(R.id.relativeLayout_UI);
         relativeLayout_UI.getLayoutParams().width = MainActivity.width;
-        relativeLayout_UI.getLayoutParams().height = MainActivity.height - MainActivity.height / 8;
+        relativeLayout_UI.getLayoutParams().height = MainActivity.content.getHeight();
 
         relativeLayoutMap = (RelativeLayout) view.findViewById(R.id.relative_layout_map);
 
@@ -146,28 +136,16 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         compass = (ImageView) view.findViewById(R.id.compass);
 
-        needle = (ImageView) view.findViewById(R.id.needle);
+        needleGoal = (ImageView) view.findViewById(R.id.needleGoal);
+        needleStar1 = (ImageView) view.findViewById(R.id.needleStar1);
+        needleStar2 = (ImageView) view.findViewById(R.id.needleStar2);
+        needleStar3 = (ImageView) view.findViewById(R.id.needleStar3);
 
         imageViewPlayer = (ImageView) view.findViewById(R.id.imageViewPlayer);
-        //imageViewPlayer.getLayoutParams().width = MainActivity.width * 5 / 3;
-        //imageViewPlayer.getLayoutParams().height = MainActivity.width * 5 / 3;
-        //setMargins(imageViewPlayer, -MainActivity.width / 3, 0, 0, 0);
-        if (!scene.equals("s")) {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getContext().getPackageName()));
-        } else {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getContext().getPackageName()));
-        }
+
         imageViewDarkness = (ImageView) view.findViewById(R.id.imageViewDarkness);
-        //imageViewDarkness.getLayoutParams().width = MainActivity.width * 5 / 3;
-        //imageViewDarkness.getLayoutParams().height = MainActivity.width * 5 / 3;
-        //setMargins(imageViewDarkness, -MainActivity.width / 3, 0, 0, 0);
-        imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
 
         imageViewSandstorm = (ImageView) view.findViewById(R.id.imageViewSandstorm);
-        imageViewSandstorm.getLayoutParams().width = MainActivity.width;
-        imageViewSandstorm.getLayoutParams().height = MainActivity.width;
-        setMargins(imageViewSandstorm, 0, 0, 0, MainActivity.width / 3);
-        imageViewSandstorm.setVisibility(View.INVISIBLE);
 
         gridViewMap = (GridView) view.findViewById(R.id.gridViewMap);
         gridViewMap.setOnItemClickListener(this);
@@ -176,31 +154,33 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         gridViewLevel = (GridView) view.findViewById(R.id.gridViewLevel);
 
-        gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 6) / 3;
-        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 9) / 3;
-        gridViewLevel.setNumColumns(currentLevel[0].length - 6);
-        gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
-        gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));
-        //setMargins(gridViewLevel, 0, 0, 0, MainActivity.width / 3);
+        /*gridViewLevel.setOnTouchListener(new View.OnTouchListener() {
+            float dX, dY;
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
 
-        //3x3 View
-        /*gridViewLevel.getLayoutParams().width = MainActivity.width * 5 / 3;
-        gridViewLevel.getLayoutParams().height = MainActivity.width * 5 / 3;
-        setMargins(gridViewLevel, -MainActivity.width / 3, 0, 0, 0);*/
+                    case MotionEvent.ACTION_DOWN:
 
-        //5x5 View
-        /*gridViewLevel.getLayoutParams().width = MainActivity.width;
-        gridViewLevel.getLayoutParams().height = MainActivity.width;
-        setMargins(gridViewLevel, 0, 0, 0, MainActivity.width / 3);*/
+                        dX = (v.getX() - event.getRawX());
+                        dY = (v.getY() - event.getRawY());
 
-        gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
-        gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
+                        break;
 
-        MainActivity.title.setText("Level " + (MainActivity.world + 1) + "-" + (MainActivity.level + 1));
-        MainActivity.livesCounter.setText("");
-        MainActivity.stepsCounter.setText("" + steps);
-        MainActivity.timeCounter.setText(("" + time));
-        MainActivity.starsCounter.setText("" + MainActivity.allStars);
+                    case MotionEvent.ACTION_MOVE:
+
+                        *//*v.animate()
+                                .x((event.getRawX() + dX))
+                                .y((event.getRawY() + dY))
+                                .setDuration(0)
+                                .start();*//*
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });*/
 
         imageStar1 = (ImageView) view.findViewById(R.id.imageStar1);
         imageStar2 = (ImageView) view.findViewById(R.id.imageStar2);
@@ -208,9 +188,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         posX = (TextView) view.findViewById(R.id.posX);
         posY = (TextView) view.findViewById(R.id.posY);
-
-        posX.setText("posX: " + x);
-        posY.setText("posY: " + y);
 
         resetLevel = (Button) view.findViewById(R.id.resetLevel);
         resetLevel.setOnClickListener(this);
@@ -259,54 +236,13 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
         });
 
-        controlButton = (ToggleButton) view.findViewById(R.id.controlButton);
-        controlButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    MainActivity.swipe = true;
-                } else {
-                    MainActivity.swipe = false;
-                }
-            }
-        });
-
-        vibrator = (Vibrator) getActivity().getSystemService(getActivity().VIBRATOR_SERVICE);
-
-        switch (scene) {
-            case "f":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
-                break;
-            case "c":
-                bgm = MediaPlayer.create(getContext(), R.raw.grand_cave);
-                break;
-            case "s":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
-                break;
-            case "d":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
-                break;
-        }
-        bgm.setLooping(true);
-
-        fire = MediaPlayer.create(getContext(), R.raw.campfire);
-        fire.setLooping(true);
-
-        heartbeat = MediaPlayer.create(getContext(), R.raw.heartbeat_breathing);
-        heartbeat.setLooping(true);
-
         imgSword = (ImageView) view.findViewById(R.id.imgSword);
-        imgSword.setVisibility(View.INVISIBLE);
 
         relativeLayout_UI.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             public void onSwipeTop() {
                 if (allowInput && contains(LevelArrays.MOVE_DOWN, currentLevel[y][x])) {
                     steps++;
                     moveDown();
-                    playSound(R.raw.sand1, MainActivity.volumeSound);
-                    //vibrator.vibrate(VIBRATE_SHORT);
-                } else {
-                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -314,10 +250,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 if (allowInput && contains(LevelArrays.MOVE_LEFT, currentLevel[y][x])) {
                     steps++;
                     moveLeft();
-                    playSound(R.raw.sand1, MainActivity.volumeSound);
-                    //vibrator.vibrate(VIBRATE_SHORT);
-                } else {
-                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -325,10 +257,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 if (allowInput && contains(LevelArrays.MOVE_RIGHT, currentLevel[y][x])) {
                     steps++;
                     moveRight();
-                    playSound(R.raw.sand1, MainActivity.volumeSound);
-                    //vibrator.vibrate(VIBRATE_SHORT);
-                } else {
-                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
 
@@ -336,16 +264,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 if (allowInput && contains(LevelArrays.MOVE_UP, currentLevel[y][x])) {
                     steps++;
                     moveUp();
-                    playSound(R.raw.sand1, MainActivity.volumeSound);
-                    //vibrator.vibrate(VIBRATE_SHORT);
-                } else {
-                    //vibrator.vibrate(VIBRATE_MEDIUM);
                 }
             }
         });
 
         mInterstitialAd = new InterstitialAd(getContext());
-        mInterstitialAd.setAdUnitId(getString(R.string.interstitial_ad_unit_id));
+        mInterstitialAd.setAdUnitId("ca-app-pub-7666608930334273/3015809346");
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
@@ -357,7 +281,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         requestNewInterstitial();
 
-        loadGame();
+        reset();
 
         if (MainMenuFragment.devMode) {
             LevelFragment levelFragment = new LevelFragment();
@@ -383,36 +307,48 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         super.onResume();
         MainActivity.timeLayout.setVisibility(View.VISIBLE);
         MainActivity.stepsLayout.setVisibility(View.VISIBLE);
-        try {
-            bgm.setVolume(volumeBGM, volumeBGM);
+
+        if (bgm != null) {
             bgm.start();
-            fire.setVolume(volumeFire, volumeFire);
-            fire.start();
-            heartbeat.setVolume(volumeHeart, volumeHeart);
-            heartbeat.start();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+
+        if (fire != null) {
+            fire.start();
+        }
+
+        if (heartbeat != null) {
+            heartbeat.start();
+        }
+
         if (!hasDialog) {
             MainActivity.stopTime = false;
         }
+
         createHandler();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        saveGame();
         MainActivity.timeLayout.setVisibility(View.INVISIBLE);
         MainActivity.stepsLayout.setVisibility(View.INVISIBLE);
         handler.removeCallbacksAndMessages(null);
-        try {
+
+        if (bgm != null && bgm.isPlaying()) {
             bgm.pause();
-            fire.pause();
-            heartbeat.pause();
-        } catch (Exception e) {
-            e.printStackTrace();
+            bgm.seekTo(0);
         }
+
+        if (fire != null && fire.isPlaying()) {
+            fire.pause();
+            fire.seekTo(0);
+        }
+
+        if (heartbeat != null && heartbeat.isPlaying()) {
+            heartbeat.pause();
+            heartbeat.seekTo(0);
+        }
+
         MainActivity.stopTime = true;
     }
 
@@ -429,6 +365,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             transaction.replace(R.id.content, mainMenuFragment, "MainMenuFragment");
             transaction.addToBackStack("MainMenuFragment");
             transaction.commit();
+            if (MainActivity.menuBGM != null) {
+                MainActivity.menuBGM.start();
+            }
         }
 
         currentLevel = copyLevel(LevelArrays.WORLDS[MainActivity.world][MainActivity.level]);
@@ -443,12 +382,20 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             containsTrap = false;
         }
 
-        /*if (!MainMenuFragment.devMode) {
+        if (!MainMenuFragment.devMode) {
             int randRotation = 0 + (int) (Math.random() * ((3 - 0) + 1));
             for (int i = 0; i < randRotation; i++) {
                 currentLevel = rotateLevel(currentLevel);
             }
-        }*/
+        }
+
+        items.clear();
+
+        for (int i = 2; i < GameFragment.currentLevel.length - 5; i++) {
+            for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
+                items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
+            }
+        }
 
         discovered.clear();
         stepsMade.clear();
@@ -462,7 +409,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         volumeFire = 0;
         volumeHeart = 0;
         position = new Point(x, y);
-        /*discovered.add(new Point(x - 1, y - 1));
+        discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -470,26 +417,47 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));*/
+        discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
 
-        gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
+        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / 3;
+        relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / 3;
+
+        gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / 3;
+        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / 3;
+        gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+        gridViewLevel.setTranslationY(-MainActivity.width / 3 * y);
+        gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 3));
+
+        levelAdapter = new LevelAdapter(getContext(), 0);
+
+        gridViewLevel.setAdapter(levelAdapter);
+
         gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+        imageViewSandstorm.setVisibility(View.INVISIBLE);
+
         if (!scene.equals("s")) {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getContext().getPackageName()));
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
         } else {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getContext().getPackageName()));
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
         }
+        imageViewPlayer.setVisibility(View.VISIBLE);
 
         setNeedle();
-        MainActivity.title.setText("Level " + (MainActivity.world + 1) + "-" + (MainActivity.level + 1));
+        MainActivity.title.setText(getString(R.string.level) + " " + (MainActivity.world + 1) + " - " + (MainActivity.level + 1));
         MainActivity.stepsCounter.setText("" + steps);
         MainActivity.timeCounter.setText("" + time);
         posX.setText("posX: " + x);
         posY.setText("posY: " + y);
         hasSword = false;
+        mapRevealed = false;
         imgSword.setVisibility(View.INVISIBLE);
+
+        if (bgm != null) {
+            bgm.reset();
+            bgm.release();
+        }
 
         switch (scene) {
             case "f":
@@ -506,14 +474,26 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 break;
         }
 
-        bgm.setLooping(true);
-        bgm.setVolume(MainActivity.volumeMusic, MainActivity.volumeMusic);
-        bgm.start();
+        if (bgm != null) {
+            bgm.setLooping(true);
+            bgm.setVolume(MainActivity.volumeMusic, MainActivity.volumeMusic);
+            bgm.start();
+        }
+
+        if (fire != null) {
+            fire.reset();
+            fire.release();
+        }
 
         fire = MediaPlayer.create(getContext(), R.raw.campfire);
         fire.setLooping(true);
         fire.setVolume(volumeFire, volumeFire);
         fire.start();
+
+        if (heartbeat != null) {
+            heartbeat.reset();
+            heartbeat.release();
+        }
 
         heartbeat = MediaPlayer.create(getContext(), R.raw.heartbeat_breathing);
         heartbeat.setLooping(true);
@@ -525,23 +505,29 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar3.setImageResource(R.drawable.star_empty);
 
         checkDialog();
+
+        /*Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
+        Log.d("debug", "height without statusbar: " + MainActivity.height);
+        Log.d("debug", "rel. Layout Container height: " + relativeLayout_Container.getHeight());
+        Log.d("debug", "UI Container height: " + relativeLayout_UI.getHeight());
+        Log.d("debug", "content height: " + MainActivity.content.getHeight());*/
     }
 
     public void move() {
         allowInput = false;
 
-        /*gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
-        gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));*/
-
         if (!scene.equals("s")) {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction, "drawable", getContext().getPackageName()));
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
         } else {
-            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction, "drawable", getContext().getPackageName()));
+            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
         }
 
         position = new Point(x, y);
 
-        /*discovered.add(new Point(x - 1, y - 1));
+        if (!mapRevealed) {
+            discovered.clear();
+        }
+        discovered.add(new Point(x - 1, y - 1));
         discovered.add(new Point(x, y - 1));
         discovered.add(new Point(x + 1, y - 1));
         discovered.add(new Point(x - 1, y));
@@ -549,7 +535,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y));
         discovered.add(new Point(x - 1, y + 1));
         discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));*/
+        discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
         MainActivity.stepsCounter.setText("" + steps);
         posX.setText("posX: " + x);
@@ -576,6 +562,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             }
         }
+
+        playSound(R.raw.sand1, MainActivity.volumeSound);
     }
 
     public void moveDown() {
@@ -672,35 +660,35 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         if (contains(LevelArrays.FIRE, currentLevel[y][x])) {
             darkness = 0;
             imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+
             volumeFire = MainActivity.volumeSound;
-            fire.setVolume(volumeFire, volumeFire);
-            if (!fire.isPlaying()) {
-                fire.start();
+            if (fire != null) {
+                fire.setVolume(volumeFire, volumeFire);
             }
             return true;
         } else if (contains(LevelArrays.FIRE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 1]) ||
                 contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1])) {
-            volumeFire = MainActivity.volumeSound * 0.66f;
-            fire.setVolume(volumeFire, volumeFire);
-            if (!fire.isPlaying()) {
-                fire.start();
+            volumeFire = MainActivity.volumeSound * 0.5f;
+            if (fire != null) {
+                fire.setVolume(volumeFire, volumeFire);
             }
             return false;
-        } else if (contains(LevelArrays.FIRE, currentLevel[y - 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 2]) ||
+        } /*else if (contains(LevelArrays.FIRE, currentLevel[y - 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y - 2][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y - 1][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y - 1][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y][x]) || contains(LevelArrays.FIRE, currentLevel[y][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 1][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 1][x + 2]) ||
                 contains(LevelArrays.FIRE, currentLevel[y + 2][x - 2]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x - 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 1]) || contains(LevelArrays.FIRE, currentLevel[y + 2][x + 2])) {
             volumeFire = MainActivity.volumeSound * 0.33f;
-            fire.setVolume(volumeFire, volumeFire);
-            if (!fire.isPlaying()) {
-                fire.start();
+            if (fire != null) {
+                fire.setVolume(volumeFire, volumeFire);
             }
             return false;
-        } else {
+        }*/ else {
             volumeFire = 0;
-            fire.setVolume(volumeFire, volumeFire);
+            if (fire != null) {
+                fire.setVolume(volumeFire, volumeFire);
+            }
         }
         return false;
     }
@@ -708,6 +696,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public boolean checkSword() {
         if (contains(LevelArrays.WEAPON, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.WEAPON, currentLevel[y][x])];
+            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+            levelAdapter.notifyDataSetChanged();
+
             hasSword = true;
             playSound(R.raw.sword, MainActivity.volumeSound);
             if (hasSword) {
@@ -727,16 +718,26 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkPortal() {
-        for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
-            String str = currentLevel[currentLevel.length - 2][i];
-            String[] result = str.split(",");
-            if ((x == Integer.parseInt(result[0])) && (y == Integer.parseInt(result[1]))) {
-                if (i % 2 == 0) {
-                    String[] even = currentLevel[currentLevel.length - 2][i + 1].split(",");
-                    x = Integer.parseInt(even[0]);
-                    y = Integer.parseInt(even[1]);
+        if (contains(LevelArrays.PORTAL, currentLevel[y][x])) {
+            int oldX = x;
+            int oldY = y;
+            for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
+                String str = currentLevel[currentLevel.length - 2][i];
+                String[] result = str.split(",");
+                String[] coordinates;
+                if ((x == Integer.parseInt(result[0])) && (y == Integer.parseInt(result[1]))) {
+                    if (i % 2 == 0) {
+                        coordinates = currentLevel[currentLevel.length - 2][i + 1].split(",");
+                    } else {
+                        coordinates = currentLevel[currentLevel.length - 2][i - 1].split(",");
+                    }
+                    x = Integer.parseInt(coordinates[0]);
+                    y = Integer.parseInt(coordinates[1]);
                     position = new Point(x, y);
-                    /*discovered.add(new Point(x - 1, y - 1));
+                    if (!mapRevealed) {
+                        discovered.clear();
+                    }
+                    discovered.add(new Point(x - 1, y - 1));
                     discovered.add(new Point(x, y - 1));
                     discovered.add(new Point(x + 1, y - 1));
                     discovered.add(new Point(x - 1, y));
@@ -744,31 +745,46 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     discovered.add(new Point(x + 1, y));
                     discovered.add(new Point(x - 1, y + 1));
                     discovered.add(new Point(x, y + 1));
-                    discovered.add(new Point(x + 1, y + 1));*/
+                    discovered.add(new Point(x + 1, y + 1));
                     stepsMade.add(position);
-                    playSound(R.raw.portal, MainActivity.volumeSound);
-                    return true;
-                } else {
-                    String[] odd = currentLevel[currentLevel.length - 2][i - 1].split(",");
-                    x = Integer.parseInt(odd[0]);
-                    y = Integer.parseInt(odd[1]);
-                    position = new Point(x, y);
-                    /*discovered.add(new Point(x - 1, y - 1));
-                    discovered.add(new Point(x, y - 1));
-                    discovered.add(new Point(x + 1, y - 1));
-                    discovered.add(new Point(x - 1, y));
-                    discovered.add(position);
-                    discovered.add(new Point(x + 1, y));
-                    discovered.add(new Point(x - 1, y + 1));
-                    discovered.add(new Point(x, y + 1));
-                    discovered.add(new Point(x + 1, y + 1));*/
-                    stepsMade.add(position);
-                    playSound(R.raw.portal, MainActivity.volumeSound);
+                    playSound(R.raw.portal, MainActivity.volumeSound * 1.5f);
+
+                    float difX = (MainActivity.width / 3) * (oldX - x);
+                    float difY = (MainActivity.width / 3) * (oldY - y);
+
+                    TranslateAnimation animation = new TranslateAnimation(0.0f, difX, 0.0f, difY);
+                    animation.setDuration((long) (Math.sqrt(Math.pow(oldX - x, 2) + Math.pow(oldY - y, 2)) * moveSpeed));
+                    animation.setInterpolator(getContext(), android.R.anim.accelerate_decelerate_interpolator);
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                            allowInput = false;
+                            imageViewPlayer.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            allowInput = true;
+                            imageViewPlayer.setVisibility(View.VISIBLE);
+                            gridViewLevel.setTranslationY(-MainActivity.width / 3 * y);
+                            gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 3));
+                            animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
+                            animation.setDuration(1);
+                            gridViewLevel.startAnimation(animation);
+                            gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
+                            setNeedle();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    gridViewLevel.startAnimation(animation);
                     return true;
                 }
             }
         }
-
         return false;
     }
 
@@ -778,6 +794,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 gameOver();
             } else {
                 currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.MONSTER, currentLevel[y][x])];
+                items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+                levelAdapter.notifyDataSetChanged();
+
                 playSound(R.raw.monster_death, MainActivity.volumeSound);
             }
             return true;
@@ -796,8 +815,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public boolean checkCrack() {
         if (contains(LevelArrays.CRACK, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.HOLE[getIndex(LevelArrays.CRACK, currentLevel[y][x])];
-            Log.d("debug", "CRACK!");
-            playSound(R.raw.monster_death, MainActivity.volumeSound);
+            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+            levelAdapter.notifyDataSetChanged();
+            playSound(R.raw.hole, MainActivity.volumeSound);
             return true;
         }
         return false;
@@ -817,40 +837,44 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             return true;
         } else if (darkness < 12) {
             volumeBGM = MainActivity.volumeMusic;
+            if (bgm != null) {
+                bgm.setVolume(volumeBGM, volumeBGM);
+            }
             volumeHeart = 0;
-            bgm.setVolume(volumeBGM, volumeBGM);
-            heartbeat.setVolume(volumeHeart, volumeHeart);
-            if (!heartbeat.isPlaying()) {
-                heartbeat.start();
+            if (heartbeat != null) {
+                heartbeat.setVolume(volumeHeart, volumeHeart);
             }
         }
 
         switch (darkness) {
             case 12:
                 volumeBGM = MainActivity.volumeMusic * 0.66f;
+                if (bgm != null) {
+                    bgm.setVolume(volumeBGM, volumeBGM);
+                }
                 volumeHeart = MainActivity.volumeSound * 0.33f;
-                heartbeat.setVolume(volumeHeart, volumeHeart);
-                bgm.setVolume(volumeBGM, volumeBGM);
-                if (!heartbeat.isPlaying()) {
-                    heartbeat.start();
+                if (heartbeat != null) {
+                    heartbeat.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
             case 13:
                 volumeBGM = MainActivity.volumeMusic * 0.33f;
+                if (bgm != null) {
+                    bgm.setVolume(volumeBGM, volumeBGM);
+                }
                 volumeHeart = MainActivity.volumeSound * 0.66f;
-                heartbeat.setVolume(volumeHeart, volumeHeart);
-                bgm.setVolume(volumeBGM, volumeBGM);
-                if (!heartbeat.isPlaying()) {
-                    heartbeat.start();
+                if (heartbeat != null) {
+                    heartbeat.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
             case 14:
                 volumeBGM = 0;
+                if (bgm != null) {
+                    bgm.setVolume(volumeBGM, volumeBGM);
+                }
                 volumeHeart = 1;
-                heartbeat.setVolume(volumeHeart, volumeHeart);
-                bgm.setVolume(volumeBGM, volumeBGM);
-                if (!heartbeat.isPlaying()) {
-                    heartbeat.start();
+                if (heartbeat != null) {
+                    heartbeat.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
         }
@@ -860,6 +884,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public boolean checkStar() {
         if (contains(LevelArrays.STAR, currentLevel[y][x])) {
             currentLevel[y][x] = LevelArrays.NORMAL[getIndex(LevelArrays.STAR, currentLevel[y][x])];
+
+            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+            levelAdapter.notifyDataSetChanged();
+
             stars++;
             playSound(R.raw.star, MainActivity.volumeSound);
 
@@ -885,7 +913,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     imageStar3.setImageResource(R.drawable.star);
                     break;
             }
-            gridViewLevel.setAdapter(new TestLevelAdapter(getContext(), 0));
             return true;
         }
         return false;
@@ -895,27 +922,23 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         MainActivity.stopTime = true;
         playSound(R.raw.death, MainActivity.volumeSound);
 
-        try {
-            if (bgm.isPlaying()) {
-                bgm.stop();
-            }
+        if (bgm != null && bgm.isPlaying()) {
+            bgm.pause();
+        }
 
-            if (fire.isPlaying()) {
-                fire.stop();
-            }
+        if (fire != null && fire.isPlaying()) {
+            fire.pause();
+        }
 
-            if (heartbeat.isPlaying()) {
-                heartbeat.stop();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (heartbeat != null && heartbeat.isPlaying()) {
+            heartbeat.pause();
         }
 
         if (darkness > 14) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setMessage("If I just had a torch...");
+            builder.setMessage(getString(R.string.die_torch));
             if (MainActivity.torches > 0) {
-                builder.setPositiveButton("Use torch: " + MainActivity.torches, new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.use_torch) + ": " + MainActivity.torches, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         darkness = 0;
@@ -923,19 +946,41 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         dialog.dismiss();
                         MainActivity.stopTime = false;
                         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+                        if (bgm != null) {
+                            bgm.start();
+                        }
+
+                        if (fire != null) {
+                            fire.start();
+                        }
+
+                        if (heartbeat != null) {
+                            heartbeat.start();
+                        }
                     }
                 });
             } else {
-                builder.setPositiveButton("Buy torch: 20 Stars", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.buy_torch) + ": 5 " + getString(R.string.stars), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (MainActivity.allStars >= 20) {
-                            MainActivity.allStars -= 20;
+                        if (MainActivity.allStars >= 5) {
+                            MainActivity.allStars -= 5;
                             MainActivity.starsCounter.setText("" + MainActivity.allStars);
                             darkness = 0;
                             dialog.dismiss();
                             MainActivity.stopTime = false;
                             imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
+                            if (bgm != null) {
+                                bgm.start();
+                            }
+
+                            if (fire != null) {
+                                fire.start();
+                            }
+
+                            if (heartbeat != null) {
+                                heartbeat.start();
+                            }
                         } else {
                             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -948,7 +993,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     }
                 });
             }
-            builder.setNegativeButton("No, thanks!", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.no_thanks, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MainActivity.resetCount++;
@@ -977,12 +1022,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     }
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("You died!");
-                    builder.setMessage("You died after: " + steps + " steps.");
+                    builder.setTitle(R.string.you_died);
+                    builder.setMessage(getString(R.string.you_died_after) + ": " + steps + " " + getString(R.string.die_steps));
                     builder.setView(image2);
                     builder.setCancelable(false);
                     if (MainActivity.lives > 0) {
-                        builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                        builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
@@ -993,7 +1038,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             }
                         });
                     }
-                    builder.setNegativeButton("Level Select", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.level_select, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -1002,6 +1047,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
                             transaction.addToBackStack("LevelSelectFragment");
                             transaction.commit();
+                            if (MainActivity.menuBGM != null) {
+                                MainActivity.menuBGM.start();
+                            }
                         }
                     });
                     builder.show();
@@ -1035,12 +1083,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("You died!");
-            builder.setMessage("You died after: " + steps + " steps.");
+            builder.setTitle(R.string.you_died);
+            builder.setMessage(getString(R.string.you_died_after) + ": " + steps + " " + getString(R.string.die_steps));
             builder.setView(image2);
             builder.setCancelable(false);
             if (MainActivity.lives > 0) {
-                builder.setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.retry, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
@@ -1051,7 +1099,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     }
                 });
             }
-            builder.setNegativeButton("Level Select", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.level_select, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -1060,6 +1108,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
                     transaction.addToBackStack("LevelSelectFragment");
                     transaction.commit();
+                    if (MainActivity.menuBGM != null) {
+                        MainActivity.menuBGM.start();
+                    }
                 }
             });
             builder.show();
@@ -1068,6 +1119,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     public boolean checkWin() {
         if (contains(LevelArrays.GOAL, currentLevel[y][x])) {
+            imageViewPlayer.setVisibility(View.INVISIBLE);
             MainActivity.resetCount++;
             if (MainActivity.lives < 5) {
                 MainActivity.lives++;
@@ -1075,11 +1127,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
             MainActivity.stopTime = true;
 
-            if ((MainActivity.level < LevelArrays.WORLDS[MainActivity.world].length - 1) && (MainActivity.level + 1 > MainActivity.maxLevel)) {
-                MainActivity.maxLevel = MainActivity.level + 1;
+            if ((MainActivity.level < LevelArrays.WORLDS[MainActivity.world].length - 1) && (MainActivity.level + 1 > MainActivity.maxLevel[MainActivity.world])) {
+                MainActivity.maxLevel[MainActivity.world] = MainActivity.level + 1;
             } else if ((MainActivity.level == LevelArrays.WORLDS[MainActivity.world].length - 1) && (MainActivity.world + 1 > MainActivity.maxWorld) && (MainActivity.world < LevelArrays.WORLDS.length - 1)) {
                 MainActivity.maxWorld = MainActivity.world + 1;
-                MainActivity.maxLevel = 0;
             }
 
             int minSteps = Integer.parseInt(currentLevel[currentLevel.length - 3][4]);
@@ -1090,7 +1141,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 score++;
             }
 
-            if (time - minSteps * 2 <= 0) {
+            if (time - minSteps <= 0) {
                 score++;
             }
 
@@ -1432,12 +1483,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             MainActivity.starsList.add(MainActivity.world + ", " + MainActivity.level + ", " + score);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("You win!");
-            builder.setMessage("Steps: " + steps + "\n" + "Time: " + time + "\n");
+            builder.setTitle(R.string.you_win);
+            builder.setMessage(getString(R.string.steps) + ": " + steps + "\n" + getString(R.string.time) + ": " + time);
             builder.setView(linearLayout);
             builder.setCancelable(false);
             if (MainActivity.level < LevelArrays.WORLDS[MainActivity.world].length - 1) {
-                builder.setPositiveButton("Next Level", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.next_level, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.level++;
@@ -1449,7 +1500,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     }
                 });
             } else {
-                builder.setPositiveButton("Next World", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.next_world, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.level = 0;
@@ -1460,10 +1511,13 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         transaction.replace(R.id.content, worldSelectFragment, "WorldSelectFragment");
                         transaction.addToBackStack("WorldSelectFragment");
                         transaction.commit();
+                        if (MainActivity.menuBGM != null) {
+                            MainActivity.menuBGM.start();
+                        }
                     }
                 });
             }
-            builder.setNeutralButton("Level Select", new DialogInterface.OnClickListener() {
+            builder.setNeutralButton(R.string.level_select, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -1472,9 +1526,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
                     transaction.addToBackStack("LevelSelectFragment");
                     transaction.commit();
+                    if (MainActivity.menuBGM != null) {
+                        MainActivity.menuBGM.start();
+                    }
                 }
             });
-            builder.setNegativeButton("Replay", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.replay, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
@@ -1486,19 +1543,26 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             });
             builder.show();
 
-            if (bgm.isPlaying()) {
-                bgm.stop();
+            if (bgm != null && bgm.isPlaying()) {
+                bgm.pause();
             }
 
-            if (fire.isPlaying()) {
-                fire.stop();
+            if (fire != null && fire.isPlaying()) {
+                fire.pause();
             }
 
-            if (heartbeat.isPlaying()) {
-                heartbeat.stop();
+            if (heartbeat != null && heartbeat.isPlaying()) {
+                heartbeat.pause();
             }
 
-            playSound(R.raw.win, MainActivity.volumeSound / 2);
+            if (bgm != null) {
+                bgm.reset();
+                bgm.release();
+            }
+
+            bgm = MediaPlayer.create(getContext(), R.raw.win);
+            bgm.setVolume(MainActivity.volumeSound / 2, MainActivity.volumeSound / 2);
+            bgm.start();
             return true;
         }
         return false;
@@ -1507,18 +1571,16 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public void checkDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         if (MainActivity.maxWorld == MainActivity.world) {
-            if (MainActivity.maxLevel == MainActivity.level) {
+            if (MainActivity.maxLevel[MainActivity.world] == MainActivity.level) {
                 switch (MainActivity.world) {
                     case 0:
                         switch (MainActivity.level) {
                             case 0:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Welcome to Mazecape");
-                                builder.setMessage("You find yourself lost in a terrifying maze. You need to get back home before sunset. " +
-                                        "Move around by swiping or change the input mode to touch at the bottom of the screen. " +
-                                        "At each stage you will find 3 stars that will help you to proceed later on. Good luck!");
-                                builder.setPositiveButton("Let's get started!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.welcome_to_mazecape);
+                                builder.setMessage(R.string.welcome_dialog);
+                                builder.setPositiveButton(R.string.lets_get_started, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1533,9 +1595,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Monster");
-                                builder.setMessage("Oh no a monster is blocking your path. You must find a sword first in order to proceed.");
-                                builder.setPositiveButton("I can handle that!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.moster);
+                                builder.setMessage(R.string.monster_dialog);
+                                builder.setPositiveButton(R.string.i_can_handle_that, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1550,9 +1612,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 5:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Portal");
-                                builder.setMessage("Look, there's a portal somewhere. You have to find it. It will take you to unreachable places!");
-                                builder.setPositiveButton("Awesome!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.portal);
+                                builder.setMessage(R.string.portal_dialog);
+                                builder.setPositiveButton(R.string.awesome, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1571,9 +1633,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 0:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Cave");
-                                builder.setMessage("You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a campfire.");
-                                builder.setPositiveButton("Sure!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.cave);
+                                builder.setMessage(R.string.cave_dialog);
+                                builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1592,9 +1654,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 0:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Snow");
-                                builder.setMessage("It got cold. The path is frozen and slippery. Watch out!");
-                                builder.setPositiveButton("Alright!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.snow);
+                                builder.setMessage(R.string.snow_dialog);
+                                builder.setPositiveButton(R.string.alright, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1613,9 +1675,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 0:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
-                                builder.setTitle("Desert");
-                                builder.setMessage("You entered a wide desert. Try not not to lose your orientation and watch out for sandstorms!");
-                                builder.setPositiveButton("Let's not get lost!", new DialogInterface.OnClickListener() {
+                                builder.setTitle(R.string.desert);
+                                builder.setMessage(R.string.desert_dialog);
+                                builder.setPositiveButton(R.string.lets_not_get_lost, new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         MainActivity.stopTime = false;
@@ -1644,7 +1706,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
         System.out.println("--------------------------------------");*/
 
-        //rotate level by 90 degrees ccw
+        //rotate level by 90 degrees cw
         String[][] newArray = new String[oldArray[0].length + 3][oldArray.length - 3];
         for (int i = 0; i < oldArray.length - 3; i++) {
             for (int k = 0; k < oldArray[i].length; k++) {
@@ -1753,6 +1815,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         newX = newArray[0].length - 1 - y;
         x = newX;
         y = newY;
+        position = new Point(x, y);
 
         //rotate steps made
         for (int i = 0; i < stepsMade.size(); i++) {
@@ -1760,8 +1823,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             newY = stepsMade.get(i).y;
             newY = stepsMade.get(i).x;
             newX = newArray[0].length - 1 - stepsMade.get(i).y;
-            stepsMade.get(i).x = newX;
-            stepsMade.get(i).y = newY;
+            stepsMade.set(i, new Point(newX, newY));
         }
 
         //rotate discovered paths
@@ -1770,8 +1832,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             newY = discovered.get(i).y;
             newY = discovered.get(i).x;
             newX = newArray[0].length - 1 - discovered.get(i).y;
-            discovered.get(i).x = newX;
-            discovered.get(i).y = newY;
+            discovered.set(i, new Point(newX, newY));
         }
 
         //rotate portals
@@ -1807,14 +1868,53 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public void setNeedle() {
         int goalX = 0;
         int goalY = 0;
+        int star1X = 0;
+        int star1Y = 0;
+        int star2X = 0;
+        int star2Y = 0;
+        int star3X = 0;
+        int star3Y = 0;
+
         for (int i = 0; i < currentLevel.length - 3; i++) {
             for (int k = 0; k < currentLevel[i].length; k++) {
                 if (contains(LevelArrays.GOAL, currentLevel[i][k])) {
                     goalX = k;
                     goalY = i;
+                    break;
                 }
             }
         }
+
+        for (int i = 0; i < currentLevel.length - 3; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(LevelArrays.STAR, currentLevel[i][k])) {
+                    star1X = k;
+                    star1Y = i;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currentLevel.length - 3; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(LevelArrays.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X)) {
+                    star2X = k;
+                    star2Y = i;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currentLevel.length - 3; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(LevelArrays.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X) && !(i == star2Y && k == star2X)) {
+                    star3X = k;
+                    star3Y = i;
+                    break;
+                }
+            }
+        }
+
         float y = goalY - position.y;
         float x = goalX - position.x;
         float angleRad = (float) Math.atan2(y, x);
@@ -1822,17 +1922,63 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         float angle = angleDeg + 90;
 
         if (!(y == 0 && x == 0)) {
-            needle.setRotation(angle);
+            needleGoal.setRotation(angle);
+        }
+
+        if (!(star1X == 0 && star1Y == 0)) {
+            y = star1Y - position.y;
+            x = star1X - position.x;
+            angleRad = (float) Math.atan2(y, x);
+            angleDeg = (float) Math.toDegrees(angleRad);
+            angle = angleDeg + 90;
+
+            if (!(y == 0 && x == 0)) {
+                needleStar1.setVisibility(View.VISIBLE);
+                needleStar1.setRotation(angle);
+            }
+        } else {
+            needleStar1.setVisibility(View.INVISIBLE);
+        }
+
+        if (!(star2X == 0 && star2Y == 0)) {
+            y = star2Y - position.y;
+            x = star2X - position.x;
+            angleRad = (float) Math.atan2(y, x);
+            angleDeg = (float) Math.toDegrees(angleRad);
+            angle = angleDeg + 90;
+
+            if (!(y == 0 && x == 0)) {
+                needleStar2.setVisibility(View.VISIBLE);
+                needleStar2.setRotation(angle);
+            }
+        } else {
+            needleStar2.setVisibility(View.INVISIBLE);
+        }
+
+        if (!(star3X == 0 && star3Y == 0)) {
+            y = star3Y - position.y;
+            x = star3X - position.x;
+            angleRad = (float) Math.atan2(y, x);
+            angleDeg = (float) Math.toDegrees(angleRad);
+            angle = angleDeg + 90;
+
+            if (!(y == 0 && x == 0)) {
+                needleStar3.setVisibility(View.VISIBLE);
+                needleStar3.setRotation(angle);
+            }
+        } else {
+            needleStar3.setVisibility(View.INVISIBLE);
         }
     }
 
     public void playSound(int sound, float volume) {
-        MediaPlayer stepSound = MediaPlayer.create(getContext(), sound);
-        stepSound.setVolume(volume, volume);
-        stepSound.start();
-        stepSound.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        MediaPlayer soundPlayer = MediaPlayer.create(getContext(), sound);
+        soundPlayer.setVolume(volume, volume);
+        soundPlayer.start();
+        soundPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mp.reset();
                 mp.release();
             }
         });
@@ -1840,8 +1986,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     public void startAnimation(float fromX, float toX, float fromY, float toY) {
         final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
-        translateAnimation.setDuration(200);
-        translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
+        translateAnimation.setDuration(moveSpeed);
+        if (scene.equals("s")) {
+            translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
+        } else {
+            translateAnimation.setInterpolator(getContext(), android.R.anim.accelerate_decelerate_interpolator);
+        }
         translateAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -1852,6 +2002,14 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             @Override
             public void onAnimationEnd(Animation animation) {
                 allowInput = true;
+                gridViewLevel.setTranslationY(-MainActivity.width / 3 * y);
+                gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 3));
+                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
+                animation.setDuration(1);
+                gridViewLevel.startAnimation(animation);
+                gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
+                setNeedle();
+
                 if (!checkDarkness()) {
                     if (!checkTrap()) {
                         if (!checkHole()) {
@@ -1862,7 +2020,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     checkStar();
                                     checkPortal();
                                     if (contains(LevelArrays.CRACK, currentLevel[y][x])) {
-                                        playSound(R.raw.sword, MainActivity.volumeSound);
+                                        playSound(R.raw.cracking, MainActivity.volumeSound);
                                     }
                                     if (scene.equals("d")) {
                                         int randStep = 5 + (int) (Math.random() * ((10 - 5) + 1));
@@ -1893,6 +2051,25 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                                 }
                                             });
                                             imageViewSandstorm.startAnimation(rotateAnimation);
+
+                                            items.clear();
+                                            for (int i = 2; i < GameFragment.currentLevel.length - 5; i++) {
+                                                for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
+                                                    items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
+                                                }
+                                            }
+
+                                            relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / 3;
+                                            relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / 3;
+
+                                            gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / 3;
+                                            gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / 3;
+                                            gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+                                            gridViewLevel.setTranslationY(-MainActivity.width / 3 * y);
+                                            gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 3));
+
+                                            levelAdapter.notifyDataSetChanged();
+                                            gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
                                         }
                                     }
                                 }
@@ -1901,14 +2078,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     }
                 }
 
-                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
-                animation.setDuration(1);
-                gridViewLevel.startAnimation(animation);
-                //gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
-                gridViewLevel.setTranslationY(-MainActivity.width / 3 * (y - 1));
-                gridViewLevel.setTranslationX(-MainActivity.width / 3 * (x - 4));
-                gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
-                setNeedle();
                 isAnimating = false;
 
                 //Slippery Ground
@@ -1964,19 +2133,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void resetLevel() {
-        try {
+        if (bgm != null && bgm.isPlaying()) {
             bgm.pause();
+        }
+        if (fire != null && fire.isPlaying()) {
             fire.pause();
+        }
+        if (heartbeat != null && heartbeat.isPlaying()) {
             heartbeat.pause();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         MainActivity.stopTime = true;
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Do you really want to reset level?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.reset_level);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.resetCount++;
@@ -1987,16 +2158,22 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.stopTime = false;
-                bgm.start();
-                fire.start();
-                heartbeat.start();
+                if (bgm != null) {
+                    bgm.start();
+                }
+                if (fire != null) {
+                    fire.start();
+                }
+                if (heartbeat != null) {
+                    heartbeat.start();
+                }
             }
         });
-        builder.setNeutralButton("Level Select", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(R.string.level_select, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.resetCount++;
@@ -2007,6 +2184,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
                 transaction.addToBackStack("LevelSelectFragment");
                 transaction.commit();
+                if (MainActivity.menuBGM != null) {
+                    MainActivity.menuBGM.start();
+                }
             }
         });
         builder.setCancelable(false);
@@ -2034,7 +2214,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 int trapY = Integer.parseInt(result[1]);
                                 if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[trapY][trapX])) {
                                     currentLevel[trapY][trapX] = LevelArrays.TRAP_INACTIVE[getIndex(LevelArrays.TRAP_ACTIVE, currentLevel[trapY][trapX])];
+                                    items.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[trapY][trapX], "drawable", getContext().getPackageName()));
+                                    levelAdapter.notifyDataSetChanged();
                                     trapActive = false;
+                                    checkTrap();
                                 }
                             }
                             if (!trapActive) {
@@ -2048,70 +2231,24 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 int trapY = Integer.parseInt(result[1]);
                                 if (contains(LevelArrays.TRAP_INACTIVE, currentLevel[trapY][trapX])) {
                                     currentLevel[trapY][trapX] = LevelArrays.TRAP_ACTIVE[getIndex(LevelArrays.TRAP_INACTIVE, currentLevel[trapY][trapX])];
+                                    items.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[trapY][trapX], "drawable", getContext().getPackageName()));
+                                    levelAdapter.notifyDataSetChanged();
                                     trapActive = true;
+                                    checkTrap();
                                 }
                             }
                             if (trapActive) {
                                 playSound(R.raw.trap_activate, MainActivity.volumeSound);
                             }
                         }
-
-
-
-
-                        /*for (int i = 0; i < currentLevel.length - 3; i++) {
-                            for (int k = 0; k < currentLevel[i].length; k++) {
-                                if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[i][k]) && (time + 2) % 3 == 0) {
-                                    if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x])) {
-                                        playSound(R.raw.trap_deactivate, MainActivity.volumeSound);
-                                        Log.d("debug", "1");
-                                        trapVisible = true;
-                                    } else if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x + 1]) ||
-                                            contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x + 1]) ||
-                                            contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x + 1])) {
-                                        playSound(R.raw.trap_deactivate, MainActivity.volumeSound * 2 / 3);
-                                        Log.d("debug", "2");
-                                        trapVisible = true;
-                                    }
-                                *//*else if (contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 2][x - 2]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 2][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 2][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 2][x + 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 2][x + 2]) ||
-                                        contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x - 2]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x + 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y - 1][x + 2]) ||
-                                        contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x - 2]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x + 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y][x + 2]) ||
-                                        contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x - 2]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x + 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 1][x + 2]) ||
-                                        contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 2][x - 2]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 2][x - 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 2][x]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 2][x + 1]) || contains(LevelArrays.TRAP_ACTIVE, currentLevel[y + 2][x + 2])) {
-                                    playSound(R.raw.trap_deactivate, MainActivity.volumeSound / 3);
-                                    trapVisible = true;
-                                }*//*
-                                    currentLevel[i][k] = LevelArrays.TRAP_INACTIVE[getIndex(LevelArrays.TRAP_ACTIVE, currentLevel[i][k])];
-                                } else if (contains(LevelArrays.TRAP_INACTIVE, currentLevel[i][k]) && time % 3 == 0) {
-                                    if (contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x])) {
-                                        playSound(R.raw.trap_activate, MainActivity.volumeSound);
-                                        Log.d("debug", "3");
-                                        trapVisible = true;
-                                    } else if (contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x + 1]) ||
-                                            contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x + 1]) ||
-                                            contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x + 1])) {
-                                        playSound(R.raw.trap_activate, MainActivity.volumeSound * 2 / 3);
-                                        Log.d("debug", "4");
-                                        trapVisible = true;
-                                    }
-                                *//*else if (contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 2][x - 2]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 2][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 2][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 2][x + 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 2][x + 2]) ||
-                                        contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x - 2]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x + 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y - 1][x + 2]) ||
-                                        contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x - 2]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x + 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y][x + 2]) ||
-                                        contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x - 2]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x + 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 1][x + 2]) ||
-                                        contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 2][x - 2]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 2][x - 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 2][x]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 2][x + 1]) || contains(LevelArrays.TRAP_INACTIVE, currentLevel[y + 2][x + 2])) {
-                                    playSound(R.raw.trap_activate, MainActivity.volumeSound / 3);
-                                    trapVisible = true;
-                                }*//*
-                                    currentLevel[i][k] = LevelArrays.TRAP_ACTIVE[getIndex(LevelArrays.TRAP_INACTIVE, currentLevel[i][k])];
-                                }
-                            }
-                        }*/
                     }
-                    if (!isAnimating && trapVisible) {
-                        gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
+
+                    /*if (!isAnimating && trapVisible) {
+                        items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+                        levelAdapter.notifyDataSetChanged();
                         gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
                         checkTrap();
-                    }
+                    }*/
                     if (scene.equals("f") && (time % Integer.parseInt(currentLevel[currentLevel.length - 3][3]) == 0)) {
                         darkness++;
                         imageViewDarkness.setImageResource(PlayerArrays.DARKNESS[darkness]);
@@ -2121,25 +2258,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
         };
         handler.postDelayed(runnable, 1000);
-    }
-
-    public void saveGame() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        if (controlButton.isChecked()) {
-            editor.putBoolean("isChecked", true);
-        } else {
-            editor.putBoolean("isChecked", false);
-        }
-        editor.apply();
-    }
-
-    public void loadGame() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
-
-        controlButton.setChecked(sharedPreferences.getBoolean("isChecked", true));
-
-        reset();
     }
 
     @Override
@@ -2154,16 +2272,17 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Do you like to reveal the map? 30 Stars");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.reveal_map);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (MainActivity.allStars >= 30) {
-                    MainActivity.allStars -= 30;
-                    for (int i = 0; i < GameFragment.currentLevel.length - 3; i++) {
-                        for (int k = 0; k < GameFragment.currentLevel[i].length - 1; k++) {
+                if (MainActivity.allStars >= 10) {
+                    MainActivity.allStars -= 10;
+                    for (int i = 0; i < currentLevel.length - 3; i++) {
+                        for (int k = 0; k < currentLevel[i].length - 1; k++) {
                             Point point = new Point(k, i);
                             discovered.add(point);
+                            mapRevealed = true;
                         }
                     }
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
@@ -2180,7 +2299,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

@@ -22,19 +22,10 @@
         android:verticalSpacing="0dp" />
 
     <RelativeLayout
-        android:id="@+id/footer_black"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/gridViewLevel"
-        android:background="#000"
-        android:visibility="invisible">
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/relativeLayout_UI"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/imageViewPlayer"
@@ -43,16 +34,8 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:adjustViewBounds="true"
-            android:src="@drawable/pfup" />
-
-        <ImageView
-            android:id="@+id/imageViewDarkness"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:adjustViewBounds="true"
-            android:src="@drawable/darkness_00" />
+            android:src="@drawable/pfup_big"
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/imageViewSandstorm"
@@ -64,12 +47,23 @@
             android:src="@drawable/sandstorm"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/imageViewDarkness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:adjustViewBounds="true"
+            android:src="@drawable/darkness_00_big"
+            android:visibility="visible" />
+
         <RelativeLayout
             android:id="@+id/header_black"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_above="@+id/imageViewDarkness"
-            android:background="#000" />
+            android:background="#000"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/posX"
@@ -121,7 +115,8 @@
             android:text="Swipe"
             android:textColor="#fff"
             android:textOff="Swipe"
-            android:textOn="Touch" />
+            android:textOn="Touch"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/cheatButton"
@@ -155,10 +150,29 @@
                     android:src="@drawable/compass" />
 
                 <ImageView
-                    android:id="@+id/needle"
+                    android:id="@+id/needleStar1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/compass_star" />
+
+                <ImageView
+                    android:id="@+id/needleStar2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/compass_star" />
+
+                <ImageView
+                    android:id="@+id/needleStar3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/compass_star" />
+
+                <ImageView
+                    android:id="@+id/needleGoal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/needle" />
+
             </RelativeLayout>
 
             <RelativeLayout

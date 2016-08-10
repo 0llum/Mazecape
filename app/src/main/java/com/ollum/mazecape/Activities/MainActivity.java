@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -34,24 +36,33 @@ import com.ollum.mazecape.util.IabResult;
 import java.util.HashSet;
 import java.util.Set;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static FragmentManager fragmentManager;
 
-    public static int maxLevel = 0;
+    public static FrameLayout content;
     public static int maxWorld = 0;
     public static int level = 0;
     public static int world = 0;
     public static int lives = 5;
     public static boolean swipe = true;
+    public static boolean inverse = false;
     public static HashSet<String> starsList;
     public static int allStars = 0;
     public static int world1Stars = 0;
     public static int world2Stars = 0;
     public static int world3Stars = 0;
     public static int world4Stars = 0;
+    public static int world1MaxLevel = 0;
+    public static int world2MaxLevel = 0;
+    public static int world3MaxLevel = 0;
+    public static int world4MaxLevel = 0;
+    public static int[] maxLevel;
     public static int[] worldStars;
     public static Display display;
     public static Point size;
@@ -75,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static int resetCount = 0;
     public static AdRequest adRequest;
     public static boolean showAds = true;
+    public static MediaPlayer menuBGM;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
@@ -101,6 +113,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                        .setDefaultFontPath("fonts/mail_ray_stuff.ttf")
+                        .setFontAttrId(R.attr.fontPath)
+                        .build()
+        );
+
+        content = (FrameLayout) findViewById(R.id.content);
+
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
@@ -122,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stepsLayout.setVisibility(View.INVISIBLE);
 
         title = (TextView) findViewById(R.id.title);
-        title.setText("Mazecape");
+        title.setText(R.string.app_name);
         livesCounter = (TextView) findViewById(R.id.livesCounter);
         starsCounter = (TextView) findViewById(R.id.starsCounter);
         timeCounter = (TextView) findViewById(R.id.timeCounter);
@@ -152,6 +172,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         loadGame();
         createHandler();
+
+        /*Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, 0);
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, 60000, pendingIntent);
+        Log.d("debug", "set up");*/
+
+        if (menuBGM != null) {
+            menuBGM.reset();
+            menuBGM.release();
+        }
+
+        menuBGM = MediaPlayer.create(this, R.raw.and_how_it_all_began);
+        menuBGM.setLooping(true);
+        menuBGM.setVolume(volumeMusic, volumeMusic);
+        menuBGM.start();
     }
 
     @Override
@@ -176,20 +214,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.addToBackStack("WorldSelectFragment");
             transaction.commit();
         } else if (current.equals("GameFragment") || current.equals("LevelFragment")) {
-            try {
+            if (GameFragment.bgm != null && GameFragment.bgm.isPlaying()) {
                 GameFragment.bgm.pause();
+            }
+            if (GameFragment.fire != null && GameFragment.fire.isPlaying()) {
                 GameFragment.fire.pause();
+            }
+            if (GameFragment.heartbeat != null && GameFragment.heartbeat.isPlaying()) {
                 GameFragment.heartbeat.pause();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
 
             stopTime = true;
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("");
-            builder.setMessage("Do you really want to go back to the level select screen? You will lose all your progress in the current level!");
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            builder.setMessage(R.string.level_select_screen);
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     resetCount++;
@@ -202,14 +242,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     transaction.commit();
                 }
             });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
                     stopTime = false;
-                    GameFragment.bgm.start();
-                    GameFragment.fire.start();
-                    GameFragment.heartbeat.start();
+                    if (GameFragment.bgm != null) {
+                        GameFragment.bgm.start();
+                    }
+                    if (GameFragment.fire != null) {
+                        GameFragment.fire.start();
+                    }
+                    if (GameFragment.heartbeat != null) {
+                        GameFragment.heartbeat.start();
+                    }
                 }
             });
             builder.setCancelable(false);
@@ -248,12 +294,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onPause() {
         super.onPause();
         saveGame();
+
+        if (menuBGM != null && menuBGM.isPlaying()) {
+            menuBGM.pause();
+            menuBGM.seekTo(0);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         loadGame();
+
+        FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
+        String current = currentFragment.getName();
+
+        if (menuBGM != null && !current.equals("GameFragment") || current.equals("LevelFragment")) {
+            menuBGM.start();
+        }
     }
 
     @Override
@@ -267,14 +325,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mHelper = null;
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
     public void loadGame() {
         SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
 
         level = sharedPreferences.getInt("level", 0);
         world = sharedPreferences.getInt("world", 0);
         lives = sharedPreferences.getInt("lives", 5);
-        maxLevel = sharedPreferences.getInt("maxLevel", 0);
         maxWorld = sharedPreferences.getInt("maxWorld", 0);
+        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
+        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
+        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 0);
+        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 0);
         allStars = sharedPreferences.getInt("allStars", 0);
         world1Stars = sharedPreferences.getInt("world1Stars", 0);
         world2Stars = sharedPreferences.getInt("world2Stars", 0);
@@ -282,6 +348,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         world4Stars = sharedPreferences.getInt("world4Stars", 0);
         torches = sharedPreferences.getInt("torches", 0);
         swipe = sharedPreferences.getBoolean("swipe", true);
+        inverse = sharedPreferences.getBoolean("inverse", false);
         volumeMusic = sharedPreferences.getFloat("volumeMusic", 1);
         volumeSound = sharedPreferences.getFloat("volumeSound", 1);
         logOffTime = sharedPreferences.getLong("logOffTime", 0);
@@ -292,6 +359,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         worldStars = new int[]{
                 world1Stars, world2Stars, world3Stars, world4Stars
+        };
+
+        maxLevel = new int[]{
+                world1MaxLevel, world2MaxLevel, world3MaxLevel, world4MaxLevel
         };
 
         while ((currentTimeMillis() - logOffTime > 300000) && lives < 5) {
@@ -311,8 +382,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putInt("level", level);
         editor.putInt("world", world);
         editor.putInt("lives", lives);
-        editor.putInt("maxLevel", maxLevel);
         editor.putInt("maxWorld", maxWorld);
+        editor.putInt("world1MaxLevel", maxLevel[0]);
+        editor.putInt("world2MaxLevel", maxLevel[1]);
+        editor.putInt("world3MaxLevel", maxLevel[2]);
+        editor.putInt("world4MaxLevel", maxLevel[3]);
         editor.putStringSet("stars", starsList);
         editor.putInt("torches", torches);
         editor.putInt("allStars", allStars);
@@ -321,6 +395,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putInt("world3Stars", world3Stars);
         editor.putInt("world4Stars", world4Stars);
         editor.putBoolean("swipe", swipe);
+        editor.putBoolean("inverse", inverse);
         editor.putFloat("volumeMusic", volumeMusic);
         editor.putFloat("volumeSound", volumeSound);
         editor.putLong("logOffTime", currentTimeMillis());

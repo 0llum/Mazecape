@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Mazecape</string>
+
+    <string name="play_button">Spielen</string>
+    <string name="help_button">Hilfe</string>
+    <string name="shop_button">Shop</string>
+    <string name="level_editor_button">Level Editor</string>
+
+    <string name="shop">Shop</string>
+    <string name="level">Level</string>
+    <string name="level_editor">Level Editor</string>
+
+    <string name="settings">Einstellungen</string>
+    <string name="music_volume">Lautstärke Musik</string>
+    <string name="sound_volume">Lautstärke Geräusche</string>
+
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="no_thanks">Nein, danke</string>
+
+    <string name="ads_remove">Beim ersten Kauf wird die App werbefrei!</string>
+
+    <string name="forest">Wald</string>
+    <string name="cave">Höhle</string>
+    <string name="snow">Schnee</string>
+    <string name="desert">Wüste</string>
+
+    <string name="star">Stern</string>
+    <string name="fire">Feuer</string>
+    <string name="portal">Portal</string>
+    <string name="moster">Monster</string>
+    <string name="sword">Schwert</string>
+    <string name="trap_active">Falle (aktiv)</string>
+    <string name="trap_inactive">Falle (inaktiv)</string>
+    <string name="crack">Riss</string>
+    <string name="hole">Loch</string>
+
+    <string name="level_types">Level Arten</string>
+    <string name="forest_info">Beende das Level vor Sonnenuntergang. Je länger du benötigst umso dunkler wird es</string>
+    <string name="cave_info">Beende das Level mit wenigen Schritten. Je mehr Schritte du benötigst umso dunkler wird es</string>
+    <string name="snow_info">Der Boden ist glatt. Du kannst deine Richtung erst wieder ändern, wenn der Weg endet</string>
+    <string name="desert_info">Alle paar Schritte verlierst du die Orientierung. Die Karte wird zufällig rotieren</string>
+    <string name="special_tiles">Spezial Felder</string>
+    <string name="star_info">Sterne werden dir auf deinem Weg helfen. Du findest 3 Stück in jedem Level</string>
+    <string name="fire_info">Eine Feuerstelle wird dein Abenteuer verlängern indem es die Dunkelheit zurücksetzt</string>
+    <string name="portal_info">Ein Portal bringt dich an unerreichbare Orte</string>
+    <string name="monster_info">An einem Monster kommst du nur mithilfe eines Schwerts vorbei</string>
+    <string name="sword_info">Ein Schwert hilft dir Monster zu besiegen</string>
+    <string name="trap_active_info">Wenn du eine aktive Falle betrittst wirst du sterben</string>
+    <string name="trap_inactive_info">Solange die Falle inaktiv ist kannst du sie gefahrlos passieren</string>
+    <string name="crack_info">Der Boden ist rissig. Er wird nur noch einen Schritt aushalten</string>
+    <string name="hole_info">Der Boden ist eingebrochen. Wenn du hineinfällst wirst du sterben</string>
+
+    <string name="die_torch">Wenn ich doch nur eine Fackel hätte&#8230;</string>
+    <string name="stars">Sterne</string>
+    <string name="use_torch">Fackel benutzen</string>
+    <string name="buy_torch">Fackel kaufen</string>
+    <string name="you_died">Du bist gestorben</string>
+    <string name="you_died_after">Du bist nach</string>
+    <string name="die_steps">Schritten gestorben</string>
+    <string name="retry">Nochmal</string>
+    <string name="level_select">Levelauswahl</string>
+    <string name="world_select">Weltauswahl</string>
+    <string name="you_win">Sieg</string>
+    <string name="steps">Schritte</string>
+    <string name="time">Zeit</string>
+    <string name="next_level">Weiter</string>
+    <string name="next_world">Weiter</string>
+    <string name="replay">Nochmal</string>
+
+    <string name="welcome_to_mazecape">Willkommen bei Mazecape</string>
+    <string name="welcome_dialog">Du befindest dich in einem unheimlichen Labyrinth. Du musst vor Sonnenuntergang wieder nach Hause kommen. Bewege dich durch Wischen oder ändere die Steuerung am unteren Ende des Bildschirms. In jedem Level wirst du 3 Sterne finden, die dir später weiterhelfen können. Viel Glück!</string>
+    <string name="lets_get_started">Auf geht\'s</string>
+    <string name="monster_dialog">Oh nein, ein Monster blockiert deinen Weg. Du musst zuerst ein Schwert finden um weiterzukommen</string>
+    <string name="i_can_handle_that">Das schaffe ich schon</string>
+    <string name="portal_dialog">Sieh, dort ist irgendwo ein Portal. Es bringt dich an unerreichbare Orte</string>
+    <string name="awesome">Super</string>
+    <string name="cave_dialog">Du betrittst ein dunkle Höhle. Je weiter du hineingehst umso dunkler wird es. Achte auf deine Schritte und suche nach einer Feuerstelle</string>
+    <string name="sure">Sicher</string>
+    <string name="snow_dialog">Es ist kalt geworden. Der Weg ist eingefroren und rutschig. Pass auf</string>
+    <string name="alright">Alles klar</string>
+    <string name="desert_dialog">Du betrittst eine große Wüste. Versuche nicht die Orientierung zu verlieren und hüte dich vor den Sandstürmen</string>
+    <string name="lets_not_get_lost">Ich hoffe ich verirre mich nicht</string>
+    <string name="reset_level">Möchtest du das Level wirklich zurürcksetzen?</string>
+    <string name="reveal_map">Möchtest du die Karte aufdecken? 10 Sterne</string>
+    <string name="level_select_screen">Möchtest du wirklich zur Levelauswahl zurückkehren? Du verlierst dabei deinen aktuellen Fortschritt</string>
+
+    <string name="purchase_successful">Kauf erfolgreich</string>
+    <string name="not_enough_stars">Du hast nicht genug Sterne</string>
+    <string name="full_health">Du hast bereits 5 Leben</string>
+    <string name="purchase_error">Kauf fehlgeschlagen. Bitte versuche es erneut</string>
+
+</resources>

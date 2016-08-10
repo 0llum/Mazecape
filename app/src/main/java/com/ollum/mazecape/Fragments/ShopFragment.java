@@ -49,27 +49,27 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onIabPurchaseFinished(IabResult result, Purchase info) {
                 if (result.isFailure()) {
-                    Toast.makeText(getContext(), "There was an error, please try again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.purchase_error, Toast.LENGTH_LONG).show();
                 } else if (info.getSku().equals("100_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 100;
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
-                    Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                 } else if (info.getSku().equals("200_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 200;
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
-                    Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                 } else if (info.getSku().equals("500_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 500;
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
-                    Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                 } else if (info.getSku().equals("1000_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 1000;
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
-                    Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -87,12 +87,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                         MainActivity.lives++;
                         MainActivity.starsCounter.setText("" + MainActivity.allStars);
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
-                        Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getContext(), "You already are at 5 lives!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Not enough Stars!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.button_5_hearts:
@@ -104,16 +104,18 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                         }
                         MainActivity.starsCounter.setText("" + MainActivity.allStars);
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
-                        Toast.makeText(getContext(), "Purchase successfully!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getContext(), "You already are at 5 lives!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(getContext(), "Not enough Stars!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
                 break;
             case R.id.button_100_stars:
                 try {
+                    MainActivity.allStars += 100;
+                    MainActivity.showAds = false;
                     MainActivity.mHelper.launchPurchaseFlow(getActivity(), "100_stars", 10001, mPurchaseFinishedListener, "");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
@@ -121,6 +123,8 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_200_stars:
                 try {
+                    MainActivity.allStars += 200;
+                    MainActivity.showAds = false;
                     MainActivity.mHelper.launchPurchaseFlow(getActivity(), "200_stars", 10001, mPurchaseFinishedListener, "");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
@@ -128,6 +132,8 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_500_stars:
                 try {
+                    MainActivity.allStars += 500;
+                    MainActivity.showAds = false;
                     MainActivity.mHelper.launchPurchaseFlow(getActivity(), "500_stars", 10001, mPurchaseFinishedListener, "");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();
@@ -135,6 +141,8 @@ public class ShopFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_1000_stars:
                 try {
+                    MainActivity.allStars += 1000;
+                    MainActivity.showAds = false;
                     MainActivity.mHelper.launchPurchaseFlow(getActivity(), "1000_stars", 10001, mPurchaseFinishedListener, "");
                 } catch (IabHelper.IabAsyncInProgressException e) {
                     e.printStackTrace();

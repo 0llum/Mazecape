@@ -6,25 +6,13 @@
     tools:context=".Fragments.MainMenuFragment">
 
     <Button
-        android:id="@+id/button_continue"
+        android:id="@+id/button_play"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:text="Continue"
-        android:textColor="#FFF"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/button_level_select"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_continue"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="Level Select"
+        android:layout_marginTop="100dp"
+        android:text="@string/play_button"
         android:textColor="#FFF"
         android:textSize="20dp" />
 
@@ -36,7 +24,7 @@
         android:layout_below="@+id/button_shop"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Help"
+        android:text="@string/help_button"
         android:textColor="#FFF"
         android:textSize="20dp" />
 
@@ -47,7 +35,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id"></com.google.android.gms.ads.AdView>
+        ads:adUnitId="ca-app-pub-7666608930334273/1321226947"></com.google.android.gms.ads.AdView>
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -68,7 +56,7 @@
         android:layout_below="@+id/button_level_editor"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Shop"
+        android:text="@string/shop_button"
         android:textColor="#FFF"
         android:textSize="20dp" />
 
@@ -77,10 +65,10 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_level_select"
+        android:layout_below="@+id/button_play"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Level Editor"
+        android:text="@string/level_editor_button"
         android:textColor="#FFF"
         android:textSize="20dp" />
 

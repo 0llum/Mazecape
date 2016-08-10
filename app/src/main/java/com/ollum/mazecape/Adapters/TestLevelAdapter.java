@@ -21,7 +21,7 @@ public class TestLevelAdapter extends BaseAdapter {
     public TestLevelAdapter(Context context, int center) {
         inflater = LayoutInflater.from(context);
 
-        for (int i = 3; i < GameFragment.currentLevel.length - 5; i++) {
+        for (int i = 3; i < GameFragment.currentLevel.length - 6; i++) {
             for (int k = 3; k < GameFragment.currentLevel[i].length - 3; k++) {
                 items.add(new Item("" + i, context.getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", context.getPackageName())));
             }

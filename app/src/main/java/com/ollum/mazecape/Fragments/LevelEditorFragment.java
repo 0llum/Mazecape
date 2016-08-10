@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Arrays.LevelArrays;
 import com.ollum.mazecape.Classes.Item;
 import com.ollum.mazecape.R;
@@ -31,6 +32,8 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_editor, container, false);
+
+        MainActivity.title.setText(R.string.level_editor);
 
         gridViewLevelEditor = (GridView) view.findViewById(R.id.gridview_level_editor);
         gridViewLevelEditor.setOnItemClickListener(this);

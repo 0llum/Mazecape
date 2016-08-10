@@ -28,7 +28,7 @@ public class MapAdapter extends BaseAdapter {
                 if (GameFragment.stepsMade.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i))) {
                     items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("m" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
                 } else if (GameFragment.discovered.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i))) {
-                    items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("m" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
+                    items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("n" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
                 } else {
                     items.add(new Item(i + 4 + "-" + k + 4, R.drawable.blank));
                 }

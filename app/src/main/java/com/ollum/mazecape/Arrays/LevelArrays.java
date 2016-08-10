@@ -451,23 +451,162 @@ public class LevelArrays {
             {},
             {}
     };
+    public static final String[][] one = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntu", "ndl", "sdn", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "sdn", "nud", "nur", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "ntr", "nur", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sdn", "nud", "ndr", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nul", "gup", "nur", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"5", "3", "f", "4", "38"},
+            {},
+            {}
+    };
+    public static final String[][] two = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "srt", "nlr", "nlr", "ntu", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ndl", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "prt", "ntd", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "mtl", "ndl", "prt", "ndl", "sup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "nur", "glt", "nur", "wlt", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"5", "3", "f", "4", "34"},
+            {"4,5", "5,6"},
+            {}
+    };
+    public static final String[][] three = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nlr", "ndl", "ndr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "ndl", "nud", "sup", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "mtl", "nul", "nud", "nur", "nlr", "ntd", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "sdn", "nur", "nlr", "ndl", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ntl", "ndl", "ndr", "nul", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nul", "nud", "nud", "ndr", "wlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "srt", "nlr", "nul", "gup", "nur", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"6", "3", "f", "8", "80"},
+            {},
+            {}
+    };
+    public static final String[][] four = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndn", "ndr", "ntu", "nlr", "nlr", "nlr", "nlt", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nul", "nur", "nlr", "nlt", "ndr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "ctu", "nlt", "ndr", "ntr", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nul", "nur", "nlr", "ntr", "nud", "sup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nlr", "ndl", "nud", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "ndl", "ndr", "nul", "nur", "slt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "nur", "nul", "grt", "nlr", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"6", "3", "f", "6", "58"},
+            {},
+            {}
+    };
+    public static final String[][] five = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "nlr", "ntu", "nlt", "nrt", "nlr", "ntu", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndn", "ndr", "ntd", "nlr", "nlr", "nlr", "ntd", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "ntr", "ndr", "nlr", "ntu", "nlr", "nlt", "ntl", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nup", "nud", "ndr", "ntd", "ndl", "ndn", "nud", "nup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "ndr", "ntr", "nud", "gdn", "nud", "ntl", "nul", "sdn", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndn", "nud", "nup", "sup", "nur", "nul", "nud", "ndn", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "ntr", "nrt", "nlr", "ntu", "nlr", "nul", "ntl", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "ntu", "nlr", "ntd", "nlr", "ntu", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "ntd", "nlr", "nlt", "nrt", "ntd", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"3", "3", "f", "7", "64"},
+            {},
+            {}
+    };
+    public static final String[][] six = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "sup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "glt", "sup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"3", "3", "f", "4", "34"},
+            {},
+            {}
+    };
+    public static final String[][] seven = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "srt", "nlr", "ntu", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nul", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nlr", "ndl", "nud", "ndn", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nlt", "nud", "nur", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "nul", "srt", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "ndr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "nul", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "ndl", "ndn", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sdn", "ntl", "ntd", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nul", "grt", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"5", "3", "f", "7", "65"},
+            {},
+            {}
+    };
+    public static final String[][] eight = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "ntu", "ndl", "nrt", "nlr", "nlr", "ndl", "ndr", "ntu", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "ntr", "nur", "nlr", "nlr", "ndl", "nud", "nud", "nud", "nup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nup", "ndr", "nlr", "ndl", "ntl", "nul", "nud", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nul", "ndr", "nul", "nud", "ndr", "ntd", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nlr", "nul", "srt", "nul", "nud", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nlr", "nlr", "ndl", "ndr", "nlr", "nul", "nur", "ndl", "nup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndn", "ndr", "nul", "nud", "srt", "nlr", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "ntr", "nur", "nlr", "ntd", "nlr", "nlr", "nul", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndn", "nud", "ndr", "ndl", "sdn", "ndr", "nlr", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "ntd", "nul", "nur", "nul", "gup", "nrt", "ntd", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"6", "3", "f", "11", "109"},
+            {},
+            {}
+    };
     public static final String[][][] LEVEL = {
             FOREST_1, FOREST_2, FOREST_3, FOREST_4, FOREST_5, FOREST_6, FOREST_7, CAVE_1, SNOW_1, SNOW_2, DESERT_1, DESERT_2, LEVEL_D, CAVE_2, CAVE_3, CAVE_4, FOREST_1, FOREST_2, FOREST_3, FOREST_4, FOREST_5, FOREST_6, FOREST_7, CAVE_1, SNOW_1, SNOW_2, DESERT_1, DESERT_2, LEVEL_D, CAVE_2, CAVE_3, CAVE_4
     };
-    /*public static final String[][][] WORLD_1 = {
-            FOREST_1
-    };
-    public static final String[][][] WORLD_2 = {
-            CAVE_6
-    };
-    public static final String[][][] WORLD_3 = {
-            SNOW_3
-    };
-    public static final String[][][] WORLD_4 = {
-            DESERT_3
-    };*/
     public static final String[][][] WORLD_1 = {
-            FOREST_1, FOREST_2, FOREST_3, FOREST_4, FOREST_5, FOREST_6, FOREST_7
+            FOREST_1, FOREST_2, FOREST_3, FOREST_4, FOREST_5, FOREST_6, FOREST_7, one, six, two, four, three, seven, five, eight
     };
     public static final String[][][] WORLD_2 = {
             CAVE_5, CAVE_1, CAVE_6, CAVE_2, CAVE_3, CAVE_4
@@ -477,6 +616,9 @@ public class LevelArrays {
     };
     public static final String[][][] WORLD_4 = {
             DESERT_3, DESERT_1, DESERT_2
+    };
+    public static final String[][][] TEST_LEVEL = {
+            one, two, three, four, five, six, seven, eight
     };
     public static final String[][][][] WORLDS = {
             WORLD_1, WORLD_2, WORLD_3, WORLD_4

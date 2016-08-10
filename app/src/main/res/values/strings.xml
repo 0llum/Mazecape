@@ -1,9 +1,96 @@
 <resources>
     <string name="app_name">Mazecape</string>
 
-    <string name="banner_ad_unit_id">ca-app-pub-7666608930334273/1321226947</string>
-    <string name="interstitial_ad_unit_id">ca-app-pub-7666608930334273/3015809346</string>
+    <string name="play_button">Play</string>
+    <string name="help_button">Help</string>
+    <string name="shop_button">Shop</string>
+    <string name="level_editor_button">Level Editor</string>
+
+    <string name="shop">Shop</string>
+    <string name="level">Level</string>
+    <string name="level_editor">Level Editor</string>
+
+    <string name="settings">Settings</string>
+    <string name="music_volume">Music Volume</string>
+    <string name="sound_volume">Sound Volume</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="no_thanks">No, thanks</string>
+
+    <string name="ads_remove">All ads will be removed with your first purchase!</string>
+
+    <string name="forest">Forest</string>
+    <string name="cave">Cave</string>
+    <string name="snow">Snow</string>
+    <string name="desert">Desert</string>
+
+    <string name="star">Star</string>
+    <string name="fire">Fire</string>
+    <string name="portal">Portal</string>
+    <string name="moster">Monster</string>
+    <string name="sword">Sword</string>
+    <string name="trap_active">Trap (active)</string>
+    <string name="trap_inactive">Trap (inactive)</string>
+    <string name="crack">Crack</string>
+    <string name="hole">Hole</string>
+
+    <string name="level_types">Level Types</string>
+    <string name="forest_info">Try to finish the level before it gets dark. The longer you take the darker it gets</string>
+    <string name="cave_info">Try to finish the level with less steps. The deeper you go the darker it gets</string>
+    <string name="snow_info">The ground is slippery. You can\'t change direction until the path ends</string>
+    <string name="desert_info">Every few steps you\'ll lose your orientation. The map will rotate randomly</string>
+    <string name="special_tiles">Special Tiles</string>
+    <string name="star_info">Stars will help you on your way. You\'ll find 3 of them in each level</string>
+    <string name="fire_info">Finding a fireplace will help you survive longer as it resets the darkness completely</string>
+    <string name="portal_info">A portal takes you to unreachable places</string>
+    <string name="monster_info">When you face a monster make sure you have found a sword first in order to survive</string>
+    <string name="sword_info">A sword will help you fighting monsters along the path</string>
+    <string name="trap_active_info">While the trap is active you will die when trying to cross it</string>
+    <string name="trap_inactive_info">The trap is temporarily inactive. You can safely pass it but be quick</string>
+    <string name="crack_info">The ground is fragile. It will only last for one more step before breaking</string>
+    <string name="hole_info">The ground has collapsed. When you try to cross it you will die</string>
+
+    <string name="die_torch">If I just had a torch&#8230;</string>
+    <string name="stars">Stars</string>
+    <string name="use_torch">Use torch</string>
+    <string name="buy_torch">Buy torch</string>
+    <string name="you_died">You died</string>
+    <string name="you_died_after">You died after</string>
+    <string name="die_steps">steps</string>
+    <string name="retry">Retry</string>
+    <string name="level_select">Level Select</string>
+    <string name="world_select">World Select</string>
+    <string name="you_win">You win</string>
+    <string name="steps">Steps</string>
+    <string name="time">Time</string>
+    <string name="next_level">Next</string>
+    <string name="next_world">Next</string>
+    <string name="replay">Replay</string>
+
+    <string name="welcome_to_mazecape">Welcome to Mazecape</string>
+    <string name="welcome_dialog">You find yourself lost in a terrifying maze. You need to get back home before sunset. Move around by swiping or change the input mode to touch at the bottom of the screen. At each stage you will find 3 stars that will help you to proceed later on. Good luck!</string>
+    <string name="lets_get_started">Let\'s get started</string>
+    <string name="monster_dialog">Oh no a monster is blocking your path. You must find a sword first in order to proceed</string>
+    <string name="i_can_handle_that">I can handle that</string>
+    <string name="portal_dialog">Look, there\'s a portal somewhere. You have to find it. It will take you to unreachable places</string>
+    <string name="awesome">Awesome</string>
+    <string name="cave_dialog">You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a fireplace</string>
+    <string name="sure">Sure</string>
+    <string name="snow_dialog">It got cold. The path is frozen and slippery. Watch out</string>
+    <string name="alright">Alright</string>
+    <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
+    <string name="lets_not_get_lost">Let\'s not get lost</string>
+    <string name="reset_level">Do you really want to reset level?</string>
+    <string name="reveal_map">Do you like to reveal the map? 10 Stars</string>
+    <string name="level_select_screen">Do you really want to go back to the level select screen? You will lose all your progress in the current level</string>
+
+    <string name="purchase_successful">Purchase successful</string>
+    <string name="not_enough_stars">Not enough stars</string>
+    <string name="full_health">You already are at full health</string>
+    <string name="purchase_error">There was an error, please try again</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

@@ -14,13 +14,13 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Arrays.LevelArrays;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LevelSelectFragment extends Fragment {
@@ -32,7 +32,7 @@ public class LevelSelectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_select, container, false);
 
-        MainActivity.title.setText("Level Select");
+        MainActivity.title.setText(R.string.level_select);
 
         currentWorld = LevelArrays.WORLDS[MainActivity.world];
 
@@ -49,16 +49,24 @@ public class LevelSelectFragment extends Fragment {
                     transaction.replace(R.id.content, gameFragment, "GameFragment");
                     transaction.addToBackStack("GameFragment");
                     transaction.commit();
+                    if (MainActivity.menuBGM != null) {
+                        MainActivity.menuBGM.pause();
+                        MainActivity.menuBGM.seekTo(0);
+                    }
                 } else {
-                    if (position <= MainActivity.maxLevel) {
+                    if (position <= MainActivity.maxLevel[MainActivity.world]) {
                         MainActivity.level = position;
                         if (MainActivity.lives > 0) {
-                        GameFragment gameFragment = new GameFragment();
-                        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
-                        transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-                        transaction.replace(R.id.content, gameFragment, "GameFragment");
-                        transaction.addToBackStack("GameFragment");
-                        transaction.commit();
+                            GameFragment gameFragment = new GameFragment();
+                            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                            transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                            transaction.replace(R.id.content, gameFragment, "GameFragment");
+                            transaction.addToBackStack("GameFragment");
+                            transaction.commit();
+                            if (MainActivity.menuBGM != null) {
+                                MainActivity.menuBGM.pause();
+                                MainActivity.menuBGM.seekTo(0);
+                            }
                         } else {
                             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -67,12 +75,14 @@ public class LevelSelectFragment extends Fragment {
                             transaction.commit();
                             MainActivity.shopVisible = true;
                         }
+                    } else {
+                        Toast.makeText(getContext(), "You can unlock this level by finishing all previous levels", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
 
-        gridViewLevels.setSelection(MainActivity.maxLevel);
+        gridViewLevels.setSelection(MainActivity.maxLevel[MainActivity.world]);
 
         return view;
     }
@@ -86,9 +96,7 @@ public class LevelSelectFragment extends Fragment {
 
             for (int i = 0; i < currentWorld.length; i++) {
                 String scene = currentWorld[i][currentWorld[i].length - 3][2];
-                if (Arrays.asList(LevelArrays.WORLDS).indexOf(currentWorld) < MainActivity.maxWorld) {
-                    items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
-                } else if (i <= MainActivity.maxLevel) {
+                if (i <= MainActivity.maxLevel[MainActivity.world]) {
                     items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
                 } else {
                     items.add(new Item("" + i, getResources().getIdentifier(scene + "blk", "drawable", getContext().getPackageName()), i + 1));
