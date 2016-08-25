@@ -41,4 +41,25 @@
         android:layout_toStartOf="@+id/score"
         android:src="@drawable/star_button" />
 
+    <TextView
+        android:id="@+id/unlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100 / 200"
+        android:layout_below="@+id/level"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:textSize="20dp" />
+
+    <ImageView
+        android:id="@+id/unlock_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/star_button"
+        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@+id/unlock"
+        android:layout_alignTop="@+id/unlock"
+        android:layout_marginRight="5dp"
+        android:layout_alignBottom="@+id/unlock" />
+
 </RelativeLayout>

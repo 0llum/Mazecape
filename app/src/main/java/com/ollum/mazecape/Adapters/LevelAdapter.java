@@ -1,6 +1,7 @@
 package com.ollum.mazecape.Adapters;
 
 import android.content.Context;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,9 @@ public class LevelAdapter extends BaseAdapter {
             holder = (ViewHolder) row.getTag();
         }
 
-        holder.imageView.setImageResource(GameFragment.items.get(position));
-
+        //holder.imageView.setImageResource(GameFragment.items.get(position));
+        holder.imageView.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), GameFragment.items.get(position), null));
+        //holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), GameFragment.items.get(position)));
 
         return row;
     }

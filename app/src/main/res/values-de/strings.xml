@@ -82,12 +82,15 @@
     <string name="desert_dialog">Du betrittst eine große Wüste. Versuche nicht die Orientierung zu verlieren und hüte dich vor den Sandstürmen</string>
     <string name="lets_not_get_lost">Ich hoffe ich verirre mich nicht</string>
     <string name="reset_level">Möchtest du das Level wirklich zurürcksetzen?</string>
-    <string name="reveal_map">Möchtest du die Karte aufdecken? 10 Sterne</string>
+    <string name="reveal_map">Möchtest du die Karte aufdecken? 20 Sterne</string>
     <string name="level_select_screen">Möchtest du wirklich zur Levelauswahl zurückkehren? Du verlierst dabei deinen aktuellen Fortschritt</string>
 
     <string name="purchase_successful">Kauf erfolgreich</string>
     <string name="not_enough_stars">Du hast nicht genug Sterne</string>
     <string name="full_health">Du hast bereits 5 Leben</string>
     <string name="purchase_error">Kauf fehlgeschlagen. Bitte versuche es erneut</string>
+    <string name="lives">Lives</string>
+    <string name="discovered">Discovered</string>
+    <string name="goal">Goal</string>
 
 </resources>

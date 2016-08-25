@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ollum.mazecape.Activities.MainActivity;
-import com.ollum.mazecape.Arrays.LevelArrays;
+import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
@@ -34,13 +34,15 @@ public class LevelSelectFragment extends Fragment {
 
         MainActivity.title.setText(R.string.level_select);
 
-        currentWorld = LevelArrays.WORLDS[MainActivity.world];
+        currentWorld = Worlds.WORLDS[MainActivity.world];
 
         gridViewLevels = (GridView) view.findViewById(R.id.gridViewLevels);
         gridViewLevels.setAdapter(new LevelsAdapter(getContext(), 0));
         gridViewLevels.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
                 if (MainMenuFragment.devMode) {
                     MainActivity.level = position;
                     GameFragment gameFragment = new GameFragment();
@@ -171,5 +173,4 @@ public class LevelSelectFragment extends Fragment {
             }
         }
     }
-
 }

@@ -26,6 +26,7 @@ public class SettingsFragment extends Fragment {
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_layout_settings);
 
         musicVol = (SeekBar) view.findViewById(R.id.seekBar_music);
+        musicVol.setProgress((int) (MainActivity.volumeMusic * 10));
         musicVol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -36,6 +37,7 @@ public class SettingsFragment extends Fragment {
                 if (MainActivity.menuBGM != null) {
                     MainActivity.menuBGM.setVolume(MainActivity.volumeMusic, MainActivity.volumeMusic);
                 }
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
             }
 
             @Override
@@ -48,9 +50,9 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-        musicVol.setProgress((int) (MainActivity.volumeMusic * 10));
 
         soundVol = (SeekBar) view.findViewById(R.id.seekBar_sound);
+        soundVol.setProgress((int) (MainActivity.volumeSound * 10));
         soundVol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -61,6 +63,7 @@ public class SettingsFragment extends Fragment {
                 if (GameFragment.heartbeat != null) {
                     GameFragment.heartbeat.setVolume(GameFragment.volumeHeart, GameFragment.volumeHeart);
                 }
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
             }
 
             @Override
@@ -73,26 +76,27 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-        soundVol.setProgress((int) (MainActivity.volumeSound * 10));
 
         toggleButtonControl = (ToggleButton) view.findViewById(R.id.toggleButtonControl);
+        toggleButtonControl.setChecked(MainActivity.swipe);
         toggleButtonControl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 if (isChecked) {
                     MainActivity.swipe = true;
-
                 } else {
                     MainActivity.swipe = false;
                 }
             }
         });
-        toggleButtonControl.setChecked(MainActivity.swipe);
 
         toggleButtonInverse = (ToggleButton) view.findViewById(R.id.toggleButtonInverse);
+        toggleButtonInverse.setChecked(MainActivity.inverse);
         toggleButtonInverse.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 if (isChecked) {
                     MainActivity.inverse = true;
                 } else {
@@ -100,7 +104,6 @@ public class SettingsFragment extends Fragment {
                 }
             }
         });
-        toggleButtonInverse.setChecked(MainActivity.inverse);
 
         return view;
     }

@@ -58,6 +58,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
             case R.id.button_play:
                 WorldSelectFragment worldSelectFragment = new WorldSelectFragment();
@@ -68,6 +69,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 transaction2.commit();
                 break;
             case R.id.button_shop:
+                MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                 transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
@@ -76,6 +78,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 MainActivity.shopVisible = true;
                 break;
             case R.id.button_help:
+                MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 HelpFragment helpFragment = new HelpFragment();
                 FragmentTransaction transaction4 = MainActivity.fragmentManager.beginTransaction();
                 transaction4.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -91,7 +94,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 transaction5.replace(R.id.content, levelEditorFragment, "LevelEditorFragment");
                 transaction5.addToBackStack("LevelEditorFragment");
                 transaction5.commit();
-
+                break;
         }
     }
 }

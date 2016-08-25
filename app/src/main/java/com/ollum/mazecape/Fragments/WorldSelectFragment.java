@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ollum.mazecape.Activities.MainActivity;
-import com.ollum.mazecape.Arrays.LevelArrays;
+import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
@@ -27,6 +27,8 @@ import java.util.List;
 public class WorldSelectFragment extends Fragment {
 
     GridView gridViewWorlds;
+    int collectedStars;
+    int counter = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class WorldSelectFragment extends Fragment {
         gridViewWorlds.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
                 if (MainMenuFragment.devMode) {
                     MainActivity.world = position;
                     LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -157,6 +161,10 @@ public class WorldSelectFragment extends Fragment {
 
         gridViewWorlds.setSelection(MainActivity.maxWorld);
 
+        for (int i = 0; i < MainActivity.worldStars.length; i++) {
+            collectedStars += MainActivity.worldStars[i];
+        }
+
         return view;
     }
 
@@ -213,8 +221,8 @@ public class WorldSelectFragment extends Fragment {
         @Override
         public View getView(int position, View view, ViewGroup viewGroup) {
             View v = view;
-            ImageView picture;
-            TextView world, score;
+            ImageView picture, unlockStar;
+            TextView world, score, unlock;
 
             if (v == null) {
                 v = inflater.inflate(R.layout.gridview_world_select, viewGroup, false);
@@ -222,11 +230,15 @@ public class WorldSelectFragment extends Fragment {
                 v.setTag(R.id.text, v.findViewById(R.id.text));
                 v.setTag(R.id.score, v.findViewById(R.id.score));
                 v.setTag(R.id.level, v.findViewById(R.id.level));
+                v.setTag(R.id.unlock, v.findViewById(R.id.unlock));
+                v.setTag(R.id.unlock_star, v.findViewById(R.id.unlock_star));
             }
 
             picture = (ImageView) v.getTag(R.id.picture);
             score = (TextView) v.getTag(R.id.score);
             world = (TextView) v.getTag(R.id.level);
+            unlock = (TextView) v.getTag(R.id.unlock);
+            unlockStar = (ImageView) v.getTag(R.id.unlock_star);
 
             Item item = (Item) getItem(position);
 
@@ -235,7 +247,16 @@ public class WorldSelectFragment extends Fragment {
             world.setText("" + (position + 1));
             world.setTextColor(Color.BLACK);
 
-            score.setText("" + MainActivity.worldStars[position] + " / " + LevelArrays.WORLDS[position].length * 5);
+            if (collectedStars >= position * 100 || MainActivity.maxWorld >= position) {
+                unlockStar.setVisibility(View.INVISIBLE);
+                unlock.setVisibility(View.INVISIBLE);
+            } else {
+                unlockStar.setVisibility(View.VISIBLE);
+                unlock.setVisibility(View.VISIBLE);
+                unlock.setText("" + collectedStars + " / " + (100 * position));
+            }
+
+            score.setText("" + MainActivity.worldStars[position] + " / " + Worlds.WORLDS[position].length * 5);
 
             return v;
         }
@@ -251,5 +272,4 @@ public class WorldSelectFragment extends Fragment {
             }
         }
     }
-
 }

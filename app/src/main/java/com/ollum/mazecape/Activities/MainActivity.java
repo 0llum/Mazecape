@@ -3,9 +3,12 @@ package com.ollum.mazecape.Activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -14,16 +17,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.Fragments.HelpFragment;
+import com.ollum.mazecape.Fragments.LevelEditorFragment;
 import com.ollum.mazecape.Fragments.LevelSelectFragment;
 import com.ollum.mazecape.Fragments.MainMenuFragment;
 import com.ollum.mazecape.Fragments.SettingsFragment;
@@ -50,6 +57,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static int level = 0;
     public static int world = 0;
     public static int lives = 5;
+    public static int levelCompass = 0;
+    public static int levelMap = 0;
+    public static int levelTorch = 0;
+    public static int levelSpeed = 0;
+    public static int levelLives = 0;
+    public static int levelStars = 0;
     public static boolean swipe = true;
     public static boolean inverse = false;
     public static HashSet<String> starsList;
@@ -87,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static AdRequest adRequest;
     public static boolean showAds = true;
     public static MediaPlayer menuBGM;
+    public static RewardedVideoAd mAd;
+    public static Button sendButton;
+    public static SoundPool soundPool;
+    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
@@ -157,6 +174,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         shopButton = (ImageButton) findViewById(R.id.button_shop);
         shopButton.setOnClickListener(this);
 
+        sendButton = (Button) findViewById(R.id.button_send);
+        sendButton.setOnClickListener(this);
+
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
@@ -169,6 +189,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         MobileAds.initialize(this, "ca-app-pub-7666608930334273~8844493743");
         adRequest = new AdRequest.Builder().build();
+
+        mAd = MobileAds.getRewardedVideoAdInstance(this);
+        loadRewardedVideoAd();
 
         loadGame();
         createHandler();
@@ -190,14 +213,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menuBGM.setLooping(true);
         menuBGM.setVolume(volumeMusic, volumeMusic);
         menuBGM.start();
+
+        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        clickID = soundPool.load(this, R.raw.click, 1);
+        swoosh1ID = soundPool.load(this, R.raw.swoosh1, 1);
+        swoosh2ID = soundPool.load(this, R.raw.swoosh2, 1);
+        liveID = soundPool.load(this, R.raw.live, 1);
+        stepID = soundPool.load(this, R.raw.sand1, 1);
+        portalID = soundPool.load(this, R.raw.portal, 1);
+        crackID = soundPool.load(this, R.raw.cracking, 1);
+        swordID = soundPool.load(this, R.raw.sword, 1);
+        monsterID = soundPool.load(this, R.raw.monster_death, 1);
+        holeID = soundPool.load(this, R.raw.hole, 1);
+        deathID = soundPool.load(this, R.raw.death, 1);
+        starID = soundPool.load(this, R.raw.star, 1);
+        trapActiveID = soundPool.load(this, R.raw.trap_activate, 1);
+        trapInactiveID = soundPool.load(this, R.raw.trap_deactivate, 1);
+        winID = soundPool.load(this, R.raw.win, 1);
+    }
+
+    private void loadRewardedVideoAd() {
+        mAd.loadAd("ca-app-pub-7666608930334273/7484754549", new AdRequest.Builder().build());
     }
 
     @Override
     public void onBackPressed() {
+        soundPool.play(clickID, volumeSound, volumeSound, 1, 0, 1);
+
         FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
         String current = currentFragment.getName();
 
-        if (current.equals("MainMenuFragment")) {
+        if (fragmentManager.getBackStackEntryCount() < 0) {
+            MainMenuFragment mainMenuFragment = new MainMenuFragment();
+            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);
+            transaction.replace(R.id.content, mainMenuFragment, "MainMenuFragment");
+            transaction.addToBackStack("MainMenuFragment");
+            transaction.commit();
+        } else if (current.equals("MainMenuFragment")) {
             return;
         } else if (current.equals("WorldSelectFragment")) {
             MainMenuFragment mainMenuFragment = new MainMenuFragment();
@@ -258,10 +311,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 }
             });
-            builder.setCancelable(false);
             builder.create();
             builder.show();
         } else if (current.equals("SettingsFragment")) {
+            soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
             transaction.remove(settingsFragment);
@@ -270,6 +323,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             stopTime = false;
             settingsVisible = false;
         } else if (current.equals("ShopFragment")) {
+            soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
             transaction.remove(shopFragment);
@@ -278,6 +332,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             stopTime = false;
             shopVisible = false;
         } else if (current.equals("HelpFragment")) {
+            soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
             transaction.remove(helpFragment);
@@ -285,6 +340,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             fragmentManager.popBackStack();
             stopTime = false;
             helpVisible = false;
+        } else if (current.equals("LevelEditorFragment")) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("");
+            builder.setMessage("Do you really want to go back to main menu?");
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainMenuFragment mainMenuFragment = new MainMenuFragment();
+                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);
+                    transaction.replace(R.id.content, mainMenuFragment, "MainMenuFragment");
+                    transaction.addToBackStack("MainMenuFragment");
+                    transaction.commit();
+                }
+            });
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create();
+            builder.show();
         } else {
             super.onBackPressed();
         }
@@ -336,6 +414,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         level = sharedPreferences.getInt("level", 0);
         world = sharedPreferences.getInt("world", 0);
         lives = sharedPreferences.getInt("lives", 5);
+        levelCompass = sharedPreferences.getInt("levelCompass", 1);
+        levelMap = sharedPreferences.getInt("levelMap", 1);
+        levelTorch = sharedPreferences.getInt("levelTorch", 0);
+        levelSpeed = sharedPreferences.getInt("levelSpeed", 0);
+        levelStars = sharedPreferences.getInt("levelStars", 0);
+        levelLives = sharedPreferences.getInt("levelLives", 0);
         maxWorld = sharedPreferences.getInt("maxWorld", 0);
         world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
         world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
@@ -365,7 +449,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 world1MaxLevel, world2MaxLevel, world3MaxLevel, world4MaxLevel
         };
 
-        while ((currentTimeMillis() - logOffTime > 300000) && lives < 5) {
+        while ((currentTimeMillis() - logOffTime > 300000) && lives < (5 + levelLives)) {
             lives++;
             logOffTime += 300000;
         }
@@ -382,6 +466,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putInt("level", level);
         editor.putInt("world", world);
         editor.putInt("lives", lives);
+        editor.putInt("levelCompass", levelCompass);
+        editor.putInt("levelMap", levelMap);
+        editor.putInt("levelTorch", levelTorch);
+        editor.putInt("levelSpeed", levelSpeed);
+        editor.putInt("levelStars", levelStars);
+        editor.putInt("levelLives", levelLives);
         editor.putInt("maxWorld", maxWorld);
         editor.putInt("world1MaxLevel", maxLevel[0]);
         editor.putInt("world2MaxLevel", maxLevel[1]);
@@ -412,14 +502,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 endMillis = currentTimeMillis();
-                if (lives < 5) {
+                if (lives < (5 + levelLives)) {
+                    if (ShopFragment.liveTimer != null) {
+                        ShopFragment.liveTimer.setText(String.format("%d:%02d", (4 - (int) (((endMillis - startMillis) / (1000 * 60)) % 60)), (59 - (int) ((endMillis - startMillis) / 1000) % 60)));
+                    }
                     if (endMillis - startMillis > 300000) {
                         lives++;
                         startMillis = currentTimeMillis();
                         livesCounter.setText("" + lives);
+                        soundPool.play(liveID, volumeSound, volumeSound, 1, 0, 1);
                     }
                 } else {
                     startMillis = currentTimeMillis();
+                    if (ShopFragment.liveTimer != null) {
+                        ShopFragment.liveTimer.setText("5:00");
+                    }
                 }
                 livesHandler.postDelayed(this, 1000);
             }
@@ -438,6 +535,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        soundPool.play(clickID, volumeSound, volumeSound, 1, 0, 1);
         switch (v.getId()) {
             case R.id.button_settings:
                 if (shopVisible) {
@@ -459,6 +557,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     helpVisible = false;
                 }
                 if (!settingsVisible) {
+                    soundPool.play(swoosh1ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.add(R.id.content, settingsFragment, "SettingsFragment");
@@ -467,6 +566,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     stopTime = true;
                     settingsVisible = true;
                 } else {
+                    soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.remove(settingsFragment);
@@ -496,6 +596,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     settingsVisible = false;
                 }
                 if (!helpVisible) {
+                    soundPool.play(swoosh1ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.add(R.id.content, helpFragment, "HelpFragment");
@@ -504,6 +605,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     stopTime = true;
                     helpVisible = true;
                 } else {
+                    soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.remove(helpFragment);
@@ -533,6 +635,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     settingsVisible = false;
                 }
                 if (!shopVisible) {
+                    soundPool.play(swoosh1ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.add(R.id.content, shopFragment, "ShopFragment");
@@ -541,6 +644,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     stopTime = true;
                     shopVisible = true;
                 } else {
+                    soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
                     FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                     transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
                     transaction.remove(shopFragment);
@@ -548,6 +652,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fragmentManager.popBackStack();
                     stopTime = false;
                     shopVisible = false;
+                }
+                break;
+            case R.id.button_send:
+                StringBuilder builder = new StringBuilder();
+                builder.append(LevelEditorFragment.scene + ", " + LevelEditorFragment.columns + ", " + LevelEditorFragment.rows + "\n");
+                for (int i = 0; i < LevelEditorFragment.level.length; i++) {
+                    builder.append("{");
+                    System.out.print("{");
+                    for (int k = 0; k < LevelEditorFragment.level[i].length; k++) {
+                        builder.append("\"" + LevelEditorFragment.level[i][k] + "\", ");
+                        System.out.print("\"" + LevelEditorFragment.level[i][k] + "\", ");
+                    }
+                    builder.append("},");
+                    builder.append("\n");
+                }
+
+                String message = builder.toString();
+
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("message/rfc822");
+                i.putExtra(Intent.EXTRA_EMAIL, new String[]{"o.dolgener@googlemail.com"});
+                i.putExtra(Intent.EXTRA_SUBJECT, "New Level");
+                i.putExtra(Intent.EXTRA_TEXT, message);
+                try {
+                    startActivity(Intent.createChooser(i, "Send mail..."));
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

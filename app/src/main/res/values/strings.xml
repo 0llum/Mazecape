@@ -82,15 +82,14 @@
     <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
     <string name="lets_not_get_lost">Let\'s not get lost</string>
     <string name="reset_level">Do you really want to reset level?</string>
-    <string name="reveal_map">Do you like to reveal the map? 10 Stars</string>
+    <string name="reveal_map">Do you like to reveal the map? 20 Stars</string>
     <string name="level_select_screen">Do you really want to go back to the level select screen? You will lose all your progress in the current level</string>
 
     <string name="purchase_successful">Purchase successful</string>
     <string name="not_enough_stars">Not enough stars</string>
     <string name="full_health">You already are at full health</string>
     <string name="purchase_error">There was an error, please try again</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="lives">Lives</string>
+    <string name="discovered">Discovered</string>
+    <string name="goal">Goal</string>
 </resources>

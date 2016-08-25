@@ -2,12 +2,14 @@ package com.ollum.mazecape.Adapters;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Classes.Item;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.R;
@@ -25,10 +27,20 @@ public class MapAdapter extends BaseAdapter {
 
         for (int i = -3; i <= 3; i++) {
             for (int k = -3; k <= 3; k++) {
-                if (GameFragment.stepsMade.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i))) {
-                    items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("m" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
-                } else if (GameFragment.discovered.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i))) {
-                    items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("n" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
+                if (GameFragment.stepsMade.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i)) && MainActivity.levelMap > 0) {
+                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b")) {
+                        items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("mn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3), "drawable", context.getPackageName())));
+                        Log.d("debug", "mn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3));
+                    } else {
+                        items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("m" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
+                    }
+                } else if (GameFragment.discovered.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i)) && MainActivity.levelMap > 1) {
+                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b")) {
+                        items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("nn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3), "drawable", context.getPackageName())));
+                        Log.d("debug", "nn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3));
+                    } else {
+                        items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("n" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
+                    }
                 } else {
                     items.add(new Item(i + 4 + "-" + k + 4, R.drawable.blank));
                 }

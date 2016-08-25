@@ -164,7 +164,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="visible">
 
             <ImageView
                 android:id="@+id/imageView4"
@@ -184,6 +185,14 @@
                 fontPath="fonts/mail_ray_stuff.ttf"/>
 
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Send"
+            android:id="@+id/button_send"
+            android:visibility="gone"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
