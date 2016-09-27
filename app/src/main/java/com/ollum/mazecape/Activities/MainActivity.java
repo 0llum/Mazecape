@@ -421,11 +421,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         levelSpeed = sharedPreferences.getInt("levelSpeed", 0);
         levelStars = sharedPreferences.getInt("levelStars", 0);
         levelLives = sharedPreferences.getInt("levelLives", 0);
-        maxWorld = sharedPreferences.getInt("maxWorld", 3);
-        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 29);
-        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 29);
-        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 29);
-        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 29);
+        maxWorld = sharedPreferences.getInt("maxWorld", 0);
+        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
+        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
+        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 0);
+        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 0);
         allStars = sharedPreferences.getInt("allStars", 0);
         world1Stars = sharedPreferences.getInt("world1Stars", 0);
         world2Stars = sharedPreferences.getInt("world2Stars", 0);

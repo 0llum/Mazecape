@@ -47,7 +47,7 @@
         android:checked="false"
         android:text="Developer Mode"
         android:textColor="#FFF"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button_shop"
