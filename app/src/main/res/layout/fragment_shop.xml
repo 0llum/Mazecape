@@ -641,6 +641,52 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/linearLayout_rate"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/linearLayout_5_hearts"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" >
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="50"
+                    android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imageView31"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:padding="5dp"
+                    android:src="@drawable/star" />
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="gimme 5, get 50" />
+
+                <Button
+                    android:id="@+id/button_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Rate!"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/linearLayout_ad"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

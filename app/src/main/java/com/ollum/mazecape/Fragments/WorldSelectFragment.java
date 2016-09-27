@@ -61,12 +61,12 @@ public class WorldSelectFragment extends Fragment {
                     transaction.commit();
                 } else if (position - 1 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 100 Stars");
+                    builder.setMessage("Would you like to buy this World? 50 Stars");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (MainActivity.allStars >= 100) {
-                                MainActivity.allStars -= 100;
+                            if (MainActivity.allStars >= 50) {
+                                MainActivity.allStars -= 50;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld++;
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
@@ -93,12 +93,12 @@ public class WorldSelectFragment extends Fragment {
                     builder.show();
                 } else if (position - 2 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 200 Stars");
+                    builder.setMessage("Would you like to buy this World? 100 Stars");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (MainActivity.allStars >= 200) {
-                                MainActivity.allStars -= 200;
+                            if (MainActivity.allStars >= 100) {
+                                MainActivity.allStars -= 100;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld += 2;
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
@@ -125,12 +125,12 @@ public class WorldSelectFragment extends Fragment {
                     builder.show();
                 } else if (position - 3 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 300 Stars");
+                    builder.setMessage("Would you like to buy this World? 150 Stars");
                     builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            if (MainActivity.allStars >= 300) {
-                                MainActivity.allStars -= 300;
+                            if (MainActivity.allStars >= 150) {
+                                MainActivity.allStars -= 150;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld += 3;
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
@@ -247,13 +247,13 @@ public class WorldSelectFragment extends Fragment {
             world.setText("" + (position + 1));
             world.setTextColor(Color.BLACK);
 
-            if (collectedStars >= position * 100 || MainActivity.maxWorld >= position) {
+            if (collectedStars >= position * 50 || MainActivity.maxWorld >= position) {
                 unlockStar.setVisibility(View.INVISIBLE);
                 unlock.setVisibility(View.INVISIBLE);
             } else {
                 unlockStar.setVisibility(View.VISIBLE);
                 unlock.setVisibility(View.VISIBLE);
-                unlock.setText("" + collectedStars + " / " + (100 * position));
+                unlock.setText("" + collectedStars + " / " + (50 * position));
             }
 
             score.setText("" + MainActivity.worldStars[position] + " / " + Worlds.WORLDS[position].length * 5);

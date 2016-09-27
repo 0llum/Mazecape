@@ -2,126 +2,126 @@ package com.ollum.mazecape.Arrays;
 
 public class World1 {
     public static final String[][] FOREST_01 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nrt", "slr", "slr", "slr", "glt", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nrt", "slr", "slr", "slr", "glt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "4"},
             {},
             {}
     };
     public static final String[][] FOREST_02 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sdr", "nlr", "sdl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "sdl", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nrt", "nul", "gup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sdr", "nlr", "sdl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "sdl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nrt", "nul", "gup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "5", "f", "8"},
             {},
             {}
     };
     public static final String[][] FOREST_03 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sdn", "ndr", "ntu", "nlt", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ntl", "nul", "nur", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "ntu", "slt", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "srt", "nul", "grt", "nul", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sdn", "ndr", "ntu", "nlt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ntl", "nul", "nur", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "ntu", "slt", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "srt", "nul", "grt", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "f", "22"},
             {},
             {}
     };
     public static final String[][] FOREST_04 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntu", "ndl", "sdn", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nud", "sdn", "nud", "nur", "nul", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "ntr", "nur", "nlr", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sdn", "nud", "ndr", "ndl", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "nul", "gup", "nur", "nul", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "ntu", "ndl", "sdn", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "sdn", "nud", "nur", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "ntr", "nur", "nlr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sdn", "nud", "ndr", "ndl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nul", "gup", "nur", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "f", "38"},
             {},
             {}
     };
     public static final String[][] FOREST_05 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sdr", "nlr", "sdl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ntl", "mdl", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sup", "gup", "wup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sdr", "nlr", "sdl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ntl", "mdl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sup", "gup", "wup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "f", "12"},
             {},
             {}
     };
     public static final String[][] FOREST_06 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nrt", "nlr", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "ndl", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nul", "sup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nud", "ndr", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ntl", "nul", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nud", "ndr", "nul", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sup", "nur", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "glt", "sup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nrt", "nlr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "ndl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nul", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ntl", "nul", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sup", "nur", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "glt", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "34"},
             {},
             {}
     };
     public static final String[][] FOREST_07 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "rdr", "rlr", "rtu", "rlr", "rdl", "xxx", "xxx"},
-            {"xxx", "xxx", "rud", "gdn", "rud", "sdn", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rud", "pup", "rud", "wud", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rtl", "rlr", "rtr", "nud", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rud", "pdn", "rud", "nud", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rud", "sud", "rup", "sud", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rud", "mur", "nlr", "nul", "rud", "xxx", "xxx"},
-            {"xxx", "xxx", "rur", "rlr", "rlr", "rlr", "rul", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "otu", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "gdn", "rud", "sdn", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "pup", "rud", "wud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "otl", "rlr", "rtr", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "pdn", "rud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sud", "rup", "sud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "mur", "nlr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "8", "f", "15"},
             {"3,4", "3,6"},
             {}
     };
     public static final String[][] FOREST_08 = {
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "gdn", "ndr", "wlt", "rdn", "sdn", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "mud", "nud", "rdr", "rul", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ntl", "ntd", "blr", "nlr", "ntr", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "sup", "rdr", "rul", "ndr", "nul", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "rrt", "rul", "srt", "ntd", "nlt", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "gdn", "ndr", "wlt", "rdn", "sdn", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "mud", "nud", "rdr", "rul", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ntl", "ntd", "blr", "nlr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sup", "rdr", "rul", "ndr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "rrt", "rul", "srt", "ntd", "nlt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "f", "24"},
             {},
             {}
@@ -284,6 +284,44 @@ public class World1 {
             {}
     };
     public static final String[][] FOREST_17 = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nlr", "ntu", "ntu", "ndl", "sdn", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "ndr", "ndl", "nup", "nud", "nur", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "nur", "ndl", "ntl", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "ndl", "nud", "nup", "ndr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nul", "nur", "nlr", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "ndl", "nrt", "ntu", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nul", "nur", "glt", "nur", "nlr", "slt", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"7", "6", "f", "100"},
+            {},
+            {}
+    };
+    public static final String[][] FOREST_18 = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ndl", "ndr", "nlr", "nlr", "nlr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nrt", "ntr", "nup", "ndr", "ndl", "ndr", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "ndl", "nur", "nlr", "nul", "nud", "nud", "nur", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "nrt", "ntu", "nlt", "nud", "nur", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "nur", "ndl", "ntl", "nlr", "ntd", "ntu", "nul", "sup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nul", "nud", "ndr", "ndl", "nup", "ndr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndn", "ndr", "nul", "nud", "nur", "nlr", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "nul", "ndr", "ntd", "nlr", "slt", "ndr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nlr", "nul", "grt", "nlr", "nlr", "nul", "nup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"6", "4", "f", "100"},
+            {},
+            {}
+    };
+    public static final String[][] FOREST_19 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -304,7 +342,7 @@ public class World1 {
             {}
     };
 
-    public static final String[][] FOREST_18 = {
+    public static final String[][] FOREST_20 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -324,7 +362,7 @@ public class World1 {
             {"6,6", "9,6"},
             {}
     };
-    public static final String[][] FOREST_19 = {
+    public static final String[][] FOREST_21 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -345,7 +383,7 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_20 = {
+    public static final String[][] FOREST_22 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -366,7 +404,7 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_21 = {
+    public static final String[][] FOREST_23 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -386,7 +424,7 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_22 = {
+    public static final String[][] FOREST_24 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -407,17 +445,17 @@ public class World1 {
             {"4,9", "3,8"},
             {"8,5", "8,8", "5,10"}
     };
-    public static final String[][] FOREST_23 = {
+    public static final String[][] FOREST_25 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nrt", "ntu", "ndl", "nrt", "nlr", "nlr", "ndl", "ndr", "ntu", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ndr", "ntr", "nur", "nlr", "nlr", "ndl", "nud", "nud", "nud", "nup", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "nup", "ndr", "nlr", "ndl", "ntl", "nul", "nud", "nur", "ndl", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nur", "nlr", "nul", "ndr", "nul", "nud", "ndr", "ntd", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nul", "ndr", "nul", "nud", "ndr", "ntd", "flt", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ndr", "nlr", "nlr", "nul", "srt", "nul", "nud", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ntl", "nlr", "nlr", "ndl", "ndr", "nlr", "nul", "nur", "ndl", "nup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nud", "ndn", "ndr", "nul", "nud", "srt", "nlr", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "fdn", "ndr", "nul", "nud", "srt", "nlr", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "ntr", "nur", "nlr", "ntd", "nlr", "nlr", "nul", "ndr", "nul", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ndn", "nud", "ndr", "ndl", "sdn", "ndr", "nlr", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "ntd", "nul", "nur", "nul", "gup", "nrt", "ntd", "nlr", "nul", "xxx", "xxx", "xxx"},
@@ -428,7 +466,7 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_24 = {
+    public static final String[][] FOREST_26 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -437,7 +475,7 @@ public class World1 {
             {"xxx", "xxx", "xxx", "ntl", "ndl", "ndr", "ntr", "nud", "ndn", "ndr", "nul", "ndn", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "ntl", "nul", "nur", "ncs", "ntr", "nur", "ntu", "nul", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "ncs", "ntu", "nlt", "nud", "nur", "nlt", "nur", "slt", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nul", "nud", "ndn", "nur", "ntu", "nlt", "ndr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "nud", "ndn", "nur", "ntu", "flt", "ndr", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ntl", "nlr", "ntd", "ntr", "ndn", "nud", "ndr", "ntd", "ntr", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "ndr", "slt", "nud", "nud", "nur", "ncs", "nlt", "sup", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nup", "nur", "nlr", "ntd", "ntd", "nlt", "nur", "nlr", "glt", "xxx", "xxx", "xxx"},
@@ -448,7 +486,7 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_25 = {
+    public static final String[][] FOREST_27 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -456,12 +494,12 @@ public class World1 {
             {"xxx", "xxx", "xxx", "nup", "nur", "ndl", "nud", "nud", "nup", "nud", "nur", "nlr", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ndr", "nlr", "nul", "nud", "nur", "ndl", "nud", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "srt", "nlr", "ntr", "ndr", "nul", "nud", "nur", "ndl", "nup", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ntl", "nlr", "ndl", "nud", "nud", "ndr", "ntd", "nlt", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "nlr", "ndl", "nud", "nud", "ndr", "ntd", "flt", "nur", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "ndn", "nud", "nud", "nud", "nur", "ndl", "ndr", "ndl", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "nud", "nud", "ntl", "nul", "ndr", "nul", "nud", "nud", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "nud", "nud", "nup", "ndr", "nul", "ndr", "nul", "nud", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "ntr", "nur", "nlr", "nul", "ndr", "nul", "ndn", "nud", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nrt", "ntd", "nlr", "nlr", "slt", "gup", "nrt", "ntd", "ntd", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "frt", "ntd", "nlr", "nlr", "slt", "gup", "nrt", "ntd", "ntd", "nul", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -469,7 +507,29 @@ public class World1 {
             {},
             {}
     };
-    public static final String[][] FOREST_26 = {
+    public static final String[][] FOREST_28 = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndn", "ndr", "nlr", "nlr", "wlt", "ndn", "wrt", "nlr", "nlr", "ndl", "sdn", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "ndr", "nlr", "ndl", "nud", "ndr", "nlr", "ndl", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "nur", "ndl", "nud", "nud", "nud", "ndr", "nul", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "nlr", "nul", "ntl", "ntr", "nud", "nur", "nlr", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nlr", "nlr", "nul", "nud", "nur", "mtu", "nlr", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "nlr", "nlr", "ntu", "nlr", "fcs", "nlr", "ntd", "nlr", "nlr", "nlt", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "nlr", "mtd", "ndl", "nud", "ndr", "nlr", "nlr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "nlr", "ndl", "nud", "ntl", "mtr", "ndr", "nlr", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "ndr", "nul", "nud", "nud", "nud", "nur", "ndl", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nud", "nur", "nlr", "nul", "nud", "nur", "nlr", "nul", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "sup", "nur", "nlr", "nlr", "wlt", "nup", "srt", "nlr", "nlr", "nul", "gup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"3", "3", "f", "100"},
+            {},
+            {}
+    };
+    public static final String[][] FOREST_29 = {
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
@@ -478,16 +538,42 @@ public class World1 {
             {"xxx", "xxx", "xxx", "ndr", "nul", "nur", "nlr", "ndl", "nud", "nur", "ntu", "nlt", "nur", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ntl", "slt", "ndr", "nlr", "nul", "nup", "ndr", "nul", "ndr", "nlr", "ntr", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nup", "ndr", "nul", "ndr", "nlr", "nlr", "nul", "ndr", "nul", "ndn", "nud", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "ndr", "nul", "ndr", "ntd", "nlr", "nlt", "ndr", "nul", "srt", "ntd", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "ndr", "ntd", "nlr", "flt", "ndr", "nul", "srt", "ntd", "nul", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "ntl", "nlr", "nul", "ndr", "nlr", "ndl", "nur", "nlr", "ntu", "nlr", "ndl", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nud", "ndr", "nlt", "nur", "ndl", "nur", "nlr", "ndl", "nup", "ndr", "ntr", "xxx", "xxx", "xxx"},
-            {"xxx", "xxx", "xxx", "nud", "nur", "ntu", "ndl", "nud", "ndr", "nlt", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "ntu", "ndl", "nud", "ndr", "flt", "nud", "ndr", "nul", "nud", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nur", "nlr", "nul", "nud", "nud", "nur", "ntu", "nul", "nud", "ndr", "nul", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "nrt", "nlr", "nlr", "nul", "nur", "glt", "nur", "nlr", "nul", "nur", "slt", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
             {"13", "4", "f", "100"},
+            {},
+            {}
+    };
+    public static final String[][] FOREST_30 = {
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "ntu", "nlr", "nlr", "nlr", "ntu", "nlr", "nlr", "nlr", "ndl", "ndr", "ntu", "nlr", "nlr", "slt", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "ndr", "ndl", "ndn", "nud", "ndr", "nlr", "ndl", "nup", "nud", "nur", "nlr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "nul", "nud", "nur", "nul", "nud", "ndn", "nur", "nlr", "nul", "ndr", "ndl", "ndr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nlr", "ndl", "nud", "ndr", "nlr", "nul", "ntl", "nlr", "nlr", "nlr", "nul", "nud", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "ndl", "nur", "nul", "nur", "nlr", "ndl", "nur", "ndl", "ndr", "nlr", "ndl", "ntl", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "nlr", "ntu", "nlr", "ndl", "nud", "ndr", "nul", "nud", "ndr", "nul", "nud", "ndr", "ntr", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "nlr", "ntr", "nrt", "nul", "nud", "nur", "ndl", "nud", "nud", "ndr", "nul", "nud", "fup", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nup", "nud", "ndr", "nul", "ndr", "ndl", "nur", "nlr", "nul", "nud", "nup", "nur", "ndl", "nur", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ndr", "nul", "nud", "ndr", "nul", "ntl", "nlr", "nlr", "ndl", "ntl", "nlr", "nlr", "ntd", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "ntl", "ndl", "fup", "nur", "ndl", "nur", "ndl", "ndr", "nul", "nur", "ndl", "ndr", "nlr", "ndl", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "nlr", "nlr", "nul", "ndr", "nul", "nur", "nlr", "slt", "nud", "nur", "ndl", "nud", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "ndr", "nlt", "ndr", "nlr", "nul", "ndr", "nlr", "nlr", "nlr", "ntr", "ndr", "nul", "nur", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nud", "nur", "ndl", "nur", "nlr", "nlr", "nul", "ndr", "nlr", "ndl", "nud", "nud", "ndr", "nlr", "ndl", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nur", "nlr", "ntd", "ndl", "ndr", "nlr", "nlr", "nul", "ndr", "nul", "fup", "nur", "ntd", "nlt", "nud", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "nrt", "nlr", "nlr", "sul", "nur", "nlr", "nlr", "glt", "nur", "nlr", "nlr", "nlr", "nlr", "nlr", "nul", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx", "xxx"},
+            {"12", "4", "f", "200"},
             {},
             {}
     };

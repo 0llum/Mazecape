@@ -2,7 +2,9 @@ package com.ollum.mazecape.Fragments;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
@@ -37,7 +40,11 @@ import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import static java.lang.System.currentTimeMillis;
 
 public class GameFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -594,6 +601,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar2.setImageResource(R.drawable.star_empty);
         imageStar3.setImageResource(R.drawable.star_empty);
 
+        saveGame();
         checkDialog();
 
         /*Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
@@ -991,7 +999,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkTrap() {
-        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x])) {
+        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !hasDialog) {
             gameOver();
             return true;
         }
@@ -1010,7 +1018,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkHole() {
-        if (contains(Tiles.HOLE, currentLevel[y][x])) {
+        if (contains(Tiles.HOLE, currentLevel[y][x] ) && !hasDialog) {
             gameOver();
             return true;
         }
@@ -1018,7 +1026,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkDarkness() {
-        if (darkness > 14) {
+        if (darkness > 14 && !hasDialog) {
             gameOver();
             return true;
         } else if (darkness < 12) {
@@ -1147,6 +1155,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         if (heartbeat != null) {
                             heartbeat.start();
                         }
+                        saveGame();
                     }
                 });
             } else {
@@ -1173,6 +1182,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (heartbeat != null) {
                                 heartbeat.start();
                             }
+                            saveGame();
                         } else {
                             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -1257,6 +1267,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                saveGame();
                                 if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                                     mInterstitialAd.show();
                                 } else {
@@ -1278,6 +1289,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (MainActivity.menuBGM != null) {
                                 MainActivity.menuBGM.start();
                             }
+                            saveGame();
                         }
                     });
                     builder.show();
@@ -1288,6 +1300,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             builder.show();
         } else {
             MainActivity.resetCount++;
+            MainActivity.livesCounter.setText("" + MainActivity.lives);
             ImageView image2 = new ImageView(getContext());
             ImageView image3 = new ImageView(getContext());
             switch (MainActivity.lives) {
@@ -1352,6 +1365,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                        saveGame();
                         if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                             mInterstitialAd.show();
                         } else {
@@ -1373,6 +1387,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     if (MainActivity.menuBGM != null) {
                         MainActivity.menuBGM.start();
                     }
+                    saveGame();
                 }
             });
             builder.show();
@@ -1721,8 +1736,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 collectedStars += MainActivity.worldStars[i];
             }
 
-            if (collectedStars >= (MainActivity.maxWorld + 1) * 100 && MainActivity.maxWorld < com.ollum.mazecape.Arrays.Worlds.WORLDS.length) {
+            if (collectedStars >= (MainActivity.maxWorld + 1) * 50 && MainActivity.maxWorld < Worlds.WORLDS.length) {
                 MainActivity.maxWorld++;
+                Toast.makeText(getContext(), "You've unlocked a new World!", Toast.LENGTH_LONG).show();
             }
 
             /*ImageView image2 = new ImageView(getContext());
@@ -1757,7 +1773,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle(R.string.you_win);
-            builder.setMessage(getString(R.string.steps) + ": " + steps + "\n" + getString(R.string.time) + ": " + time);
+            builder.setMessage(getString(R.string.steps) + ": " + steps + " / " + minSteps + "\n" + getString(R.string.time) + ": " + time);
             builder.setView(linearLayout);
             builder.setCancelable(false);
             if (MainActivity.level < com.ollum.mazecape.Arrays.Worlds.WORLDS[MainActivity.world].length - 1) {
@@ -1833,6 +1849,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             MainActivity.soundPool.play(MainActivity.winID, MainActivity.volumeSound / 2, MainActivity.volumeSound / 2, 1, 0, 1);
+            saveGame();
             return true;
         }
         return false;
@@ -1863,7 +1880,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 builder.create();
                                 builder.show();
                                 break;
-                            case 3:
+                            case 4:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
                                 builder.setTitle(R.string.moster);
@@ -1881,7 +1898,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 builder.create();
                                 builder.show();
                                 break;
-                            case 5:
+                            case 6:
                                 MainActivity.stopTime = true;
                                 hasDialog = true;
                                 builder.setTitle(R.string.portal);
@@ -2655,5 +2672,42 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         });
         builder.create();
         builder.show();
+    }
+
+    public void saveGame() {
+        Set<String> set = new HashSet<String>();
+        set.addAll(MainActivity.starsList);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("level", MainActivity.level);
+        editor.putInt("world", MainActivity.world);
+        editor.putInt("lives", MainActivity.lives);
+        editor.putInt("levelCompass", MainActivity.levelCompass);
+        editor.putInt("levelMap", MainActivity.levelMap);
+        editor.putInt("levelTorch", MainActivity.levelTorch);
+        editor.putInt("levelSpeed", MainActivity.levelSpeed);
+        editor.putInt("levelStars", MainActivity.levelStars);
+        editor.putInt("levelLives", MainActivity.levelLives);
+        editor.putInt("maxWorld", MainActivity.maxWorld);
+        editor.putInt("world1MaxLevel", MainActivity.maxLevel[0]);
+        editor.putInt("world2MaxLevel", MainActivity.maxLevel[1]);
+        editor.putInt("world3MaxLevel", MainActivity.maxLevel[2]);
+        editor.putInt("world4MaxLevel", MainActivity.maxLevel[3]);
+        editor.putStringSet("stars", MainActivity.starsList);
+        editor.putInt("torches", MainActivity.torches);
+        editor.putInt("allStars", MainActivity.allStars);
+        editor.putInt("world1Stars", MainActivity.world1Stars);
+        editor.putInt("world2Stars", MainActivity.world2Stars);
+        editor.putInt("world3Stars", MainActivity.world3Stars);
+        editor.putInt("world4Stars", MainActivity.world4Stars);
+        editor.putBoolean("swipe", MainActivity.swipe);
+        editor.putBoolean("inverse", MainActivity.inverse);
+        editor.putFloat("volumeMusic", MainActivity.volumeMusic);
+        editor.putFloat("volumeSound", MainActivity.volumeSound);
+        editor.putLong("logOffTime", currentTimeMillis());
+        editor.putInt("resetCount", MainActivity.resetCount);
+        editor.putBoolean("showAds", MainActivity.showAds);
+        editor.putBoolean("rated", MainActivity.rated);
+        editor.apply();
     }
 }

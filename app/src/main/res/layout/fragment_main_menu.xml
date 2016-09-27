@@ -46,7 +46,8 @@
         android:layout_marginTop="50dp"
         android:checked="false"
         android:text="Developer Mode"
-        android:textColor="#FFF" />
+        android:textColor="#FFF"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/button_shop"

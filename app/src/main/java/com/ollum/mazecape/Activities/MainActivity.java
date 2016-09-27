@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static boolean shopVisible = false;
     public static boolean helpVisible = false;
     public static boolean stopTime = false;
+    public static boolean rated = false;
     public static int torches = 0;
     public static IabHelper mHelper;
     public static float volumeMusic;
@@ -420,11 +421,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         levelSpeed = sharedPreferences.getInt("levelSpeed", 0);
         levelStars = sharedPreferences.getInt("levelStars", 0);
         levelLives = sharedPreferences.getInt("levelLives", 0);
-        maxWorld = sharedPreferences.getInt("maxWorld", 0);
-        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
-        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
-        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 0);
-        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 0);
+        maxWorld = sharedPreferences.getInt("maxWorld", 3);
+        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 29);
+        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 29);
+        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 29);
+        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 29);
         allStars = sharedPreferences.getInt("allStars", 0);
         world1Stars = sharedPreferences.getInt("world1Stars", 0);
         world2Stars = sharedPreferences.getInt("world2Stars", 0);
@@ -438,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         logOffTime = sharedPreferences.getLong("logOffTime", 0);
         resetCount = sharedPreferences.getInt("resetCount", 0);
         showAds = sharedPreferences.getBoolean("showAds", true);
+        rated = sharedPreferences.getBoolean("rated", false);
         Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
         starsList.addAll(set);
 
@@ -491,6 +493,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putLong("logOffTime", currentTimeMillis());
         editor.putInt("resetCount", resetCount);
         editor.putBoolean("showAds", showAds);
+        editor.putBoolean("rated", rated);
         editor.apply();
     }
 
