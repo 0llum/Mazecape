@@ -89,8 +89,23 @@
     <string name="not_enough_stars">Du hast nicht genug Sterne</string>
     <string name="full_health">Du hast bereits 5 Leben</string>
     <string name="purchase_error">Kauf fehlgeschlagen. Bitte versuche es erneut</string>
-    <string name="lives">Lives</string>
-    <string name="discovered">Discovered</string>
-    <string name="goal">Goal</string>
-
+    <string name="lives">Leben</string>
+    <string name="discovered">Entdeckt</string>
+    <string name="goal">Ziel</string>
+    <string name="new_world">Du hast eine neue Welt freigeschaltet!</string>
+    <string name="enter_columns">Anzahl Spalten (1..20)</string>
+    <string name="enter_rows">Anzahl Reihen (1..20)</string>
+    <string name="next">Weiter</string>
+    <string name="enter_number">Bitte wähle eine Zahl zwischen 1 und 20</string>
+    <string name="enter_scene">Szene wählen (\'f\', \'c\', \'s\' oder \'d\')</string>
+    <string name="enter_scene_char">Bitte gib \'f\', \'c\', \'s\' or \'d\' ein</string>
+    <string name="unlock_level">Du kannst dieses Level freischalten, indem du alle vorheringen Level beendest</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="no_internet">Keine Internetverbindung</string>
+    <string name="max">Max</string>
+    <string name="buy_world_50">Möchtest du diese Welt kaufen? 50 Sterne</string>
+    <string name="buy_world_100">Möchtest du diese Welt kaufen? 100 Sterne</string>
+    <string name="buy_world_150">Möchtest du diese Welt kaufen? 150 Sterne</string>
+    <string name="back_to_main_menu">Möchtest du wirklich zum Hauptmenü zurückkehren?</string>
+    <string name="buy_world_200">Möchtest du diese Welt kaufen? 200 Sterne</string>
 </resources>

@@ -10,6 +10,9 @@ public class Tiles {
     public static final String[] MONSTER = {
             "mup", "mrt", "mdn", "mlt", "mud", "mlr", "mur", "mdr", "mdl", "mul", "mtu", "mtr", "mtd", "mtl", "mcs"
     };
+    public static final String[] BLOOD = {
+            "dup", "drt", "ddn", "dlt", "dud", "dlr", "dur", "ddr", "ddl", "dul", "dtu", "dtr", "dtd", "dtl", "dcs"
+    };
     public static final String[] FIRE = {
             "fup", "frt", "fdn", "flt", "fud", "flr", "fur", "fdr", "fdl", "ful", "ftu", "ftr", "ftd", "ftl", "fcs"
     };

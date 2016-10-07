@@ -1,6 +1,5 @@
 package com.ollum.mazecape.Fragments;
 
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +8,7 @@ import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -38,6 +38,7 @@ import com.ollum.mazecape.Arrays.Tiles;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
+import com.ollum.mazecape.util.SaveGame;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -90,6 +91,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     float angleGoalNew;
     int gridViewColumns = 3;
     private Handler handler;
+    int randStep = 0;
+    int step = 0;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
@@ -411,6 +414,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         x = Integer.parseInt(currentLevel[currentLevel.length - 3][0]);
         y = Integer.parseInt(currentLevel[currentLevel.length - 3][1]);
 
+        if (scene.equals("m")) {
+            movementSpeed *= 2;
+        }
+
         if (!(currentLevel[currentLevel.length - 1].length == 0)) {
             containsTrap = true;
         } else {
@@ -444,6 +451,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         steps = 0;
         time = 0;
         cheat = 0;
+        randStep = 5 + (int) (Math.random() * ((15 - 5) + 1));
         direction = "up";
         MainActivity.stopTime = false;
         volumeFire = 0;
@@ -493,21 +501,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         switch (gridViewColumns) {
             case 1:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
                 }
                 break;
             case 3:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
                 }
                 break;
             case 5:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_big", "drawable", getContext().getPackageName()));
@@ -558,16 +566,19 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         switch (scene) {
             case "f":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
+                bgm = MediaPlayer.create(getContext(), R.raw.forest);
                 break;
             case "c":
-                bgm = MediaPlayer.create(getContext(), R.raw.grand_cave);
+                bgm = MediaPlayer.create(getContext(), R.raw.cave);
                 break;
             case "s":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
+                bgm = MediaPlayer.create(getContext(), R.raw.snow);
                 break;
             case "d":
-                bgm = MediaPlayer.create(getContext(), R.raw.overworld);
+                bgm = MediaPlayer.create(getContext(), R.raw.desert);
+                break;
+            case "m":
+                bgm = MediaPlayer.create(getContext(), R.raw.moon);
                 break;
         }
 
@@ -601,7 +612,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar2.setImageResource(R.drawable.star_empty);
         imageStar3.setImageResource(R.drawable.star_empty);
 
-        saveGame();
+        SaveGame.saveGame(getContext());
         checkDialog();
 
         /*Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
@@ -616,21 +627,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         switch (gridViewColumns) {
             case 1:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
                 }
                 break;
             case 3:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
                 }
                 break;
             case 5:
-                if (!scene.equals("s")) {
+                if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
                 } else {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_big", "drawable", getContext().getPackageName()));
@@ -687,7 +698,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             y++;
             move();
 
-            //3x3 View
             startAnimation(0, 0, 0, -MainActivity.width / gridViewColumns);
             TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, -gridViewMap.getHeight() / 7);
             translateAnimation.setDuration(movementSpeed);
@@ -711,9 +721,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             });
             gridViewMap.startAnimation(translateAnimation);
-
-            //5x5 View
-            /*startAnimation(0, 0, 0, -MainActivity.width / 5);*/
         }
     }
 
@@ -724,7 +731,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             y--;
             move();
 
-            //3x3 View
             startAnimation(0, 0, 0, MainActivity.width / gridViewColumns);
             TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, gridViewMap.getHeight() / 7);
             translateAnimation.setDuration(movementSpeed);
@@ -750,10 +756,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             });
             gridViewMap.startAnimation(translateAnimation);
-
-
-            //5x5 View
-            /*startAnimation(0, 0, 0, MainActivity.width / 5);*/
         }
     }
 
@@ -764,7 +766,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             x--;
             move();
 
-            //3x3 View
             startAnimation(0, MainActivity.width / gridViewColumns, 0, 0);
             TranslateAnimation translateAnimation = new TranslateAnimation(0, gridViewMap.getWidth() / 7, 0, 0);
             translateAnimation.setDuration(movementSpeed);
@@ -788,9 +789,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             });
             gridViewMap.startAnimation(translateAnimation);
-
-            //5x5 View
-            /*startAnimation(0, MainActivity.width / 5, 0, 0);*/
         }
     }
 
@@ -801,7 +799,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             x++;
             move();
 
-            //3x3 View
             startAnimation(0, -MainActivity.width / gridViewColumns, 0, 0);
             TranslateAnimation translateAnimation = new TranslateAnimation(0, -gridViewMap.getWidth() / 7, 0, 0);
             translateAnimation.setDuration(movementSpeed);
@@ -826,9 +823,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
             });
             gridViewMap.startAnimation(translateAnimation);
-
-            //5x5 View
-            /*startAnimation(0, -MainActivity.width / 5, 0, 0);*/
         }
     }
 
@@ -985,7 +979,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 gameOver();
             } else {
                 allowInput = true;
-                currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.MONSTER, currentLevel[y][x])];
+                currentLevel[y][x] = Tiles.BLOOD[getIndex(Tiles.MONSTER, currentLevel[y][x])];
                 items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
                 levelAdapter.notifyDataSetChanged();
                 hasSword = false;
@@ -1155,7 +1149,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         if (heartbeat != null) {
                             heartbeat.start();
                         }
-                        saveGame();
+                        SaveGame.saveGame(getContext());
                     }
                 });
             } else {
@@ -1182,7 +1176,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (heartbeat != null) {
                                 heartbeat.start();
                             }
-                            saveGame();
+                            SaveGame.saveGame(getContext());
                         } else {
                             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -1267,7 +1261,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                saveGame();
+                                SaveGame.saveGame(getContext());
                                 if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                                     mInterstitialAd.show();
                                 } else {
@@ -1289,7 +1283,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (MainActivity.menuBGM != null) {
                                 MainActivity.menuBGM.start();
                             }
-                            saveGame();
+                            SaveGame.saveGame(getContext());
                         }
                     });
                     builder.show();
@@ -1365,7 +1359,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        saveGame();
+                        SaveGame.saveGame(getContext());
                         if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                             mInterstitialAd.show();
                         } else {
@@ -1387,7 +1381,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     if (MainActivity.menuBGM != null) {
                         MainActivity.menuBGM.start();
                     }
-                    saveGame();
+                    SaveGame.saveGame(getContext());
                 }
             });
             builder.show();
@@ -1460,6 +1454,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 1;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 1;
+                                break;
                         }
                     }
                     image.setImageResource(R.drawable.stars_1);
@@ -1488,6 +1485,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 1;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 1;
+                                break;
                         }
                     } else {
                         MainActivity.allStars = MainActivity.allStars + (2 * (MainActivity.levelStars + 1));
@@ -1503,6 +1503,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 2;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 2;
                                 break;
                         }
                     }
@@ -1530,6 +1533,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 1;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 1;
+                                break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 1)) {
                         MainActivity.allStars = MainActivity.allStars + (2 * (MainActivity.levelStars + 1));
@@ -1546,6 +1552,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 2;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 2;
+                                break;
                         }
                     } else {
                         MainActivity.allStars = MainActivity.allStars + (3 * (MainActivity.levelStars + 1));
@@ -1561,6 +1570,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 3;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 3;
                                 break;
                         }
                     }
@@ -1586,6 +1598,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 1;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 1;
+                                break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 2)) {
                         MainActivity.allStars = MainActivity.allStars + (2 * (MainActivity.levelStars + 1));
@@ -1601,6 +1616,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 2;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 2;
                                 break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 1)) {
@@ -1618,6 +1636,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 3;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 3;
+                                break;
                         }
                     } else {
                         MainActivity.allStars = MainActivity.allStars + (4 * (MainActivity.levelStars + 1));
@@ -1633,6 +1654,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 4;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 4;
                                 break;
                         }
                     }
@@ -1656,6 +1680,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 1;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 1;
+                                break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 3)) {
                         MainActivity.allStars = MainActivity.allStars + (2 * (MainActivity.levelStars + 1));
@@ -1671,6 +1698,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 2;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 2;
                                 break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 2)) {
@@ -1688,6 +1718,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 3;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 3;
+                                break;
                         }
                     } else if (MainActivity.starsList.contains(MainActivity.world + ", " + MainActivity.level + ", " + 1)) {
                         MainActivity.allStars = MainActivity.allStars + (4 * (MainActivity.levelStars + 1));
@@ -1703,6 +1736,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 break;
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 4;
+                                break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 4;
                                 break;
                         }
                     } else {
@@ -1720,6 +1756,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             case 3:
                                 MainActivity.world4Stars = MainActivity.world4Stars + 5;
                                 break;
+                            case 4:
+                                MainActivity.world5Stars = MainActivity.world5Stars + 5;
+                                break;
                         }
                     }
                     image.setImageResource(R.drawable.stars_5);
@@ -1727,7 +1766,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             MainActivity.worldStars = new int[]{
-                    MainActivity.world1Stars, MainActivity.world2Stars, MainActivity.world3Stars, MainActivity.world4Stars
+                    MainActivity.world1Stars, MainActivity.world2Stars, MainActivity.world3Stars, MainActivity.world4Stars, MainActivity.world5Stars
             };
 
             //unlock new world when enough stars collected
@@ -1736,10 +1775,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 collectedStars += MainActivity.worldStars[i];
             }
 
-            if (collectedStars >= (MainActivity.maxWorld + 1) * 50 && MainActivity.maxWorld < Worlds.WORLDS.length) {
+            if (collectedStars >= (MainActivity.maxWorld + 1) * 50 && MainActivity.maxWorld < Worlds.WORLDS.length - 1) {
                 MainActivity.maxWorld++;
-                Toast.makeText(getContext(), "You've unlocked a new World!", Toast.LENGTH_LONG).show();
+                MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                Toast.makeText(getContext(), R.string.new_world, Toast.LENGTH_LONG).show();
             }
+
+            /*if (collectedStars >= 50) {
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_collect_50_stars));
+            }*/
 
             /*ImageView image2 = new ImageView(getContext());
             switch (MainActivity.lives) {
@@ -1849,7 +1893,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             MainActivity.soundPool.play(MainActivity.winID, MainActivity.volumeSound / 2, MainActivity.volumeSound / 2, 1, 0, 1);
-            saveGame();
+            SaveGame.saveGame(getContext());
             return true;
         }
         return false;
@@ -2361,9 +2405,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     if (contains(Tiles.CRACK, currentLevel[y][x])) {
                                         MainActivity.soundPool.play(MainActivity.crackID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                     }
+                                    step++;
                                     if (scene.equals("d") && !contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !contains(Tiles.TRAP_INACTIVE, currentLevel[y][x])) {
-                                        int randStep = 5 + (int) (Math.random() * ((10 - 5) + 1));
-                                        if (steps % randStep == 0) {
+                                        if (step % randStep == 0) {
+                                            step = 0;
+                                            randStep = 5 + (int) (Math.random() * ((15 - 5) + 1));
                                             allowInput = false;
                                             int randRotation = 1 + (int) (Math.random() * ((3 - 1) + 1));
                                             for (int i = 0; i < randRotation; i++) {
@@ -2434,8 +2480,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         }
                     }
                 }
-
-                //gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
 
                 isAnimating = false;
                 //allowInput = true;
@@ -2672,42 +2716,5 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         });
         builder.create();
         builder.show();
-    }
-
-    public void saveGame() {
-        Set<String> set = new HashSet<String>();
-        set.addAll(MainActivity.starsList);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", MainActivity.level);
-        editor.putInt("world", MainActivity.world);
-        editor.putInt("lives", MainActivity.lives);
-        editor.putInt("levelCompass", MainActivity.levelCompass);
-        editor.putInt("levelMap", MainActivity.levelMap);
-        editor.putInt("levelTorch", MainActivity.levelTorch);
-        editor.putInt("levelSpeed", MainActivity.levelSpeed);
-        editor.putInt("levelStars", MainActivity.levelStars);
-        editor.putInt("levelLives", MainActivity.levelLives);
-        editor.putInt("maxWorld", MainActivity.maxWorld);
-        editor.putInt("world1MaxLevel", MainActivity.maxLevel[0]);
-        editor.putInt("world2MaxLevel", MainActivity.maxLevel[1]);
-        editor.putInt("world3MaxLevel", MainActivity.maxLevel[2]);
-        editor.putInt("world4MaxLevel", MainActivity.maxLevel[3]);
-        editor.putStringSet("stars", MainActivity.starsList);
-        editor.putInt("torches", MainActivity.torches);
-        editor.putInt("allStars", MainActivity.allStars);
-        editor.putInt("world1Stars", MainActivity.world1Stars);
-        editor.putInt("world2Stars", MainActivity.world2Stars);
-        editor.putInt("world3Stars", MainActivity.world3Stars);
-        editor.putInt("world4Stars", MainActivity.world4Stars);
-        editor.putBoolean("swipe", MainActivity.swipe);
-        editor.putBoolean("inverse", MainActivity.inverse);
-        editor.putFloat("volumeMusic", MainActivity.volumeMusic);
-        editor.putFloat("volumeSound", MainActivity.volumeSound);
-        editor.putLong("logOffTime", currentTimeMillis());
-        editor.putInt("resetCount", MainActivity.resetCount);
-        editor.putBoolean("showAds", MainActivity.showAds);
-        editor.putBoolean("rated", MainActivity.rated);
-        editor.apply();
     }
 }

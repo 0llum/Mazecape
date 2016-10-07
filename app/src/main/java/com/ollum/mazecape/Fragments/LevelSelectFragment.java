@@ -78,7 +78,7 @@ public class LevelSelectFragment extends Fragment {
                             MainActivity.shopVisible = true;
                         }
                     } else {
-                        Toast.makeText(getContext(), "You can unlock this level by finishing all previous levels", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.unlock_level, Toast.LENGTH_LONG).show();
                     }
                 }
             }

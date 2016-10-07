@@ -50,16 +50,16 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
 
     public void columnDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Select Columns (1..20");
+        builder.setMessage(R.string.enter_columns);
         final EditText editText = new EditText(getContext());
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(editText);
-        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 if (editText.getText().toString().equals("") || Integer.parseInt(editText.getText().toString()) < 1 || Integer.parseInt(editText.getText().toString()) > 20) {
-                    Toast.makeText(getContext(), "Please enter a number between 1 and 20", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.enter_number, Toast.LENGTH_LONG).show();
                 } else {
                     columns = Integer.parseInt(editText.getText().toString());
                     rowDialog();
@@ -74,16 +74,16 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
 
     public void rowDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Select Rows (1..20");
+        builder.setMessage(R.string.enter_rows);
         final EditText editText = new EditText(getContext());
         editText.setInputType(InputType.TYPE_CLASS_NUMBER);
         builder.setView(editText);
-        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 if (editText.getText().toString().equals("") || Integer.parseInt(editText.getText().toString()) < 1 || Integer.parseInt(editText.getText().toString()) > 20) {
-                    Toast.makeText(getContext(), "Please enter a number between 1 and 20", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.enter_number, Toast.LENGTH_LONG).show();
                 } else {
                     rows = Integer.parseInt(editText.getText().toString());
                     sceneDialog();
@@ -98,10 +98,10 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
 
     public void sceneDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Select Scene ('f', 'c', 's' or 'd')");
+        builder.setMessage(R.string.enter_scene);
         final EditText editText = new EditText(getContext());
         builder.setView(editText);
-        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.next, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -110,7 +110,7 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
                     createGrid();
                     dialog.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "Please enter 'f', 'c', 's' or 'd'", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.enter_scene_char, Toast.LENGTH_LONG).show();
                 }
             }
         });

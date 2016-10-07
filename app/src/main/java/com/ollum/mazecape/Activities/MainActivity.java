@@ -11,6 +11,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +40,8 @@ import com.ollum.mazecape.Fragments.WorldSelectFragment;
 import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
 import com.ollum.mazecape.util.IabResult;
+import com.ollum.mazecape.util.LoadGame;
+import com.ollum.mazecape.util.SaveGame;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -71,10 +74,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static int world2Stars = 0;
     public static int world3Stars = 0;
     public static int world4Stars = 0;
+    public static int world5Stars = 0;
     public static int world1MaxLevel = 0;
     public static int world2MaxLevel = 0;
     public static int world3MaxLevel = 0;
     public static int world4MaxLevel = 0;
+    public static int world5MaxLevel = 0;
     public static int[] maxLevel;
     public static int[] worldStars;
     public static Display display;
@@ -104,11 +109,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static RewardedVideoAd mAd;
     public static Button sendButton;
     public static SoundPool soundPool;
-    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID;
+    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
-    public long logOffTime;
+    public static long logOffTime;
     ImageButton settingsButton, helpButton, shopButton;
 
     @Override
@@ -194,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         loadRewardedVideoAd();
 
-        loadGame();
         createHandler();
 
         /*Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -210,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             menuBGM.release();
         }
 
-        menuBGM = MediaPlayer.create(this, R.raw.and_how_it_all_began);
+        menuBGM = MediaPlayer.create(this, R.raw.menu);
         menuBGM.setLooping(true);
         menuBGM.setVolume(volumeMusic, volumeMusic);
         menuBGM.start();
@@ -231,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trapActiveID = soundPool.load(this, R.raw.trap_activate, 1);
         trapInactiveID = soundPool.load(this, R.raw.trap_deactivate, 1);
         winID = soundPool.load(this, R.raw.win, 1);
+        upgradeID = soundPool.load(this, R.raw.upgrade, 1);
     }
 
     private void loadRewardedVideoAd() {
@@ -344,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (current.equals("LevelEditorFragment")) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("");
-            builder.setMessage("Do you really want to go back to main menu?");
+            builder.setMessage(R.string.back_to_main_menu);
             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -372,7 +377,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        saveGame();
+        SaveGame.saveGame(getApplicationContext());
 
         if (menuBGM != null && menuBGM.isPlaying()) {
             menuBGM.pause();
@@ -383,7 +388,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        loadGame();
+        LoadGame.loadGame(getApplicationContext());
 
         FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
         String current = currentFragment.getName();
@@ -407,94 +412,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    public void loadGame() {
-        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
-
-        level = sharedPreferences.getInt("level", 0);
-        world = sharedPreferences.getInt("world", 0);
-        lives = sharedPreferences.getInt("lives", 5);
-        levelCompass = sharedPreferences.getInt("levelCompass", 1);
-        levelMap = sharedPreferences.getInt("levelMap", 1);
-        levelTorch = sharedPreferences.getInt("levelTorch", 0);
-        levelSpeed = sharedPreferences.getInt("levelSpeed", 0);
-        levelStars = sharedPreferences.getInt("levelStars", 0);
-        levelLives = sharedPreferences.getInt("levelLives", 0);
-        maxWorld = sharedPreferences.getInt("maxWorld", 0);
-        world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
-        world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
-        world3MaxLevel = sharedPreferences.getInt("world3MaxLevel", 0);
-        world4MaxLevel = sharedPreferences.getInt("world4MaxLevel", 0);
-        allStars = sharedPreferences.getInt("allStars", 0);
-        world1Stars = sharedPreferences.getInt("world1Stars", 0);
-        world2Stars = sharedPreferences.getInt("world2Stars", 0);
-        world3Stars = sharedPreferences.getInt("world3Stars", 0);
-        world4Stars = sharedPreferences.getInt("world4Stars", 0);
-        torches = sharedPreferences.getInt("torches", 0);
-        swipe = sharedPreferences.getBoolean("swipe", true);
-        inverse = sharedPreferences.getBoolean("inverse", false);
-        volumeMusic = sharedPreferences.getFloat("volumeMusic", 1);
-        volumeSound = sharedPreferences.getFloat("volumeSound", 1);
-        logOffTime = sharedPreferences.getLong("logOffTime", 0);
-        resetCount = sharedPreferences.getInt("resetCount", 0);
-        showAds = sharedPreferences.getBoolean("showAds", true);
-        rated = sharedPreferences.getBoolean("rated", false);
-        Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
-        starsList.addAll(set);
-
-        worldStars = new int[]{
-                world1Stars, world2Stars, world3Stars, world4Stars
-        };
-
-        maxLevel = new int[]{
-                world1MaxLevel, world2MaxLevel, world3MaxLevel, world4MaxLevel
-        };
-
-        while ((currentTimeMillis() - logOffTime > 300000) && lives < (5 + levelLives)) {
-            lives++;
-            logOffTime += 300000;
-        }
-
-        livesCounter.setText("" + lives);
-        starsCounter.setText("" + allStars);
-    }
-
-    public void saveGame() {
-        Set<String> set = new HashSet<String>();
-        set.addAll(starsList);
-        SharedPreferences sharedPreferences = getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", level);
-        editor.putInt("world", world);
-        editor.putInt("lives", lives);
-        editor.putInt("levelCompass", levelCompass);
-        editor.putInt("levelMap", levelMap);
-        editor.putInt("levelTorch", levelTorch);
-        editor.putInt("levelSpeed", levelSpeed);
-        editor.putInt("levelStars", levelStars);
-        editor.putInt("levelLives", levelLives);
-        editor.putInt("maxWorld", maxWorld);
-        editor.putInt("world1MaxLevel", maxLevel[0]);
-        editor.putInt("world2MaxLevel", maxLevel[1]);
-        editor.putInt("world3MaxLevel", maxLevel[2]);
-        editor.putInt("world4MaxLevel", maxLevel[3]);
-        editor.putStringSet("stars", starsList);
-        editor.putInt("torches", torches);
-        editor.putInt("allStars", allStars);
-        editor.putInt("world1Stars", world1Stars);
-        editor.putInt("world2Stars", world2Stars);
-        editor.putInt("world3Stars", world3Stars);
-        editor.putInt("world4Stars", world4Stars);
-        editor.putBoolean("swipe", swipe);
-        editor.putBoolean("inverse", inverse);
-        editor.putFloat("volumeMusic", volumeMusic);
-        editor.putFloat("volumeSound", volumeSound);
-        editor.putLong("logOffTime", currentTimeMillis());
-        editor.putInt("resetCount", resetCount);
-        editor.putBoolean("showAds", showAds);
-        editor.putBoolean("rated", rated);
-        editor.apply();
     }
 
     public void createHandler() {

@@ -23,6 +23,7 @@ import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
 import com.ollum.mazecape.util.IabResult;
 import com.ollum.mazecape.util.Purchase;
+import com.ollum.mazecape.util.SaveGame;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -71,17 +72,17 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelCompass) {
             case 0:
                 buttonCompass.setVisibility(View.INVISIBLE);
-                compassUpgrade.setText("Upgrade");
+                compassUpgrade.setText(R.string.upgrade);
                 compassLevel.setText("Level 0");
                 break;
             case 1:
                 buttonCompass.setText("200");
-                compassUpgrade.setText("Upgrade");
+                compassUpgrade.setText(R.string.upgrade);
                 compassLevel.setText(getString(R.string.goal));
                 break;
             case 2:
                 buttonCompass.setVisibility(View.INVISIBLE);
-                compassUpgrade.setText("Max");
+                compassUpgrade.setText(R.string.max);
                 compassLevel.setText(getString(R.string.stars));
                 break;
         }
@@ -92,17 +93,17 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelMap) {
             case 0:
                 buttonMap.setVisibility(View.INVISIBLE);
-                mapUpgrade.setText("Upgrade");
+                mapUpgrade.setText(R.string.upgrade);
                 mapLevel.setText("Level 0");
                 break;
             case 1:
                 buttonMap.setText("200");
-                mapUpgrade.setText("Upgrade");
+                mapUpgrade.setText(R.string.upgrade);
                 mapLevel.setText(getString(R.string.steps));
                 break;
             case 2:
                 buttonMap.setVisibility(View.INVISIBLE);
-                mapUpgrade.setText("Max");
+                mapUpgrade.setText(R.string.max);
                 mapLevel.setText(getString(R.string.discovered));
                 break;
         }
@@ -113,27 +114,27 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelTorch) {
             case 0:
                 buttonTorch.setText("50");
-                torchUpgrade.setText("Upgrade");
+                torchUpgrade.setText(R.string.upgrade);
                 torchLevel.setText("1:00 min");
                 break;
             case 1:
                 buttonTorch.setText("100");
-                torchUpgrade.setText("Upgrade");
+                torchUpgrade.setText(R.string.upgrade);
                 torchLevel.setText("1:30 min");
                 break;
             case 2:
                 buttonTorch.setText("150");
-                torchUpgrade.setText("Upgrade");
+                torchUpgrade.setText(R.string.upgrade);
                 torchLevel.setText("2:00 min");
                 break;
             case 3:
                 buttonTorch.setText("200");
-                torchUpgrade.setText("Upgrade");
+                torchUpgrade.setText(R.string.upgrade);
                 torchLevel.setText("2:30 min");
                 break;
             case 4:
                 buttonTorch.setVisibility(View.INVISIBLE);
-                torchUpgrade.setText("Max");
+                torchUpgrade.setText(R.string.max);
                 torchLevel.setText("3:00 min");
                 break;
         }
@@ -144,22 +145,22 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelSpeed) {
             case 0:
                 buttonSpeed.setText("50");
-                speedUpgrade.setText("Upgrade");
+                speedUpgrade.setText(R.string.upgrade);
                 speedLevel.setText("100%");
                 break;
             case 1:
                 buttonSpeed.setText("100");
-                speedUpgrade.setText("Upgrade");
+                speedUpgrade.setText(R.string.upgrade);
                 speedLevel.setText("133%");
                 break;
             case 2:
                 buttonSpeed.setText("150");
-                speedUpgrade.setText("Upgrade");
+                speedUpgrade.setText(R.string.upgrade);
                 speedLevel.setText("166%");
                 break;
             case 3:
                 buttonSpeed.setVisibility(View.INVISIBLE);
-                speedUpgrade.setText("Max");
+                speedUpgrade.setText(R.string.max);
                 speedLevel.setText("200%");
                 break;
         }
@@ -170,32 +171,32 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelLives) {
             case 0:
                 buttonLives.setText("50");
-                livesUpgrade.setText("Upgrade");
+                livesUpgrade.setText(R.string.upgrade);
                 livesLevel.setText("5 " + getString(R.string.lives));
                 break;
             case 1:
                 buttonLives.setText("100");
-                livesUpgrade.setText("Upgrade");
+                livesUpgrade.setText(R.string.upgrade);
                 livesLevel.setText("6 " + getString(R.string.lives));
                 break;
             case 2:
                 buttonLives.setText("150");
-                livesUpgrade.setText("Upgrade");
+                livesUpgrade.setText(R.string.upgrade);
                 livesLevel.setText("7 " + getString(R.string.lives));
                 break;
             case 3:
                 buttonLives.setText("200");
-                livesUpgrade.setText("Upgrade");
+                livesUpgrade.setText(R.string.upgrade);
                 livesLevel.setText("8 " + getString(R.string.lives));
                 break;
             case 4:
                 buttonLives.setText("250");
-                livesUpgrade.setText("Upgrade");
+                livesUpgrade.setText(R.string.upgrade);
                 livesLevel.setText("9 " + getString(R.string.lives));
                 break;
             case 5:
                 buttonLives.setVisibility(View.INVISIBLE);
-                livesUpgrade.setText("Max");
+                livesUpgrade.setText(R.string.max);
                 livesLevel.setText("10 " + getString(R.string.lives));
                 break;
         }
@@ -206,17 +207,17 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         switch (MainActivity.levelStars) {
             case 0:
                 buttonStars.setText("100");
-                starsUpgrade.setText("Upgrade");
+                starsUpgrade.setText(R.string.upgrade);
                 starsLevel.setText("x1");
                 break;
             case 1:
                 buttonStars.setText("200");
-                starsUpgrade.setText("Upgrade");
+                starsUpgrade.setText(R.string.upgrade);
                 starsLevel.setText("x2");
                 break;
             case 2:
                 buttonStars.setVisibility(View.INVISIBLE);
-                starsUpgrade.setText("Max");
+                starsUpgrade.setText(R.string.max);
                 starsLevel.setText("x3");
                 break;
         }
@@ -247,27 +248,31 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 } else if (info.getSku().equals("100_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 100;
+                    MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else if (info.getSku().equals("200_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 200;
+                    MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else if (info.getSku().equals("500_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 500;
+                    MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else if (info.getSku().equals("1000_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 1000;
+                    MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 }
             }
         };
@@ -291,7 +296,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
                         Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                         MainActivity.soundPool.play(MainActivity.liveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        saveGame();
+                        SaveGame.saveGame(getContext());;
                     } else {
                         Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
                     }
@@ -312,7 +317,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
                         Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                         MainActivity.soundPool.play(MainActivity.liveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        saveGame();
+                        SaveGame.saveGame(getContext());;
                     } else {
                         Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
                     }
@@ -324,25 +329,26 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonCompass.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonCompass.getText().toString());
                     MainActivity.levelCompass++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelCompass) {
                         case 0:
                             buttonCompass.setVisibility(View.INVISIBLE);
-                            compassUpgrade.setText("Upgrade");
+                            compassUpgrade.setText(R.string.upgrade);
                             compassLevel.setText("Level 0");
                             break;
                         case 1:
                             buttonCompass.setText("200");
-                            compassUpgrade.setText("Upgrade");
+                            compassUpgrade.setText(R.string.upgrade);
                             compassLevel.setText(getString(R.string.goal));
                         case 2:
                             buttonCompass.setVisibility(View.INVISIBLE);
-                            compassUpgrade.setText("Max");
+                            compassUpgrade.setText(R.string.max);
                             compassLevel.setText(getString(R.string.stars));
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -351,26 +357,27 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonMap.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonMap.getText().toString());
                     MainActivity.levelMap++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelMap) {
                         case 0:
                             buttonMap.setVisibility(View.INVISIBLE);
-                            mapUpgrade.setText("Upgrade");
+                            mapUpgrade.setText(R.string.upgrade);
                             mapLevel.setText("Level 0");
                             break;
                         case 1:
                             buttonMap.setText("200");
-                            mapUpgrade.setText("Upgrade");
+                            mapUpgrade.setText(R.string.upgrade);
                             mapLevel.setText(getString(R.string.steps));
                             break;
                         case 2:
                             buttonMap.setVisibility(View.INVISIBLE);
-                            mapUpgrade.setText("Max");
+                            mapUpgrade.setText(R.string.max);
                             mapLevel.setText(getString(R.string.discovered));
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -379,36 +386,37 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonTorch.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonTorch.getText().toString());
                     MainActivity.levelTorch++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelTorch) {
                         case 0:
                             buttonTorch.setText("50");
-                            torchUpgrade.setText("Upgrade");
+                            torchUpgrade.setText(R.string.upgrade);
                             torchLevel.setText("1:00 min");
                             break;
                         case 1:
                             buttonTorch.setText("100");
-                            torchUpgrade.setText("Upgrade");
+                            torchUpgrade.setText(R.string.upgrade);
                             torchLevel.setText("1:30 min");
                             break;
                         case 2:
                             buttonTorch.setText("150");
-                            torchUpgrade.setText("Upgrade");
+                            torchUpgrade.setText(R.string.upgrade);
                             torchLevel.setText("2:00 min");
                             break;
                         case 3:
                             buttonTorch.setText("200");
-                            torchUpgrade.setText("Upgrade");
+                            torchUpgrade.setText(R.string.upgrade);
                             torchLevel.setText("2:30 min");
                             break;
                         case 4:
                             buttonTorch.setVisibility(View.INVISIBLE);
-                            torchUpgrade.setText("Max");
+                            torchUpgrade.setText(R.string.max);
                             torchLevel.setText("3:00 min");
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -417,31 +425,32 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonSpeed.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonSpeed.getText().toString());
                     MainActivity.levelSpeed++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelSpeed) {
                         case 0:
                             buttonSpeed.setText("50");
-                            speedUpgrade.setText("Upgrade");
+                            speedUpgrade.setText(R.string.upgrade);
                             speedLevel.setText("100%");
                             break;
                         case 1:
                             buttonSpeed.setText("100");
-                            speedUpgrade.setText("Upgrade");
+                            speedUpgrade.setText(R.string.upgrade);
                             speedLevel.setText("133%");
                             break;
                         case 2:
                             buttonSpeed.setText("150");
-                            speedUpgrade.setText("Upgrade");
+                            speedUpgrade.setText(R.string.upgrade);
                             speedLevel.setText("166%");
                             break;
                         case 3:
                             buttonSpeed.setVisibility(View.INVISIBLE);
-                            speedUpgrade.setText("Max");
+                            speedUpgrade.setText(R.string.max);
                             speedLevel.setText("200%");
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -450,41 +459,42 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonLives.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonLives.getText().toString());
                     MainActivity.levelLives++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelLives) {
                         case 0:
                             buttonLives.setText("50");
-                            livesUpgrade.setText("Upgrade");
+                            livesUpgrade.setText(R.string.upgrade);
                             livesLevel.setText("5 " + getString(R.string.lives));
                             break;
                         case 1:
                             buttonLives.setText("100");
-                            livesUpgrade.setText("Upgrade");
+                            livesUpgrade.setText(R.string.upgrade);
                             livesLevel.setText("6 " + getString(R.string.lives));
                             break;
                         case 2:
                             buttonLives.setText("150");
-                            livesUpgrade.setText("Upgrade");
+                            livesUpgrade.setText(R.string.upgrade);
                             livesLevel.setText("7 " + getString(R.string.lives));
                             break;
                         case 3:
                             buttonLives.setText("200");
-                            livesUpgrade.setText("Upgrade");
+                            livesUpgrade.setText(R.string.upgrade);
                             livesLevel.setText("8 " + getString(R.string.lives));
                             break;
                         case 4:
                             buttonLives.setText("250");
-                            livesUpgrade.setText("Upgrade");
+                            livesUpgrade.setText(R.string.upgrade);
                             livesLevel.setText("9 " + getString(R.string.lives));
                             break;
                         case 5:
                             buttonLives.setVisibility(View.INVISIBLE);
-                            livesUpgrade.setText("Max");
+                            livesUpgrade.setText(R.string.max);
                             livesLevel.setText("10 " + getString(R.string.lives));
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -494,26 +504,27 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 if (MainActivity.allStars >= Integer.parseInt(buttonStars.getText().toString())) {
                     MainActivity.allStars -= Integer.parseInt(buttonStars.getText().toString());
                     MainActivity.levelStars++;
+                    MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     switch (MainActivity.levelStars) {
                         case 0:
                             buttonStars.setText("100");
-                            starsUpgrade.setText("Upgrade");
+                            starsUpgrade.setText(R.string.upgrade);
                             starsLevel.setText("x1");
                             break;
                         case 1:
                             buttonStars.setText("200");
-                            starsUpgrade.setText("Upgrade");
+                            starsUpgrade.setText(R.string.upgrade);
                             starsLevel.setText("x2");
                             break;
                         case 2:
                             buttonStars.setVisibility(View.INVISIBLE);
-                            starsUpgrade.setText("Max");
+                            starsUpgrade.setText(R.string.max);
                             starsLevel.setText("x3");
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
                 }
@@ -560,9 +571,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                     }
 
-                    saveGame();
+                    SaveGame.saveGame(getContext());;
                 } else {
-                    Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
                 }
                 break;
             /*case R.id.button_watch_ad:
@@ -575,74 +586,37 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
 
     @Override
     public void onRewarded(RewardItem reward) {
-        Toast.makeText(getContext(), "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewarded! currency: " + reward.getType() + "  amount: " + reward.getAmount(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-        Toast.makeText(getContext(), "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdClosed() {
-        Toast.makeText(getContext(), "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int errorCode) {
-        Toast.makeText(getContext(), "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        Toast.makeText(getContext(), "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoAdOpened() {
-        Toast.makeText(getContext(), "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onRewardedVideoStarted() {
-        Toast.makeText(getContext(), "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
-    }
-
-    public void saveGame() {
-        Set<String> set = new HashSet<String>();
-        set.addAll(MainActivity.starsList);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("level", MainActivity.level);
-        editor.putInt("world", MainActivity.world);
-        editor.putInt("lives", MainActivity.lives);
-        editor.putInt("levelCompass", MainActivity.levelCompass);
-        editor.putInt("levelMap", MainActivity.levelMap);
-        editor.putInt("levelTorch", MainActivity.levelTorch);
-        editor.putInt("levelSpeed", MainActivity.levelSpeed);
-        editor.putInt("levelStars", MainActivity.levelStars);
-        editor.putInt("levelLives", MainActivity.levelLives);
-        editor.putInt("maxWorld", MainActivity.maxWorld);
-        editor.putInt("world1MaxLevel", MainActivity.maxLevel[0]);
-        editor.putInt("world2MaxLevel", MainActivity.maxLevel[1]);
-        editor.putInt("world3MaxLevel", MainActivity.maxLevel[2]);
-        editor.putInt("world4MaxLevel", MainActivity.maxLevel[3]);
-        editor.putStringSet("stars", MainActivity.starsList);
-        editor.putInt("torches", MainActivity.torches);
-        editor.putInt("allStars", MainActivity.allStars);
-        editor.putInt("world1Stars", MainActivity.world1Stars);
-        editor.putInt("world2Stars", MainActivity.world2Stars);
-        editor.putInt("world3Stars", MainActivity.world3Stars);
-        editor.putInt("world4Stars", MainActivity.world4Stars);
-        editor.putBoolean("swipe", MainActivity.swipe);
-        editor.putBoolean("inverse", MainActivity.inverse);
-        editor.putFloat("volumeMusic", MainActivity.volumeMusic);
-        editor.putFloat("volumeSound", MainActivity.volumeSound);
-        editor.putLong("logOffTime", currentTimeMillis());
-        editor.putInt("resetCount", MainActivity.resetCount);
-        editor.putBoolean("showAds", MainActivity.showAds);
-        editor.putBoolean("rated", MainActivity.rated);
-        editor.apply();
+        //Toast.makeText(getContext(), "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 
     public boolean isOnline() {

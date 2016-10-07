@@ -120,7 +120,7 @@ public class World2 {
             {"ocs", "ocs", "olt", "nud", "ndn", "ndr", "ndl", "nud", "nud", "ndr", "nul", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nur", "ncs", "nul", "nud", "nup", "nud", "nup", "grt", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nrt", "ntd", "nlr", "ntd", "nlr", "ftd", "nlr", "nlr", "slt", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "oul", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "c", "70"},
@@ -138,11 +138,11 @@ public class World2 {
             {"ocs", "ocs", "olt", "mud", "tud", "sup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nur", "ccs", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "ccs", "ntr", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nur", "gul", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "gur", "nul", "sup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"4", "3", "c", "19"},
+            {"4", "3", "c", "20"},
             {},
             {"4,7"}
     };
@@ -161,7 +161,7 @@ public class World2 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odl", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"3", "3", "c", "100"},
+            {"3", "3", "c", "49"},
             {"7,3", "4,10", "4,4", "3,7", "6,4", "7,7", "7,6", "3,9", "5,10", "6,10"},
             {"5,6"}
     };

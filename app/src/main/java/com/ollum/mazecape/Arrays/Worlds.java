@@ -24,10 +24,18 @@ public class Worlds {
             World4.DESERT_01, World4.DESERT_02, World4.DESERT_03, World4.DESERT_04, World4.DESERT_05,
             World4.DESERT_06, World4.DESERT_07, World4.DESERT_08, World4.DESERT_09
     };
+    public static final String[][][] WORLD_5 = {
+            World5.MOON_01, World5.MOON_02, World5.MOON_03, World5.MOON_04, World5.MOON_05,
+            World5.MOON_06, World5.MOON_07, World5.MOON_08, World5.MOON_09, World5.MOON_10,
+            World5.MOON_11, World5.MOON_12, World5.MOON_13, World5.MOON_14, World5.MOON_15,
+            World5.MOON_16, World5.MOON_17, World5.MOON_18, World5.MOON_19, World5.MOON_20,
+            World5.MOON_21, World5.MOON_22, World5.MOON_23, World5.MOON_24, World5.MOON_25,
+            World5.MOON_26, World5.MOON_27, World5.MOON_28, World5.MOON_29, World5.MOON_30
+    };
     public static final String[][][] TEST_LEVEL = {
 
     };
     public static final String[][][][] WORLDS = {
-            WORLD_1, WORLD_2, WORLD_3, WORLD_4
+            WORLD_1, WORLD_2, WORLD_3, WORLD_4, WORLD_5
     };
 }

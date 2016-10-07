@@ -15,8 +15,9 @@ android {
         applicationId "com.ollum.mazecape"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 7
-        versionName "2.1"
+        versionCode 10
+        versionName "2.3"
+        //multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,6 +34,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
+    //compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.firebase:firebase-ads:9.2.0'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }

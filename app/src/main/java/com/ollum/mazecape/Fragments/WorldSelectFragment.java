@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.R;
+import com.ollum.mazecape.util.SaveGame;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,6 @@ public class WorldSelectFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-
                 if (MainMenuFragment.devMode) {
                     MainActivity.world = position;
                     LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -61,16 +61,18 @@ public class WorldSelectFragment extends Fragment {
                     transaction.commit();
                 } else if (position - 1 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 50 Stars");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.buy_world_50);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 50) {
                                 MainActivity.allStars -= 50;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld++;
+                                MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
+                                SaveGame.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -83,7 +85,7 @@ public class WorldSelectFragment extends Fragment {
                             }
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -93,16 +95,18 @@ public class WorldSelectFragment extends Fragment {
                     builder.show();
                 } else if (position - 2 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 100 Stars");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.buy_world_100);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 100) {
                                 MainActivity.allStars -= 100;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld += 2;
+                                MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
+                                SaveGame.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -115,7 +119,7 @@ public class WorldSelectFragment extends Fragment {
                             }
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -125,16 +129,18 @@ public class WorldSelectFragment extends Fragment {
                     builder.show();
                 } else if (position - 3 == MainActivity.maxWorld) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Would you like to buy this World? 150 Stars");
-                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    builder.setMessage(R.string.buy_world_150);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if (MainActivity.allStars >= 150) {
                                 MainActivity.allStars -= 150;
                                 MainActivity.starsCounter.setText("" + MainActivity.allStars);
                                 MainActivity.maxWorld += 3;
+                                MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
+                                SaveGame.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -147,7 +153,41 @@ public class WorldSelectFragment extends Fragment {
                             }
                         }
                     });
-                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+                } else if (position - 4 == MainActivity.maxWorld) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage(R.string.buy_world_200);
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (MainActivity.allStars >= 200) {
+                                MainActivity.allStars -= 200;
+                                MainActivity.starsCounter.setText("" + MainActivity.allStars);
+                                MainActivity.maxWorld += 4;
+                                MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
+                                gridViewWorlds.setSelection(MainActivity.maxWorld);
+                                SaveGame.saveGame(getContext());
+                                dialog.dismiss();
+                            } else {
+                                FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                                transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                                transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
+                                transaction.addToBackStack("ShopFragment");
+                                transaction.commit();
+                                MainActivity.stopTime = true;
+                                MainActivity.shopVisible = true;
+                            }
+                        }
+                    });
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -181,24 +221,35 @@ public class WorldSelectFragment extends Fragment {
                     items.add(new Item("1", getResources().getIdentifier("c" + "blk", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
+                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 1:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
+                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 2:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
+                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 3:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
+                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    break;
+                case 4:
+                    items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
+                    items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
+                    items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
+                    items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
+                    items.add(new Item("4", getResources().getIdentifier("m" + "xxx", "drawable", getContext().getPackageName()), 5));
                     break;
             }
         }

@@ -92,4 +92,20 @@
     <string name="lives">Lives</string>
     <string name="discovered">Discovered</string>
     <string name="goal">Goal</string>
+    <string name="new_world">You\'ve unlocked a new World!</string>
+    <string name="enter_columns">Select Columns (1..20)</string>
+    <string name="enter_rows">Select Rows (1..20)</string>
+    <string name="next">Next</string>
+    <string name="enter_number">Please enter a number between 1 and 20</string>
+    <string name="enter_scene">Select Scene (\'f\', \'c\', \'s\' or \'d\')</string>
+    <string name="enter_scene_char">Please enter \'f\', \'c\', \'s\' or \'d\'</string>
+    <string name="unlock_level">You can unlock this level by finishing all previous levels</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="max">Max</string>
+    <string name="buy_world_50">Would you like to buy this World? 50 Stars</string>
+    <string name="buy_world_100">Would you like to buy this World? 100 Stars</string>
+    <string name="buy_world_150">Would you like to buy this World? 150 Stars</string>
+    <string name="back_to_main_menu">Do you really want to go back to main menu?</string>
+    <string name="buy_world_200">Would you like to buy this World? 200 Stars</string>
 </resources>

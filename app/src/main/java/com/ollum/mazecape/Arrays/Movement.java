@@ -10,7 +10,8 @@ public class Movement {
             "sdn", "sdl", "stu", "sdr", "sud", "str", "stl", "scs",
             "bud",
             "cdn", "cdl", "ctu", "cdr", "cud", "ctr", "ctl", "ccs",
-            "jdn", "jtl", "jtr", "jrd", "jld", "jcd", "jcl", "jcr"
+            "jdn", "jtl", "jtr", "jrd", "jld", "jcd", "jcl", "jcr",
+            "ddn", "ddl", "dtu", "ddr", "dud", "dtr", "dtl", "dcs"
     };
     public static final String[] MOVE_LEFT = {
             "ndl", "ntu", "nlt", "nlr", "ntr", "nul", "ntd", "ncs",
@@ -21,7 +22,8 @@ public class Movement {
             "sdl", "stu", "slt", "slr", "str", "sul", "std", "scs",
             "blr",
             "cdl", "ctu", "clt", "clr", "ctr", "cul", "ctd", "ccs",
-            "jlt", "jtu", "jtd", "jdl", "jul", "jcd", "jcl", "jcu"
+            "jlt", "jtu", "jtd", "jdl", "jul", "jcd", "jcl", "jcu",
+            "ddl", "dtu", "dlt", "dlr", "dtr", "dul", "dtd", "dcs"
     };
     public static final String[] MOVE_RIGHT = {
             "ntu", "ndr", "nlr", "nrt", "ntl", "ntd", "nur", "ncs",
@@ -32,7 +34,8 @@ public class Movement {
             "stu", "sdr", "slr", "srt", "stl", "std", "sur", "scs",
             "blr",
             "ctu", "cdr", "clr", "crt", "ctl", "ctd", "cur", "ccs",
-            "jrt", "jtu", "jtd", "jdr", "jur", "jcd", "jcu", "jcr"
+            "jrt", "jtu", "jtd", "jdr", "jur", "jcd", "jcu", "jcr",
+            "dtu", "ddr", "dlr", "drt", "dtl", "dtd", "dur", "dcs"
     };
     public static final String[] MOVE_UP = {
             "nud", "ntr", "ntl", "nul", "ntd", "nup", "nur", "ncs",
@@ -43,6 +46,7 @@ public class Movement {
             "sud", "str", "stl", "sul", "std", "sup", "sur", "scs",
             "bud",
             "cud", "ctr", "ctl", "cul", "ctd", "cup", "cur", "ccs",
-            "jup", "jtl", "jtr", "jru", "jlu", "jcl", "jcu", "jcr"
+            "jup", "jtl", "jtr", "jru", "jlu", "jcl", "jcu", "jcr",
+            "dud", "dtr", "dtl", "dul", "dtd", "dup", "dur", "dcs"
     };
 }
