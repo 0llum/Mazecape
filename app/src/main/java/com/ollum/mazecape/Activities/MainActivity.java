@@ -4,14 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -44,7 +42,6 @@ import com.ollum.mazecape.util.LoadGame;
 import com.ollum.mazecape.util.SaveGame;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -110,10 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static Button sendButton;
     public static SoundPool soundPool;
     public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID;
+    public static long logOffTime;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
-    public static long logOffTime;
     ImageButton settingsButton, helpButton, shopButton;
 
     @Override
@@ -199,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         loadRewardedVideoAd();
 
+        LoadGame.loadGame(getApplicationContext());
         createHandler();
 
         /*Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -208,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, 0, 60000, pendingIntent);
         Log.d("debug", "set up");*/
+
 
         if (menuBGM != null) {
             menuBGM.reset();

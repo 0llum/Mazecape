@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingPrefix"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000"
-    tools:context=".Activities.MainActivity">
+    tools:context=".Activities.MainActivity"
+    tools:ignore="MissingPrefix">
 
     <RelativeLayout
         android:id="@+id/titleBar"
@@ -17,6 +17,7 @@
 
         <TextView
             android:id="@+id/title"
+            fontPath="fonts/mail_ray_stuff.ttf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -25,8 +26,7 @@
             android:gravity="center_horizontal"
             android:text="@string/app_name"
             android:textColor="#fff"
-            android:textSize="24dp"
-            fontPath="fonts/mail_ray_stuff.ttf"/>
+            android:textSize="24dp" />
 
         <ImageButton
             android:id="@+id/button_settings"
@@ -95,12 +95,12 @@
 
             <TextView
                 android:id="@+id/livesCounter"
+                fontPath="fonts/mail_ray_stuff.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lives"
                 android:textColor="#ffffff"
-                android:textSize="16dp"
-                fontPath="fonts/mail_ray_stuff.ttf"/>
+                android:textSize="16dp" />
 
         </LinearLayout>
 
@@ -122,12 +122,12 @@
 
             <TextView
                 android:id="@+id/starsCounter"
+                fontPath="fonts/mail_ray_stuff.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stars"
                 android:textColor="#ffffff"
-                android:textSize="16dp"
-                fontPath="fonts/mail_ray_stuff.ttf"/>
+                android:textSize="16dp" />
 
         </LinearLayout>
 
@@ -149,12 +149,12 @@
 
             <TextView
                 android:id="@+id/timeCounter"
+                fontPath="fonts/mail_ray_stuff.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
                 android:textColor="#ffffff"
-                android:textSize="16dp"
-                fontPath="fonts/mail_ray_stuff.ttf"/>
+                android:textSize="16dp" />
 
         </LinearLayout>
 
@@ -177,22 +177,22 @@
 
             <TextView
                 android:id="@+id/stepsCounter"
+                fontPath="fonts/mail_ray_stuff.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Steps"
                 android:textColor="#ffffff"
-                android:textSize="16dp"
-                fontPath="fonts/mail_ray_stuff.ttf"/>
+                android:textSize="16dp" />
 
         </LinearLayout>
 
         <Button
+            android:id="@+id/button_send"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:text="Send"
-            android:id="@+id/button_send"
-            android:visibility="gone"
-            android:layout_weight="1" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

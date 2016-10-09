@@ -20,17 +20,17 @@
         android:textSize="24dp" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:id="@+id/scrollView"
-        android:layout_below="@+id/shop_title"
         android:layout_above="@+id/textView_adsRemove"
+        android:layout_below="@+id/shop_title"
         android:scrollbars="none">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -42,7 +42,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/textView42"
@@ -181,7 +181,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/compass_upgrade"
@@ -189,8 +189,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView23"
@@ -228,7 +228,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/map_upgrade"
@@ -236,8 +236,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView24"
@@ -275,7 +275,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/torch_upgrade"
@@ -283,8 +283,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView25"
@@ -322,7 +322,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/speed_upgrade"
@@ -330,8 +330,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView26"
@@ -369,7 +369,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/lives_upgrade"
@@ -377,8 +377,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView30"
@@ -416,7 +416,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/stars_upgrade"
@@ -424,8 +424,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:textSize="16dp"
-                    android:text="upgrade" />
+                    android:text="upgrade"
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/imageView29"
@@ -650,7 +650,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp" >
+                android:paddingRight="20dp">
 
                 <TextView
                     android:id="@+id/textView43"
@@ -740,10 +740,10 @@
         android:id="@+id/textView_adsRemove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ads_remove"
-        android:gravity="center_horizontal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:gravity="center_horizontal"
+        android:text="@string/ads_remove" />
 
 </RelativeLayout>

@@ -1,14 +1,11 @@
 package com.ollum.mazecape.Fragments;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -41,11 +38,7 @@ import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.SaveGame;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import static java.lang.System.currentTimeMillis;
 
 public class GameFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -90,9 +83,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     float angleGoalOld;
     float angleGoalNew;
     int gridViewColumns = 3;
-    private Handler handler;
     int randStep = 0;
     int step = 0;
+    private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
@@ -1012,7 +1005,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkHole() {
-        if (contains(Tiles.HOLE, currentLevel[y][x] ) && !hasDialog) {
+        if (contains(Tiles.HOLE, currentLevel[y][x]) && !hasDialog) {
             gameOver();
             return true;
         }
