@@ -4,7 +4,6 @@ package com.ollum.mazecape.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -296,7 +295,6 @@ public class WorldSelectFragment extends Fragment {
             picture.setImageResource(item.drawableId);
 
             world.setText("" + (position + 1));
-            world.setTextColor(Color.BLACK);
 
             if (collectedStars >= position * 50 || MainActivity.maxWorld >= position) {
                 unlockStar.setVisibility(View.INVISIBLE);

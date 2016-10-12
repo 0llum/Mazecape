@@ -2,7 +2,6 @@ package com.ollum.mazecape.Fragments;
 
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -157,7 +156,6 @@ public class LevelSelectFragment extends Fragment {
             }
 
             level.setText("" + (position + 1));
-            level.setTextColor(Color.BLACK);
 
             return v;
         }

@@ -25,7 +25,7 @@
             android:layout_centerVertical="true"
             android:gravity="center_horizontal"
             android:text="@string/app_name"
-            android:textColor="#fff"
+            android:textColor="@color/colorTextLight"
             android:textSize="24dp" />
 
         <ImageButton
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lives"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextLight"
                 android:textSize="16dp" />
 
         </LinearLayout>
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Stars"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextLight"
                 android:textSize="16dp" />
 
         </LinearLayout>
@@ -153,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Time"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextLight"
                 android:textSize="16dp" />
 
         </LinearLayout>
@@ -181,7 +181,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Steps"
-                android:textColor="#ffffff"
+                android:textColor="@color/colorTextLight"
                 android:textSize="16dp" />
 
         </LinearLayout>

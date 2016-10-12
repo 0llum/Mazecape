@@ -108,4 +108,9 @@
     <string name="buy_world_150">Möchtest du diese Welt kaufen? 150 Sterne</string>
     <string name="back_to_main_menu">Möchtest du wirklich zum Hauptmenü zurückkehren?</string>
     <string name="buy_world_200">Möchtest du diese Welt kaufen? 200 Sterne</string>
+    <string name="controls">Steuerung</string>
+    <string name="normal">Normal</string>
+    <string name="inverse">Invertiert</string>
+    <string name="touch">Tippen</string>
+    <string name="swipe">Wischen</string>
 </resources>

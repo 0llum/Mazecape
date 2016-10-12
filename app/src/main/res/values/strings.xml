@@ -108,4 +108,9 @@
     <string name="buy_world_150">Would you like to buy this World? 150 Stars</string>
     <string name="back_to_main_menu">Do you really want to go back to main menu?</string>
     <string name="buy_world_200">Would you like to buy this World? 200 Stars</string>
+    <string name="controls">Controls</string>
+    <string name="normal">Normal</string>
+    <string name="inverse">Inverse</string>
+    <string name="touch">Touch</string>
+    <string name="swipe">Swipe</string>
 </resources>

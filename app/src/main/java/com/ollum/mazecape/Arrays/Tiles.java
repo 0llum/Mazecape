@@ -31,11 +31,20 @@ public class Tiles {
     public static final String[] STAR = {
             "sup", "srt", "sdn", "slt", "sud", "slr", "sur", "sdr", "sdl", "sul", "stu", "str", "std", "stl", "scs"
     };
+    public static final String[] BRIDGE = {
+            "bup", "brt", "bdn", "blt", "bud", "blr", "bur", "bdr", "bdl", "bul", "btu", "btr", "btd", "btl", "bcs"
+    };
     public static final String[] CRACK = {
             "cup", "crt", "cdn", "clt", "cud", "clr", "cur", "cdr", "cdl", "cul", "ctu", "ctr", "ctd", "ctl", "ccs"
     };
     public static final String[] HOLE = {
             "hup", "hrt", "hdn", "hlt", "hud", "hlr", "hur", "hdr", "hdl", "hul", "htu", "htr", "htd", "htl", "hcs"
+    };
+    public static final String[] LOOKOUT = {
+            "lup", "lrt", "ldn", "llt", "lud", "llr", "lur", "ldr", "ldl", "lul", "ltu", "ltr", "ltd", "ltl", "lcs"
+    };
+    public static final String[] FOG = {
+            "vup", "vrt", "vdn", "vlt", "vud", "vlr", "vur", "vdr", "vdl", "vul", "vtu", "vtr", "vtd", "vtl", "vcs"
     };
     public static final String[] JUMP = {
             "jup", "jrt", "jdn", "jlt", "jtl", "jtr", "jtu", "jtd", "jur", "jru", "jrd", "jdr", "jld", "jdl", "jlu", "jul", "jcd", "jcl", "jcu", "jcr"

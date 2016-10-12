@@ -3,4 +3,7 @@
     <color name="colorPrimary">#FFF</color>
     <color name="colorPrimaryDark">#000</color>
     <color name="colorAccent">#FFF</color>
+
+    <color name="colorTextLight">#FFF</color>
+    <color name="colorTextDark">#000</color>
 </resources>

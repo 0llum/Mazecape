@@ -461,8 +461,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
 
-        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
         relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
 
         gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
         gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
@@ -472,16 +472,36 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             case 1:
                 gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
                 gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                if (!(scene.equals("s") || scene.equals("m"))) {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
+                } else {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
+                }
                 break;
             case 3:
                 gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
                 gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                if (!(scene.equals("s") || scene.equals("m"))) {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
+                } else {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
+                }
                 break;
             case 5:
                 gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
                 gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+
+                if (!(scene.equals("s") || scene.equals("m"))) {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
+                } else {
+                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_big", "drawable", getContext().getPackageName()));
+                }
                 break;
         }
+
+        imageViewPlayer.setVisibility(View.VISIBLE);
 
         levelAdapter = new LevelAdapter(getContext(), 0);
 
@@ -492,31 +512,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageViewDarkness.setImageResource(Darkness.DARKNESS_SMALL[darkness]);
         imageViewSandstorm.setVisibility(View.INVISIBLE);
 
-        switch (gridViewColumns) {
-            case 1:
-                if (!(scene.equals("s") || scene.equals("m"))) {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
-                } else {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
-                }
-                break;
-            case 3:
-                if (!(scene.equals("s") || scene.equals("m"))) {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
-                } else {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
-                }
-                break;
-            case 5:
-                if (!(scene.equals("s") || scene.equals("m"))) {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
-                } else {
-                    imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_big", "drawable", getContext().getPackageName()));
-                }
-                break;
-        }
-
-        imageViewPlayer.setVisibility(View.VISIBLE);
 
         if (MainActivity.levelCompass > 0) {
             needleGoal.setVisibility(View.VISIBLE);
@@ -988,6 +983,25 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public boolean checkTrap() {
         if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !hasDialog) {
             gameOver();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkBridge() {
+        if (contains(Tiles.BRIDGE, currentLevel[y][x])) {
+            MainActivity.soundPool.play(MainActivity.crackID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
+            Handler bridgeHandler = new Handler();
+            bridgeHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (contains(Tiles.BRIDGE, currentLevel[y][x])) {
+                        MainActivity.soundPool.play(MainActivity.holeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                        gameOver();
+                    }
+                }
+            }, 1000);
             return true;
         }
         return false;
@@ -2367,18 +2381,51 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                if (contains(Tiles.LOOKOUT, currentLevel[y][x])) {
+                    gridViewColumns = 5;
+                } else if (contains(Tiles.FOG, currentLevel[y][x])) {
+                    gridViewColumns = 1;
+                } else {
+                    gridViewColumns = 3;
+                }
+
+                relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+
+                gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+                gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+
                 switch (gridViewColumns) {
                     case 1:
                         gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
                         gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                        if (!(scene.equals("s") || scene.equals("m"))) {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
+                        } else {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
+                        }
                         break;
                     case 3:
                         gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
                         gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                        if (!(scene.equals("s") || scene.equals("m"))) {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
+                        } else {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_small", "drawable", getContext().getPackageName()));
+                        }
                         break;
                     case 5:
                         gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
                         gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+
+                        if (!(scene.equals("s") || scene.equals("m"))) {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
+                        } else {
+                            imageViewPlayer.setImageResource(getResources().getIdentifier("p" + "f" + direction + "_big", "drawable", getContext().getPackageName()));
+                        }
                         break;
                 }
 
@@ -2395,6 +2442,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     checkSword();
                                     checkStar();
                                     checkPortal();
+                                    checkBridge();
                                     if (contains(Tiles.CRACK, currentLevel[y][x])) {
                                         MainActivity.soundPool.play(MainActivity.crackID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                     }

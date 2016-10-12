@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:text="@string/shop"
-        android:textColor="#fff"
+        android:textColor="@color/colorTextLight"
         android:textSize="24dp" />
 
     <ScrollView
@@ -51,6 +51,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="free"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -66,7 +67,8 @@
                     android:id="@+id/live_timer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button"
@@ -98,6 +100,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="1"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -113,7 +116,8 @@
                     android:id="@+id/textView34"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_1_heart"
@@ -144,6 +148,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="5"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -159,7 +164,8 @@
                     android:id="@+id/textView38"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_5_hearts"
@@ -190,6 +196,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -206,7 +213,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_compass"
@@ -237,6 +245,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -253,7 +262,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_map"
@@ -284,6 +294,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -300,7 +311,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_torch"
@@ -331,6 +343,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -347,7 +360,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_speed"
@@ -378,6 +392,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -394,7 +409,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_lives"
@@ -425,6 +441,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="upgrade"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <ImageView
@@ -441,7 +458,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1" />
+                    android:text="Level 1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_stars"
@@ -472,6 +490,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="100"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -487,7 +506,8 @@
                     android:id="@+id/textView26"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_100_stars"
@@ -518,6 +538,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="200"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -535,6 +556,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="save 25%"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <Button
@@ -565,6 +587,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="500"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -582,6 +605,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="save 40%"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <Button
@@ -612,6 +636,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="1000"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20dp" />
 
                 <ImageView
@@ -629,6 +654,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="save 50%"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="16dp" />
 
                 <Button
@@ -659,6 +685,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="50"
+                    android:textColor="@color/colorTextLight"
                     android:textSize="20sp" />
 
                 <ImageView
@@ -675,7 +702,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="gimme 5, get 50" />
+                    android:text="gimme 5, get 50"
+                    android:textColor="@color/colorTextLight" />
 
                 <Button
                     android:id="@+id/button_rate"

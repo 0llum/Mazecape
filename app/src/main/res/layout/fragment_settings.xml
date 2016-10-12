@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:text="@string/settings"
-        android:textColor="#fff"
+        android:textColor="@color/colorTextLight"
         android:textSize="24dp" />
 
     <SeekBar
@@ -40,7 +40,8 @@
         android:layout_below="@+id/settings_title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
-        android:text="@string/music_volume" />
+        android:text="@string/music_volume"
+        android:textColor="@color/colorTextLight" />
 
     <TextView
         android:id="@+id/textView39"
@@ -49,7 +50,8 @@
         android:layout_below="@+id/seekBar_music"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="@string/sound_volume" />
+        android:text="@string/sound_volume"
+        android:textColor="@color/colorTextLight" />
 
     <SeekBar
         android:id="@+id/seekBar_sound"
@@ -71,7 +73,8 @@
         android:layout_below="@+id/seekBar_sound"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:text="Controls" />
+        android:text="@string/controls"
+        android:textColor="@color/colorTextLight" />
 
     <ToggleButton
         android:id="@+id/toggleButtonControl"
@@ -85,9 +88,9 @@
         android:background="#00000000"
         android:checked="false"
         android:text="Swipe"
-        android:textColor="#fff"
-        android:textOff="Touch"
-        android:textOn="Swipe" />
+        android:textColor="@color/colorTextLight"
+        android:textOff="@string/touch"
+        android:textOn="@string/swipe" />
 
     <ToggleButton
         android:id="@+id/toggleButtonInverse"
@@ -101,8 +104,8 @@
         android:background="#00000000"
         android:checked="false"
         android:text="Swipe"
-        android:textColor="#fff"
-        android:textOff="Normal"
-        android:textOn="Inverse" />
+        android:textColor="@color/colorTextLight"
+        android:textOff="@string/normal"
+        android:textOn="@string/inverse" />
 
 </RelativeLayout>

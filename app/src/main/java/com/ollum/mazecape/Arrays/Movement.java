@@ -11,7 +11,9 @@ public class Movement {
             "bud",
             "cdn", "cdl", "ctu", "cdr", "cud", "ctr", "ctl", "ccs",
             "jdn", "jtl", "jtr", "jrd", "jld", "jcd", "jcl", "jcr",
-            "ddn", "ddl", "dtu", "ddr", "dud", "dtr", "dtl", "dcs"
+            "ddn", "ddl", "dtu", "ddr", "dud", "dtr", "dtl", "dcs",
+            "ldn", "ldl", "ltu", "ldr", "lud", "ltr", "ltl", "lcs",
+            "vdn", "vdl", "vtu", "vdr", "vud", "vtr", "vtl", "vcs",
     };
     public static final String[] MOVE_LEFT = {
             "ndl", "ntu", "nlt", "nlr", "ntr", "nul", "ntd", "ncs",
@@ -23,7 +25,9 @@ public class Movement {
             "blr",
             "cdl", "ctu", "clt", "clr", "ctr", "cul", "ctd", "ccs",
             "jlt", "jtu", "jtd", "jdl", "jul", "jcd", "jcl", "jcu",
-            "ddl", "dtu", "dlt", "dlr", "dtr", "dul", "dtd", "dcs"
+            "ddl", "dtu", "dlt", "dlr", "dtr", "dul", "dtd", "dcs",
+            "ldl", "ltu", "llt", "llr", "ltr", "lul", "ltd", "lcs",
+            "vdl", "vtu", "vlt", "vlr", "vtr", "vul", "vtd", "vcs",
     };
     public static final String[] MOVE_RIGHT = {
             "ntu", "ndr", "nlr", "nrt", "ntl", "ntd", "nur", "ncs",
@@ -35,7 +39,9 @@ public class Movement {
             "blr",
             "ctu", "cdr", "clr", "crt", "ctl", "ctd", "cur", "ccs",
             "jrt", "jtu", "jtd", "jdr", "jur", "jcd", "jcu", "jcr",
-            "dtu", "ddr", "dlr", "drt", "dtl", "dtd", "dur", "dcs"
+            "dtu", "ddr", "dlr", "drt", "dtl", "dtd", "dur", "dcs",
+            "ltu", "ldr", "llr", "lrt", "ltl", "ltd", "lur", "lcs",
+            "vtu", "vdr", "vlr", "vrt", "vtl", "vtd", "vur", "vcs",
     };
     public static final String[] MOVE_UP = {
             "nud", "ntr", "ntl", "nul", "ntd", "nup", "nur", "ncs",
@@ -47,6 +53,8 @@ public class Movement {
             "bud",
             "cud", "ctr", "ctl", "cul", "ctd", "cup", "cur", "ccs",
             "jup", "jtl", "jtr", "jru", "jlu", "jcl", "jcu", "jcr",
-            "dud", "dtr", "dtl", "dul", "dtd", "dup", "dur", "dcs"
+            "dud", "dtr", "dtl", "dul", "dtd", "dup", "dur", "dcs",
+            "lud", "ltr", "ltl", "lul", "ltd", "lup", "lur", "lcs",
+            "vud", "vtr", "vtl", "vul", "vtd", "vup", "vur", "vcs",
     };
 }

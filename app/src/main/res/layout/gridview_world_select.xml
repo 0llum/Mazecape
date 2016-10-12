@@ -20,6 +20,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="1"
+        android:textColor="@color/colorTextDark"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -29,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/picture"
         android:layout_centerHorizontal="true"
-        android:text="100 / 200" />
+        android:text="100 / 200"
+        android:textColor="@color/colorTextLight" />
 
     <ImageView
         android:id="@+id/imageView21"
@@ -49,6 +51,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:text="100 / 200"
+        android:textColor="@color/colorTextLight"
         android:textSize="20dp" />
 
     <ImageView
