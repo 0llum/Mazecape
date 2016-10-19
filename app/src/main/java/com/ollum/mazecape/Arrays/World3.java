@@ -155,6 +155,26 @@ public class World3 {
             {}
     };
     public static final String[][] SNOW_10 = {
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "nlr", "nlr", "ntu", "nlr", "nlr", "nlr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "nlr", "ndl", "nud", "ndr", "nlr", "ndl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nud", "wrt", "nul", "sup", "nur", "plt", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nur", "ntu", "ndl", "gdn", "ndr", "ntu", "nul", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nlr", "ntr", "nud", "mud", "nud", "ntl", "nlr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "ntu", "ncs", "ntr", "nud", "ntl", "ncs", "nlr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ntl", "ncs", "nul", "nud", "ntl", "nul", "nur", "nlr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ntl", "plt", "nur", "ntr", "nrt", "nlr", "ndl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sup", "nur", "nlr", "nlr", "ntd", "nlr", "nlr", "nul", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"7", "3", "s", "33"},
+            {"5,10", "9,5"},
+            {}
+    };
+        public static final String[][] SNOW_11 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},

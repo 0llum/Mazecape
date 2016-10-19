@@ -13,12 +13,13 @@ import static java.lang.System.currentTimeMillis;
 
 public class SaveGame {
     public static void saveGame(Context context) {
-        //SharedPreferences sharedPreferences = getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        Set<String> set = new HashSet<String>();
-        set.addAll(MainActivity.starsList);
+        Set<String> starsSet = new HashSet<>();
+        starsSet.addAll(MainActivity.starsList);
+        Set<String> diarySet = new HashSet<>();
+        diarySet.addAll(MainActivity.diaryList);
         editor.putInt("level", MainActivity.level);
         editor.putInt("world", MainActivity.world);
         editor.putInt("lives", MainActivity.lives);
@@ -35,6 +36,7 @@ public class SaveGame {
         editor.putInt("world4MaxLevel", MainActivity.maxLevel[3]);
         editor.putInt("world5MaxLevel", MainActivity.maxLevel[4]);
         editor.putStringSet("stars", MainActivity.starsList);
+        editor.putStringSet("diary", MainActivity.diaryList);
         editor.putInt("torches", MainActivity.torches);
         editor.putInt("allStars", MainActivity.allStars);
         editor.putInt("world1Stars", MainActivity.world1Stars);

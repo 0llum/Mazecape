@@ -11,7 +11,7 @@ public class Tiles {
             "mup", "mrt", "mdn", "mlt", "mud", "mlr", "mur", "mdr", "mdl", "mul", "mtu", "mtr", "mtd", "mtl", "mcs"
     };
     public static final String[] BLOOD = {
-            "dup", "drt", "ddn", "dlt", "dud", "dlr", "dur", "ddr", "ddl", "dul", "dtu", "dtr", "dtd", "dtl", "dcs"
+            "xup", "xrt", "xdn", "xlt", "xud", "xlr", "xur", "xdr", "xdl", "xul", "xtu", "xtr", "xtd", "xtl", "xcs"
     };
     public static final String[] FIRE = {
             "fup", "frt", "fdn", "flt", "fud", "flr", "fur", "fdr", "fdl", "ful", "ftu", "ftr", "ftd", "ftl", "fcs"
@@ -21,6 +21,9 @@ public class Tiles {
     };
     public static final String[] NORMAL = {
             "nup", "nrt", "ndn", "nlt", "nud", "nlr", "nur", "ndr", "ndl", "nul", "ntu", "ntr", "ntd", "ntl", "ncs"
+    };
+    public static final String[] DIARY = {
+            "dup", "drt", "ddn", "dlt", "dud", "dlr", "dur", "ddr", "ddl", "dul", "dtu", "dtr", "dtd", "dtl", "dcs"
     };
     public static final String[] TRAP_INACTIVE = {
             "iup", "irt", "idn", "ilt", "iud", "ilr", "iur", "idr", "idl", "iul", "itu", "itr", "itd", "itl", "ics"
@@ -50,6 +53,6 @@ public class Tiles {
             "jup", "jrt", "jdn", "jlt", "jtl", "jtr", "jtu", "jtd", "jur", "jru", "jrd", "jdr", "jld", "jdl", "jlu", "jul", "jcd", "jcl", "jcu", "jcr"
     };
     public static final String[][] TILES = {
-            NORMAL, GOAL, STAR, FIRE, PORTAL, MONSTER, WEAPON, CRACK, TRAP_ACTIVE
+            NORMAL, GOAL, STAR, FIRE, PORTAL, MONSTER, WEAPON, CRACK, TRAP_ACTIVE, LOOKOUT, FOG, DIARY
     };
 }

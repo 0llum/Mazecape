@@ -14,14 +14,18 @@
         android:scaleType="centerCrop" />
 
     <TextView
-        android:id="@+id/level"
+        android:id="@+id/world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:shadowColor="@color/colorTextDark"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
         android:text="1"
-        android:textColor="@color/colorTextDark"
-        android:textSize="20dp"
+        android:textColor="@color/colorTextLight"
+        android:textSize="@dimen/app_title"
         android:textStyle="bold" />
 
     <TextView
@@ -31,7 +35,8 @@
         android:layout_below="@+id/picture"
         android:layout_centerHorizontal="true"
         android:text="100 / 200"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/text" />
 
     <ImageView
         android:id="@+id/imageView21"
@@ -39,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/picture"
         android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:layout_toLeftOf="@+id/score"
         android:layout_toStartOf="@+id/score"
         android:src="@drawable/star_button" />
@@ -47,12 +53,11 @@
         android:id="@+id/unlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/level"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="125dp"
         android:text="100 / 200"
         android:textColor="@color/colorTextLight"
-        android:textSize="20dp" />
+        android:textSize="@dimen/headline" />
 
     <ImageView
         android:id="@+id/unlock_star"

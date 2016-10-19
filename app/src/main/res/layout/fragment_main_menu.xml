@@ -11,8 +11,44 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="75dp"
         android:text="@string/play_button"
+        android:textColor="@color/colorTextLight"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/button_story"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_play"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/story_button"
+        android:textColor="@color/colorTextLight"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/button_level_editor"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_story"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/level_editor_button"
+        android:textColor="@color/colorTextLight"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/button_shop"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_level_editor"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/shop_button"
         android:textColor="@color/colorTextLight"
         android:textSize="20dp" />
 
@@ -28,6 +64,18 @@
         android:textColor="@color/colorTextLight"
         android:textSize="20dp" />
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_help"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:checked="false"
+        android:text="Developer Mode"
+        android:textColor="@color/colorTextLight"
+        android:visibility="visible" />
+
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="wrap_content"
@@ -36,41 +84,5 @@
         android:layout_centerHorizontal="true"
         ads:adSize="BANNER"
         ads:adUnitId="ca-app-pub-7666608930334273/1321226947"></com.google.android.gms.ads.AdView>
-
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_help"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:checked="false"
-        android:text="Developer Mode"
-        android:textColor="@color/colorTextLight"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/button_shop"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_level_editor"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="@string/shop_button"
-        android:textColor="@color/colorTextLight"
-        android:textSize="20dp" />
-
-    <Button
-        android:id="@+id/button_level_editor"
-        style="@style/Base.Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_play"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:text="@string/level_editor_button"
-        android:textColor="@color/colorTextLight"
-        android:textSize="20dp" />
 
 </RelativeLayout>

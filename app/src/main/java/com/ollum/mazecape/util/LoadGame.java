@@ -24,7 +24,7 @@ public class LoadGame {
         MainActivity.levelSpeed = sharedPreferences.getInt("levelSpeed", 0);
         MainActivity.levelStars = sharedPreferences.getInt("levelStars", 0);
         MainActivity.levelLives = sharedPreferences.getInt("levelLives", 0);
-        MainActivity.maxWorld = sharedPreferences.getInt("maxWorld", 3);
+        MainActivity.maxWorld = sharedPreferences.getInt("maxWorld", 0);
         if (MainActivity.maxWorld > 4) {
             MainActivity.maxWorld = 4;
         }
@@ -48,8 +48,10 @@ public class LoadGame {
         MainActivity.resetCount = sharedPreferences.getInt("resetCount", 0);
         MainActivity.showAds = sharedPreferences.getBoolean("showAds", true);
         MainActivity.rated = sharedPreferences.getBoolean("rated", false);
-        Set<String> set = sharedPreferences.getStringSet("stars", new HashSet<String>());
-        MainActivity.starsList.addAll(set);
+        Set<String> starsSet = sharedPreferences.getStringSet("stars", new HashSet<String>());
+        MainActivity.starsList.addAll(starsSet);
+        Set<String> diarySet = sharedPreferences.getStringSet("diary", new HashSet<String>());
+        MainActivity.diaryList.addAll(diarySet);
 
         MainActivity.worldStars = new int[]{
                 MainActivity.world1Stars, MainActivity.world2Stars, MainActivity.world3Stars, MainActivity.world4Stars, MainActivity.world5Stars

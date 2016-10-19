@@ -21,14 +21,18 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:id="@+id/level"
+        android:id="@+id/world"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:shadowColor="@color/colorTextDark"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="1"
         android:text="1"
-        android:textColor="@color/colorTextDark"
-        android:textSize="20dp"
+        android:textColor="@color/colorTextLight"
+        android:textSize="@dimen/headline"
         android:textStyle="bold" />
 
 </RelativeLayout>

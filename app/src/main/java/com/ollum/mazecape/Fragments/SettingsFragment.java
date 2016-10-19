@@ -1,10 +1,13 @@
 package com.ollum.mazecape.Fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -12,12 +15,14 @@ import android.widget.ToggleButton;
 
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
+import com.ollum.mazecape.util.ResetGame;
 
 public class SettingsFragment extends Fragment {
 
     RelativeLayout relativeLayout;
     SeekBar musicVol, soundVol;
     ToggleButton toggleButtonControl, toggleButtonInverse;
+    Button resetButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +107,29 @@ public class SettingsFragment extends Fragment {
                 } else {
                     MainActivity.inverse = false;
                 }
+            }
+        });
+
+        resetButton = (Button) view.findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage(R.string.reset_game);
+                builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ResetGame.resetGame(getContext());
+                    }
+                });
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create();
+                builder.show();
             }
         });
 

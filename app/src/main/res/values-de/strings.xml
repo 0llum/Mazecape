@@ -35,7 +35,7 @@
     <string name="crack">Riss</string>
     <string name="hole">Loch</string>
 
-    <string name="level_types">Level Arten</string>
+    <string name="level_types">Welten</string>
     <string name="forest_info">Beende das Level vor Sonnenuntergang. Je länger du benötigst umso dunkler wird es</string>
     <string name="cave_info">Beende das Level mit wenigen Schritten. Je mehr Schritte du benötigst umso dunkler wird es</string>
     <string name="snow_info">Der Boden ist glatt. Du kannst deine Richtung erst wieder ändern, wenn der Weg endet</string>
@@ -113,4 +113,62 @@
     <string name="inverse">Invertiert</string>
     <string name="touch">Tippen</string>
     <string name="swipe">Wischen</string>
+
+    <string name="chapter">Kapitel</string>
+    <string name="chapter_1">Kapitel 1</string>
+    <string name="chapter_2">Kapitel 2</string>
+    <string name="chapter_3">Kapitel 3</string>
+    <string name="chapter_4">Kapitel 4</string>
+
+    <string name="chapter_1_page_1">Einer der Wenigen bin ich, die sich erinnern; an das helle, warme Licht, an all\' die Farben, an den Tag; Bilder aus der Kindheit.\nWas uns heute bleibt, ist Dunkelheit und Kälte.</string>
+    <string name="chapter_1_page_2">&#8230; und die Sonne versank in Trauer. Sie sank immer weiter. Wo sie jetzt ist, das wissen wir nicht.</string>
+    <string name="chapter_1_page_3">Geblieben sind uns nur noch das Feuer und die Mondsteine, um uns vor der Dunkelheit zu schützen.\nDie Gelehrten meinen jedoch ihre Macht nimmt stetig ab. Was uns dann erwartet, will ich mir nicht ausmalen.</string>
+    <string name="chapter_1_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+
+    <string name="chapter_2_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+
+    <string name="chapter_3_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+
+    <string name="chapter_4_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+
+    <string name="story_button">Geschichte</string>
+    <string name="interesting">Interessant</string>
+    <string name="reset_game">Möchtest du wirklich deinen Spielstand zurücksetzen? Das kann nicht rückgängig gemacht werden!</string>
+    <string name="hate_ads">Du hasst Werbung? Ich auch, aber als unabhängiger Entwickler bin ich auf deine Unterstützung angewiesen. Mit deinem ersten Kauf wird die App werbefrei!</string>
+    <string name="open_shop">Zum Shop</string>
+    <string name="like_ads">Ich mag Werbung</string>
+    <string name="ads">Werbung</string>
 </resources>

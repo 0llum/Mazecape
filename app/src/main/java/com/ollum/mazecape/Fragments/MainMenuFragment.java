@@ -17,7 +17,7 @@ import com.ollum.mazecape.R;
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
     public static boolean devMode = false;
-    Button playButton, levelEditorButton, shopButton, helpButton;
+    Button playButton, levelEditorButton, storyButton, shopButton, helpButton;
     CheckBox checkBox;
 
     @Override
@@ -31,6 +31,9 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
         levelEditorButton = (Button) view.findViewById(R.id.button_level_editor);
         levelEditorButton.setOnClickListener(this);
+
+        storyButton = (Button) view.findViewById(R.id.button_story);
+        storyButton.setOnClickListener(this);
 
         shopButton = (Button) view.findViewById(R.id.button_shop);
         shopButton.setOnClickListener(this);
@@ -67,6 +70,14 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 transaction2.replace(R.id.content, worldSelectFragment, "WorldSelectFragment");
                 transaction2.addToBackStack("WorldSelectFragment");
                 transaction2.commit();
+                break;
+            case R.id.button_story:
+                StoryFragment storyFragment = new StoryFragment();
+                FragmentTransaction transaction6 = MainActivity.fragmentManager.beginTransaction();
+                transaction6.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                transaction6.replace(R.id.content, storyFragment, "StoryFragment");
+                transaction6.addToBackStack("StoryFragment");
+                transaction6.commit();
                 break;
             case R.id.button_shop:
                 MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);

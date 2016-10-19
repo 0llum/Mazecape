@@ -3,9 +3,10 @@
     android:id="@+id/linear_layout_help"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DD000000"
+    android:background="@drawable/page"
     android:clickable="true"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context="com.ollum.mazecape.Fragments.HelpFragment">
 
     <ScrollView
@@ -27,9 +28,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
                 android:text="@string/level_types"
-                android:textColor="@color/colorTextLight"
-                android:textSize="24dp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorTextDark"
+                android:textSize="@dimen/headline" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,17 +55,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/forest"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/forest_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -93,17 +92,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cave"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/cave_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -131,17 +129,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/snow"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/snow_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -169,17 +166,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/desert"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/desert_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -190,9 +186,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp"
                 android:text="@string/special_tiles"
-                android:textColor="@color/colorTextLight"
-                android:textSize="24dp"
-                android:textStyle="bold" />
+                android:textColor="@color/colorTextDark"
+                android:textSize="@dimen/headline" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -218,17 +213,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/star"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/star_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -256,17 +250,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fire"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fire_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -294,17 +287,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/portal"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/portal_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -332,17 +324,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/moster"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/monster_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -370,17 +361,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sword"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView20"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/sword_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -408,17 +398,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trap_active"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trap_active_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -446,17 +435,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trap_inactive"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/trap_inactive_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -484,17 +472,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/crack"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView26"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/crack_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -522,17 +509,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/hole"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subHeadline" />
 
                     <TextView
                         android:id="@+id/textView28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/hole_info"
-                        android:textColor="@color/colorTextLight"
-                        android:textSize="16dp" />
+                        android:textColor="@color/colorTextDark"
+                        android:textSize="@dimen/subText" />
                 </LinearLayout>
             </LinearLayout>
 

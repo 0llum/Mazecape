@@ -14,6 +14,7 @@ public class Movement {
             "ddn", "ddl", "dtu", "ddr", "dud", "dtr", "dtl", "dcs",
             "ldn", "ldl", "ltu", "ldr", "lud", "ltr", "ltl", "lcs",
             "vdn", "vdl", "vtu", "vdr", "vud", "vtr", "vtl", "vcs",
+            "xdn", "xdl", "xtu", "xdr", "xud", "xtr", "xtl", "xcs",
     };
     public static final String[] MOVE_LEFT = {
             "ndl", "ntu", "nlt", "nlr", "ntr", "nul", "ntd", "ncs",
@@ -28,6 +29,7 @@ public class Movement {
             "ddl", "dtu", "dlt", "dlr", "dtr", "dul", "dtd", "dcs",
             "ldl", "ltu", "llt", "llr", "ltr", "lul", "ltd", "lcs",
             "vdl", "vtu", "vlt", "vlr", "vtr", "vul", "vtd", "vcs",
+            "xdl", "xtu", "xlt", "xlr", "xtr", "xul", "xtd", "xcs",
     };
     public static final String[] MOVE_RIGHT = {
             "ntu", "ndr", "nlr", "nrt", "ntl", "ntd", "nur", "ncs",
@@ -42,6 +44,7 @@ public class Movement {
             "dtu", "ddr", "dlr", "drt", "dtl", "dtd", "dur", "dcs",
             "ltu", "ldr", "llr", "lrt", "ltl", "ltd", "lur", "lcs",
             "vtu", "vdr", "vlr", "vrt", "vtl", "vtd", "vur", "vcs",
+            "xtu", "xdr", "xlr", "xrt", "xtl", "xtd", "xur", "xcs",
     };
     public static final String[] MOVE_UP = {
             "nud", "ntr", "ntl", "nul", "ntd", "nup", "nur", "ncs",
@@ -56,5 +59,6 @@ public class Movement {
             "dud", "dtr", "dtl", "dul", "dtd", "dup", "dur", "dcs",
             "lud", "ltr", "ltl", "lul", "ltd", "lup", "lur", "lcs",
             "vud", "vtr", "vtl", "vul", "vtd", "vup", "vur", "vcs",
+            "xud", "xtr", "xtl", "xul", "xtd", "xup", "xur", "xcs",
     };
 }

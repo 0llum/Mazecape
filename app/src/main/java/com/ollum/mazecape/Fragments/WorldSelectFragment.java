@@ -279,14 +279,14 @@ public class WorldSelectFragment extends Fragment {
                 v.setTag(R.id.picture, v.findViewById(R.id.picture));
                 v.setTag(R.id.text, v.findViewById(R.id.text));
                 v.setTag(R.id.score, v.findViewById(R.id.score));
-                v.setTag(R.id.level, v.findViewById(R.id.level));
+                v.setTag(R.id.world, v.findViewById(R.id.world));
                 v.setTag(R.id.unlock, v.findViewById(R.id.unlock));
                 v.setTag(R.id.unlock_star, v.findViewById(R.id.unlock_star));
             }
 
             picture = (ImageView) v.getTag(R.id.picture);
             score = (TextView) v.getTag(R.id.score);
-            world = (TextView) v.getTag(R.id.level);
+            world = (TextView) v.getTag(R.id.world);
             unlock = (TextView) v.getTag(R.id.unlock);
             unlockStar = (ImageView) v.getTag(R.id.unlock_star);
 

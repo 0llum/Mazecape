@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/page"
+    android:padding="40dp"
     tools:context=".Fragments.LevelSelectFragment">
 
     <GridView
@@ -11,7 +13,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_margin="20dp"
         android:horizontalSpacing="20dp"
         android:numColumns="3"
         android:scrollbars="none"

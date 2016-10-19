@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static boolean swipe = true;
     public static boolean inverse = false;
     public static HashSet<String> starsList;
+    public static HashSet<String> diaryList;
     public static int allStars = 0;
     public static int world1Stars = 0;
     public static int world2Stars = 0;
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static RewardedVideoAd mAd;
     public static Button sendButton;
     public static SoundPool soundPool;
-    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID;
+    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID, diaryID;
     public static long logOffTime;
     public Handler livesHandler;
     public long startMillis;
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/mail_ray_stuff.ttf")
+                        .setDefaultFontPath("fonts/bilbo.regular.ttf")
                         .setFontAttrId(R.attr.fontPath)
                         .build()
         );
@@ -189,6 +190,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         transaction.commit();
 
         starsList = new HashSet<>();
+        diaryList = new HashSet<>();
 
         MobileAds.initialize(this, "ca-app-pub-7666608930334273~8844493743");
         adRequest = new AdRequest.Builder().build();
@@ -235,6 +237,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         trapInactiveID = soundPool.load(this, R.raw.trap_deactivate, 1);
         winID = soundPool.load(this, R.raw.win, 1);
         upgradeID = soundPool.load(this, R.raw.upgrade, 1);
+        diaryID = soundPool.load(this, R.raw.diary, 1);
     }
 
     private void loadRewardedVideoAd() {
@@ -257,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.commit();
         } else if (current.equals("MainMenuFragment")) {
             return;
-        } else if (current.equals("WorldSelectFragment")) {
+        } else if (current.equals("WorldSelectFragment") || current.equals("StoryFragment")) {
             MainMenuFragment mainMenuFragment = new MainMenuFragment();
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
             transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);

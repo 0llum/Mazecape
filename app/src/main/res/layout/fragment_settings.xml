@@ -3,8 +3,9 @@
     android:id="@+id/relative_layout_settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DD000000"
+    android:background="@drawable/page"
     android:clickable="true"
+    android:padding="20dp"
     tools:context="com.ollum.mazecape.Fragments.SettingsFragment">
 
     <TextView
@@ -16,8 +17,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:text="@string/settings"
-        android:textColor="@color/colorTextLight"
-        android:textSize="24dp" />
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/headline" />
 
     <SeekBar
         android:id="@+id/seekBar_music"
@@ -41,7 +42,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:text="@string/music_volume"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/text" />
 
     <TextView
         android:id="@+id/textView39"
@@ -51,7 +53,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/sound_volume"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/text" />
 
     <SeekBar
         android:id="@+id/seekBar_sound"
@@ -74,7 +77,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/controls"
-        android:textColor="@color/colorTextLight" />
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/text" />
 
     <ToggleButton
         android:id="@+id/toggleButtonControl"
@@ -88,7 +92,7 @@
         android:background="#00000000"
         android:checked="false"
         android:text="Swipe"
-        android:textColor="@color/colorTextLight"
+        android:textColor="@color/colorTextDark"
         android:textOff="@string/touch"
         android:textOn="@string/swipe" />
 
@@ -104,8 +108,19 @@
         android:background="#00000000"
         android:checked="false"
         android:text="Swipe"
-        android:textColor="@color/colorTextLight"
+        android:textColor="@color/colorTextDark"
         android:textOff="@string/normal"
         android:textOn="@string/inverse" />
+
+    <Button
+        android:id="@+id/resetButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:text="Reset Game"
+        android:textColor="@color/colorTextDark" />
 
 </RelativeLayout>

@@ -1,0 +1,173 @@
+<resources>
+    <string name="app_name">Mazecape</string>
+
+    <string name="play_button">Jugar</string>
+    <string name="help_button">Ayuda</string>
+    <string name="shop_button">Tienda</string>
+    <string name="level_editor_button">Nivel Editor</string>
+
+    <string name="shop">Tienda</string>
+    <string name="level">Nivel</string>
+    <string name="level_editor">Nivel Editor</string>
+
+    <string name="settings">Ajustes</string>
+    <string name="music_volume">volumen de la música</string>
+    <string name="sound_volume">volumen del sonido</string>
+
+    <string name="yes">Si</string>
+    <string name="no">No</string>
+    <string name="no_thanks">No, gracias</string>
+
+    <string name="ads_remove">All ads will be removed with your first purchase!</string>
+
+    <string name="forest">Bosque</string>
+    <string name="cave">Cueva</string>
+    <string name="snow">Nieve</string>
+    <string name="desert">Desierto</string>
+
+    <string name="star">Estrella</string>
+    <string name="fire">Hoguera</string>
+    <string name="portal">Portal</string>
+    <string name="moster">Monstruo</string>
+    <string name="sword">Espada</string>
+    <string name="trap_active">Trampa (activo)</string>
+    <string name="trap_inactive">Trampa (inactivo)</string>
+    <string name="crack">Grieta</string>
+    <string name="hole">Hoyo</string>
+
+    <string name="level_types">Mundos</string>
+    <string name="forest_info">Try to finish the level before it gets dark. The longer you take the darker it gets</string>
+    <string name="cave_info">Try to finish the level with less steps. The deeper you go the darker it gets</string>
+    <string name="snow_info">The ground is slippery. You can\'t change direction until the path ends</string>
+    <string name="desert_info">Every few steps you\'ll lose your orientation. The map will rotate randomly</string>
+    <string name="special_tiles">Azulejos especiales</string>
+    <string name="star_info">Stars will help you on your way. You\'ll find 3 of them in each level</string>
+    <string name="fire_info">Finding a fireplace will help you survive longer as it resets the darkness completely</string>
+    <string name="portal_info">A portal takes you to unreachable places</string>
+    <string name="monster_info">When you face a monster make sure you have found a sword first in order to survive</string>
+    <string name="sword_info">A sword will help you fighting monsters along the path</string>
+    <string name="trap_active_info">While the trap is active you will die when trying to cross it</string>
+    <string name="trap_inactive_info">The trap is temporarily inactive. You can safely pass it but be quick</string>
+    <string name="crack_info">The ground is fragile. It will only last for one more step before breaking</string>
+    <string name="hole_info">The ground has collapsed. When you try to cross it you will die</string>
+
+    <string name="die_torch">If I just had a torch&#8230;</string>
+    <string name="stars">Estrellas</string>
+    <string name="use_torch">Utilisar la antorcha</string>
+    <string name="buy_torch">Comprar antorcha</string>
+    <string name="you_died">Moriste</string>
+    <string name="you_died_after">You died after</string>
+    <string name="die_steps">pasos</string>
+    <string name="retry">Rever</string>
+    <string name="level_select">Selecciona el nivel</string>
+    <string name="world_select">Selecciona el mundo</string>
+    <string name="you_win">Victoria</string>
+    <string name="steps">Pasos</string>
+    <string name="time">Hora</string>
+    <string name="next_level">Next</string>
+    <string name="next_world">Next</string>
+    <string name="replay">Repetir</string>
+
+    <string name="welcome_to_mazecape">Bienvenido a Mazecape</string>
+    <string name="welcome_dialog">You find yourself lost in a terrifying maze. You need to get back home before sunset. Move around by swiping or change the input mode to touch at the bottom of the screen. At each stage you will find 3 stars that will help you to proceed later on. Good luck!</string>
+    <string name="lets_get_started">Let\'s get started</string>
+    <string name="monster_dialog">Oh no a monster is blocking your path. You must find a sword first in order to proceed</string>
+    <string name="i_can_handle_that">I can handle that</string>
+    <string name="portal_dialog">Look, there\'s a portal somewhere. You have to find it. It will take you to unreachable places</string>
+    <string name="awesome">Awesome</string>
+    <string name="cave_dialog">You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a fireplace</string>
+    <string name="sure">Sure</string>
+    <string name="snow_dialog">It got cold. The path is frozen and slippery. Watch out</string>
+    <string name="alright">Alright</string>
+    <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
+    <string name="lets_not_get_lost">Let\'s not get lost</string>
+    <string name="reset_level">Do you really want to reset level?</string>
+    <string name="reveal_map">Do you like to reveal the map? 20 Stars</string>
+    <string name="level_select_screen">Do you really want to go back to the level select screen? You will lose all your progress in the current level</string>
+
+    <string name="purchase_successful">Compra con éxito</string>
+    <string name="not_enough_stars">Not enough stars</string>
+    <string name="full_health">You already are at full health</string>
+    <string name="purchase_error">There was an error, please try again</string>
+    <string name="lives">Vidas</string>
+    <string name="discovered">Discovered</string>
+    <string name="goal">Objetivo</string>
+    <string name="new_world">You\'ve unlocked a new World!</string>
+    <string name="enter_columns">Select Columns (1..20)</string>
+    <string name="enter_rows">Select Rows (1..20)</string>
+    <string name="next">Next</string>
+    <string name="enter_number">Please enter a number between 1 and 20</string>
+    <string name="enter_scene">Select Scene (\'f\', \'c\', \'s\' or \'d\')</string>
+    <string name="enter_scene_char">Please enter \'f\', \'c\', \'s\' or \'d\'</string>
+    <string name="unlock_level">You can unlock this level by finishing all previous levels</string>
+    <string name="upgrade">Mejorar</string>
+    <string name="no_internet">Sin conexión a Internet</string>
+    <string name="max">Max</string>
+    <string name="buy_world_50">Would you like to buy this World? 50 Stars</string>
+    <string name="buy_world_100">Would you like to buy this World? 100 Stars</string>
+    <string name="buy_world_150">Would you like to buy this World? 150 Stars</string>
+    <string name="back_to_main_menu">Do you really want to go back to main menu?</string>
+    <string name="buy_world_200">Would you like to buy this World? 200 Stars</string>
+    <string name="controls">Control</string>
+    <string name="normal">Normal</string>
+    <string name="inverse">Inverse</string>
+    <string name="touch">Touch</string>
+    <string name="swipe">Swipe</string>
+    <string name="chapter">Chapter</string>
+    <string name="chapter_1">Capítulo 1</string>
+    <string name="chapter_2">Capítulo 2</string>
+    <string name="chapter_3">Capítulo 3</string>
+    <string name="chapter_4">Capítulo 4</string>
+
+    <string name="chapter_1_page_1">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_2">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_3">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_4">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_5">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_6">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_7">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_8">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_9">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_1_page_10">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+
+    <string name="chapter_2_page_1">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_2">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_3">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_4">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_5">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_6">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_7">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_8">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_9">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_2_page_10">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+
+    <string name="chapter_3_page_1">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_2">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_3">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_4">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_5">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_6">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_7">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_8">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_9">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_3_page_10">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+
+    <string name="chapter_4_page_1">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_2">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_3">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_4">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_5">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_6">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_7">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_8">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_9">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+    <string name="chapter_4_page_10">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
+
+    <string name="story_button">Historia</string>
+    <string name="interesting">Interesting</string>
+    <string name="reset_game">Do you really want to reset your game? This cannot be undone!</string>
+    <string name="hate_ads">Do you hate Ads? Me too, but as an independant developer I\'m dependant on your support. You can remove all Ads with your first purchase!</string>
+    <string name="open_shop">Open Shop</string>
+    <string name="like_ads">I like ads</string>
+    <string name="ads">Ads</string>
+</resources>

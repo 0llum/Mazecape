@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,7 +57,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public static float volumeBGM = MainActivity.volumeMusic;
     public static float volumeFire = 0;
     public static float volumeHeart = 0;
-    RelativeLayout relativeLayout_Container, relativeLayout_UI, relativeLayoutMap;
+    RelativeLayout relativeLayout_Container, relativeLayout_UI, relativeLayoutMap, relativeLayoutHeader;
     LinearLayout navigation;
     GridView gridViewLevel, gridViewMap;
     ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
@@ -137,6 +138,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         relativeLayout_UI.getLayoutParams().height = MainActivity.content.getHeight();
 
         relativeLayoutMap = (RelativeLayout) view.findViewById(R.id.relative_layout_map);
+
+        relativeLayoutHeader = (RelativeLayout) view.findViewById(R.id.header_black);
 
         navigation = (LinearLayout) view.findViewById(R.id.navigation);
         navigation.getLayoutParams().height = (int) (MainActivity.height / 3.55555555);
@@ -287,6 +290,41 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             public void onAdClosed() {
                 requestNewInterstitial();
                 reset();
+
+                final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                MainActivity.stopTime = true;
+                hasDialog = true;
+                builder.setTitle(R.string.ads);
+                builder.setMessage(R.string.hate_ads);
+                builder.setPositiveButton(R.string.open_shop, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
+                        MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                        transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
+                        transaction.add(R.id.content, MainActivity.shopFragment, "ShopFragment");
+                        transaction.addToBackStack("ShopFragment");
+                        transaction.commit();
+                        MainActivity.shopVisible = true;
+
+                        hasDialog = false;
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton(R.string.like_ads, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                        MainActivity.stopTime = false;
+                        hasDialog = false;
+                        dialog.dismiss();
+                    }
+                });
+                builder.setCancelable(false);
+                builder.create();
+                builder.show();
             }
         });
 
@@ -603,11 +641,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         SaveGame.saveGame(getContext());
         checkDialog();
 
-        /*Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
+        Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
         Log.d("debug", "height without statusbar: " + MainActivity.height);
         Log.d("debug", "rel. Layout Container height: " + relativeLayout_Container.getHeight());
         Log.d("debug", "UI Container height: " + relativeLayout_UI.getHeight());
-        Log.d("debug", "content height: " + MainActivity.content.getHeight());*/
+        Log.d("debug", "content height: " + MainActivity.content.getHeight());
     }
 
     public void move() {
@@ -1108,6 +1146,686 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     imageStar3.setImageResource(R.drawable.star);
                     break;
             }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkDiary() {
+        if (contains(Tiles.DIARY, currentLevel[y][x])) {
+            currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.DIARY, currentLevel[y][x])];
+
+            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+            levelAdapter.notifyDataSetChanged();
+
+            MainActivity.diaryList.add(MainActivity.world + ", " + (MainActivity.level + 1));
+
+            MainActivity.soundPool.play(MainActivity.diaryID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
+            MainActivity.stopTime = true;
+            hasDialog = true;
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+            switch (MainActivity.world) {
+                case 0:
+                    switch (MainActivity.level + 1) {
+                        case 3:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_1);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 6:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_2);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 9:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_3);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 12:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_4);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 15:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_5);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 18:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_6);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 21:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_7);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 24:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_8);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 27:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_9);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 30:
+                            builder.setTitle(R.string.chapter_1);
+                            builder.setMessage(R.string.chapter_1_page_10);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (MainActivity.level + 1) {
+                        case 3:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_1);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 6:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_2);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 9:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_3);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 12:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_4);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 15:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_5);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 18:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_6);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 21:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_7);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 24:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_8);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 27:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_9);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 30:
+                            builder.setTitle(R.string.chapter_2);
+                            builder.setMessage(R.string.chapter_2_page_10);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (MainActivity.level + 1) {
+                        case 3:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_1);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 6:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_2);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 9:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_3);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 12:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_4);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 15:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_5);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 18:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_6);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 21:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_7);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 24:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_8);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 27:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_9);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 30:
+                            builder.setTitle(R.string.chapter_3);
+                            builder.setMessage(R.string.chapter_3_page_10);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (MainActivity.level + 1) {
+                        case 3:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_1);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 6:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_2);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 9:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_3);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 12:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_4);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 15:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_5);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 18:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_6);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 21:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_7);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 24:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_8);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 27:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_9);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                        case 30:
+                            builder.setTitle(R.string.chapter_4);
+                            builder.setMessage(R.string.chapter_4_page_10);
+                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                                    MainActivity.stopTime = false;
+                                    hasDialog = false;
+                                    dialog.dismiss();
+                                }
+                            });
+                            builder.setCancelable(false);
+                            builder.create();
+                            builder.show();
+                            break;
+                    }
+                    break;
+            }
+
             return true;
         }
         return false;
@@ -2441,6 +3159,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     checkFire();
                                     checkSword();
                                     checkStar();
+                                    checkDiary();
                                     checkPortal();
                                     checkBridge();
                                     if (contains(Tiles.CRACK, currentLevel[y][x])) {

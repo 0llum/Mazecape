@@ -131,12 +131,12 @@ public class LevelSelectFragment extends Fragment {
                 v.setTag(R.id.picture, v.findViewById(R.id.picture));
                 v.setTag(R.id.text, v.findViewById(R.id.text));
                 v.setTag(R.id.score, v.findViewById(R.id.score));
-                v.setTag(R.id.level, v.findViewById(R.id.level));
+                v.setTag(R.id.world, v.findViewById(R.id.world));
             }
 
             picture = (ImageView) v.getTag(R.id.picture);
             score = (ImageView) v.getTag(R.id.score);
-            level = (TextView) v.getTag(R.id.level);
+            level = (TextView) v.getTag(R.id.world);
 
             Item item = (Item) getItem(position);
 

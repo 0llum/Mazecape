@@ -18,7 +18,8 @@ public class Worlds {
     };
     public static final String[][][] WORLD_3 = {
             World3.SNOW_01, World3.SNOW_02, World3.SNOW_03, World3.SNOW_04, World3.SNOW_05,
-            World3.SNOW_06, World3.SNOW_07, World3.SNOW_08, World3.SNOW_09, World3.SNOW_10
+            World3.SNOW_06, World3.SNOW_07, World3.SNOW_08, World3.SNOW_09, World3.SNOW_10,
+            World3.SNOW_11
     };
     public static final String[][][] WORLD_4 = {
             World4.DESERT_01, World4.DESERT_02, World4.DESERT_03, World4.DESERT_04, World4.DESERT_05,
