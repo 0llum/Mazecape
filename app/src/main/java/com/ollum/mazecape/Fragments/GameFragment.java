@@ -36,7 +36,7 @@ import com.ollum.mazecape.Arrays.Tiles;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SaveGame;
+import com.ollum.mazecape.util.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -638,7 +638,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar2.setImageResource(R.drawable.star_empty);
         imageStar3.setImageResource(R.drawable.star_empty);
 
-        SaveGame.saveGame(getContext());
+        SharedPreferences.saveGame(getContext());
         checkDialog();
 
         Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
@@ -1171,7 +1171,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 case 0:
                     switch (MainActivity.level + 1) {
                         case 3:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_1));
                             builder.setMessage(R.string.chapter_1_page_1);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1187,7 +1187,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 6:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_2));
                             builder.setMessage(R.string.chapter_1_page_2);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1203,7 +1203,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 9:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_3));
                             builder.setMessage(R.string.chapter_1_page_3);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1219,7 +1219,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 12:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_4));
                             builder.setMessage(R.string.chapter_1_page_4);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1235,7 +1235,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 15:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_5));
                             builder.setMessage(R.string.chapter_1_page_5);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1251,7 +1251,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 18:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_6));
                             builder.setMessage(R.string.chapter_1_page_6);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1267,7 +1267,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 21:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_7));
                             builder.setMessage(R.string.chapter_1_page_7);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1283,7 +1283,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 24:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_8));
                             builder.setMessage(R.string.chapter_1_page_8);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1299,7 +1299,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 27:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_9));
                             builder.setMessage(R.string.chapter_1_page_9);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1315,7 +1315,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             builder.show();
                             break;
                         case 30:
-                            builder.setTitle(R.string.chapter_1);
+                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_10));
                             builder.setMessage(R.string.chapter_1_page_10);
                             builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
                                 @Override
@@ -1874,7 +1874,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         if (heartbeat != null) {
                             heartbeat.start();
                         }
-                        SaveGame.saveGame(getContext());
+                        SharedPreferences.saveGame(getContext());
                     }
                 });
             } else {
@@ -1901,7 +1901,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (heartbeat != null) {
                                 heartbeat.start();
                             }
-                            SaveGame.saveGame(getContext());
+                            SharedPreferences.saveGame(getContext());
                         } else {
                             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
                             transaction.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
@@ -1986,7 +1986,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                SaveGame.saveGame(getContext());
+                                SharedPreferences.saveGame(getContext());
                                 if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                                     mInterstitialAd.show();
                                 } else {
@@ -2008,7 +2008,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             if (MainActivity.menuBGM != null) {
                                 MainActivity.menuBGM.start();
                             }
-                            SaveGame.saveGame(getContext());
+                            SharedPreferences.saveGame(getContext());
                         }
                     });
                     builder.show();
@@ -2084,7 +2084,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        SaveGame.saveGame(getContext());
+                        SharedPreferences.saveGame(getContext());
                         if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                             mInterstitialAd.show();
                         } else {
@@ -2106,7 +2106,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     if (MainActivity.menuBGM != null) {
                         MainActivity.menuBGM.start();
                     }
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                 }
             });
             builder.show();
@@ -2618,7 +2618,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             MainActivity.soundPool.play(MainActivity.winID, MainActivity.volumeSound / 2, MainActivity.volumeSound / 2, 1, 0, 1);
-            SaveGame.saveGame(getContext());
+            SharedPreferences.saveGame(getContext());
             return true;
         }
         return false;

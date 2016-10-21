@@ -103,7 +103,7 @@ public class World2 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"3", "3", "c", "100"},
+            {"3", "3", "c", "37"},
             {"7,4", "9,5", "5,3", "8,6", "7,7", "7,6", "5,6", "5,8"},
             {"7,5"}
     };

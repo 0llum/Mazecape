@@ -120,14 +120,26 @@
     <string name="chapter_3">Kapitel 3</string>
     <string name="chapter_4">Kapitel 4</string>
 
+    <string name="page">Seite</string>
+    <string name="page_1">Seite 1</string>
+    <string name="page_2">Seite 2</string>
+    <string name="page_3">Seite 3</string>
+    <string name="page_4">Seite 4</string>
+    <string name="page_5">Seite 5</string>
+    <string name="page_6">Seite 6</string>
+    <string name="page_7">Seite 7</string>
+    <string name="page_8">Seite 8</string>
+    <string name="page_9">Seite 9</string>
+    <string name="page_10">Seite 10</string>
+
     <string name="chapter_1_page_1">Einer der Wenigen bin ich, die sich erinnern; an das helle, warme Licht, an all\' die Farben, an den Tag; Bilder aus der Kindheit.\nWas uns heute bleibt, ist Dunkelheit und Kälte.</string>
-    <string name="chapter_1_page_2">&#8230; und die Sonne versank in Trauer. Sie sank immer weiter. Wo sie jetzt ist, das wissen wir nicht.</string>
-    <string name="chapter_1_page_3">Geblieben sind uns nur noch das Feuer und die Mondsteine, um uns vor der Dunkelheit zu schützen.\nDie Gelehrten meinen jedoch ihre Macht nimmt stetig ab. Was uns dann erwartet, will ich mir nicht ausmalen.</string>
-    <string name="chapter_1_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_1_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_1_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_1_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_1_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_2">Mir wurde der Auftrag erteilt, die Suche nach der Sonne anzuführen. Zugegeben, immerhin weiß ich noch wie sie aussah.</string>
+    <string name="chapter_1_page_3">Gestern habe ich zum ersten Mal von ihm geträumt. Ein junger Mann allein in der Dunkelheit, aus seinen Augen strahlte ein warmes Licht.</string>
+    <string name="chapter_1_page_4">Sonne und Mond waren Geliebte, getrennt durch die Gesetze der Welt.\nIrgendwann jedoch wurde das Verlangen zu groß und der Mond näherte sich der Sonne. Die feurige Umarmung war das das letzte, was der Mond spürte.</string>
+    <string name="chapter_1_page_5">&#8230; und die Sonne versank in Trauer. Sie sank immer weiter. Wo sie jetzt ist, das wissen wir nicht.</string>
+    <string name="chapter_1_page_6">Geblieben sind uns nur noch das Feuer und die Mondsteine, um uns vor der Dunkelheit zu schützen.\nDie Gelehrten meinen jedoch ihre Macht nimmt stetig ab. Was uns dann erwartet, will ich mir nicht ausmalen.</string>
+    <string name="chapter_1_page_7">Dunkle Geschöpfe verschiedenster Art, die der Tag sonst fernhielt, beheimaten nun unsere Welt. So berichten es uns unsere Kuriere, die Wenigen, die sich der ewigen Nacht stellen.</string>
+    <string name="chapter_1_page_8">Allein die Mondsteinstädte bieten uns Schutz vor der Kälte und dem, was in Dunkelheit lauert.</string>
     <string name="chapter_1_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
     <string name="chapter_1_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
 

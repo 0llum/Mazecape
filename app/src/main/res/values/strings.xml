@@ -120,6 +120,18 @@
     <string name="chapter_3">Chapter 3</string>
     <string name="chapter_4">Chapter 4</string>
 
+    <string name="page">Page</string>
+    <string name="page_1">Page 1</string>
+    <string name="page_2">Page 2</string>
+    <string name="page_3">Page 3</string>
+    <string name="page_4">Page 4</string>
+    <string name="page_5">Page 5</string>
+    <string name="page_6">Page 6</string>
+    <string name="page_7">Page 7</string>
+    <string name="page_8">Page 8</string>
+    <string name="page_9">Page 9</string>
+    <string name="page_10">Page 10</string>
+
     <string name="chapter_1_page_1">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
     <string name="chapter_1_page_2">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
     <string name="chapter_1_page_3">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>

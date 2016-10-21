@@ -15,7 +15,7 @@ import android.widget.ToggleButton;
 
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.ResetGame;
+import com.ollum.mazecape.util.SharedPreferences;
 
 public class SettingsFragment extends Fragment {
 
@@ -119,7 +119,8 @@ public class SettingsFragment extends Fragment {
                 builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ResetGame.resetGame(getContext());
+                        SharedPreferences.resetGame(getContext());
+                        SharedPreferences.loadGame(getContext());
                     }
                 });
                 builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

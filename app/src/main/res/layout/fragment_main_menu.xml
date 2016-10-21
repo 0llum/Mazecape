@@ -74,7 +74,7 @@
         android:checked="false"
         android:text="Developer Mode"
         android:textColor="@color/colorTextLight"
-        android:visibility="visible" />
+        android:visibility="invisible" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

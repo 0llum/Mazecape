@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SaveGame;
+import com.ollum.mazecape.util.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +71,7 @@ public class WorldSelectFragment extends Fragment {
                                 MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
-                                SaveGame.saveGame(getContext());
+                                SharedPreferences.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -105,7 +105,7 @@ public class WorldSelectFragment extends Fragment {
                                 MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
-                                SaveGame.saveGame(getContext());
+                                SharedPreferences.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -139,7 +139,7 @@ public class WorldSelectFragment extends Fragment {
                                 MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
-                                SaveGame.saveGame(getContext());
+                                SharedPreferences.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -173,7 +173,7 @@ public class WorldSelectFragment extends Fragment {
                                 MainActivity.soundPool.play(MainActivity.upgradeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 gridViewWorlds.setAdapter(new WorldsAdapter(getContext(), 0));
                                 gridViewWorlds.setSelection(MainActivity.maxWorld);
-                                SaveGame.saveGame(getContext());
+                                SharedPreferences.saveGame(getContext());
                                 dialog.dismiss();
                             } else {
                                 FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -220,36 +220,36 @@ public class WorldSelectFragment extends Fragment {
                     items.add(new Item("1", getResources().getIdentifier("c" + "blk", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 1:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 2:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 3:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
-                    items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
-                case 4:
+                /*case 4:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
                     items.add(new Item("4", getResources().getIdentifier("m" + "xxx", "drawable", getContext().getPackageName()), 5));
-                    break;
+                    break;*/
             }
         }
 

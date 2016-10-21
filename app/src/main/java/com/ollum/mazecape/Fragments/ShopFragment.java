@@ -22,7 +22,7 @@ import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
 import com.ollum.mazecape.util.IabResult;
 import com.ollum.mazecape.util.Purchase;
-import com.ollum.mazecape.util.SaveGame;
+import com.ollum.mazecape.util.SharedPreferences;
 
 public class ShopFragment extends Fragment implements View.OnClickListener, RewardedVideoAdListener {
 
@@ -245,7 +245,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else if (info.getSku().equals("200_stars")) {
                     MainActivity.showAds = false;
@@ -253,7 +253,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else if (info.getSku().equals("500_stars")) {
                     MainActivity.showAds = false;
@@ -261,7 +261,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else if (info.getSku().equals("1000_stars")) {
                     MainActivity.showAds = false;
@@ -269,7 +269,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 }
             }
@@ -294,7 +294,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
                         Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                         MainActivity.soundPool.play(MainActivity.liveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        SaveGame.saveGame(getContext());
+                        SharedPreferences.saveGame(getContext());
                         ;
                     } else {
                         Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
@@ -316,7 +316,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         MainActivity.livesCounter.setText("" + MainActivity.lives);
                         Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                         MainActivity.soundPool.play(MainActivity.liveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                        SaveGame.saveGame(getContext());
+                        SharedPreferences.saveGame(getContext());
                         ;
                     } else {
                         Toast.makeText(getContext(), R.string.full_health, Toast.LENGTH_LONG).show();
@@ -348,7 +348,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -378,7 +378,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -418,7 +418,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -453,7 +453,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -498,7 +498,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -529,7 +529,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             break;
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.not_enough_stars, Toast.LENGTH_LONG).show();
@@ -577,7 +577,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
                     }
 
-                    SaveGame.saveGame(getContext());
+                    SharedPreferences.saveGame(getContext());
                     ;
                 } else {
                     Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();

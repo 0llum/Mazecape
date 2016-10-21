@@ -38,8 +38,7 @@ import com.ollum.mazecape.Fragments.WorldSelectFragment;
 import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
 import com.ollum.mazecape.util.IabResult;
-import com.ollum.mazecape.util.LoadGame;
-import com.ollum.mazecape.util.SaveGame;
+import com.ollum.mazecape.util.SharedPreferences;
 
 import java.util.HashSet;
 
@@ -198,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAd = MobileAds.getRewardedVideoAdInstance(this);
         loadRewardedVideoAd();
 
-        LoadGame.loadGame(getApplicationContext());
+        SharedPreferences.loadGame(getApplicationContext());
         createHandler();
 
         /*Intent alarmIntent = new Intent(this, AlarmReceiver.class);
@@ -379,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        SaveGame.saveGame(getApplicationContext());
+        SharedPreferences.saveGame(getApplicationContext());
 
         if (menuBGM != null && menuBGM.isPlaying()) {
             menuBGM.pause();
@@ -390,7 +389,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-        LoadGame.loadGame(getApplicationContext());
+        SharedPreferences.loadGame(getApplicationContext());
 
         FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
         String current = currentFragment.getName();

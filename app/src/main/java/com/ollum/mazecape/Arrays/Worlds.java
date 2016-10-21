@@ -37,6 +37,6 @@ public class Worlds {
 
     };
     public static final String[][][][] WORLDS = {
-            WORLD_1, WORLD_2, WORLD_3, WORLD_4, WORLD_5
+            WORLD_1, WORLD_2, WORLD_3, WORLD_4
     };
 }
