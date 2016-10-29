@@ -11,6 +11,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "s", "1"},
             {},
+            {},
             {}
     };
     public static final String[][] SNOW_02 = {
@@ -26,21 +27,23 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "s", "7"},
             {},
+            {},
             {}
     };
     public static final String[][] SNOW_03 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "srt", "ndl", "gdn", "vdr", "slt", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nrt", "vcs", "vcs", "vcs", "vdl", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "ndr", "ncs", "ntr", "vtl", "vul", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nud", "ltl", "ncs", "ncs", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "srt", "ndl", "gdn", "ndr", "slt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nrt", "ncs", "ncs", "ncs", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "ncs", "ntr", "ntl", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ntl", "ncs", "ncs", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nur", "nul", "sup", "nur", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "4", "s", "19"},
+            {},
             {},
             {}
     };
@@ -60,7 +63,8 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "s", "11"},
             {},
-            {"5,9"}
+            {"5,9"},
+            {}
     };
     public static final String[][] SNOW_05 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -78,6 +82,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "s", "19"},
+            {},
             {},
             {}
     };
@@ -97,6 +102,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "6", "s", "33"},
             {"9,5", "9,7"},
+            {},
             {}
     };
     public static final String[][] SNOW_07 = {
@@ -114,6 +120,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "s", "33"},
+            {},
             {},
             {}
     };
@@ -133,6 +140,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "9", "s", "20"},
             {},
+            {},
             {}
     };
     public static final String[][] SNOW_09 = {
@@ -151,6 +159,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "s", "34"},
+            {},
             {},
             {}
     };
@@ -172,9 +181,10 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "3", "s", "33"},
             {"5,10", "9,5"},
+            {},
             {}
     };
-        public static final String[][] SNOW_11 = {
+    public static final String[][] SNOW_11 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
@@ -197,6 +207,7 @@ public class World3 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"10", "11", "s", "100"},
+            {},
             {},
             {}
     };

@@ -26,9 +26,9 @@ import com.ollum.mazecape.util.SharedPreferences;
 
 public class ShopFragment extends Fragment implements View.OnClickListener, RewardedVideoAdListener {
 
-    public static LinearLayout rateLayout;
+    public static LinearLayout rateLayout, likeLayout;
     public static TextView liveTimer, compassUpgrade, mapUpgrade, torchUpgrade, speedUpgrade, livesUpgrade, starsUpgrade, compassLevel, mapLevel, torchLevel, speedLevel, livesLevel, starsLevel;
-    Button button1heart, button5hearts, buttonCompass, buttonMap, buttonTorch, buttonSpeed, buttonLives, buttonStars, button100stars, button200stars, button500stars, button1000stars, buttonRate, buttonWatchAd;
+    Button button1heart, button5hearts, buttonCompass, buttonMap, buttonTorch, buttonSpeed, buttonLives, buttonStars, button100stars, button200stars, button500stars, button1000stars, buttonRate, buttonLike, buttonWatchAd;
     IabHelper.OnIabPurchaseFinishedListener mPurchaseFinishedListener;
 
     @Override
@@ -38,6 +38,11 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         rateLayout = (LinearLayout) view.findViewById(R.id.linearLayout_rate);
         if (MainActivity.rated) {
             rateLayout.setVisibility(View.GONE);
+        }
+
+        likeLayout = (LinearLayout) view.findViewById(R.id.linearLayout_like);
+        if (MainActivity.liked) {
+            likeLayout.setVisibility(View.GONE);
         }
 
         liveTimer = (TextView) view.findViewById(R.id.live_timer);
@@ -230,6 +235,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
 
         buttonRate = (Button) view.findViewById(R.id.button_rate);
         buttonRate.setOnClickListener(this);
+
+        buttonLike = (Button) view.findViewById(R.id.button_like);
+        buttonLike.setOnClickListener(this);
 
         buttonWatchAd = (Button) view.findViewById(R.id.button_watch_ad);
         buttonWatchAd.setOnClickListener(this);
@@ -565,7 +573,7 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                 break;
             case R.id.button_rate:
                 if (isOnline()) {
-                    MainActivity.allStars += 50;
+                    MainActivity.allStars += 25;
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     MainActivity.rated = true;
                     rateLayout.setVisibility(View.GONE);
@@ -579,6 +587,25 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
 
                     SharedPreferences.saveGame(getContext());
                     ;
+                } else {
+                    Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.button_like:
+                if (isOnline()) {
+                    MainActivity.allStars += 25;
+                    MainActivity.starsCounter.setText("" + MainActivity.allStars);
+                    MainActivity.liked = true;
+                    likeLayout.setVisibility(View.GONE);
+
+                    try {
+                        getContext().getPackageManager().getPackageInfo("com.facebook.katana", 0);
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/229717690779040")));
+                    } catch (Exception e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/Mazecape")));
+                    }
+
+                    SharedPreferences.saveGame(getContext());
                 } else {
                     Toast.makeText(getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
                 }

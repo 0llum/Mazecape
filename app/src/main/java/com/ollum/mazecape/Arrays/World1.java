@@ -11,6 +11,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "4"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_02 = {
@@ -24,8 +25,9 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "5", "f", "8"},
-            {},
-            {}
+            {"4,5", "3,7"},
+            {"5,4"},
+            {"3,4"}
     };
     public static final String[][] FOREST_03 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -39,6 +41,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "f", "22"},
+            {},
             {},
             {}
     };
@@ -56,6 +59,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "f", "38"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_05 = {
@@ -70,6 +74,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "f", "12"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_06 = {
@@ -78,7 +83,7 @@ public class World1 {
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "our", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "drt", "nlr", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "nlr", "ntr", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nur", "ddl", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "ndl", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "nul", "sup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "ndr", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ntl", "nul", "nud", "ort", "ocs", "ocs"},
@@ -90,6 +95,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "f", "34"},
+            {},
             {},
             {}
     };
@@ -108,21 +114,23 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "8", "f", "15"},
             {"3,4", "3,6"},
+            {},
             {}
     };
     public static final String[][] FOREST_08 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "gdn", "ndr", "wlt", "rdn", "sdn", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "otu", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "gdn", "ndr", "wlt", "rud", "sdn", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "mud", "nud", "rdr", "rul", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ntl", "ntd", "blr", "nlr", "ntr", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "sup", "rdr", "rul", "ndr", "nul", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "rrt", "rul", "srt", "ntd", "nlt", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "rdr", "rul", "ndr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "sup", "rud", "srt", "ntd", "nlt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "otd", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"7", "7", "f", "24"},
+            {"7", "7", "f", "26"},
+            {},
             {},
             {}
     };
@@ -131,8 +139,8 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "srt", "nlr", "nlr", "ntu", "ndl", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "ndr", "nlr", "ndl", "nud", "nud", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nud", "prt", "dtd", "nul", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "ddl", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "prt", "ntd", "nul", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "mtl", "ndl", "prt", "ndl", "sup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "sup", "nur", "glt", "nur", "wlt", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
@@ -140,6 +148,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "f", "34"},
             {"4,5", "5,6"},
+            {},
             {}
     };
     public static final String[][] FOREST_10 = {
@@ -157,6 +166,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "52"},
+            {},
             {},
             {}
     };
@@ -176,6 +186,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "f", "80"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_12 = {
@@ -194,6 +205,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "f", "58"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_13 = {
@@ -210,6 +222,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "f", "33"},
             {"5,4", "3,7", "7,4", "9,7", "3,3", "9,5", "3,5", "9,3"},
+            {},
             {}
     };
     public static final String[][] FOREST_14 = {
@@ -228,6 +241,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "30"},
+            {},
             {},
             {}
     };
@@ -249,6 +263,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "f", "65"},
+            {},
             {},
             {}
     };
@@ -281,6 +296,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "103"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_17 = {
@@ -298,6 +314,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "6", "f", "64"},
+            {},
             {},
             {}
     };
@@ -317,7 +334,8 @@ public class World1 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"6", "4", "f", "100"},
+            {"6", "4", "f", "72"},
+            {},
             {},
             {}
     };
@@ -338,6 +356,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "64"},
+            {},
             {},
             {}
     };
@@ -360,6 +379,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "f", "112"},
             {"6,6", "9,6"},
+            {},
             {}
     };
     public static final String[][] FOREST_21 = {
@@ -379,7 +399,8 @@ public class World1 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"3", "3", "f", "100"},
+            {"3", "3", "f", "115"},
+            {},
             {},
             {}
     };
@@ -400,7 +421,8 @@ public class World1 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"12", "3", "f", "100"},
+            {"12", "3", "f", "125"},
+            {},
             {},
             {}
     };
@@ -420,7 +442,8 @@ public class World1 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"7", "4", "f", "100"},
+            {"7", "4", "f", "97"},
+            {},
             {},
             {}
     };
@@ -432,8 +455,8 @@ public class World1 {
             {"ocs", "ocs", "olt", "xxx", "xxx", "nud", "drt", "mlr", "ntr", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "nlr", "ntd", "clr", "ndl", "tud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "nrt", "ntu", "slt", "nur", "ntr", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "wup", "ndr", "mtd", "nlr", "ndl", "nud", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "pdn", "nud", "fdn", "nrt", "ntr", "tud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "wup", "ndr", "mtd", "nlr", "nlr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "pdn", "nud", "fdn", "wrt", "ndr", "tud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "pup", "nur", "ndl", "nur", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ntl", "nlr", "tlr", "ncs", "clr", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "ndr", "nlr", "ntr", "sdn", "nud", "ort", "ocs", "ocs"},
@@ -443,7 +466,8 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "100"},
             {"4,9", "3,8"},
-            {"8,5", "8,8", "5,10"}
+            {"8,5", "8,8", "5,10"},
+            {}
     };
     public static final String[][] FOREST_25 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -463,6 +487,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "f", "109"},
+            {},
             {},
             {}
     };
@@ -484,6 +509,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "74"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_27 = {
@@ -499,11 +525,12 @@ public class World1 {
             {"ocs", "ocs", "olt", "nud", "nud", "nud", "ntl", "nul", "ndr", "nul", "nud", "nud", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "nud", "nud", "nup", "ndr", "nul", "ndr", "nul", "nud", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nur", "ntr", "nur", "nlr", "nul", "ndr", "nul", "ndn", "nud", "nud", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "frt", "ntd", "nlr", "nlr", "slt", "gup", "drt", "ntd", "ntd", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "frt", "ntd", "nlr", "nlr", "slt", "gup", "nrt", "ntd", "ntd", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"8", "4", "f", "100"},
+            {},
             {},
             {}
     };
@@ -527,6 +554,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "f", "100"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_29 = {
@@ -549,6 +577,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"13", "4", "f", "100"},
             {},
+            {},
             {}
     };
     public static final String[][] FOREST_30 = {
@@ -561,7 +590,7 @@ public class World1 {
             {"ocs", "ocs", "olt", "ndr", "nlr", "ndl", "nud", "ndr", "nlr", "nul", "ntl", "nlr", "nlr", "nlr", "nul", "nud", "nur", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ntl", "ndl", "nur", "nul", "nur", "nlr", "ndl", "nur", "ndl", "ndr", "nlr", "ndl", "ntl", "nlt", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "nur", "nlr", "ntu", "nlr", "ndl", "nud", "ndr", "nul", "nud", "ndr", "nul", "nud", "ndr", "ntr", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nud", "ndr", "nlr", "ntr", "nrt", "nul", "nud", "nur", "ndl", "nud", "nud", "ddr", "nul", "nud", "fup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "nlr", "ntr", "nrt", "nul", "nud", "nur", "ndl", "nud", "nud", "ndr", "nul", "nud", "fup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nup", "nud", "ndr", "nul", "ndr", "ndl", "nur", "nlr", "nul", "nud", "nup", "nur", "ndl", "nur", "ndl", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "nul", "nud", "ndr", "nul", "ntl", "nlr", "nlr", "ndl", "ntl", "nlr", "nlr", "ntd", "nlt", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ntl", "ndl", "fup", "nur", "ndl", "nur", "ndl", "ndr", "nul", "nur", "ndl", "ndr", "nlr", "ndl", "nud", "ort", "ocs", "ocs"},
@@ -574,6 +603,7 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"12", "4", "f", "200"},
+            {},
             {},
             {}
     };

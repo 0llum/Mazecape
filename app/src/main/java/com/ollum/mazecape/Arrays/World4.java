@@ -6,14 +6,15 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "ntu", "nlr", "nlr", "slt", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nud", "vur", "vlr", "vlr", "vdl", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nud", "sdn", "ndr", "nlr", "ltr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nur", "nlr", "nlr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "sdn", "ndr", "nlr", "ntr", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nud", "nud", "nud", "sdn", "nud", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "nur", "nul", "gup", "nur", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "d", "39"},
+            {},
             {},
             {}
     };
@@ -30,6 +31,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "d", "34"},
+            {},
             {},
             {}
     };
@@ -49,6 +51,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "d", "55"},
             {},
+            {},
             {}
     };
     public static final String[][] DESERT_04 = {
@@ -67,6 +70,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"9", "3", "d", "71"},
             {},
+            {},
             {}
     };
     public static final String[][] DESERT_05 = {
@@ -82,9 +86,10 @@ public class World4 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"3", "3", "d", "100"},
+            {"3", "3", "d", "33"},
             {},
-            {"7,3", "5,4", "5,8"}
+            {"7,3", "5,4", "5,8"},
+            {}
     };
     public static final String[][] DESERT_06 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -101,6 +106,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "d", "48"},
+            {},
             {},
             {}
     };
@@ -120,6 +126,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "d", "56"},
             {"5,5", "3,9", "7,5", "9,9", "3,4", "9,4"},
+            {},
             {}
     };
     public static final String[][] DESERT_08 = {
@@ -141,6 +148,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"12", "12", "d", "31"},
             {},
+            {},
             {}
     };
     public static final String[][] DESERT_09 = {
@@ -161,6 +169,7 @@ public class World4 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "d", "93"},
+            {},
             {},
             {}
     };

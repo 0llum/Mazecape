@@ -11,7 +11,7 @@ import android.widget.GridView;
 import com.ollum.mazecape.Adapters.TestLevelAdapter;
 import com.ollum.mazecape.R;
 
-public class LevelFragment extends Fragment {
+public class TestLevelFragment extends Fragment {
 
     GridView gridView;
 

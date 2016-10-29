@@ -68,19 +68,6 @@
     <string name="next_world">Next</string>
     <string name="replay">Rejouer</string>
 
-    <string name="welcome_to_mazecape">Bienvenue à Mazecape</string>
-    <string name="welcome_dialog">You find yourself lost in a terrifying maze. You need to get back home before sunset. Move around by swiping or change the input mode to touch at the bottom of the screen. At each stage you will find 3 stars that will help you to proceed later on. Good luck!</string>
-    <string name="lets_get_started">Let\'s get started</string>
-    <string name="monster_dialog">Oh no a monster is blocking your path. You must find a sword first in order to proceed</string>
-    <string name="i_can_handle_that">I can handle that</string>
-    <string name="portal_dialog">Look, there\'s a portal somewhere. You have to find it. It will take you to unreachable places</string>
-    <string name="awesome">Awesome</string>
-    <string name="cave_dialog">You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a fireplace</string>
-    <string name="sure">Sure</string>
-    <string name="snow_dialog">It got cold. The path is frozen and slippery. Watch out</string>
-    <string name="alright">Alright</string>
-    <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
-    <string name="lets_not_get_lost">Let\'s not get lost</string>
     <string name="reset_level">Do you really want to reset level?</string>
     <string name="reveal_map">Do you like to reveal the map? 20 Stars</string>
     <string name="level_select_screen">Do you really want to go back to the level select screen? You will lose all your progress in the current level</string>
@@ -177,10 +164,42 @@
     <string name="chapter_4_page_10">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone.</string>
 
     <string name="story_button">Histoire</string>
-    <string name="interesting">Interesting</string>
     <string name="reset_game">Do you really want to reset your game? This cannot be undone!</string>
     <string name="hate_ads">Do you hate Ads? Me too, but as an independant developer I\'m dependant on your support. You can remove all Ads with your first purchase!</string>
     <string name="open_shop">Open Shop</string>
     <string name="like_ads">I like ads</string>
     <string name="ads">Ads</string>
+
+    <!--Tutorial-->
+    <string name="welcome_to_mazecape">Welcome to Mazecape</string>
+    <string name="welcome_dialog">You wake up disoriented. You find yourself inside a maze. All you remember is - darkness. You\'re looking to sky but the sun seems to be gone. All you got is a torch. You will need it in order to survive.\n\nMove around by swiping or change the input mode in the settings. At each stage you will find 3 stars that will help you on your adventure.\n\nGood luck!</string>
+    <string name="lets_get_started">Let\'s get started</string>
+
+    <string name="diary" />
+    <string name="diary_dialog" />
+    <string name="interesting">Interesting</string>
+
+    <string name="monster_dialog">Oh no a monster is blocking your path. You must find a sword first in order to proceed</string>
+    <string name="i_can_handle_that">I can handle that</string>
+
+    <string name="portal_dialog">Look, there\'s a portal somewhere. You have to find it. It will take you to unreachable places</string>
+    <string name="awesome">Awesome</string>
+
+    <string name="bridge">Bridge</string>
+    <string name="bridge_dialog">bridge dialog</string>
+
+    <string name="fire_dialog">fire dialog</string>
+    <string name="nice">Nice</string>
+
+    <string name="crack_dialog">crack dialog</string>
+    <string name="i_try_my_best">I\'ll try my best</string>
+
+    <string name="cave_dialog">You entered a grand cave. The deeper you go the darker it gets. So watch your steps and try to find a fireplace</string>
+    <string name="sure">Sure</string>
+
+    <string name="snow_dialog">It got cold. The path is frozen and slippery. Watch out</string>
+    <string name="alright">Alright</string>
+
+    <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
+    <string name="lets_not_get_lost">Let\'s not get lost</string>
 </resources>

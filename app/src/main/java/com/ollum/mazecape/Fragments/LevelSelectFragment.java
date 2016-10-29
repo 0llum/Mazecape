@@ -96,7 +96,7 @@ public class LevelSelectFragment extends Fragment {
             inflater = LayoutInflater.from(context);
 
             for (int i = 0; i < currentWorld.length; i++) {
-                String scene = currentWorld[i][currentWorld[i].length - 3][2];
+                String scene = currentWorld[i][currentWorld[i].length - 4][2];
                 if (i <= MainActivity.maxLevel[MainActivity.world]) {
                     items.add(new Item("" + i, getResources().getIdentifier(scene + "xxx", "drawable", getContext().getPackageName()), i + 1));
                 } else {

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.ollum.mazecape.Fragments.DiaryFragment;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.Fragments.HelpFragment;
 import com.ollum.mazecape.Fragments.LevelEditorFragment;
@@ -34,6 +35,8 @@ import com.ollum.mazecape.Fragments.LevelSelectFragment;
 import com.ollum.mazecape.Fragments.MainMenuFragment;
 import com.ollum.mazecape.Fragments.SettingsFragment;
 import com.ollum.mazecape.Fragments.ShopFragment;
+import com.ollum.mazecape.Fragments.StoryFragment;
+import com.ollum.mazecape.Fragments.TutorialFragment;
 import com.ollum.mazecape.Fragments.WorldSelectFragment;
 import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
@@ -90,11 +93,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static SettingsFragment settingsFragment = new SettingsFragment();
     public static ShopFragment shopFragment = new ShopFragment();
     public static HelpFragment helpFragment = new HelpFragment();
+    public static TutorialFragment tutorialFragment = new TutorialFragment();
+    public static DiaryFragment diaryFragment = new DiaryFragment();
     public static boolean settingsVisible = false;
     public static boolean shopVisible = false;
     public static boolean helpVisible = false;
     public static boolean stopTime = false;
     public static boolean rated = false;
+    public static boolean liked = false;
     public static int torches = 0;
     public static IabHelper mHelper;
     public static float volumeMusic;
@@ -108,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static SoundPool soundPool;
     public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID, diaryID;
     public static long logOffTime;
+    public static String tutorialTitle, tutorialMessage, tutorialButton;
+    public static String diaryTitle, diarySubtitle, diaryMessage, diaryButton;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
@@ -134,9 +142,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/bilbo.regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
+                .setDefaultFontPath("fonts/bilbo.regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
         );
 
         content = (FrameLayout) findViewById(R.id.content);
@@ -259,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.commit();
         } else if (current.equals("MainMenuFragment")) {
             return;
-        } else if (current.equals("WorldSelectFragment") || current.equals("StoryFragment")) {
+        } else if (current.equals("WorldSelectFragment")) {
             MainMenuFragment mainMenuFragment = new MainMenuFragment();
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
             transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);
@@ -273,15 +281,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             transaction.replace(R.id.content, worldSelectFragment, "WorldSelectFragment");
             transaction.addToBackStack("WorldSelectFragment");
             transaction.commit();
-        } else if (current.equals("GameFragment") || current.equals("LevelFragment")) {
-            if (GameFragment.bgm != null && GameFragment.bgm.isPlaying()) {
-                GameFragment.bgm.pause();
+        } else if (current.equals("GameFragment") || current.equals("TestLevelFragment")) {
+            if (GameFragment.gameBGM != null && GameFragment.gameBGM.isPlaying()) {
+                GameFragment.gameBGM.pause();
             }
-            if (GameFragment.fire != null && GameFragment.fire.isPlaying()) {
-                GameFragment.fire.pause();
+            if (GameFragment.fireAtmo != null && GameFragment.fireAtmo.isPlaying()) {
+                GameFragment.fireAtmo.pause();
             }
-            if (GameFragment.heartbeat != null && GameFragment.heartbeat.isPlaying()) {
-                GameFragment.heartbeat.pause();
+            if (GameFragment.heartbeatAtmo != null && GameFragment.heartbeatAtmo.isPlaying()) {
+                GameFragment.heartbeatAtmo.pause();
             }
 
             stopTime = true;
@@ -292,6 +300,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     resetCount++;
                     livesCounter.setText("" + lives);
                     LevelSelectFragment levelSelectFragment = new LevelSelectFragment();
@@ -300,21 +309,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     transaction.replace(R.id.content, levelSelectFragment, "LevelSelectFragment");
                     transaction.addToBackStack("LevelSelectFragment");
                     transaction.commit();
+
+                    if (MainActivity.menuBGM != null) {
+                        MainActivity.menuBGM.start();
+                    }
                 }
             });
             builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     dialog.dismiss();
                     stopTime = false;
-                    if (GameFragment.bgm != null) {
-                        GameFragment.bgm.start();
+                    if (GameFragment.gameBGM != null) {
+                        GameFragment.gameBGM.start();
                     }
-                    if (GameFragment.fire != null) {
-                        GameFragment.fire.start();
+                    if (GameFragment.fireAtmo != null) {
+                        GameFragment.fireAtmo.start();
                     }
-                    if (GameFragment.heartbeat != null) {
-                        GameFragment.heartbeat.start();
+                    if (GameFragment.heartbeatAtmo != null) {
+                        GameFragment.heartbeatAtmo.start();
                     }
                 }
             });
@@ -370,6 +384,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             builder.create();
             builder.show();
+        } else if (current.equals("StoryFragment")) {
+            if (StoryFragment.storyBGM != null && StoryFragment.storyBGM.isPlaying()) {
+                StoryFragment.storyBGM.pause();
+            }
+
+            MainMenuFragment mainMenuFragment = new MainMenuFragment();
+            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);
+            transaction.replace(R.id.content, mainMenuFragment, "MainMenuFragment");
+            transaction.addToBackStack("MainMenuFragment");
+            transaction.commit();
+
+            if (MainActivity.menuBGM != null) {
+                MainActivity.menuBGM.start();
+            }
         } else {
             super.onBackPressed();
         }
@@ -394,7 +423,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
         String current = currentFragment.getName();
 
-        if (menuBGM != null && !current.equals("GameFragment") || current.equals("LevelFragment")) {
+        if (menuBGM != null && !current.equals("GameFragment") || current.equals("TestLevelFragment")) {
             menuBGM.start();
         }
     }

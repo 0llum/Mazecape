@@ -47,6 +47,7 @@ public class SharedPreferences {
         editor.putInt("resetCount", MainActivity.resetCount);
         editor.putBoolean("showAds", MainActivity.showAds);
         editor.putBoolean("rated", MainActivity.rated);
+        editor.putBoolean("liked", MainActivity.liked);
         editor.apply();
     }
 
@@ -63,8 +64,8 @@ public class SharedPreferences {
         MainActivity.levelStars = sharedPreferences.getInt("levelStars", 0);
         MainActivity.levelLives = sharedPreferences.getInt("levelLives", 0);
         MainActivity.maxWorld = sharedPreferences.getInt("maxWorld", 0);
-        if (MainActivity.maxWorld > 4) {
-            MainActivity.maxWorld = 4;
+        if (MainActivity.maxWorld > 3) {
+            MainActivity.maxWorld = 3;
         }
         MainActivity.world1MaxLevel = sharedPreferences.getInt("world1MaxLevel", 0);
         MainActivity.world2MaxLevel = sharedPreferences.getInt("world2MaxLevel", 0);
@@ -86,6 +87,7 @@ public class SharedPreferences {
         MainActivity.resetCount = sharedPreferences.getInt("resetCount", 0);
         MainActivity.showAds = sharedPreferences.getBoolean("showAds", true);
         MainActivity.rated = sharedPreferences.getBoolean("rated", false);
+        MainActivity.liked = sharedPreferences.getBoolean("liked", false);
         Set<String> starsSet = sharedPreferences.getStringSet("stars", new HashSet<String>());
         MainActivity.starsList.addAll(starsSet);
         Set<String> diarySet = sharedPreferences.getStringSet("diary", new HashSet<String>());
@@ -138,7 +140,8 @@ public class SharedPreferences {
         editor.putInt("world3Stars", 0);
         editor.putInt("world4Stars", 0);
         editor.putInt("world5Stars", 0);
-        editor.putBoolean("rated", MainActivity.rated);
+        editor.putBoolean("rated", false);
+        editor.putBoolean("liked", false);
         editor.apply();
     }
 }

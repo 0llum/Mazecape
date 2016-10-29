@@ -37,6 +37,9 @@ public class Tiles {
     public static final String[] BRIDGE = {
             "bup", "brt", "bdn", "blt", "bud", "blr", "bur", "bdr", "bdl", "bul", "btu", "btr", "btd", "btl", "bcs"
     };
+    public static final String[] BRIDGE_HOLE = {
+            "qup", "qrt", "qdn", "qlt", "qud", "qlr", "qur", "qdr", "qdl", "qul", "qtu", "qtr", "qtd", "qtl", "qcs"
+    };
     public static final String[] CRACK = {
             "cup", "crt", "cdn", "clt", "cud", "clr", "cur", "cdr", "cdl", "cul", "ctu", "ctr", "ctd", "ctl", "ccs"
     };
@@ -52,7 +55,13 @@ public class Tiles {
     public static final String[] JUMP = {
             "jup", "jrt", "jdn", "jlt", "jtl", "jtr", "jtu", "jtd", "jur", "jru", "jrd", "jdr", "jld", "jdl", "jlu", "jul", "jcd", "jcl", "jcu", "jcr"
     };
+    public static final String[] ROTATION = {
+            "yup", "yrt", "ydn", "ylt", "yud", "ylr", "yur", "ydr", "ydl", "yul", "ytu", "ytr", "ytd", "ytl", "ycs"
+    };
+    public static final String[] SWITCH = {
+            "zup", "zrt", "zdn", "zlt", "zud", "zlr", "zur", "zdr", "zdl", "zul", "ztu", "ztr", "ztd", "ztl", "zcs"
+    };
     public static final String[][] TILES = {
-            NORMAL, GOAL, STAR, FIRE, PORTAL, MONSTER, WEAPON, CRACK, TRAP_ACTIVE, LOOKOUT, FOG, DIARY
+            NORMAL, GOAL, STAR, FIRE, PORTAL, MONSTER, WEAPON, CRACK, TRAP_ACTIVE, SWITCH, ROTATION, FOG, LOOKOUT
     };
 }

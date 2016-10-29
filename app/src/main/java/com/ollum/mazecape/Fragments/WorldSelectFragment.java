@@ -28,7 +28,6 @@ public class WorldSelectFragment extends Fragment {
 
     GridView gridViewWorlds;
     int collectedStars;
-    int counter = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

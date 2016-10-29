@@ -68,19 +68,6 @@
     <string name="next_world">Weiter</string>
     <string name="replay">Nochmal</string>
 
-    <string name="welcome_to_mazecape">Willkommen bei Mazecape</string>
-    <string name="welcome_dialog">Du befindest dich in einem unheimlichen Labyrinth. Du musst vor Sonnenuntergang wieder nach Hause kommen. Bewege dich durch Wischen oder ändere die Steuerung am unteren Ende des Bildschirms. In jedem Level wirst du 3 Sterne finden, die dir später weiterhelfen können. Viel Glück!</string>
-    <string name="lets_get_started">Auf geht\'s</string>
-    <string name="monster_dialog">Oh nein, ein Monster blockiert deinen Weg. Du musst zuerst ein Schwert finden um weiterzukommen</string>
-    <string name="i_can_handle_that">Das schaffe ich schon</string>
-    <string name="portal_dialog">Sieh, dort ist irgendwo ein Portal. Es bringt dich an unerreichbare Orte</string>
-    <string name="awesome">Super</string>
-    <string name="cave_dialog">Du betrittst ein dunkle Höhle. Je weiter du hineingehst umso dunkler wird es. Achte auf deine Schritte und suche nach einer Feuerstelle</string>
-    <string name="sure">Sicher</string>
-    <string name="snow_dialog">Es ist kalt geworden. Der Weg ist eingefroren und rutschig. Pass auf</string>
-    <string name="alright">Alles klar</string>
-    <string name="desert_dialog">Du betrittst eine große Wüste. Versuche nicht die Orientierung zu verlieren und hüte dich vor den Sandstürmen</string>
-    <string name="lets_not_get_lost">Ich hoffe ich verirre mich nicht</string>
     <string name="reset_level">Möchtest du das Level wirklich zurürcksetzen?</string>
     <string name="reveal_map">Möchtest du die Karte aufdecken? 20 Sterne</string>
     <string name="level_select_screen">Möchtest du wirklich zur Levelauswahl zurückkehren? Du verlierst dabei deinen aktuellen Fortschritt</string>
@@ -177,10 +164,42 @@
     <string name="chapter_4_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
 
     <string name="story_button">Geschichte</string>
-    <string name="interesting">Interessant</string>
     <string name="reset_game">Möchtest du wirklich deinen Spielstand zurücksetzen? Das kann nicht rückgängig gemacht werden!</string>
     <string name="hate_ads">Du hasst Werbung? Ich auch, aber als unabhängiger Entwickler bin ich auf deine Unterstützung angewiesen. Mit deinem ersten Kauf wird die App werbefrei!</string>
     <string name="open_shop">Zum Shop</string>
     <string name="like_ads">Ich mag Werbung</string>
     <string name="ads">Werbung</string>
+
+    <!-- Tutorial-->
+    <string name="welcome_to_mazecape">Willkommen bei Mazecape</string>
+    <string name="welcome_dialog">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur. Alles was dir bleibt ist deine Fackel. Ohne sie gibt es keine Chance zu überleben.\n\nBewege dich durch Wischen über den Bildschirm oder ändere die Steuerung in den Einstellungen. In jedem Level wirst du 3 Sterne finden, die dir bei deinem Abenteuer helfen werden.\n\nViel Glück!</string>
+    <string name="lets_get_started">Auf geht\'s</string>
+
+    <string name="diary">Tagebuch</string>
+    <string name="diary_dialog">In jedem dritten Level kannst du zusätzlich eine verlorene Tagebuchseite finden. Finde alle Seiten um die komplette Geschichte zu erfahren.\n\nIm Hauptmenü unter dem Menüpunkt \'Geschichte\' kannst du alle bereits gefundenen Seiten jederzeit nachlesen.</string>
+    <string name="interesting">Interessant</string>
+
+    <string name="monster_dialog">Ein Monster blockiert deinen Weg. Halte Ausschau nach einem Schwert und besiege das Monster um weiterzukommen.</string>
+    <string name="i_can_handle_that">Das schaffe ich schon</string>
+
+    <string name="portal_dialog">Hier ist irgendwo ein Portal. Finde es! Es führt dich an unerreichbare Orte!</string>
+    <string name="awesome">Super</string>
+
+    <string name="bridge">Brücke</string>
+    <string name="bridge_dialog">Dein Weg führt dich über eine alte Brücke. Sie könnte jederzeit einbrechen. Beeile Dich!</string>
+
+    <string name="fire_dialog">In einigen Leveln kommst du an Feuerstellen vorbei. Nutze sie um deine Fackel wieder vollständig zu entzünden. So kannst du auch größere und kompliziertere Level bezwingen!</string>
+    <string name="nice">Sehr gut</string>
+
+    <string name="crack_dialog">An einigen Stellen findest du Risse im Boden. Ein einziges Mal kannst du jedoch sicher passieren. Danach stürzt der Weg ein und du kommst nicht mehr zurück!</string>
+    <string name="i_try_my_best">Ich gebe mein Bestes</string>
+
+    <string name="cave_dialog">Du betrittst ein dunkle Höhle. Je weiter du hineingehst umso dunkler wird es. Achte auf deine Schritte und suche nach einer Feuerstelle</string>
+    <string name="sure">Sicher</string>
+
+    <string name="snow_dialog">Es ist kalt geworden. Der Weg ist eingefroren und rutschig. Pass auf</string>
+    <string name="alright">Alles klar</string>
+
+    <string name="desert_dialog">Du betrittst eine große Wüste. Versuche nicht die Orientierung zu verlieren und hüte dich vor den Sandstürmen</string>
+    <string name="lets_not_get_lost">Ich hoffe ich verirre mich nicht</string>
 </resources>

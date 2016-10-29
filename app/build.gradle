@@ -15,29 +15,30 @@ android {
         applicationId "com.ollum.mazecape"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
-        versionName "3.0"
+        versionCode 12
+        versionName "3.0.1"
         //multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            debuggable true
         }
     }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
-    compile 'com.google.firebase:firebase-ads:9.2.0'
+    compile 'com.google.firebase:firebase-ads:9.8.00'
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+    testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'

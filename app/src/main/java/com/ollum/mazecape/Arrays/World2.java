@@ -20,23 +20,25 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "26"},
             {},
+            {},
             {}
     };
     public static final String[][] CAVE_02 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "ndn", "srt", "nlr", "ntu", "nlt", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "vud", "vdr", "vtu", "lcs", "ndl", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "vur", "vul", "vup", "nud", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndn", "srt", "nlr", "ntu", "zlt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "ntu", "ydl", "sdl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nul", "zup", "nud", "zup", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "olt", "ndr", "nlr", "nlr", "ntd", "ndl", "ort", "ocs", "ocs"},
-            {"ocs", "ocs", "olt", "nur", "nlr", "glt", "frt", "sul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nlr", "glt", "srt", "nul", "ort", "ocs", "ocs"},
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"3", "3", "c", "30"},
+            {"3", "3", "c", "34"},
             {},
-            {}
+            {},
+            {"5,5", "6,4", "7,3", "6,4", "7,5", "6,4"}
     };
     public static final String[][] CAVE_03 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -51,6 +53,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "57"},
+            {},
             {},
             {}
     };
@@ -70,7 +73,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "6", "c", "51"},
             {},
-            {"5,4", "8,7"}
+            {"5,4", "8,7"},
+            {}
     };
     public static final String[][] CAVE_05 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -88,7 +92,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "3", "c", "100"},
             {},
-            {"5,8"}
+            {"5,8"},
+            {}
     };
     public static final String[][] CAVE_06 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -105,7 +110,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "37"},
             {"7,4", "9,5", "5,3", "8,6", "7,7", "7,6", "5,6", "5,8"},
-            {"7,5"}
+            {"7,5"},
+            {}
     };
     public static final String[][] CAVE_07 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -124,6 +130,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "c", "70"},
+            {},
             {},
             {}
     };
@@ -144,7 +151,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "c", "20"},
             {},
-            {"4,7"}
+            {"4,7"},
+            {}
     };
     public static final String[][] CAVE_09 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -163,7 +171,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "49"},
             {"7,3", "4,10", "4,4", "3,7", "6,4", "7,7", "7,6", "3,9", "5,10", "6,10"},
-            {"5,6"}
+            {"5,6"},
+            {}
     };
     public static final String[][] CAVE_10 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -181,7 +190,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "c", "56"},
             {"3,9", "9,3"},
-            {"6,5", "5,6", "7,6", "6,7"}
+            {"6,5", "5,6", "7,6", "6,7"},
+            {}
     };
     public static final String[][] CAVE_11 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -202,6 +212,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "3", "c", "114"},
             {},
+            {},
             {}
     };
     public static final String[][] CAVE_12 = {
@@ -219,6 +230,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "3", "c", "100"},
+            {},
             {},
             {}
     };
@@ -238,7 +250,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "9", "c", "100"},
             {},
-            {"4,6"}
+            {"4,6"},
+            {}
     };
     public static final String[][] CAVE_14 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -257,7 +270,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "100"},
             {},
-            {"7,5"}
+            {"7,5"},
+            {}
     };
     public static final String[][] CAVE_15 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -273,7 +287,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "c", "100"},
             {},
-            {"5,4"}
+            {"5,4"},
+            {}
     };
     public static final String[][] CAVE_16 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -291,6 +306,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"4", "3", "c", "100"},
+            {},
             {},
             {}
     };
@@ -311,7 +327,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "3", "c", "100"},
             {},
-            {"7,4", "5,5", "3,6", "6,9"}
+            {"7,4", "5,5", "3,6", "6,9"},
+            {}
     };
     public static final String[][] CAVE_18 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -338,7 +355,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "6", "c", "100"},
             {"3,11", "3,12", "4,11", "5,11", "7,11", "8,11", "8,12", "10,15", "4,14", "5,14", "7,14", "7,13", "3,18", "9,18"},
-            {"5,7", "9,9"}
+            {"5,7", "9,9"},
+            {}
     };
     public static final String[][] CAVE_19 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -358,6 +376,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "c", "100"},
             {"3,3", "11,11", "7,6", "7,9", "7,8", "7,5", "6,7", "9,7", "8,7", "5,7"},
+            {},
             {}
     };
     public static final String[][] CAVE_20 = {
@@ -380,7 +399,8 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "3", "c", "100"},
             {"5,3", "12,4", "3,5", "4,12", "5,5", "12,12", "9,8", "12,8", "13,9", "13,11", "11,13", "9,13", "9,11", "8,11", "8,12", "7,5", "8,5", "8,3", "9,3", "9,9", "7,8", "4,8", "4,7", "3,13", "3,11", "3,7", "9,5", "11,5"},
-            {"9,12"}
+            {"9,12"},
+            {}
     };
     public static final String[][] CAVE_21 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
@@ -408,6 +428,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"5", "5", "c", "100"},
             {},
+            {},
             {}
     };
     public static final String[][] CAVE_22 = {
@@ -425,6 +446,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"6", "6", "c", "100"},
+            {},
             {},
             {}
     };
@@ -445,6 +467,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"7", "7", "c", "132"},
+            {},
             {},
             {}
     };
@@ -471,6 +494,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "8", "c", "147"},
+            {},
             {},
             {}
     };
@@ -502,6 +526,7 @@ public class World2 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"12", "3", "c", "400"},
+            {},
             {},
             {}
     };

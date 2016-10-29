@@ -78,6 +78,11 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 transaction6.replace(R.id.content, storyFragment, "StoryFragment");
                 transaction6.addToBackStack("StoryFragment");
                 transaction6.commit();
+
+                if (MainActivity.menuBGM != null) {
+                    MainActivity.menuBGM.pause();
+                    MainActivity.menuBGM.seekTo(0);
+                }
                 break;
             case R.id.button_shop:
                 MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -90,10 +95,9 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.button_help:
                 MainActivity.soundPool.play(MainActivity.swoosh1ID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                HelpFragment helpFragment = new HelpFragment();
                 FragmentTransaction transaction4 = MainActivity.fragmentManager.beginTransaction();
                 transaction4.setCustomAnimations(R.anim.in_from_top, R.anim.top_out);
-                transaction4.add(R.id.content, helpFragment, "HelpFragment");
+                transaction4.add(R.id.content, MainActivity.helpFragment, "HelpFragment");
                 transaction4.addToBackStack("HelpFragment");
                 transaction4.commit();
                 MainActivity.helpVisible = true;

@@ -1,5 +1,6 @@
 package com.ollum.mazecape.Fragments;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +14,11 @@ import com.ollum.mazecape.R;
 
 import java.util.ArrayList;
 
+import static com.ollum.mazecape.Activities.MainActivity.volumeMusic;
+
 public class StoryFragment extends Fragment {
 
+    public static MediaPlayer storyBGM;
     LinearLayout linearLayout;
     TextView chapter1, chapter2, chapter3, chapter4;
     TextView chapter1page1, chapter1page2, chapter1page3, chapter1page4, chapter1page5, chapter1page6, chapter1page7, chapter1page8, chapter1page9, chapter1page10;
@@ -194,6 +198,16 @@ public class StoryFragment extends Fragment {
                 chapter4list.get(i).setVisibility(View.INVISIBLE);
             }
         }
+
+        if (storyBGM != null) {
+            storyBGM.reset();
+            storyBGM.release();
+        }
+
+        storyBGM = MediaPlayer.create(getContext(), R.raw.story);
+        storyBGM.setLooping(true);
+        storyBGM.setVolume(volumeMusic, volumeMusic);
+        storyBGM.start();
 
         return view;
     }

@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -22,7 +21,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -43,8 +41,7 @@ import java.util.List;
 
 public class GameFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
-    public static TextView posX, posY;
-    public static MediaPlayer bgm, fire, heartbeat;
+    public static MediaPlayer gameBGM, fireAtmo, heartbeatAtmo;
     public static String[][] currentLevel;
     public static int x;
     public static int y;
@@ -61,7 +58,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     LinearLayout navigation;
     GridView gridViewLevel, gridViewMap;
     ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
-    Button resetLevel, cheatButton;
+    Button resetLevel;
     int stars = 0;
     int darkness = 0;
     int time = 0;
@@ -86,9 +83,12 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     int gridViewColumns = 3;
     int randStep = 0;
     int step = 0;
+    int goalX, goalY;
+    int star1X, star1Y, star2X, star2Y, star3X, star3Y;
     private Handler handler;
 
     public static void setMargins(View v, int l, int t, int r, int b) {
+        Log.d("debug", "setMargins()");
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             p.setMargins(l, t, r, b);
@@ -100,36 +100,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
-        MainActivity.timeLayout.setVisibility(View.VISIBLE);
-        MainActivity.stepsLayout.setVisibility(View.VISIBLE);
+        if (MainMenuFragment.devMode) {
+            TestLevelFragment testLevelFragment = new TestLevelFragment();
+            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+            transaction.replace(R.id.content, testLevelFragment, "TestLevelFragment");
+            transaction.addToBackStack("TestLevelFragment");
+            transaction.commit();
+        }
 
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
-        items = new ArrayList<Integer>();
+        items = new ArrayList<>();
 
-        currentLevel = copyLevel(com.ollum.mazecape.Arrays.Worlds.WORLDS[MainActivity.world][MainActivity.level]);
-        x = Integer.parseInt(currentLevel[currentLevel.length - 3][0]);
-        y = Integer.parseInt(currentLevel[currentLevel.length - 3][1]);
-        scene = currentLevel[currentLevel.length - 3][2];
-
-        if (!(currentLevel[currentLevel.length - 1].length == 0)) {
-            containsTrap = true;
-        } else {
-            containsTrap = false;
-        }
-
-        position = new Point(x, y);
-        discovered.add(new Point(x - 1, y - 1));
-        discovered.add(new Point(x, y - 1));
-        discovered.add(new Point(x + 1, y - 1));
-        discovered.add(new Point(x - 1, y));
-        discovered.add(position);
-        discovered.add(new Point(x + 1, y));
-        discovered.add(new Point(x - 1, y + 1));
-        discovered.add(new Point(x, y + 1));
-        discovered.add(new Point(x + 1, y + 1));
-
-        stepsMade.add(position);
+        MainActivity.timeLayout.setVisibility(View.VISIBLE);
+        MainActivity.stepsLayout.setVisibility(View.VISIBLE);
 
         relativeLayout_Container = (RelativeLayout) view.findViewById(R.id.relativeLayout_Container);
 
@@ -196,61 +181,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar2 = (ImageView) view.findViewById(R.id.imageStar2);
         imageStar3 = (ImageView) view.findViewById(R.id.imageStar3);
 
-        posX = (TextView) view.findViewById(R.id.posX);
-        posY = (TextView) view.findViewById(R.id.posY);
-
         resetLevel = (Button) view.findViewById(R.id.resetLevel);
         resetLevel.setOnClickListener(this);
-
-        cheatButton = (Button) view.findViewById(R.id.cheatButton);
-        cheatButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        cheat++;
-
-                        gridViewLevel.getLayoutParams().width = MainActivity.width;
-                        gridViewLevel.getLayoutParams().height = MainActivity.width;
-                        setMargins(gridViewLevel, 0, 0, 0, MainActivity.width / gridViewColumns);
-                        gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
-
-                        discovered.add(new Point(x - 2, y - 2));
-                        discovered.add(new Point(x - 1, y - 2));
-                        discovered.add(new Point(x, y - 2));
-                        discovered.add(new Point(x + 1, y - 2));
-                        discovered.add(new Point(x + 2, y - 2));
-                        discovered.add(new Point(x - 2, y - 1));
-                        discovered.add(new Point(x + 2, y - 1));
-                        discovered.add(new Point(x - 2, y));
-                        discovered.add(new Point(x + 2, y));
-                        discovered.add(new Point(x - 2, y + 1));
-                        discovered.add(new Point(x + 2, y + 1));
-                        discovered.add(new Point(x - 2, y + 2));
-                        discovered.add(new Point(x - 1, y + 2));
-                        discovered.add(new Point(x, y + 2));
-                        discovered.add(new Point(x + 1, y + 2));
-                        discovered.add(new Point(x + 2, y + 2));
-
-                        gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
-
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        gridViewLevel.getLayoutParams().width = MainActivity.width * 5 / gridViewColumns;
-                        gridViewLevel.getLayoutParams().height = MainActivity.width * 5 / gridViewColumns;
-                        setMargins(gridViewLevel, -MainActivity.width / gridViewColumns, 0, 0, 0);
-                        gridViewLevel.setAdapter(new LevelAdapter(getContext(), 0));
-                        break;
-                }
-                return true;
-            }
-        });
 
         imgSword = (ImageView) view.findViewById(R.id.imgSword);
 
         relativeLayout_UI.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             public void onSwipeTop() {
-                if (allowInput && contains(Movement.MOVE_DOWN, currentLevel[y][x])) {
+                Log.d("debug", "onSwipeTop()");
+                if (allowInput && contains(Movement.MOVE_DOWN, currentLevel[y][x]) && contains(Movement.MOVE_FROM_UP, currentLevel[y + 1][x])) {
                     steps++;
                     moveDown();
                     MainActivity.soundPool.play(MainActivity.stepID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -258,7 +197,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             public void onSwipeRight() {
-                if (allowInput && contains(Movement.MOVE_LEFT, currentLevel[y][x])) {
+                Log.d("debug", "onSwipeRight()");
+                if (allowInput && contains(Movement.MOVE_LEFT, currentLevel[y][x]) && contains(Movement.MOVE_FROM_RIGHT, currentLevel[y][x - 1])) {
                     steps++;
                     moveLeft();
                     MainActivity.soundPool.play(MainActivity.stepID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -266,7 +206,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             public void onSwipeLeft() {
-                if (allowInput && contains(Movement.MOVE_RIGHT, currentLevel[y][x])) {
+                Log.d("debug", "onSwipeLeft()");
+                if (allowInput && contains(Movement.MOVE_RIGHT, currentLevel[y][x]) && contains(Movement.MOVE_FROM_LEFT, currentLevel[y][x + 1])) {
                     steps++;
                     moveRight();
                     MainActivity.soundPool.play(MainActivity.stepID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -274,7 +215,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             public void onSwipeBottom() {
-                if (allowInput && contains(Movement.MOVE_UP, currentLevel[y][x])) {
+                Log.d("debug", "onSwipeBottom()");
+                if (allowInput && contains(Movement.MOVE_UP, currentLevel[y][x]) && contains(Movement.MOVE_FROM_DOWN, currentLevel[y - 1][x])) {
                     steps++;
                     moveUp();
                     MainActivity.soundPool.play(MainActivity.stepID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -329,22 +271,13 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         });
 
         requestNewInterstitial();
-
         reset();
-
-        if (MainMenuFragment.devMode) {
-            LevelFragment levelFragment = new LevelFragment();
-            FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
-            transaction.setCustomAnimations(R.anim.right_in, R.anim.left_out);
-            transaction.replace(R.id.content, levelFragment, "LevelFragment");
-            transaction.addToBackStack("LevelFragment");
-            transaction.commit();
-        }
 
         return view;
     }
 
     private void requestNewInterstitial() {
+        Log.d("debug", "requestNewInterstitial()");
         //AdRequest adRequest = new AdRequest.Builder().build();
         if (MainActivity.showAds) {
             mInterstitialAd.loadAd(MainActivity.adRequest);
@@ -354,19 +287,20 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("debug", "onResume()");
         MainActivity.timeLayout.setVisibility(View.VISIBLE);
         MainActivity.stepsLayout.setVisibility(View.VISIBLE);
 
-        if (bgm != null) {
-            bgm.start();
+        if (gameBGM != null) {
+            gameBGM.start();
         }
 
-        if (fire != null) {
-            fire.start();
+        if (fireAtmo != null) {
+            fireAtmo.start();
         }
 
-        if (heartbeat != null) {
-            heartbeat.start();
+        if (heartbeatAtmo != null) {
+            heartbeatAtmo.start();
         }
 
 
@@ -380,6 +314,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     @Override
     public void onPause() {
         super.onPause();
+        Log.d("debug", "onPause()");
         MainActivity.timeLayout.setVisibility(View.INVISIBLE);
         MainActivity.stepsLayout.setVisibility(View.INVISIBLE);
 
@@ -387,25 +322,26 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             handler.removeCallbacksAndMessages(null);
         }
 
-        if (bgm != null && bgm.isPlaying()) {
-            bgm.pause();
-            bgm.seekTo(0);
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            gameBGM.pause();
+            gameBGM.seekTo(0);
         }
 
-        if (fire != null && fire.isPlaying()) {
-            fire.pause();
-            fire.seekTo(0);
+        if (fireAtmo != null && fireAtmo.isPlaying()) {
+            fireAtmo.pause();
+            fireAtmo.seekTo(0);
         }
 
-        if (heartbeat != null && heartbeat.isPlaying()) {
-            heartbeat.pause();
-            heartbeat.seekTo(0);
+        if (heartbeatAtmo != null && heartbeatAtmo.isPlaying()) {
+            heartbeatAtmo.pause();
+            heartbeatAtmo.seekTo(0);
         }
 
         MainActivity.stopTime = true;
     }
 
     public void reset() {
+        Log.d("debug", "reset()");
         MainActivity.livesCounter.setText("" + (MainActivity.lives));
         MainActivity.starsCounter.setText("" + MainActivity.allStars);
 
@@ -421,6 +357,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             if (MainActivity.menuBGM != null) {
                 MainActivity.menuBGM.start();
             }
+            return;
         }
 
         switch (MainActivity.levelSpeed) {
@@ -440,16 +377,56 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         currentLevel = copyLevel(Worlds.WORLDS[MainActivity.world][MainActivity.level]);
 
-        scene = currentLevel[currentLevel.length - 3][2];
-        minSteps = Integer.parseInt(currentLevel[currentLevel.length - 3][3]);
-        x = Integer.parseInt(currentLevel[currentLevel.length - 3][0]);
-        y = Integer.parseInt(currentLevel[currentLevel.length - 3][1]);
+        scene = currentLevel[currentLevel.length - 4][2];
+        minSteps = Integer.parseInt(currentLevel[currentLevel.length - 4][3]);
+        x = Integer.parseInt(currentLevel[currentLevel.length - 4][0]);
+        y = Integer.parseInt(currentLevel[currentLevel.length - 4][1]);
+
+        for (int i = 0; i < currentLevel.length - 4; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(Tiles.GOAL, currentLevel[i][k])) {
+                    goalX = k;
+                    goalY = i;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currentLevel.length - 4; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(Tiles.STAR, currentLevel[i][k])) {
+                    star1X = k;
+                    star1Y = i;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currentLevel.length - 4; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(Tiles.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X)) {
+                    star2X = k;
+                    star2Y = i;
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < currentLevel.length - 4; i++) {
+            for (int k = 0; k < currentLevel[i].length; k++) {
+                if (contains(Tiles.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X) && !(i == star2Y && k == star2X)) {
+                    star3X = k;
+                    star3Y = i;
+                    break;
+                }
+            }
+        }
 
         if (scene.equals("m")) {
             movementSpeed *= 2;
         }
 
-        if (!(currentLevel[currentLevel.length - 1].length == 0)) {
+        if (!(currentLevel[currentLevel.length - 2].length == 0)) {
             containsTrap = true;
         } else {
             containsTrap = false;
@@ -464,7 +441,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         items.clear();
 
-        for (int i = 2; i < GameFragment.currentLevel.length - 5; i++) {
+        for (int i = 2; i < GameFragment.currentLevel.length - 6; i++) {
             for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
                 items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
             }
@@ -500,10 +477,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         stepsMade.add(position);
 
         relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+        relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
 
         gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
         gridViewLevel.setNumColumns(currentLevel[0].length - 4);
 
         switch (gridViewColumns) {
@@ -579,76 +556,75 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         MainActivity.title.setText(getString(R.string.level) + " " + (MainActivity.world + 1) + " - " + (MainActivity.level + 1));
         MainActivity.stepsCounter.setText("" + steps);
         MainActivity.timeCounter.setText("" + time);
-        posX.setText("posX: " + x);
-        posY.setText("posY: " + y);
         hasSword = false;
         mapRevealed = false;
         imgSword.setVisibility(View.INVISIBLE);
 
-        if (bgm != null) {
-            bgm.reset();
-            bgm.release();
+        if (gameBGM != null) {
+            gameBGM.reset();
+            gameBGM.release();
         }
 
         switch (scene) {
             case "f":
-                bgm = MediaPlayer.create(getContext(), R.raw.forest);
+                gameBGM = MediaPlayer.create(getContext(), R.raw.forest);
                 break;
             case "c":
-                bgm = MediaPlayer.create(getContext(), R.raw.cave);
+                gameBGM = MediaPlayer.create(getContext(), R.raw.cave);
                 break;
             case "s":
-                bgm = MediaPlayer.create(getContext(), R.raw.snow);
+                gameBGM = MediaPlayer.create(getContext(), R.raw.snow);
                 break;
             case "d":
-                bgm = MediaPlayer.create(getContext(), R.raw.desert);
+                gameBGM = MediaPlayer.create(getContext(), R.raw.desert);
                 break;
             case "m":
-                bgm = MediaPlayer.create(getContext(), R.raw.moon);
+                gameBGM = MediaPlayer.create(getContext(), R.raw.moon);
                 break;
         }
 
-        if (bgm != null) {
-            bgm.setLooping(true);
-            bgm.setVolume(MainActivity.volumeMusic, MainActivity.volumeMusic);
-            bgm.start();
+        if (gameBGM != null) {
+            gameBGM.setLooping(true);
+            gameBGM.setVolume(MainActivity.volumeMusic, MainActivity.volumeMusic);
+            gameBGM.start();
         }
 
-        if (fire != null) {
-            fire.reset();
-            fire.release();
+        if (fireAtmo != null) {
+            fireAtmo.reset();
+            fireAtmo.release();
         }
 
-        fire = MediaPlayer.create(getContext(), R.raw.campfire);
-        fire.setLooping(true);
-        fire.setVolume(volumeFire, volumeFire);
-        fire.start();
+        fireAtmo = MediaPlayer.create(getContext(), R.raw.campfire);
+        fireAtmo.setLooping(true);
+        fireAtmo.setVolume(volumeFire, volumeFire);
+        fireAtmo.start();
 
-        if (heartbeat != null) {
-            heartbeat.reset();
-            heartbeat.release();
+        if (heartbeatAtmo != null) {
+            heartbeatAtmo.reset();
+            heartbeatAtmo.release();
         }
 
-        heartbeat = MediaPlayer.create(getContext(), R.raw.heartbeat_breathing);
-        heartbeat.setLooping(true);
-        heartbeat.setVolume(volumeHeart, volumeHeart);
-        heartbeat.start();
+        heartbeatAtmo = MediaPlayer.create(getContext(), R.raw.heartbeat_breathing);
+        heartbeatAtmo.setLooping(true);
+        heartbeatAtmo.setVolume(volumeHeart, volumeHeart);
+        heartbeatAtmo.start();
 
         imageStar1.setImageResource(R.drawable.star_empty);
         imageStar2.setImageResource(R.drawable.star_empty);
         imageStar3.setImageResource(R.drawable.star_empty);
 
         SharedPreferences.saveGame(getContext());
-        checkDialog();
+        checkTutorial();
 
-        Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
+        /*Log.d("debug", "heigth with statusbar: " + MainActivity.size.y);
         Log.d("debug", "height without statusbar: " + MainActivity.height);
         Log.d("debug", "rel. Layout Container height: " + relativeLayout_Container.getHeight());
         Log.d("debug", "UI Container height: " + relativeLayout_UI.getHeight());
-        Log.d("debug", "content height: " + MainActivity.content.getHeight());
+        Log.d("debug", "content height: " + MainActivity.content.getHeight());*/
     }
 
     public void move() {
+        Log.d("debug", "move()");
         allowInput = false;
 
         switch (gridViewColumns) {
@@ -691,8 +667,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         discovered.add(new Point(x + 1, y + 1));
         stepsMade.add(position);
         MainActivity.stepsCounter.setText("" + steps);
-        posX.setText("posX: " + x);
-        posY.setText("posY: " + y);
 
         if (scene.equals("c") && darkness < 15 && steps % ((MainActivity.levelTorch + 2) * 2) == 0) {
             darkness++;
@@ -700,8 +674,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
 
         if (containsTrap) {
-            for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
-                String str = currentLevel[currentLevel.length - 1][i];
+            for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
+                String str = currentLevel[currentLevel.length - 2][i];
                 String[] result = str.split(",");
                 int trapX = Integer.parseInt(result[0]);
                 int trapY = Integer.parseInt(result[1]);
@@ -718,7 +692,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void moveDown() {
-        if (contains(Movement.MOVE_DOWN, currentLevel[y][x])) {
+        Log.d("debug", "moveDown()");
+        if (contains(Movement.MOVE_DOWN, currentLevel[y][x]) && contains(Movement.MOVE_FROM_UP, currentLevel[y + 1][x])) {
             direction = "dn";
             checkCrack();
             y++;
@@ -751,7 +726,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void moveUp() {
-        if (contains(Movement.MOVE_UP, currentLevel[y][x])) {
+        Log.d("debug", "moveUp()");
+        if (contains(Movement.MOVE_UP, currentLevel[y][x]) && contains(Movement.MOVE_FROM_DOWN, currentLevel[y - 1][x])) {
             direction = "up";
             checkCrack();
             y--;
@@ -786,7 +762,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void moveLeft() {
-        if (contains(Movement.MOVE_LEFT, currentLevel[y][x])) {
+        Log.d("debug", "moveLeft()");
+        if (contains(Movement.MOVE_LEFT, currentLevel[y][x]) && contains(Movement.MOVE_FROM_RIGHT, currentLevel[y][x - 1])) {
             direction = "lt";
             checkCrack();
             x--;
@@ -819,7 +796,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void moveRight() {
-        if (contains(Movement.MOVE_RIGHT, currentLevel[y][x])) {
+        Log.d("debug", "moveRight()");
+        if (contains(Movement.MOVE_RIGHT, currentLevel[y][x]) && contains(Movement.MOVE_FROM_LEFT, currentLevel[y][x + 1])) {
             direction = "rt";
             checkCrack();
             x++;
@@ -853,43 +831,35 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkFire() {
+        Log.d("debug", "checkFire()");
         if (contains(Tiles.FIRE, currentLevel[y][x])) {
             darkness = 0;
             imageViewDarkness.setImageResource(Darkness.DARKNESS_SMALL[darkness]);
 
             volumeFire = MainActivity.volumeSound;
-            if (fire != null) {
-                fire.setVolume(volumeFire, volumeFire);
+            if (fireAtmo != null) {
+                fireAtmo.setVolume(volumeFire, volumeFire);
             }
             return true;
         } else if (contains(Tiles.FIRE, currentLevel[y - 1][x - 1]) || contains(Tiles.FIRE, currentLevel[y - 1][x]) || contains(Tiles.FIRE, currentLevel[y - 1][x + 1]) ||
                 contains(Tiles.FIRE, currentLevel[y][x - 1]) || contains(Tiles.FIRE, currentLevel[y][x]) || contains(Tiles.FIRE, currentLevel[y][x + 1]) ||
                 contains(Tiles.FIRE, currentLevel[y + 1][x - 1]) || contains(Tiles.FIRE, currentLevel[y + 1][x]) || contains(Tiles.FIRE, currentLevel[y + 1][x + 1])) {
             volumeFire = MainActivity.volumeSound * 0.5f;
-            if (fire != null) {
-                fire.setVolume(volumeFire, volumeFire);
+            if (fireAtmo != null) {
+                fireAtmo.setVolume(volumeFire, volumeFire);
             }
             return false;
-        } /*else if (contains(Tiles.FIRE, currentLevel[y - 2][x - 2]) || contains(Tiles.FIRE, currentLevel[y - 2][x - 1]) || contains(Tiles.FIRE, currentLevel[y - 2][x]) || contains(Tiles.FIRE, currentLevel[y - 2][x + 1]) || contains(Tiles.FIRE, currentLevel[y - 2][x + 2]) ||
-                contains(Tiles.FIRE, currentLevel[y - 1][x - 2]) || contains(Tiles.FIRE, currentLevel[y - 1][x - 1]) || contains(Tiles.FIRE, currentLevel[y - 1][x]) || contains(Tiles.FIRE, currentLevel[y - 1][x + 1]) || contains(Tiles.FIRE, currentLevel[y - 1][x + 2]) ||
-                contains(Tiles.FIRE, currentLevel[y][x - 2]) || contains(Tiles.FIRE, currentLevel[y][x - 1]) || contains(Tiles.FIRE, currentLevel[y][x]) || contains(Tiles.FIRE, currentLevel[y][x + 1]) || contains(Tiles.FIRE, currentLevel[y][x + 2]) ||
-                contains(Tiles.FIRE, currentLevel[y + 1][x - 2]) || contains(Tiles.FIRE, currentLevel[y + 1][x - 1]) || contains(Tiles.FIRE, currentLevel[y + 1][x]) || contains(Tiles.FIRE, currentLevel[y + 1][x + 1]) || contains(Tiles.FIRE, currentLevel[y + 1][x + 2]) ||
-                contains(Tiles.FIRE, currentLevel[y + 2][x - 2]) || contains(Tiles.FIRE, currentLevel[y + 2][x - 1]) || contains(Tiles.FIRE, currentLevel[y + 2][x]) || contains(Tiles.FIRE, currentLevel[y + 2][x + 1]) || contains(Tiles.FIRE, currentLevel[y + 2][x + 2])) {
-            volumeFire = MainActivity.volumeSound * 0.33f;
-            if (fire != null) {
-                fire.setVolume(volumeFire, volumeFire);
-            }
-            return false;
-        }*/ else {
+        } else {
             volumeFire = 0;
-            if (fire != null) {
-                fire.setVolume(volumeFire, volumeFire);
+            if (fireAtmo != null) {
+                fireAtmo.setVolume(volumeFire, volumeFire);
             }
         }
         return false;
     }
 
     public boolean checkSword() {
+        Log.d("debug", "checkSword()");
         if (contains(Tiles.WEAPON, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.WEAPON, currentLevel[y][x])];
             items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
@@ -914,19 +884,20 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkPortal() {
+        Log.d("debug", "checkPortal()");
         if (contains(Tiles.PORTAL, currentLevel[y][x])) {
             allowInput = false;
             int oldX = x;
             int oldY = y;
-            for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
-                String str = currentLevel[currentLevel.length - 2][i];
+            for (int i = 0; i < currentLevel[currentLevel.length - 3].length; i++) {
+                String str = currentLevel[currentLevel.length - 3][i];
                 String[] result = str.split(",");
                 String[] coordinates;
                 if ((x == Integer.parseInt(result[0])) && (y == Integer.parseInt(result[1]))) {
                     if (i % 2 == 0) {
-                        coordinates = currentLevel[currentLevel.length - 2][i + 1].split(",");
+                        coordinates = currentLevel[currentLevel.length - 3][i + 1].split(",");
                     } else {
-                        coordinates = currentLevel[currentLevel.length - 2][i - 1].split(",");
+                        coordinates = currentLevel[currentLevel.length - 3][i - 1].split(",");
                     }
                     x = Integer.parseInt(coordinates[0]);
                     y = Integer.parseInt(coordinates[1]);
@@ -999,7 +970,100 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         return false;
     }
 
+    public boolean checkSwitch() {
+        Log.d("debug", "checkSwitch()");
+        if (contains(Tiles.SWITCH, currentLevel[y][x])) {
+            MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+            MainActivity.soundPool.play(MainActivity.trapInactiveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+            for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
+                String plate = currentLevel[currentLevel.length - 1][i];
+                String[] coordinatesPlate = plate.split(",");
+                if ((x == Integer.parseInt(coordinatesPlate[0])) && (y == Integer.parseInt(coordinatesPlate[1]))) {
+                    String tile = currentLevel[currentLevel.length - 1][i + 1];
+                    String[] coordinatesTile = tile.split(",");
+                    int tileX = Integer.parseInt(coordinatesTile[0]);
+                    int tileY = Integer.parseInt(coordinatesTile[1]);
+                    switch (currentLevel[tileY][tileX].substring(1, 3)) {
+                        case "lt":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "up";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "rt":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dn";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "up":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "rt";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "dn":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "lt";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "lr":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ud";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "ud":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "lr";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "ur":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dr";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "dr":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dl";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "dl":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ul";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "ul":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ur";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "tr":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "td";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "td":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tl";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "tl":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tu";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                        case "tu":
+                            currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tr";
+                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            levelAdapter.notifyDataSetChanged();
+                            break;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean checkMonster() {
+        Log.d("debug", "checkMonster()");
         if (contains(Tiles.MONSTER, currentLevel[y][x])) {
             if (!hasSword) {
                 gameOver();
@@ -1019,6 +1083,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkTrap() {
+        Log.d("debug", "checkTrap()");
         if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !hasDialog) {
             gameOver();
             return true;
@@ -1027,6 +1092,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkBridge() {
+        Log.d("debug", "checkBridge()");
         if (contains(Tiles.BRIDGE, currentLevel[y][x])) {
             MainActivity.soundPool.play(MainActivity.crackID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
 
@@ -1035,6 +1101,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 @Override
                 public void run() {
                     if (contains(Tiles.BRIDGE, currentLevel[y][x])) {
+                        currentLevel[y][x] = Tiles.BRIDGE_HOLE[getIndex(Tiles.BRIDGE, currentLevel[y][x])];
+                        items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+                        levelAdapter.notifyDataSetChanged();
                         MainActivity.soundPool.play(MainActivity.holeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         gameOver();
                     }
@@ -1046,6 +1115,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkCrack() {
+        Log.d("debug", "checkCrack()");
         if (contains(Tiles.CRACK, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.HOLE[getIndex(Tiles.CRACK, currentLevel[y][x])];
             items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
@@ -1057,6 +1127,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkHole() {
+        Log.d("debug", "checkHole()");
         if (contains(Tiles.HOLE, currentLevel[y][x]) && !hasDialog) {
             gameOver();
             return true;
@@ -1065,49 +1136,50 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkDarkness() {
+        Log.d("debug", "checkDarkness()");
         if (darkness > 14 && !hasDialog) {
             gameOver();
             return true;
         } else if (darkness < 12) {
             volumeBGM = MainActivity.volumeMusic;
-            if (bgm != null) {
-                bgm.setVolume(volumeBGM, volumeBGM);
+            if (gameBGM != null) {
+                gameBGM.setVolume(volumeBGM, volumeBGM);
             }
             volumeHeart = 0;
-            if (heartbeat != null) {
-                heartbeat.setVolume(volumeHeart, volumeHeart);
+            if (heartbeatAtmo != null) {
+                heartbeatAtmo.setVolume(volumeHeart, volumeHeart);
             }
         }
 
         switch (darkness) {
             case 12:
                 volumeBGM = MainActivity.volumeMusic * 0.66f;
-                if (bgm != null) {
-                    bgm.setVolume(volumeBGM, volumeBGM);
+                if (gameBGM != null) {
+                    gameBGM.setVolume(volumeBGM, volumeBGM);
                 }
                 volumeHeart = MainActivity.volumeSound * 0.33f;
-                if (heartbeat != null) {
-                    heartbeat.setVolume(volumeHeart, volumeHeart);
+                if (heartbeatAtmo != null) {
+                    heartbeatAtmo.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
             case 13:
                 volumeBGM = MainActivity.volumeMusic * 0.33f;
-                if (bgm != null) {
-                    bgm.setVolume(volumeBGM, volumeBGM);
+                if (gameBGM != null) {
+                    gameBGM.setVolume(volumeBGM, volumeBGM);
                 }
                 volumeHeart = MainActivity.volumeSound * 0.66f;
-                if (heartbeat != null) {
-                    heartbeat.setVolume(volumeHeart, volumeHeart);
+                if (heartbeatAtmo != null) {
+                    heartbeatAtmo.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
             case 14:
                 volumeBGM = 0;
-                if (bgm != null) {
-                    bgm.setVolume(volumeBGM, volumeBGM);
+                if (gameBGM != null) {
+                    gameBGM.setVolume(volumeBGM, volumeBGM);
                 }
                 volumeHeart = 1;
-                if (heartbeat != null) {
-                    heartbeat.setVolume(volumeHeart, volumeHeart);
+                if (heartbeatAtmo != null) {
+                    heartbeatAtmo.setVolume(volumeHeart, volumeHeart);
                 }
                 break;
         }
@@ -1115,6 +1187,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkStar() {
+        Log.d("debug", "checkStar()");
         if (contains(Tiles.STAR, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.STAR, currentLevel[y][x])];
 
@@ -1151,7 +1224,24 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         return false;
     }
 
+    private void showDiary(int title, int subtitle, int message, int button) {
+        Log.d("debug", "showDiary()");
+        MainActivity.stopTime = true;
+        hasDialog = true;
+
+        MainActivity.diaryTitle = getString(title);
+        MainActivity.diarySubtitle = getString(subtitle);
+        MainActivity.diaryMessage = getString(message);
+        MainActivity.diaryButton = getString(button);
+
+        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+        transaction.add(R.id.content, MainActivity.diaryFragment, "DiaryFragment");
+        transaction.addToBackStack("DiaryFragment");
+        transaction.commit();
+    }
+
     public boolean checkDiary() {
+        Log.d("debug", "checkDiary()");
         if (contains(Tiles.DIARY, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.DIARY, currentLevel[y][x])];
 
@@ -1171,656 +1261,136 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 case 0:
                     switch (MainActivity.level + 1) {
                         case 3:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_1));
-                            builder.setMessage(R.string.chapter_1_page_1);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_1, R.string.chapter_1_page_1, R.string.interesting);
                             break;
                         case 6:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_2));
-                            builder.setMessage(R.string.chapter_1_page_2);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_2, R.string.chapter_1_page_2, R.string.interesting);
                             break;
                         case 9:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_3));
-                            builder.setMessage(R.string.chapter_1_page_3);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_3, R.string.chapter_1_page_3, R.string.interesting);
                             break;
                         case 12:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_4));
-                            builder.setMessage(R.string.chapter_1_page_4);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_4, R.string.chapter_1_page_4, R.string.interesting);
                             break;
                         case 15:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_5));
-                            builder.setMessage(R.string.chapter_1_page_5);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_5, R.string.chapter_1_page_5, R.string.interesting);
                             break;
                         case 18:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_6));
-                            builder.setMessage(R.string.chapter_1_page_6);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_6, R.string.chapter_1_page_6, R.string.interesting);
                             break;
                         case 21:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_7));
-                            builder.setMessage(R.string.chapter_1_page_7);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_7, R.string.chapter_1_page_7, R.string.interesting);
                             break;
                         case 24:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_8));
-                            builder.setMessage(R.string.chapter_1_page_8);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_8, R.string.chapter_1_page_8, R.string.interesting);
                             break;
                         case 27:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_9));
-                            builder.setMessage(R.string.chapter_1_page_9);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_9, R.string.chapter_1_page_9, R.string.interesting);
                             break;
                         case 30:
-                            builder.setTitle(getString(R.string.chapter_1) + ", " + getString(R.string.page_10));
-                            builder.setMessage(R.string.chapter_1_page_10);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_1, R.string.page_10, R.string.chapter_1_page_10, R.string.interesting);
                             break;
                     }
                     break;
                 case 1:
                     switch (MainActivity.level + 1) {
                         case 3:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_1);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_1, R.string.chapter_2_page_1, R.string.interesting);
                             break;
                         case 6:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_2);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_2, R.string.chapter_2_page_2, R.string.interesting);
                             break;
                         case 9:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_3);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_3, R.string.chapter_2_page_3, R.string.interesting);
                             break;
                         case 12:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_4);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_4, R.string.chapter_2_page_4, R.string.interesting);
                             break;
                         case 15:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_5);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_5, R.string.chapter_2_page_5, R.string.interesting);
                             break;
                         case 18:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_6);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_6, R.string.chapter_2_page_6, R.string.interesting);
                             break;
                         case 21:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_7);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_7, R.string.chapter_2_page_7, R.string.interesting);
                             break;
                         case 24:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_8);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_8, R.string.chapter_2_page_8, R.string.interesting);
                             break;
                         case 27:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_9);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_9, R.string.chapter_2_page_9, R.string.interesting);
                             break;
                         case 30:
-                            builder.setTitle(R.string.chapter_2);
-                            builder.setMessage(R.string.chapter_2_page_10);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_2, R.string.page_10, R.string.chapter_2_page_10, R.string.interesting);
                             break;
                     }
                     break;
                 case 2:
                     switch (MainActivity.level + 1) {
                         case 3:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_1);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_1, R.string.chapter_3_page_1, R.string.interesting);
                             break;
                         case 6:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_2);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_2, R.string.chapter_3_page_2, R.string.interesting);
                             break;
                         case 9:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_3);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_3, R.string.chapter_3_page_3, R.string.interesting);
                             break;
                         case 12:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_4);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_4, R.string.chapter_3_page_4, R.string.interesting);
                             break;
                         case 15:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_5);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_5, R.string.chapter_3_page_5, R.string.interesting);
                             break;
                         case 18:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_6);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_6, R.string.chapter_3_page_6, R.string.interesting);
                             break;
                         case 21:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_7);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_7, R.string.chapter_3_page_7, R.string.interesting);
                             break;
                         case 24:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_8);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_8, R.string.chapter_3_page_8, R.string.interesting);
                             break;
                         case 27:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_9);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_9, R.string.chapter_3_page_9, R.string.interesting);
                             break;
                         case 30:
-                            builder.setTitle(R.string.chapter_3);
-                            builder.setMessage(R.string.chapter_3_page_10);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_3, R.string.page_10, R.string.chapter_3_page_10, R.string.interesting);
                             break;
                     }
                     break;
                 case 3:
                     switch (MainActivity.level + 1) {
                         case 3:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_1);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_1, R.string.chapter_4_page_1, R.string.interesting);
                             break;
                         case 6:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_2);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_2, R.string.chapter_4_page_2, R.string.interesting);
                             break;
                         case 9:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_3);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_3, R.string.chapter_4_page_3, R.string.interesting);
                             break;
                         case 12:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_4);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_4, R.string.chapter_4_page_4, R.string.interesting);
                             break;
                         case 15:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_5);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_5, R.string.chapter_4_page_5, R.string.interesting);
                             break;
                         case 18:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_6);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_6, R.string.chapter_4_page_6, R.string.interesting);
                             break;
                         case 21:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_7);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_7, R.string.chapter_4_page_7, R.string.interesting);
                             break;
                         case 24:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_8);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_8, R.string.chapter_4_page_8, R.string.interesting);
                             break;
                         case 27:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_9);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_9, R.string.chapter_4_page_9, R.string.interesting);
                             break;
                         case 30:
-                            builder.setTitle(R.string.chapter_4);
-                            builder.setMessage(R.string.chapter_4_page_10);
-                            builder.setPositiveButton(R.string.interesting, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                    MainActivity.stopTime = false;
-                                    hasDialog = false;
-                                    dialog.dismiss();
-                                }
-                            });
-                            builder.setCancelable(false);
-                            builder.create();
-                            builder.show();
+                            showDiary(R.string.chapter_4, R.string.page_10, R.string.chapter_4_page_10, R.string.interesting);
                             break;
                     }
                     break;
@@ -1832,21 +1402,22 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void gameOver() {
+        Log.d("debug", "gameOver()");
         allowInput = false;
         MainActivity.stopTime = true;
         hasDialog = true;
         MainActivity.soundPool.play(MainActivity.deathID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
 
-        if (bgm != null && bgm.isPlaying()) {
-            bgm.pause();
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            gameBGM.pause();
         }
 
-        if (fire != null && fire.isPlaying()) {
-            fire.pause();
+        if (fireAtmo != null && fireAtmo.isPlaying()) {
+            fireAtmo.pause();
         }
 
-        if (heartbeat != null && heartbeat.isPlaying()) {
-            heartbeat.pause();
+        if (heartbeatAtmo != null && heartbeatAtmo.isPlaying()) {
+            heartbeatAtmo.pause();
         }
 
         if (darkness > 14) {
@@ -1863,16 +1434,16 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         dialog.dismiss();
                         MainActivity.stopTime = false;
                         imageViewDarkness.setImageResource(Darkness.DARKNESS_SMALL[darkness]);
-                        if (bgm != null) {
-                            bgm.start();
+                        if (gameBGM != null) {
+                            gameBGM.start();
                         }
 
-                        if (fire != null) {
-                            fire.start();
+                        if (fireAtmo != null) {
+                            fireAtmo.start();
                         }
 
-                        if (heartbeat != null) {
-                            heartbeat.start();
+                        if (heartbeatAtmo != null) {
+                            heartbeatAtmo.start();
                         }
                         SharedPreferences.saveGame(getContext());
                     }
@@ -1890,16 +1461,16 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             dialog.dismiss();
                             MainActivity.stopTime = false;
                             imageViewDarkness.setImageResource(Darkness.DARKNESS_SMALL[darkness]);
-                            if (bgm != null) {
-                                bgm.start();
+                            if (gameBGM != null) {
+                                gameBGM.start();
                             }
 
-                            if (fire != null) {
-                                fire.start();
+                            if (fireAtmo != null) {
+                                fireAtmo.start();
                             }
 
-                            if (heartbeat != null) {
-                                heartbeat.start();
+                            if (heartbeatAtmo != null) {
+                                heartbeatAtmo.start();
                             }
                             SharedPreferences.saveGame(getContext());
                         } else {
@@ -1987,7 +1558,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 SharedPreferences.saveGame(getContext());
-                                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
+                                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
                                     mInterstitialAd.show();
                                 } else {
                                     reset();
@@ -2085,7 +1656,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         SharedPreferences.saveGame(getContext());
-                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
+                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
                             mInterstitialAd.show();
                         } else {
                             reset();
@@ -2114,6 +1685,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean checkWin() {
+        Log.d("debug", "checkWin()");
         if (contains(Tiles.GOAL, currentLevel[y][x])) {
             imageViewPlayer.setVisibility(View.INVISIBLE);
             MainActivity.resetCount++;
@@ -2551,7 +2123,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         MainActivity.level++;
-                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
+                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
                             mInterstitialAd.show();
                         } else {
                             reset();
@@ -2596,7 +2168,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                    if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
+                    if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
                         mInterstitialAd.show();
                     } else {
                         reset();
@@ -2605,16 +2177,16 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             });
             builder.show();
 
-            if (bgm != null && bgm.isPlaying()) {
-                bgm.pause();
+            if (gameBGM != null && gameBGM.isPlaying()) {
+                gameBGM.pause();
             }
 
-            if (fire != null && fire.isPlaying()) {
-                fire.pause();
+            if (fireAtmo != null && fireAtmo.isPlaying()) {
+                fireAtmo.pause();
             }
 
-            if (heartbeat != null && heartbeat.isPlaying()) {
-                heartbeat.pause();
+            if (heartbeatAtmo != null && heartbeatAtmo.isPlaying()) {
+                heartbeatAtmo.pause();
             }
 
             MainActivity.soundPool.play(MainActivity.winID, MainActivity.volumeSound / 2, MainActivity.volumeSound / 2, 1, 0, 1);
@@ -2624,132 +2196,68 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         return false;
     }
 
-    public void checkDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    private void showTutorial(int title, int message, int button) {
+        Log.d("debug", "showTutorial()");
+        MainActivity.stopTime = true;
+        hasDialog = true;
+
+        MainActivity.tutorialTitle = getString(title);
+        MainActivity.tutorialMessage = getString(message);
+        MainActivity.tutorialButton = getString(button);
+
+        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+        transaction.add(R.id.screen, MainActivity.tutorialFragment, "TutorialFragment");
+        transaction.addToBackStack("TutorialFragment");
+        transaction.commit();
+    }
+
+    public void checkTutorial() {
+        Log.d("debug", "checkTutorial()");
         if (MainActivity.maxWorld == MainActivity.world) {
             if (MainActivity.maxLevel[MainActivity.world] == MainActivity.level) {
                 switch (MainActivity.world) {
                     case 0:
                         switch (MainActivity.level) {
                             case 0:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.welcome_to_mazecape);
-                                builder.setMessage(R.string.welcome_dialog);
-                                builder.setPositiveButton(R.string.lets_get_started, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.welcome_to_mazecape, R.string.welcome_dialog, R.string.lets_get_started);
+                                break;
+                            case 2:
+                                showTutorial(R.string.diary, R.string.diary_dialog, R.string.interesting);
                                 break;
                             case 4:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.moster);
-                                builder.setMessage(R.string.monster_dialog);
-                                builder.setPositiveButton(R.string.i_can_handle_that, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.moster, R.string.monster_dialog, R.string.i_can_handle_that);
                                 break;
                             case 6:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.portal);
-                                builder.setMessage(R.string.portal_dialog);
-                                builder.setPositiveButton(R.string.awesome, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.portal, R.string.portal_dialog, R.string.awesome);
                                 break;
+                            case 7:
+                                showTutorial(R.string.bridge, R.string.bridge_dialog, R.string.alright);
+                                break;
+                            case 9:
+                                showTutorial(R.string.fire, R.string.fire_dialog, R.string.nice);
+                                break;
+                            case 11:
+                                showTutorial(R.string.crack, R.string.crack_dialog, R.string.i_try_my_best);
                         }
                         break;
                     case 1:
                         switch (MainActivity.level) {
                             case 0:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.cave);
-                                builder.setMessage(R.string.cave_dialog);
-                                builder.setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.cave, R.string.cave_dialog, R.string.sure);
                                 break;
                         }
                         break;
                     case 2:
                         switch (MainActivity.level) {
                             case 0:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.snow);
-                                builder.setMessage(R.string.snow_dialog);
-                                builder.setPositiveButton(R.string.alright, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.snow, R.string.snow_dialog, R.string.alright);
                                 break;
                         }
                         break;
                     case 3:
                         switch (MainActivity.level) {
                             case 0:
-                                MainActivity.stopTime = true;
-                                hasDialog = true;
-                                builder.setTitle(R.string.desert);
-                                builder.setMessage(R.string.desert_dialog);
-                                builder.setPositiveButton(R.string.lets_not_get_lost, new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                                        MainActivity.stopTime = false;
-                                        hasDialog = false;
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setCancelable(false);
-                                builder.create();
-                                builder.show();
+                                showTutorial(R.string.desert, R.string.desert_dialog, R.string.lets_not_get_lost);
                                 break;
                         }
                         break;
@@ -2759,6 +2267,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public String[][] rotateLevel(String[][] oldArray) {
+        Log.d("debug", "rotateLevel()");
         /*System.out.println("oldArray");
         for (int i = 0; i < oldArray.length; i++) {
             for (int k = 0; k < oldArray[i].length; k++) {
@@ -2769,115 +2278,138 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         System.out.println("--------------------------------------");*/
 
         //rotate level by 90 degrees cw
-        String[][] newArray = new String[oldArray[0].length + 3][oldArray.length - 3];
-        for (int i = 0; i < oldArray.length - 3; i++) {
+        String[][] newArray = new String[oldArray[0].length + 4][oldArray.length - 4];
+        for (int i = 0; i < oldArray.length - 4; i++) {
             for (int k = 0; k < oldArray[i].length; k++) {
                 switch (oldArray[i][k].substring(1, 3)) {
                     case "lt":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "up";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "up";
                         break;
                     case "rt":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "dn";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "dn";
                         break;
                     case "up":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "rt";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "rt";
                         break;
                     case "dn":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "lt";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "lt";
                         break;
                     case "lr":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ud";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ud";
                         break;
                     case "ud":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "lr";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "lr";
                         break;
                     case "ur":
                         if (oldArray[i][k].substring(0, 1).equals("j")) {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "rd";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "rd";
                         } else {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "dr";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "dr";
                         }
                         break;
                     case "ul":
                         if (oldArray[i][k].substring(0, 1).equals("j")) {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ru";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ru";
                         } else {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ur";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ur";
                         }
                         break;
                     case "dr":
                         if (oldArray[i][k].substring(0, 1).equals("j")) {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ld";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ld";
                         } else {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "dl";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "dl";
                         }
                         break;
                     case "dl":
                         if (oldArray[i][k].substring(0, 1).equals("j")) {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "lu";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "lu";
                         } else {
-                            newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ul";
+                            newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ul";
                         }
                         break;
                     case "ru":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "dr";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "dr";
                         break;
                     case "lu":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ur";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ur";
                         break;
                     case "rd":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "dl";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "dl";
                         break;
                     case "ld":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "ul";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "ul";
                         break;
                     case "tu":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "tr";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "tr";
                         break;
                     case "td":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "tl";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "tl";
                         break;
                     case "tl":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "tu";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "tu";
                         break;
                     case "tr":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "td";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "td";
                         break;
                     case "cs":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "cs";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "cs";
                         break;
                     case "cd":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "cl";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "cl";
                         break;
                     case "cl":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "cu";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "cu";
                         break;
                     case "cu":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "cr";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "cr";
                         break;
                     case "cr":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "cd";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "cd";
                         break;
                     case "xx":
-                        newArray[k][oldArray.length - 4 - i] = oldArray[i][k].substring(0, 1) + "xx";
+                        newArray[k][oldArray.length - 5 - i] = oldArray[i][k].substring(0, 1) + "xx";
                         break;
                 }
             }
         }
 
         //keep instructions
+        newArray[newArray.length - 4] = oldArray[oldArray.length - 4].clone();
         newArray[newArray.length - 3] = oldArray[oldArray.length - 3].clone();
         newArray[newArray.length - 2] = oldArray[oldArray.length - 2].clone();
         newArray[newArray.length - 1] = oldArray[oldArray.length - 1].clone();
 
         //rotate position
-        int newX = x;
-        int newY = y;
-        newY = x;
-        newX = newArray[0].length - 1 - y;
+        int newY = x;
+        int newX = newArray[0].length - 1 - y;
         x = newX;
         y = newY;
         position = new Point(x, y);
+
+        //rotate goal
+        int newGoalY = goalX;
+        int newGoalX = newArray[0].length - 1 - goalY;
+        goalX = newGoalX;
+        goalY = newGoalY;
+
+        //rotate star1
+        int newStar1Y = star1X;
+        int newStar1X = newArray[0].length - 1 - star1Y;
+        star1X = newStar1X;
+        star1Y = newStar1Y;
+
+        //rotate star2
+        int newStar2Y = star2X;
+        int newStar2X = newArray[0].length - 1 - star2Y;
+        star2X = newStar2X;
+        star2Y = newStar2Y;
+
+        //rotate star3
+        int newStar3Y = star3X;
+        int newStar3X = newArray[0].length - 1 - star3Y;
+        star3X = newStar3X;
+        star3Y = newStar3Y;
 
         //rotate steps made
         for (int i = 0; i < stepsMade.size(); i++) {
@@ -2898,6 +2430,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
 
         //rotate portals
+        for (int i = 0; i < newArray[newArray.length - 3].length; i++) {
+            String str = newArray[newArray.length - 3][i];
+            String[] result = str.split(",");
+            newY = Integer.parseInt(result[0]);
+            newX = newArray[0].length - 1 - Integer.parseInt(result[1]);
+            newArray[newArray.length - 3][i] = newX + "," + newY;
+        }
+
+        //rotate traps
         for (int i = 0; i < newArray[newArray.length - 2].length; i++) {
             String str = newArray[newArray.length - 2][i];
             String[] result = str.split(",");
@@ -2906,7 +2447,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             newArray[newArray.length - 2][i] = newX + "," + newY;
         }
 
-        //rotate traps
+        //rotate plates
         for (int i = 0; i < newArray[newArray.length - 1].length; i++) {
             String str = newArray[newArray.length - 1][i];
             String[] result = str.split(",");
@@ -2928,17 +2469,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void setNeedle() {
-        int goalX = 0;
-        int goalY = 0;
-        int star1X = 0;
-        int star1Y = 0;
-        int star2X = 0;
-        int star2Y = 0;
-        int star3X = 0;
-        int star3Y = 0;
+        Log.d("debug", "setNeedle()");
 
-        float y;
-        float x;
+        float diffY;
+        float diffX;
         float angleRad;
         float angleDeg;
 
@@ -2947,20 +2481,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         final float angleStar3;
 
         if (MainActivity.levelCompass > 0) {
-            for (int i = 0; i < currentLevel.length - 3; i++) {
-                for (int k = 0; k < currentLevel[i].length; k++) {
-                    if (contains(Tiles.GOAL, currentLevel[i][k])) {
-                        goalX = k;
-                        goalY = i;
-                        break;
-                    }
-                }
-            }
-
             angleGoalOld = angleGoalNew;
-            y = goalY - position.y;
-            x = goalX - position.x;
-            angleRad = (float) Math.atan2(y, x);
+            diffY = goalY - position.y;
+            diffX = goalX - position.x;
+            angleRad = (float) Math.atan2(diffY, diffX);
             angleDeg = (float) Math.toDegrees(angleRad);
             angleGoalNew = angleDeg + 90;
 
@@ -2972,11 +2496,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 angleCalc = angleCalc + 360;
             }
 
-            /*Log.d("debug", "old: " + angleGoalOld);
-            Log.d("debug", "new: " + angleGoalNew);
-            Log.d("debug", "calc: " + angleGoalNew);*/
-
-            if (!(y == 0 && x == 0)) {
+            if (!(diffY == 0 && diffX == 0)) {
                 RotateAnimation rotateAnimation = new RotateAnimation(0, angleCalc, compass.getWidth() / 2, compass.getHeight() / 2);
                 rotateAnimation.setDuration(movementSpeed - 50);
                 rotateAnimation.setInterpolator(getContext(), android.R.anim.overshoot_interpolator);
@@ -3003,85 +2523,62 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             if (MainActivity.levelCompass > 1) {
-                for (int i = 0; i < currentLevel.length - 3; i++) {
-                    for (int k = 0; k < currentLevel[i].length; k++) {
-                        if (contains(Tiles.STAR, currentLevel[i][k])) {
-                            star1X = k;
-                            star1Y = i;
-                            break;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < currentLevel.length - 3; i++) {
-                    for (int k = 0; k < currentLevel[i].length; k++) {
-                        if (contains(Tiles.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X)) {
-                            star2X = k;
-                            star2Y = i;
-                            break;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < currentLevel.length - 3; i++) {
-                    for (int k = 0; k < currentLevel[i].length; k++) {
-                        if (contains(Tiles.STAR, currentLevel[i][k]) && !(i == star1Y && k == star1X) && !(i == star2Y && k == star2X)) {
-                            star3X = k;
-                            star3Y = i;
-                            break;
-                        }
-                    }
-                }
-
                 if (!(star1X == 0 && star1Y == 0)) {
-                    y = star1Y - position.y;
-                    x = star1X - position.x;
-                    angleRad = (float) Math.atan2(y, x);
+                    diffY = star1Y - position.y;
+                    diffX = star1X - position.x;
+                    angleRad = (float) Math.atan2(diffY, diffX);
                     angleDeg = (float) Math.toDegrees(angleRad);
                     angleStar1 = angleDeg + 90;
 
-                    if (!(y == 0 && x == 0)) {
+                    if (!(diffY == 0 && diffX == 0)) {
                         needleStar1.setVisibility(View.VISIBLE);
                         needleStar1.setRotation(angleStar1);
+                    } else {
+                        star1X = 0;
+                        star1Y = 0;
+                        needleStar1.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    needleStar1.setVisibility(View.INVISIBLE);
                 }
 
                 if (!(star2X == 0 && star2Y == 0)) {
-                    y = star2Y - position.y;
-                    x = star2X - position.x;
-                    angleRad = (float) Math.atan2(y, x);
+                    diffY = star2Y - position.y;
+                    diffX = star2X - position.x;
+                    angleRad = (float) Math.atan2(diffY, diffX);
                     angleDeg = (float) Math.toDegrees(angleRad);
                     angleStar2 = angleDeg + 90;
 
-                    if (!(y == 0 && x == 0)) {
+                    if (!(diffY == 0 && diffX == 0)) {
                         needleStar2.setVisibility(View.VISIBLE);
                         needleStar2.setRotation(angleStar2);
+                    } else {
+                        star2X = 0;
+                        star2Y = 0;
+                        needleStar2.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    needleStar2.setVisibility(View.INVISIBLE);
                 }
 
                 if (!(star3X == 0 && star3Y == 0)) {
-                    y = star3Y - position.y;
-                    x = star3X - position.x;
-                    angleRad = (float) Math.atan2(y, x);
+                    diffY = star3Y - position.y;
+                    diffX = star3X - position.x;
+                    angleRad = (float) Math.atan2(diffY, diffX);
                     angleDeg = (float) Math.toDegrees(angleRad);
                     angleStar3 = angleDeg + 90;
 
-                    if (!(y == 0 && x == 0)) {
+                    if (!(diffY == 0 && diffX == 0)) {
                         needleStar3.setVisibility(View.VISIBLE);
                         needleStar3.setRotation(angleStar3);
+                    } else {
+                        star3X = 0;
+                        star3Y = 0;
+                        needleStar3.setVisibility(View.INVISIBLE);
                     }
-                } else {
-                    needleStar3.setVisibility(View.INVISIBLE);
                 }
             }
         }
     }
 
     public void startAnimation(float fromX, float toX, float fromY, float toY) {
+        Log.d("debug", "startAnimation()");
         allowInput = false;
         final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
         translateAnimation.setDuration(movementSpeed);
@@ -3108,10 +2605,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
 
                 relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-                relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+                relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
 
                 gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-                gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+                gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
                 gridViewLevel.setNumColumns(currentLevel[0].length - 4);
 
                 switch (gridViewColumns) {
@@ -3160,6 +2657,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                     checkSword();
                                     checkStar();
                                     checkDiary();
+                                    checkSwitch();
                                     checkPortal();
                                     checkBridge();
                                     if (contains(Tiles.CRACK, currentLevel[y][x])) {
@@ -3199,17 +2697,17 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                             imageViewSandstorm.startAnimation(rotateAnimation);
 
                                             items.clear();
-                                            for (int i = 2; i < GameFragment.currentLevel.length - 5; i++) {
+                                            for (int i = 2; i < GameFragment.currentLevel.length - 6; i++) {
                                                 for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
                                                     items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
                                                 }
                                             }
 
-                                            relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+                                            relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
                                             relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
 
                                             gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-                                            gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 7) / gridViewColumns;
+                                            gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
                                             gridViewLevel.setNumColumns(currentLevel[0].length - 4);
 
                                             switch (gridViewColumns) {
@@ -3242,7 +2740,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
 
                 isAnimating = false;
-                //allowInput = true;
 
                 //Slippery Ground
                 if (scene.equals("s")) {
@@ -3271,6 +2768,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public boolean contains(String[] array, String resource) {
+        Log.d("debug", "contains()");
         for (String element : array) {
             if (element.equals(resource)) {
                 return true;
@@ -3280,6 +2778,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public int getIndex(String[] array, String resource) {
+        Log.d("debug", "getIndex()");
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals(resource)) {
                 return i;
@@ -3289,6 +2788,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public String[][] copyLevel(String[][] oldArray) {
+        Log.d("debug", "copyLevel()");
         String[][] newArray = new String[oldArray.length][];
         for (int i = 0; i < oldArray.length; i++) {
             newArray[i] = oldArray[i].clone();
@@ -3297,14 +2797,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void resetLevel() {
-        if (bgm != null && bgm.isPlaying()) {
-            bgm.pause();
+        Log.d("debug", "resetLevel()");
+        if (gameBGM != null && gameBGM.isPlaying()) {
+            gameBGM.pause();
         }
-        if (fire != null && fire.isPlaying()) {
-            fire.pause();
+        if (fireAtmo != null && fireAtmo.isPlaying()) {
+            fireAtmo.pause();
         }
-        if (heartbeat != null && heartbeat.isPlaying()) {
-            heartbeat.pause();
+        if (heartbeatAtmo != null && heartbeatAtmo.isPlaying()) {
+            heartbeatAtmo.pause();
         }
 
         MainActivity.stopTime = true;
@@ -3316,7 +2817,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 MainActivity.resetCount++;
-                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
+                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog && !hasDialog) {
                     mInterstitialAd.show();
                 } else {
                     reset();
@@ -3328,14 +2829,14 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 MainActivity.stopTime = false;
-                if (bgm != null) {
-                    bgm.start();
+                if (gameBGM != null) {
+                    gameBGM.start();
                 }
-                if (fire != null) {
-                    fire.start();
+                if (fireAtmo != null) {
+                    fireAtmo.start();
                 }
-                if (heartbeat != null) {
-                    heartbeat.start();
+                if (heartbeatAtmo != null) {
+                    heartbeatAtmo.start();
                 }
             }
         });
@@ -3362,6 +2863,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     public void createHandler() {
+        Log.d("debug", "createHandler()");
         handler = new Handler();
         Runnable runnable = new Runnable() {
             @Override
@@ -3374,8 +2876,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     //Time-Based changes like traps
                     if (containsTrap) {
                         if ((time + 2) % 3 == 0) {
-                            for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
-                                String str = currentLevel[currentLevel.length - 1][i];
+                            for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
+                                String str = currentLevel[currentLevel.length - 2][i];
                                 String[] result = str.split(",");
                                 int trapX = Integer.parseInt(result[0]);
                                 int trapY = Integer.parseInt(result[1]);
@@ -3391,8 +2893,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 MainActivity.soundPool.play(MainActivity.trapInactiveID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                             }
                         } else if (time % 3 == 0) {
-                            for (int i = 0; i < currentLevel[currentLevel.length - 1].length; i++) {
-                                String str = currentLevel[currentLevel.length - 1][i];
+                            for (int i = 0; i < currentLevel[currentLevel.length - 2].length; i++) {
+                                String str = currentLevel[currentLevel.length - 2][i];
                                 String[] result = str.split(",");
                                 int trapX = Integer.parseInt(result[0]);
                                 int trapY = Integer.parseInt(result[1]);
@@ -3427,6 +2929,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     @Override
     public void onClick(View v) {
+        Log.d("debug", "onClick()");
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
             case R.id.resetLevel:
@@ -3437,6 +2940,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d("debug", "onItemClick()");
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(R.string.reveal_map);
@@ -3446,8 +2950,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 if (MainActivity.allStars >= 20) {
                     MainActivity.allStars -= 20;
-                    for (int i = 0; i < currentLevel.length - 3; i++) {
-                        for (int k = 0; k < currentLevel[i].length - 1; k++) {
+                    for (int i = 3; i < currentLevel.length - 7; i++) {
+                        for (int k = 3; k < currentLevel[i].length - 3; k++) {
                             Point point = new Point(k, i);
                             discovered.add(point);
                             mapRevealed = true;
