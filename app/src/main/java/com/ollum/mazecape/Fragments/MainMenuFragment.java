@@ -26,7 +26,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
         MainActivity.title.setText(R.string.app_name);
 
-        playButton = (Button) view.findViewById(R.id.button_play);
+        playButton = (Button) view.findViewById(R.id.button_achievements);
         playButton.setOnClickListener(this);
 
         levelEditorButton = (Button) view.findViewById(R.id.button_level_editor);
@@ -63,7 +63,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
-            case R.id.button_play:
+            case R.id.button_achievements:
                 WorldSelectFragment worldSelectFragment = new WorldSelectFragment();
                 FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
                 transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);

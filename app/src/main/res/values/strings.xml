@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mazecape</string>
+    <string name="signin_other_error">There was an issue with sign in. Please try again later.</string>
 
     <string name="play_button">Play</string>
     <string name="help_button">Help</string>
@@ -203,6 +204,17 @@
     <string name="desert_dialog">You entered a wide desert. Try not to lose your orientation and watch out for sandstorms</string>
     <string name="lets_not_get_lost">Let\'s not get lost</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="plate">Switch</string>
+    <string name="plate_info">A switch is used to turn a rotating tile</string>
+    <string name="rotation">Rotating Tile</string>
+    <string name="rotation_info">A rotating tile can be rotated by a switch</string>
+    <string name="lookout">Telescope</string>
+    <string name="lookout_info">The telescope increases your field of view</string>
+    <string name="fog">Fog</string>
+    <string name="fog_info">Fog decreases your field of view</string>
+    <string name="bridge_info">The bridge is fragile. It won\'t last long</string>
+    <string name="bridge_hole">Bridge (destroyed)</string>
+    <string name="bridge_hole_info">The bridge is destroyed. When you try to cross it you will die</string>
+    <string name="version">Version</string>
+
 </resources>

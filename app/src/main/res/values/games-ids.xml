@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Google Play game services IDs.
+Save this file as res/values/games-ids.xml in your project.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+    <string name="app_id">888185991345</string>
+    <string name="package_name">com.ollum.mazecape</string>
+    <string name="achievement_collect_50_stars">CgkIseGK4OwZEAIQCw</string>
+    <string name="achievement_collect_100_stars">CgkIseGK4OwZEAIQDg</string>
+    <string name="achievement_collect_200_stars">CgkIseGK4OwZEAIQDQ</string>
+    <string name="achievement_collect_500_stars">CgkIseGK4OwZEAIQDA</string>
+    <string name="achievement_world_1_finished">CgkIseGK4OwZEAIQAQ</string>
+    <string name="achievement_world_1_completed">CgkIseGK4OwZEAIQBQ</string>
+    <string name="achievement_chapter_1_completed">CgkIseGK4OwZEAIQFA</string>
+    <string name="achievement_world_2_finished">CgkIseGK4OwZEAIQAg</string>
+    <string name="achievement_world_2_completed">CgkIseGK4OwZEAIQBg</string>
+    <string name="achievement_chapter_2_completed">CgkIseGK4OwZEAIQFQ</string>
+    <string name="achievement_world_3_finished">CgkIseGK4OwZEAIQAw</string>
+    <string name="achievement_world_3_completed">CgkIseGK4OwZEAIQBw</string>
+    <string name="achievement_chapter_3_completed">CgkIseGK4OwZEAIQFg</string>
+    <string name="achievement_world_4_finished">CgkIseGK4OwZEAIQBA</string>
+    <string name="achievement_world_4_completed">CgkIseGK4OwZEAIQCA</string>
+    <string name="achievement_chapter_4_completed">CgkIseGK4OwZEAIQFw</string>
+    <string name="achievement_engineer">CgkIseGK4OwZEAIQGw</string>
+    <string name="achievement_navigator">CgkIseGK4OwZEAIQGQ</string>
+    <string name="achievement_treasure_hunter">CgkIseGK4OwZEAIQGg</string>
+    <string name="achievement_guiding_light">CgkIseGK4OwZEAIQHQ</string>
+    <string name="achievement_addict">CgkIseGK4OwZEAIQHg</string>
+    <string name="achievement_sprinter">CgkIseGK4OwZEAIQHw</string>
+    <string name="achievement_greedy">CgkIseGK4OwZEAIQIA</string>
+    <string name="achievement_creator">CgkIseGK4OwZEAIQGA</string>
+    <string name="achievement_supporter">CgkIseGK4OwZEAIQIQ</string>
+</resources>

@@ -53,6 +53,7 @@
             android:layout_toStartOf="@+id/button_settings"
             android:layout_weight="1"
             android:adjustViewBounds="true"
+            android:elevation="0dp"
             android:scaleType="fitXY"
             android:src="@drawable/info_white" />
 
@@ -68,6 +69,19 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@drawable/market_white" />
+
+        <ImageButton
+            android:id="@+id/button_achievements"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/button_shop"
+            android:layout_toRightOf="@+id/button_shop"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/play_white" />
     </RelativeLayout>
 
     <LinearLayout

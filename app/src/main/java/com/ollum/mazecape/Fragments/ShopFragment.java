@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.games.Games;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
 import com.ollum.mazecape.util.IabHelper;
@@ -254,7 +255,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
-                    ;
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_supporter));
+                    }
                 } else if (info.getSku().equals("200_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 200;
@@ -262,7 +265,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
-                    ;
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_supporter));
+                    }
                 } else if (info.getSku().equals("500_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 500;
@@ -270,7 +275,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
-                    ;
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_supporter));
+                    }
                 } else if (info.getSku().equals("1000_stars")) {
                     MainActivity.showAds = false;
                     MainActivity.allStars += 1000;
@@ -278,7 +285,9 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                     MainActivity.starsCounter.setText("" + MainActivity.allStars);
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
-                    ;
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_supporter));
+                    }
                 }
             }
         };
@@ -355,6 +364,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             compassLevel.setText(getString(R.string.stars));
                             break;
                     }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelCompass >= 2) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_treasure_hunter));
+                        }
+                    }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
                     ;
@@ -385,6 +400,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             mapLevel.setText(getString(R.string.discovered));
                             break;
                     }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelMap >= 2) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_navigator));
+                        }
+                    }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
                     ;
@@ -407,23 +428,29 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                         case 1:
                             buttonTorch.setText("100");
                             torchUpgrade.setText(R.string.upgrade);
-                            torchLevel.setText("1:30 min");
+                            torchLevel.setText("1:15 min");
                             break;
                         case 2:
                             buttonTorch.setText("150");
                             torchUpgrade.setText(R.string.upgrade);
-                            torchLevel.setText("2:00 min");
+                            torchLevel.setText("1:30 min");
                             break;
                         case 3:
                             buttonTorch.setText("200");
                             torchUpgrade.setText(R.string.upgrade);
-                            torchLevel.setText("2:30 min");
+                            torchLevel.setText("1:45 min");
                             break;
                         case 4:
                             buttonTorch.setVisibility(View.INVISIBLE);
                             torchUpgrade.setText(R.string.max);
-                            torchLevel.setText("3:00 min");
+                            torchLevel.setText("2:00 min");
                             break;
+                    }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelTorch >= 4) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_guiding_light));
+                        }
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
@@ -459,6 +486,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             speedUpgrade.setText(R.string.max);
                             speedLevel.setText("200%");
                             break;
+                    }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelSpeed >= 3) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_sprinter));
+                        }
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
@@ -505,6 +538,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             livesLevel.setText("10 " + getString(R.string.lives));
                             break;
                     }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelLives >= 5) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_addict));
+                        }
+                    }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
                     ;
@@ -535,6 +574,12 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
                             starsUpgrade.setText(R.string.max);
                             starsLevel.setText("x3");
                             break;
+                    }
+                    if (isOnline() && isSignedIn()) {
+                        Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+                        if (MainActivity.levelStars >= 2) {
+                            Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_greedy));
+                        }
                     }
                     Toast.makeText(getContext(), R.string.purchase_successful, Toast.LENGTH_LONG).show();
                     SharedPreferences.saveGame(getContext());
@@ -653,9 +698,13 @@ public class ShopFragment extends Fragment implements View.OnClickListener, Rewa
         //Toast.makeText(getContext(), "onRewardedVideoStarted", Toast.LENGTH_SHORT).show();
     }
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private boolean isSignedIn() {
+        return (MainActivity.mGoogleApiClient != null && MainActivity.mGoogleApiClient.isConnected());
     }
 }

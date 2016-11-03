@@ -8,8 +8,12 @@ import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +31,10 @@ import android.widget.Toast;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameUtils;
 import com.ollum.mazecape.Fragments.DiaryFragment;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.Fragments.HelpFragment;
@@ -50,10 +58,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static java.lang.System.currentTimeMillis;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int REQUEST_RESOLVE_ERROR = 1001;
+    private static final int RC_RESOLVE = 5000;
+    private static final int RC_UNUSED = 5001;
+    private static final int RC_SIGN_IN = 9001;
     public static FragmentManager fragmentManager;
-
     public static FrameLayout content;
     public static int maxWorld = 0;
     public static int level = 0;
@@ -112,19 +123,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static RewardedVideoAd mAd;
     public static Button sendButton;
     public static SoundPool soundPool;
-    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID, diaryID;
+    public static int clickID, swoosh1ID, swoosh2ID, liveID, stepID, portalID, swordID, crackID, deathID, monsterID, holeID, starID, trapActiveID, trapInactiveID, winID, upgradeID, diaryID, rotateID;
     public static long logOffTime;
     public static String tutorialTitle, tutorialMessage, tutorialButton;
     public static String diaryTitle, diarySubtitle, diaryMessage, diaryButton;
+    public static GoogleApiClient mGoogleApiClient;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
-    ImageButton settingsButton, helpButton, shopButton;
+    ImageButton settingsButton, helpButton, shopButton, achievementsButton;
+    boolean mExplicitSignOut = false;
+    boolean mInSignInFlow = false;
+    private boolean mResolvingError = false;
+    private boolean mResolvingConnectionFailure = false;
+    private boolean mAutoStartSignInFlow = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Games.API).addScope(Games.SCOPE_GAMES)
+                .build();
 
         String base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApCqNdNLtSwn177FZyPyfYbq8sU11JXtug9dUq9JTwqMgIgdCzhaUpIdNtngKSkmaKXCyYPRn8rgCMOBeZYDBmyZavrU1NVZl9u1lUCbtq+AUG9AxgdsIz2BswAsGj4eORV4/6rNOjRswfhQpQAMC0qgwNCNbq/U6WTSzZVHkyC6SEsn3W+A9mfNbYX7lvipEuIlS6pNsZQo0/fXPhHhJ6INAHD4ZRJ/R/FNdkL/kqKkdXmaNe2YDkbSgvgOc+21INw8qb4EztlX8W4bZcEcSt2zWGSfPLbDLkZ21mBkBoM/DdF28xGt8wN7uYgsZpTR6XMlLO/S/pcTYO1x5LT+XwQIDAQAB";
 
@@ -184,6 +207,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         shopButton = (ImageButton) findViewById(R.id.button_shop);
         shopButton.setOnClickListener(this);
+
+        achievementsButton = (ImageButton) findViewById(R.id.button_achievements);
+        achievementsButton.setOnClickListener(this);
 
         sendButton = (Button) findViewById(R.id.button_send);
         sendButton.setOnClickListener(this);
@@ -245,6 +271,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         winID = soundPool.load(this, R.raw.win, 1);
         upgradeID = soundPool.load(this, R.raw.upgrade, 1);
         diaryID = soundPool.load(this, R.raw.diary, 1);
+        rotateID = soundPool.load(this, R.raw.rotate, 1);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!mInSignInFlow && !mExplicitSignOut) {
+            // auto sign in
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
     }
 
     private void loadRewardedVideoAd() {
@@ -630,7 +674,85 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
+                if (isOnline() && isSignedIn()) {
+                    Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_creator));
+                }
+                break;
+            case R.id.button_achievements:
+                if (!isOnline()) {
+                    Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+                } else if (!isSignedIn()) {
+                    mGoogleApiClient.connect();
+                } else {
+                    startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), RC_UNUSED);
+                }
                 break;
         }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        Log.d("debug", "GPGS connected");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("debug", "GPGS connection suspended: " + i);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("debug", "GPGS connection failed: " + connectionResult);
+        Log.d("debug", "hasResolution: " + connectionResult.hasResolution());
+        /*if (mResolvingError) {
+            return;
+        } else if (connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
+            } catch (IntentSender.SendIntentException e) {
+                mGoogleApiClient.connect();
+            }
+        } else {
+            Log.d("debug", "Error Code: " + connectionResult.getErrorCode());
+            mResolvingError = true;
+        }*/
+
+        if (mResolvingConnectionFailure) {
+            Log.d("debug", "onConnectionFailed(): already resolving");
+            return;
+        }
+
+        if (mAutoStartSignInFlow) {
+            mAutoStartSignInFlow = false;
+            mResolvingConnectionFailure = true;
+            if (!BaseGameUtils.resolveConnectionFailure(this, mGoogleApiClient, connectionResult,
+                    RC_SIGN_IN, getString(R.string.signin_other_error))) {
+                mResolvingConnectionFailure = false;
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == RC_SIGN_IN) {
+            //mSignInClicked = false;
+            mResolvingConnectionFailure = false;
+            if (resultCode == RESULT_OK) {
+                mGoogleApiClient.connect();
+            } else {
+                BaseGameUtils.showActivityResultError(this, requestCode, resultCode, R.string.signin_other_error);
+            }
+        }
+    }
+
+    private boolean isSignedIn() {
+        return (mGoogleApiClient != null && mGoogleApiClient.isConnected());
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

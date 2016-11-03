@@ -123,4 +123,15 @@
         android:text="Reset Game"
         android:textColor="@color/colorTextDark" />
 
+    <TextView
+        android:id="@+id/settings_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="TextView"
+        android:textColor="@color/colorTextDark"
+        android:textSize="@dimen/text" />
+
 </RelativeLayout>

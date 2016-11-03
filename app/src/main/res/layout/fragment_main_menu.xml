@@ -6,7 +6,7 @@
     tools:context=".Fragments.MainMenuFragment">
 
     <Button
-        android:id="@+id/button_play"
+        android:id="@+id/button_achievements"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_play"
+        android:layout_below="@+id/button_achievements"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/story_button"

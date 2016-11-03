@@ -2,6 +2,7 @@ package com.ollum.mazecape.Fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.ollum.mazecape.Activities.MainActivity;
@@ -23,12 +25,20 @@ public class SettingsFragment extends Fragment {
     SeekBar musicVol, soundVol;
     ToggleButton toggleButtonControl, toggleButtonInverse;
     Button resetButton;
+    TextView textViewVersion;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         relativeLayout = (RelativeLayout) view.findViewById(R.id.relative_layout_settings);
+
+        textViewVersion = (TextView) view.findViewById(R.id.settings_version);
+        try {
+            textViewVersion.setText(getString(R.string.version) + ": " + getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            textViewVersion.setText("");
+        }
 
         musicVol = (SeekBar) view.findViewById(R.id.seekBar_music);
         musicVol.setProgress((int) (MainActivity.volumeMusic * 10));

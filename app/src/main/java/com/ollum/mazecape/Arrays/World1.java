@@ -25,9 +25,9 @@ public class World1 {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"3", "5", "f", "8"},
-            {"4,5", "3,7"},
-            {"5,4"},
-            {"3,4"}
+            {},
+            {},
+            {}
     };
     public static final String[][] FOREST_03 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},

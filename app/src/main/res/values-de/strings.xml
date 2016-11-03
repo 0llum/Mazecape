@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Mazecape</string>
+    <string name="signin_other_error">There was an issue with sign in. Please try again later.</string>
 
     <string name="play_button">Spielen</string>
     <string name="help_button">Hilfe</string>
@@ -202,4 +203,16 @@
 
     <string name="desert_dialog">Du betrittst eine große Wüste. Versuche nicht die Orientierung zu verlieren und hüte dich vor den Sandstürmen</string>
     <string name="lets_not_get_lost">Ich hoffe ich verirre mich nicht</string>
+    <string name="plate">Schalter</string>
+    <string name="plate_info">Mit dem Schalter kannst du eine Drehplatte rotieren lassen</string>
+    <string name="rotation">Drehplatte</string>
+    <string name="rotation_info">Eine Drehplatte kann mit einem Schalter gedreht werden</string>
+    <string name="lookout">Fernrohr</string>
+    <string name="lookout_info">Mit dem Fernrohr kannst du die Umgebung sehen</string>
+    <string name="fog">Nebel</string>
+    <string name="fog_info">Nebel schränkt deine Sicht ein</string>
+    <string name="bridge_info">Die Brücke ist instabil. Sie hält nur noch für kurze Zeit</string>
+    <string name="bridge_hole">Brücke (zerstört)</string>
+    <string name="bridge_hole_info">Die Brück ist zerstört. Wenn du sie überquerst wirst du sterben</string>
+    <string name="version">Version</string>
 </resources>
