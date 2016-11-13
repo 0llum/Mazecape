@@ -15,6 +15,8 @@ public class SharedPreferences {
         android.content.SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         android.content.SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putBoolean("firstStart", MainActivity.firstStart);
+        editor.putBoolean("wantsGPGS", MainActivity.wantsGPGS);
         editor.putInt("level", MainActivity.level);
         editor.putInt("world", MainActivity.world);
         editor.putInt("lives", MainActivity.lives);
@@ -41,6 +43,7 @@ public class SharedPreferences {
         editor.putInt("world5Stars", MainActivity.world5Stars);
         editor.putBoolean("swipe", MainActivity.swipe);
         editor.putBoolean("inverse", MainActivity.inverse);
+        editor.putBoolean("vibration", MainActivity.vibration);
         editor.putFloat("volumeMusic", MainActivity.volumeMusic);
         editor.putFloat("volumeSound", MainActivity.volumeSound);
         editor.putLong("logOffTime", currentTimeMillis());
@@ -48,12 +51,40 @@ public class SharedPreferences {
         editor.putBoolean("showAds", MainActivity.showAds);
         editor.putBoolean("rated", MainActivity.rated);
         editor.putBoolean("liked", MainActivity.liked);
+        editor.putBoolean("achievement50Stars", MainActivity.achievement50Stars);
+        editor.putBoolean("achievement100Stars", MainActivity.achievement100Stars);
+        editor.putBoolean("achievement200Stars", MainActivity.achievement200Stars);
+        editor.putBoolean("achievement500Stars", MainActivity.achievement500Stars);
+        editor.putBoolean("achievementWorld1Finished", MainActivity.achievementWorld1Finished);
+        editor.putBoolean("achievementWorld2Finished", MainActivity.achievementWorld2Finished);
+        editor.putBoolean("achievementWorld3Finished", MainActivity.achievementWorld3Finished);
+        editor.putBoolean("achievementWorld4Finished", MainActivity.achievementWorld4Finished);
+        editor.putBoolean("achievementWorld1Completed", MainActivity.achievementWorld1Completed);
+        editor.putBoolean("achievementWorld2Completed", MainActivity.achievementWorld2Completed);
+        editor.putBoolean("achievementWorld3Completed", MainActivity.achievementWorld3Completed);
+        editor.putBoolean("achievementWorld4Completed", MainActivity.achievementWorld4Completed);
+        editor.putBoolean("achievementChapter1Completed", MainActivity.achievementChapter1Completed);
+        editor.putBoolean("achievementChapter2Completed", MainActivity.achievementChapter2Completed);
+        editor.putBoolean("achievementChapter3Completed", MainActivity.achievementChapter3Completed);
+        editor.putBoolean("achievementChapter4Completed", MainActivity.achievementChapter4Completed);
+        editor.putBoolean("achievementEngineer", MainActivity.achievementEngineer);
+        editor.putBoolean("achievementNavigator", MainActivity.achievementNavigator);
+        editor.putBoolean("achievementTreasureHunter", MainActivity.achievementTreasureHunter);
+        editor.putBoolean("achievementGuidingLight", MainActivity.achievementGuidingLight);
+        editor.putBoolean("achievementSprinter", MainActivity.achievementSprinter);
+        editor.putBoolean("achievementAddict", MainActivity.achievementAddict);
+        editor.putBoolean("achievementGreedy", MainActivity.achievementGreedy);
+        editor.putBoolean("achievementCreator", MainActivity.achievementCreator);
+        editor.putBoolean("achievementSupporter", MainActivity.achievementSupporter);
+        editor.putInt("highScore", MainActivity.highScore);
         editor.apply();
     }
 
     public static void loadGame(Context context) {
         android.content.SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
+        MainActivity.firstStart = sharedPreferences.getBoolean("firstStart", true);
+        MainActivity.wantsGPGS = sharedPreferences.getBoolean("wantsGPGS", false);
         MainActivity.level = sharedPreferences.getInt("level", 0);
         MainActivity.world = sharedPreferences.getInt("world", 0);
         MainActivity.lives = sharedPreferences.getInt("lives", 5);
@@ -81,6 +112,7 @@ public class SharedPreferences {
         MainActivity.torches = sharedPreferences.getInt("torches", 0);
         MainActivity.swipe = sharedPreferences.getBoolean("swipe", true);
         MainActivity.inverse = sharedPreferences.getBoolean("inverse", false);
+        MainActivity.vibration = sharedPreferences.getBoolean("vibration", true);
         MainActivity.volumeMusic = sharedPreferences.getFloat("volumeMusic", 1);
         MainActivity.volumeSound = sharedPreferences.getFloat("volumeSound", 1);
         MainActivity.logOffTime = sharedPreferences.getLong("logOffTime", 0);
@@ -92,6 +124,32 @@ public class SharedPreferences {
         MainActivity.starsList.addAll(starsSet);
         Set<String> diarySet = sharedPreferences.getStringSet("diary", new HashSet<String>());
         MainActivity.diaryList.addAll(diarySet);
+        MainActivity.achievement50Stars = sharedPreferences.getBoolean("achievement50Stars", false);
+        MainActivity.achievement100Stars = sharedPreferences.getBoolean("achievement100Stars", false);
+        MainActivity.achievement200Stars = sharedPreferences.getBoolean("achievement200Stars", false);
+        MainActivity.achievement500Stars = sharedPreferences.getBoolean("achievement500Stars", false);
+        MainActivity.achievementWorld1Finished = sharedPreferences.getBoolean("achievementWorld1Finished", false);
+        MainActivity.achievementWorld2Finished = sharedPreferences.getBoolean("achievementWorld2Finished", false);
+        MainActivity.achievementWorld3Finished = sharedPreferences.getBoolean("achievementWorld3Finished", false);
+        MainActivity.achievementWorld4Finished = sharedPreferences.getBoolean("achievementWorld4Finished", false);
+        MainActivity.achievementWorld1Completed = sharedPreferences.getBoolean("achievementWorld1Completed", false);
+        MainActivity.achievementWorld2Completed = sharedPreferences.getBoolean("achievementWorld2Completed", false);
+        MainActivity.achievementWorld3Completed = sharedPreferences.getBoolean("achievementWorld3Completed", false);
+        MainActivity.achievementWorld4Completed = sharedPreferences.getBoolean("achievementWorld4Completed", false);
+        MainActivity.achievementChapter1Completed = sharedPreferences.getBoolean("achievementChapter1Completed", false);
+        MainActivity.achievementChapter2Completed = sharedPreferences.getBoolean("achievementChapter2Completed", false);
+        MainActivity.achievementChapter3Completed = sharedPreferences.getBoolean("achievementChapter3Completed", false);
+        MainActivity.achievementChapter4Completed = sharedPreferences.getBoolean("achievementChapter4Completed", false);
+        MainActivity.achievementEngineer = sharedPreferences.getBoolean("achievementEngineer", false);
+        MainActivity.achievementNavigator = sharedPreferences.getBoolean("achievementNavigator", false);
+        MainActivity.achievementTreasureHunter = sharedPreferences.getBoolean("achievementTreasureHunter", false);
+        MainActivity.achievementGuidingLight = sharedPreferences.getBoolean("achievementGuidingLight", false);
+        MainActivity.achievementSprinter = sharedPreferences.getBoolean("achievementSprinter", false);
+        MainActivity.achievementAddict = sharedPreferences.getBoolean("achievementAddict", false);
+        MainActivity.achievementGreedy = sharedPreferences.getBoolean("achievementGreedy", false);
+        MainActivity.achievementCreator = sharedPreferences.getBoolean("achievementCreator", false);
+        MainActivity.achievementSupporter = sharedPreferences.getBoolean("achievementSupporter", false);
+        MainActivity.highScore = sharedPreferences.getInt("highScore", 0);
 
         MainActivity.worldStars = new int[]{
                 MainActivity.world1Stars, MainActivity.world2Stars, MainActivity.world3Stars, MainActivity.world4Stars, MainActivity.world5Stars

@@ -69,11 +69,21 @@
         android:progress="0"
         android:splitTrack="false" />
 
+    <CheckBox
+        android:id="@+id/checkBox_vibration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/seekBar_sound"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/vibration"
+        android:textColor="@color/colorTextDark" />
+
     <TextView
         android:id="@+id/textView40"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/seekBar_sound"
+        android:layout_below="@+id/checkBox_vibration"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/controls"
@@ -133,5 +143,4 @@
         android:text="TextView"
         android:textColor="@color/colorTextDark"
         android:textSize="@dimen/text" />
-
 </RelativeLayout>

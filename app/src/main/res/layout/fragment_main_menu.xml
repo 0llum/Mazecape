@@ -6,7 +6,7 @@
     tools:context=".Fragments.MainMenuFragment">
 
     <Button
-        android:id="@+id/button_achievements"
+        android:id="@+id/button_play"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,17 +17,29 @@
         android:textSize="20dp" />
 
     <Button
+        android:id="@+id/button_endless"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_play"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/endless_button"
+        android:textColor="@color/colorTextLight"
+        android:textSize="20dp" />
+
+    <Button
         android:id="@+id/button_story"
         style="@style/Base.Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_achievements"
+        android:layout_below="@+id/button_endless"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:text="@string/story_button"
         android:textColor="@color/colorTextLight"
         android:textSize="20dp"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button_level_editor"
@@ -75,7 +87,7 @@
         android:checked="false"
         android:text="Developer Mode"
         android:textColor="@color/colorTextLight"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"

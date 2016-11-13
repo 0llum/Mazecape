@@ -217,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="@string/stars"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -267,7 +267,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="@string/discovered"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -317,7 +317,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="+25%"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -367,7 +367,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="+33%"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -417,7 +417,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="+1"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -467,7 +467,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Level 1"
+                    android:text="x2"
                     android:textColor="@color/colorTextDark"
                     android:textSize="@dimen/text" />
 
@@ -826,6 +826,7 @@
         android:layout_alignParentStart="true"
         android:gravity="center_horizontal"
         android:text="@string/ads_remove"
+        android:textColor="@color/colorTextDark"
         android:textSize="@dimen/text" />
 
 </RelativeLayout>

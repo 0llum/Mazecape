@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -26,6 +27,7 @@ public class SettingsFragment extends Fragment {
     ToggleButton toggleButtonControl, toggleButtonInverse;
     Button resetButton;
     TextView textViewVersion;
+    CheckBox vibrationCheckbox;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -89,6 +91,16 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        vibrationCheckbox = (CheckBox) view.findViewById(R.id.checkBox_vibration);
+        vibrationCheckbox.setChecked(MainActivity.vibration);
+        vibrationCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                MainActivity.vibration = isChecked;
+                MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
             }
         });
 

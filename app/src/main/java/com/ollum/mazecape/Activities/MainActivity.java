@@ -36,6 +36,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameUtils;
 import com.ollum.mazecape.Fragments.DiaryFragment;
+import com.ollum.mazecape.Fragments.EndlessFragment;
 import com.ollum.mazecape.Fragments.GameFragment;
 import com.ollum.mazecape.Fragments.HelpFragment;
 import com.ollum.mazecape.Fragments.LevelEditorFragment;
@@ -60,10 +61,8 @@ import static java.lang.System.currentTimeMillis;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private static final int REQUEST_RESOLVE_ERROR = 1001;
-    private static final int RC_RESOLVE = 5000;
-    private static final int RC_UNUSED = 5001;
-    private static final int RC_SIGN_IN = 9001;
+    public static final int RC_UNUSED = 5001;
+    public static final int RC_SIGN_IN = 9001;
     public static FragmentManager fragmentManager;
     public static FrameLayout content;
     public static int maxWorld = 0;
@@ -128,15 +127,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static String tutorialTitle, tutorialMessage, tutorialButton;
     public static String diaryTitle, diarySubtitle, diaryMessage, diaryButton;
     public static GoogleApiClient mGoogleApiClient;
+    public static boolean firstStart = true;
+    public static boolean wantsGPGS = false;
+    public static boolean mResolvingConnectionFailure = false;
+    public static boolean mAutoStartSignInFlow = true;
+    public static boolean achievement50Stars = false;
+    public static boolean achievement100Stars = false;
+    public static boolean achievement200Stars = false;
+    public static boolean achievement500Stars = false;
+    public static boolean achievementWorld1Finished = false;
+    public static boolean achievementWorld2Finished = false;
+    public static boolean achievementWorld3Finished = false;
+    public static boolean achievementWorld4Finished = false;
+    public static boolean achievementWorld1Completed = false;
+    public static boolean achievementWorld2Completed = false;
+    public static boolean achievementWorld3Completed = false;
+    public static boolean achievementWorld4Completed = false;
+    public static boolean achievementChapter1Completed = false;
+    public static boolean achievementChapter2Completed = false;
+    public static boolean achievementChapter3Completed = false;
+    public static boolean achievementChapter4Completed = false;
+    public static boolean achievementEngineer = false;
+    public static boolean achievementNavigator = false;
+    public static boolean achievementTreasureHunter = false;
+    public static boolean achievementGuidingLight = false;
+    public static boolean achievementSprinter = false;
+    public static boolean achievementAddict = false;
+    public static boolean achievementGreedy = false;
+    public static boolean achievementCreator = false;
+    public static boolean achievementSupporter = false;
+    public static boolean vibration = true;
+    public static int highScore;
     public Handler livesHandler;
     public long startMillis;
     public long endMillis;
-    ImageButton settingsButton, helpButton, shopButton, achievementsButton;
-    boolean mExplicitSignOut = false;
-    boolean mInSignInFlow = false;
-    private boolean mResolvingError = false;
-    private boolean mResolvingConnectionFailure = false;
-    private boolean mAutoStartSignInFlow = true;
+    private ImageButton settingsButton, helpButton, shopButton, achievementsButton, leaderboardButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,6 +236,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         achievementsButton = (ImageButton) findViewById(R.id.button_achievements);
         achievementsButton.setOnClickListener(this);
 
+        leaderboardButton = (ImageButton) findViewById(R.id.button_leaderboard);
+        leaderboardButton.setOnClickListener(this);
+
         sendButton = (Button) findViewById(R.id.button_send);
         sendButton.setOnClickListener(this);
 
@@ -272,15 +300,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         upgradeID = soundPool.load(this, R.raw.upgrade, 1);
         diaryID = soundPool.load(this, R.raw.diary, 1);
         rotateID = soundPool.load(this, R.raw.rotate, 1);
+
+        if (firstStart) {
+            firstStart = false;
+            SharedPreferences.saveGame(getApplicationContext());
+            AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                    .setTitle("Google Play Games")
+                    .setMessage(R.string.want_gpgs)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            wantsGPGS = true;
+                            SharedPreferences.saveGame(getApplicationContext());
+                            dialog.dismiss();
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            wantsGPGS = false;
+                            SharedPreferences.saveGame(getApplicationContext());
+                            dialog.dismiss();
+                        }
+                    })
+                    .setCancelable(false);
+            builder.create();
+            builder.show();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (!mInSignInFlow && !mExplicitSignOut) {
-            // auto sign in
-            mGoogleApiClient.connect();
-        }
+        if (wantsGPGS) mGoogleApiClient.connect();
     }
 
     @Override
@@ -378,6 +430,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             });
             builder.create();
             builder.show();
+        } else if (current.equals("EndlessFragment")) {
+            if (EndlessFragment.gameBGM != null && EndlessFragment.gameBGM.isPlaying()) {
+                EndlessFragment.gameBGM.pause();
+            }
+            if (EndlessFragment.fireAtmo != null && EndlessFragment.fireAtmo.isPlaying()) {
+                EndlessFragment.fireAtmo.pause();
+            }
+            if (EndlessFragment.heartbeatAtmo != null && EndlessFragment.heartbeatAtmo.isPlaying()) {
+                EndlessFragment.heartbeatAtmo.pause();
+            }
+
+            stopTime = true;
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("");
+            builder.setMessage(R.string.back_to_main_menu);
+            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                    resetCount++;
+                    livesCounter.setText("" + lives);
+
+                    EndlessFragment.score = level * 1000 + EndlessFragment.starsCollected * 100 - EndlessFragment.time;
+
+                    if (EndlessFragment.score > MainActivity.highScore) {
+                        highScore = EndlessFragment.score;
+                    }
+
+                    if (isOnline() && isSignedIn()) {
+                        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_endless_mode), EndlessFragment.score);
+                    }
+
+                    MainMenuFragment mainMenuFragment = new MainMenuFragment();
+                    FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+                    transaction.setCustomAnimations(R.anim.in_from_left, R.anim.out_to_right);
+                    transaction.replace(R.id.content, mainMenuFragment, "MainMenuFragment");
+                    transaction.addToBackStack("MainMenuFragment");
+                    transaction.commit();
+
+                    if (MainActivity.menuBGM != null) {
+                        MainActivity.menuBGM.start();
+                    }
+                }
+            });
+            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+                    dialog.dismiss();
+                    stopTime = false;
+                    if (EndlessFragment.gameBGM != null) {
+                        EndlessFragment.gameBGM.start();
+                    }
+                    if (EndlessFragment.fireAtmo != null) {
+                        EndlessFragment.fireAtmo.start();
+                    }
+                    if (EndlessFragment.heartbeatAtmo != null) {
+                        EndlessFragment.heartbeatAtmo.start();
+                    }
+                }
+            });
+            builder.create();
+            builder.show();
         } else if (current.equals("SettingsFragment")) {
             soundPool.play(swoosh2ID, volumeSound, volumeSound, 1, 0, 1);
             FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
@@ -467,7 +583,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         FragmentManager.BackStackEntry currentFragment = fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1);
         String current = currentFragment.getName();
 
-        if (menuBGM != null && !current.equals("GameFragment") || current.equals("TestLevelFragment")) {
+        if (menuBGM != null && !current.equals("GameFragment") && !current.equals("EndlessFragment") && !current.equals("TestLevelFragment")) {
             menuBGM.start();
         }
     }
@@ -674,17 +790,89 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
                 }
+
+                achievementCreator = true;
+
                 if (isOnline() && isSignedIn()) {
                     Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_creator));
                 }
                 break;
             case R.id.button_achievements:
-                if (!isOnline()) {
-                    Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
-                } else if (!isSignedIn()) {
-                    mGoogleApiClient.connect();
+                if (!wantsGPGS) {
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(this)
+                            .setTitle("Google Play Games")
+                            .setMessage(R.string.want_gpgs)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    wantsGPGS = true;
+                                    if (!isOnline()) {
+                                        Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                                    } else if (!isSignedIn()) {
+                                        mGoogleApiClient.connect();
+                                    } else {
+                                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), RC_UNUSED);
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    wantsGPGS = false;
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setCancelable(false);
+                    builder2.create();
+                    builder2.show();
                 } else {
-                    startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), RC_UNUSED);
+                    if (!isOnline()) {
+                        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+                    } else if (!isSignedIn()) {
+                        mGoogleApiClient.connect();
+                    } else {
+                        startActivityForResult(Games.Achievements.getAchievementsIntent(mGoogleApiClient), RC_UNUSED);
+                    }
+                }
+                break;
+            case R.id.button_leaderboard:
+                if (!wantsGPGS) {
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(this)
+                            .setTitle("Google Play Games")
+                            .setMessage(R.string.want_gpgs)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    wantsGPGS = true;
+                                    if (!isOnline()) {
+                                        Toast.makeText(getApplicationContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+                                    } else if (!isSignedIn()) {
+                                        mGoogleApiClient.connect();
+                                    } else {
+                                        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_endless_mode)), RC_UNUSED);
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    wantsGPGS = false;
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setCancelable(false);
+                    builder2.create();
+                    builder2.show();
+                } else {
+                    if (!isOnline()) {
+                        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+                    } else if (!isSignedIn()) {
+                        mGoogleApiClient.connect();
+                    } else {
+                        startActivityForResult(Games.Leaderboards.getLeaderboardIntent(mGoogleApiClient, getString(R.string.leaderboard_endless_mode)), RC_UNUSED);
+                    }
                 }
                 break;
         }
@@ -693,6 +881,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         Log.d("debug", "GPGS connected");
+        checkAchievements();
+        Games.Leaderboards.submitScore(mGoogleApiClient, getString(R.string.leaderboard_endless_mode), highScore);
     }
 
     @Override
@@ -754,5 +944,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+    private void checkAchievements() {
+        if (achievement50Stars)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_collect_50_stars));
+        if (achievement100Stars)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_collect_100_stars));
+        if (achievement200Stars)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_collect_200_stars));
+        if (achievement500Stars)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_collect_500_stars));
+        if (achievementWorld1Finished)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_1_finished));
+        if (achievementWorld2Finished)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_2_finished));
+        if (achievementWorld3Finished)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_3_finished));
+        if (achievementWorld4Finished)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_4_finished));
+        if (achievementWorld1Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_1_completed));
+        if (achievementWorld2Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_2_completed));
+        if (achievementWorld3Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_3_completed));
+        if (achievementWorld4Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_world_4_completed));
+        if (achievementChapter1Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_chapter_1_completed));
+        if (achievementChapter2Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_chapter_2_completed));
+        if (achievementChapter3Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_chapter_3_completed));
+        if (achievementChapter4Completed)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_chapter_4_completed));
+        if (achievementEngineer)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_engineer));
+        if (achievementNavigator)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_navigator));
+        if (achievementTreasureHunter)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_treasure_hunter));
+        if (achievementGuidingLight)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_guiding_light));
+        if (achievementSprinter)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_sprinter));
+        if (achievementAddict)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_addict));
+        if (achievementGreedy)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_greedy));
+        if (achievementCreator)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_creator));
+        if (achievementSupporter)
+            Games.Achievements.unlock(mGoogleApiClient, getString(R.string.achievement_supporter));
     }
 }

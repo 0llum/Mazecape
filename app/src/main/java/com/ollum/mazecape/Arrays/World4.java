@@ -146,7 +146,7 @@ public class World4 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"12", "12", "d", "31"},
+            {"12", "12", "d", "129"},
             {},
             {},
             {}
@@ -168,7 +168,7 @@ public class World4 {
             {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
-            {"6", "6", "d", "93"},
+            {"6", "5", "d", "93"},
             {},
             {},
             {}

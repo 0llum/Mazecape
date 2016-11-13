@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Mazecape</string>
-    <string name="signin_other_error">There was an issue with sign in. Please try again later.</string>
+    <string name="signin_other_error">Fehler bei der Anmeldung. Bitte versuche es später nochmal.</string>
 
     <string name="play_button">Spielen</string>
     <string name="help_button">Hilfe</string>
@@ -123,46 +123,46 @@
     <string name="chapter_1_page_1">Einer der Wenigen bin ich, die sich erinnern; an das helle, warme Licht, an all\' die Farben, an den Tag; Bilder aus der Kindheit.\nWas uns heute bleibt, ist Dunkelheit und Kälte.</string>
     <string name="chapter_1_page_2">Mir wurde der Auftrag erteilt, die Suche nach der Sonne anzuführen. Zugegeben, immerhin weiß ich noch wie sie aussah.</string>
     <string name="chapter_1_page_3">Gestern habe ich zum ersten Mal von ihm geträumt. Ein junger Mann allein in der Dunkelheit, aus seinen Augen strahlte ein warmes Licht.</string>
-    <string name="chapter_1_page_4">Sonne und Mond waren Geliebte, getrennt durch die Gesetze der Welt.\nIrgendwann jedoch wurde das Verlangen zu groß und der Mond näherte sich der Sonne. Die feurige Umarmung war das das letzte, was der Mond spürte.</string>
+    <string name="chapter_1_page_4">Sonne und Mond waren Geliebte, getrennt durch die Gesetze der Welt.\nIrgendwann jedoch wurde das Verlangen zu groß und der Mond näherte sich der Sonne. Die feurige Umarmung war das letzte, was der Mond spürte.</string>
     <string name="chapter_1_page_5">&#8230; und die Sonne versank in Trauer. Sie sank immer weiter. Wo sie jetzt ist, das wissen wir nicht.</string>
     <string name="chapter_1_page_6">Geblieben sind uns nur noch das Feuer und die Mondsteine, um uns vor der Dunkelheit zu schützen.\nDie Gelehrten meinen jedoch ihre Macht nimmt stetig ab. Was uns dann erwartet, will ich mir nicht ausmalen.</string>
     <string name="chapter_1_page_7">Dunkle Geschöpfe verschiedenster Art, die der Tag sonst fernhielt, beheimaten nun unsere Welt. So berichten es uns unsere Kuriere, die Wenigen, die sich der ewigen Nacht stellen.</string>
     <string name="chapter_1_page_8">Allein die Mondsteinstädte bieten uns Schutz vor der Kälte und dem, was in Dunkelheit lauert.</string>
-    <string name="chapter_1_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_1_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_1_page_9"></string>
+    <string name="chapter_1_page_10"></string>
 
-    <string name="chapter_2_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_2_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_2_page_1">Den Weg, den wir gehen, ist noch niemand vor uns gegangen. Wir wagen uns hinaus ins Ungewisse. Die Suchenden werden wir genannt.</string>
+    <string name="chapter_2_page_2">Ich habe vergessen, wie weit diese Welt doch ist. Jahrelang eingesperrt in diesen Mauern. Wie sie sich verändert hat&#8230; Farblos, ihre Pracht verborgen.</string>
+    <string name="chapter_2_page_3">Den ersten aus unseren Reihen haben wir verloren. Ruhe er in Frieden. Diese Kreaturen sind abscheulich, als entsprängen sie einem Albtraum. Wir hätten mehr kampferprobte Mitstreiter mitnehmen sollen.</string>
+    <string name="chapter_2_page_4"></string>
+    <string name="chapter_2_page_5"></string>
+    <string name="chapter_2_page_6"></string>
+    <string name="chapter_2_page_7"></string>
+    <string name="chapter_2_page_8"></string>
+    <string name="chapter_2_page_9"></string>
+    <string name="chapter_2_page_10"></string>
 
-    <string name="chapter_3_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_3_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_3_page_1">Eis&#8230; überall wo man hinsieht nur Eis und Schnee. Ob die ganze Welt irgendwann so aussehen wird? Mir ist kalt, ich will einfach nur schlafen&#8230;</string>
+    <string name="chapter_3_page_2">Die Anderen halten mich wahrscheinlich für verrückt. Ich habe ihnen von meinen Träumen erzählt. Von dem Jungen, der gleich einer Fackel die Nacht erhellt. Was hat er mit unserer Suche zu tun? Welche Rolle er wohl spielen mag?</string>
+    <string name="chapter_3_page_3"></string>
+    <string name="chapter_3_page_4"></string>
+    <string name="chapter_3_page_5"></string>
+    <string name="chapter_3_page_6"></string>
+    <string name="chapter_3_page_7"></string>
+    <string name="chapter_3_page_8"></string>
+    <string name="chapter_3_page_9"></string>
+    <string name="chapter_3_page_10"></string>
 
-    <string name="chapter_4_page_1">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_2">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_3">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_4">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_5">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_6">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_7">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_8">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_9">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
-    <string name="chapter_4_page_10">Desorientiert wachst du auf. Du findest dich in einem Labyrinth wieder. Alles woran du dich noch erinnern kannst ist - Dunkelheit. Du blickst zum Himmel, doch von der Sonne fehlt jede Spur.</string>
+    <string name="chapter_4_page_1">Unsere Suche führt uns in die Wüste. Wie absurd das doch ist. Früher kam man hier vor Hitze um. Heute erfriert man zur Mittagszeit. Eine Wüste ohne Sonne. Ich würde lachen, wäre es nicht so traurig.</string>
+    <string name="chapter_4_page_2">Er meint es wäre das richtige Tor, doch er kann es nicht öffnen. Wir sind den langen Weg in die Dunkelheit gegangen, haben so viel geopfert, wir dürfen jetzt nicht scheitern.</string>
+    <string name="chapter_4_page_3">Ein Glück, dass ich ihn für mein Vorhaben gewinnen konnte. Der Meister der Pforten wird er genannt. Er wird uns Tore öffnen um unsere Reise zu beschleunigen.</string>
+    <string name="chapter_4_page_4"></string>
+    <string name="chapter_4_page_5"></string>
+    <string name="chapter_4_page_6"></string>
+    <string name="chapter_4_page_7"></string>
+    <string name="chapter_4_page_8"></string>
+    <string name="chapter_4_page_9"></string>
+    <string name="chapter_4_page_10"></string>
 
     <string name="story_button">Geschichte</string>
     <string name="reset_game">Möchtest du wirklich deinen Spielstand zurücksetzen? Das kann nicht rückgängig gemacht werden!</string>
@@ -215,4 +215,12 @@
     <string name="bridge_hole">Brücke (zerstört)</string>
     <string name="bridge_hole_info">Die Brück ist zerstört. Wenn du sie überquerst wirst du sterben</string>
     <string name="version">Version</string>
+    <string name="want_gpgs">Möchtest du Google Play Games verwenden um Erfolge freizuschalten?</string>
+    <string name="vibration">Vibration</string>
+    <string name="score">Punkte</string>
+    <string name="your_score">Dein Punktestand ist</string>
+    <string name="main_menu">Hauptmenü</string>
+    <string name="leaderboard">Rangliste</string>
+    <string name="endless_button">Endlosmodus</string>
+    <string name="highscore">Highscore</string>
 </resources>

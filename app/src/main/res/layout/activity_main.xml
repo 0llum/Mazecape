@@ -38,9 +38,8 @@
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
-            android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:src="@drawable/settings_white" />
 
         <ImageButton
@@ -51,10 +50,8 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/button_settings"
             android:layout_toStartOf="@+id/button_settings"
-            android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:elevation="0dp"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:src="@drawable/info_white" />
 
         <ImageButton
@@ -65,9 +62,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
+            android:scaleType="centerInside"
             android:src="@drawable/market_white" />
 
         <ImageButton
@@ -78,10 +74,21 @@
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/button_shop"
             android:layout_toRightOf="@+id/button_shop"
-            android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/play_white" />
+            android:scaleType="centerInside"
+            android:src="@drawable/achievements_white" />
+
+        <ImageButton
+            android:id="@+id/button_leaderboard"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/button_achievements"
+            android:layout_toRightOf="@+id/button_achievements"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/leaderboards_white" />
     </RelativeLayout>
 
     <LinearLayout

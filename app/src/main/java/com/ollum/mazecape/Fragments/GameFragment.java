@@ -9,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -58,6 +59,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public static float volumeBGM = MainActivity.volumeMusic;
     public static float volumeFire = 0;
     public static float volumeHeart = 0;
+    Vibrator vibrator;
     private RelativeLayout relativeLayout_Container, relativeLayout_UI, relativeLayoutMap, relativeLayoutHeader;
     private LinearLayout navigation;
     private GridView gridViewLevel, gridViewMap;
@@ -274,6 +276,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 builder.show();
             }
         });
+
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         requestNewInterstitial();
         reset();
@@ -1411,6 +1415,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         MainActivity.stopTime = true;
         hasDialog = true;
         MainActivity.soundPool.play(MainActivity.deathID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
+
+        if (MainActivity.vibration) {
+            vibrator.vibrate(200);
+        }
 
         if (gameBGM != null && gameBGM.isPlaying()) {
             gameBGM.pause();
@@ -2921,54 +2929,78 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     private void checkAchievements() {
+        if (collectedStars >= 50) MainActivity.achievement50Stars = true;
+        if (collectedStars >= 100) MainActivity.achievement100Stars = true;
+        if (collectedStars >= 200) MainActivity.achievement200Stars = true;
+        if (collectedStars >= 500) MainActivity.achievement500Stars = true;
+        if (MainActivity.maxLevel[0] >= Worlds.WORLD_1.length)
+            MainActivity.achievementWorld1Finished = true;
+        if (MainActivity.maxLevel[1] >= Worlds.WORLD_2.length)
+            MainActivity.achievementWorld2Finished = true;
+        if (MainActivity.maxLevel[2] >= Worlds.WORLD_3.length)
+            MainActivity.achievementWorld3Finished = true;
+        if (MainActivity.maxLevel[3] >= Worlds.WORLD_4.length)
+            MainActivity.achievementWorld4Finished = true;
+        if (MainActivity.world1Stars >= Worlds.WORLD_1.length * 5)
+            MainActivity.achievementWorld1Completed = true;
+        if (MainActivity.world2Stars >= Worlds.WORLD_2.length * 5)
+            MainActivity.achievementWorld2Completed = true;
+        if (MainActivity.world3Stars >= Worlds.WORLD_3.length * 5)
+            MainActivity.achievementWorld3Completed = true;
+        if (MainActivity.world4Stars >= Worlds.WORLD_4.length * 5)
+            MainActivity.achievementWorld4Completed = true;
+
         if (isOnline() && isSignedIn()) {
-            if (collectedStars >= 50) {
+            if (MainActivity.achievement50Stars)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_collect_50_stars));
-            }
-
-            if (collectedStars >= 100) {
+            if (MainActivity.achievement100Stars)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_collect_100_stars));
-            }
-
-            if (collectedStars >= 200) {
+            if (MainActivity.achievement200Stars)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_collect_200_stars));
-            }
-
-            if (collectedStars >= 500) {
+            if (MainActivity.achievement500Stars)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_collect_500_stars));
-            }
-
-            if (MainActivity.maxLevel[0] >= Worlds.WORLD_1.length) {
+            if (MainActivity.achievementWorld1Finished)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_1_finished));
-            }
-
-            if (MainActivity.maxLevel[1] >= Worlds.WORLD_2.length) {
+            if (MainActivity.achievementWorld2Finished)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_2_finished));
-            }
-
-            if (MainActivity.maxLevel[2] >= Worlds.WORLD_3.length) {
+            if (MainActivity.achievementWorld3Finished)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_3_finished));
-            }
-
-            if (MainActivity.maxLevel[3] >= Worlds.WORLD_4.length) {
+            if (MainActivity.achievementWorld4Finished)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_4_finished));
-            }
-
-            if (MainActivity.world1Stars >= Worlds.WORLD_1.length * 5) {
+            if (MainActivity.achievementWorld1Completed)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_1_completed));
-            }
-
-            if (MainActivity.world2Stars >= Worlds.WORLD_2.length * 5) {
+            if (MainActivity.achievementWorld2Completed)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_2_completed));
-            }
-
-            if (MainActivity.world3Stars >= Worlds.WORLD_3.length * 5) {
+            if (MainActivity.achievementWorld3Completed)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_3_completed));
-            }
-
-            if (MainActivity.world4Stars >= Worlds.WORLD_4.length * 5) {
+            if (MainActivity.achievementWorld4Completed)
                 Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_world_4_completed));
-            }
+            if (MainActivity.achievementChapter1Completed)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_chapter_1_completed));
+            if (MainActivity.achievementChapter2Completed)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_chapter_2_completed));
+            if (MainActivity.achievementChapter3Completed)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_chapter_3_completed));
+            if (MainActivity.achievementChapter4Completed)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_chapter_4_completed));
+            if (MainActivity.achievementEngineer)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_engineer));
+            if (MainActivity.achievementNavigator)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_navigator));
+            if (MainActivity.achievementTreasureHunter)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_treasure_hunter));
+            if (MainActivity.achievementGuidingLight)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_guiding_light));
+            if (MainActivity.achievementSprinter)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_sprinter));
+            if (MainActivity.achievementAddict)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_addict));
+            if (MainActivity.achievementGreedy)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_greedy));
+            if (MainActivity.achievementCreator)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_creator));
+            if (MainActivity.achievementSupporter)
+                Games.Achievements.unlock(MainActivity.mGoogleApiClient, getString(R.string.achievement_supporter));
         }
     }
 

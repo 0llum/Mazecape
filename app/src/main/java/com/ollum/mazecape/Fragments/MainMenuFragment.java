@@ -17,7 +17,7 @@ import com.ollum.mazecape.R;
 public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
     public static boolean devMode = false;
-    Button playButton, levelEditorButton, storyButton, shopButton, helpButton;
+    Button playButton, endlessButton, levelEditorButton, storyButton, shopButton, helpButton;
     CheckBox checkBox;
 
     @Override
@@ -26,8 +26,11 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
 
         MainActivity.title.setText(R.string.app_name);
 
-        playButton = (Button) view.findViewById(R.id.button_achievements);
+        playButton = (Button) view.findViewById(R.id.button_play);
         playButton.setOnClickListener(this);
+
+        endlessButton = (Button) view.findViewById(R.id.button_endless);
+        endlessButton.setOnClickListener(this);
 
         levelEditorButton = (Button) view.findViewById(R.id.button_level_editor);
         levelEditorButton.setOnClickListener(this);
@@ -63,13 +66,26 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
-            case R.id.button_achievements:
+            case R.id.button_play:
                 WorldSelectFragment worldSelectFragment = new WorldSelectFragment();
                 FragmentTransaction transaction2 = MainActivity.fragmentManager.beginTransaction();
                 transaction2.setCustomAnimations(R.anim.right_in, R.anim.left_out);
                 transaction2.replace(R.id.content, worldSelectFragment, "WorldSelectFragment");
                 transaction2.addToBackStack("WorldSelectFragment");
                 transaction2.commit();
+                break;
+            case R.id.button_endless:
+                EndlessFragment endlessFragment = new EndlessFragment();
+                FragmentTransaction transaction3 = MainActivity.fragmentManager.beginTransaction();
+                transaction3.setCustomAnimations(R.anim.right_in, R.anim.left_out);
+                transaction3.replace(R.id.content, endlessFragment, "EndlessFragment");
+                transaction3.addToBackStack("EndlessFragment");
+                transaction3.commit();
+
+                if (MainActivity.menuBGM != null) {
+                    MainActivity.menuBGM.pause();
+                    MainActivity.menuBGM.seekTo(0);
+                }
                 break;
             case R.id.button_story:
                 StoryFragment storyFragment = new StoryFragment();

@@ -30,4 +30,5 @@ Save this file as res/values/games-ids.xml in your project.
     <string name="achievement_greedy">CgkIseGK4OwZEAIQIA</string>
     <string name="achievement_creator">CgkIseGK4OwZEAIQGA</string>
     <string name="achievement_supporter">CgkIseGK4OwZEAIQIQ</string>
+    <string name="leaderboard_endless_mode">CgkIseGK4OwZEAIQIw</string>
 </resources>
