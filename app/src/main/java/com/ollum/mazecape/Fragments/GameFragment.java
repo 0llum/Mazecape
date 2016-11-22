@@ -554,11 +554,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             needleStar3.setVisibility(View.INVISIBLE);
         }
 
-        if (MainActivity.levelMap > 0) {
-            mapPosition.setVisibility(View.INVISIBLE);
+        /*if (MainActivity.levelMap > 0) {
+            mapPosition.setVisibility(View.VISIBLE);
         } else {
             mapPosition.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         setNeedle();
         MainActivity.title.setText((MainActivity.world + 1) + " - " + (MainActivity.level + 1));
@@ -1062,9 +1062,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             levelAdapter.notifyDataSetChanged();
                             break;
                     }
-                    return true;
                 }
             }
+            return true;
         }
         return false;
     }

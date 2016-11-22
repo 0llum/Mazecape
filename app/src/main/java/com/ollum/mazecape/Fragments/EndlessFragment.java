@@ -569,11 +569,11 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
             needleStar3.setVisibility(View.INVISIBLE);
         }
 
-        if (MainActivity.levelMap > 0) {
-            mapPosition.setVisibility(View.INVISIBLE);
+        /*if (MainActivity.levelMap > 0) {
+            mapPosition.setVisibility(View.VISIBLE);
         } else {
             mapPosition.setVisibility(View.INVISIBLE);
-        }
+        }*/
 
         setNeedle();
         MainActivity.title.setText(getString(R.string.level) + " " + (level + 1));
@@ -1078,9 +1078,9 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
                             endlessAdapter.notifyDataSetChanged();
                             break;
                     }
-                    return true;
                 }
             }
+            return true;
         }
         return false;
     }

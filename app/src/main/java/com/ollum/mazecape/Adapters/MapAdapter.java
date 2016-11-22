@@ -27,13 +27,29 @@ public class MapAdapter extends BaseAdapter {
         for (int i = -3; i <= 3; i++) {
             for (int k = -3; k <= 3; k++) {
                 if (GameFragment.stepsMade.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i)) && MainActivity.levelMap > 0) {
-                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("d") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("x") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("v") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("l") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("q") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("z")) {
+                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("d") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("l") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("q") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("v") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("x") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("y") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("z")) {
                         items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("xn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3), "drawable", context.getPackageName())));
                     } else {
                         items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("x" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
                     }
                 } else if (GameFragment.discovered.contains(new Point(GameFragment.position.x + k, GameFragment.position.y + i)) && MainActivity.levelMap > 1) {
-                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("d") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("x") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("v") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("l") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("q") || GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("z")) {
+                    if (GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("c") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("b") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("d") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("l") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("q") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("v") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("x") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("y") ||
+                            GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(0, 1).equals("z")) {
                         items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("yn" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k].substring(1, 3), "drawable", context.getPackageName())));
                     } else {
                         items.add(new Item(i + 4 + "-" + k + 4, context.getResources().getIdentifier("y" + GameFragment.currentLevel[GameFragment.y + i][GameFragment.x + k], "drawable", context.getPackageName())));
