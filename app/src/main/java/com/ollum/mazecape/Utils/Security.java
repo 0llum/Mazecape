@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.ollum.mazecape.util;
+package com.ollum.mazecape.Utils;
 
 import android.text.TextUtils;
 import android.util.Base64;

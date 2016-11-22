@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.ollum.mazecape.util;
+package com.ollum.mazecape.Utils;
 
 /**
  * Exception thrown when something went wrong with in-app billing.

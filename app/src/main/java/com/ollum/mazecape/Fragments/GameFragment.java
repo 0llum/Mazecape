@@ -20,8 +20,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,7 +39,7 @@ import com.ollum.mazecape.Arrays.Tiles;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     private LinearLayout navigation;
     private GridView gridViewLevel, gridViewMap;
     private ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
-    private Button resetLevel;
+    private ImageButton replay;
     private int stars = 0;
     private int darkness = 0;
     private int time = 0;
@@ -73,7 +73,6 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     private boolean isAnimating = false;
     private boolean allowInput = true;
     private boolean hasSword = false;
-    private boolean hasDialog = false;
     private ImageView imgSword;
     private String direction = "up";
     private InterstitialAd mInterstitialAd;
@@ -188,8 +187,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         imageStar2 = (ImageView) view.findViewById(R.id.imageStar2);
         imageStar3 = (ImageView) view.findViewById(R.id.imageStar3);
 
-        resetLevel = (Button) view.findViewById(R.id.resetLevel);
-        resetLevel.setOnClickListener(this);
+        replay = (ImageButton) view.findViewById(R.id.replay);
+        replay.setOnClickListener(this);
 
         imgSword = (ImageView) view.findViewById(R.id.imgSword);
 
@@ -242,7 +241,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 MainActivity.stopTime = true;
-                hasDialog = true;
+                MainActivity.hasDialog = true;
                 builder.setTitle(R.string.ads);
                 builder.setMessage(R.string.hate_ads);
                 builder.setPositiveButton(R.string.open_shop, new DialogInterface.OnClickListener() {
@@ -258,7 +257,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         transaction.commit();
                         MainActivity.shopVisible = true;
 
-                        hasDialog = false;
+                        MainActivity.hasDialog = false;
                         dialog.dismiss();
                     }
                 });
@@ -267,7 +266,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         MainActivity.stopTime = false;
-                        hasDialog = false;
+                        MainActivity.hasDialog = false;
                         dialog.dismiss();
                     }
                 });
@@ -313,7 +312,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
 
 
-        if (!(hasDialog || MainActivity.shopVisible || MainActivity.settingsVisible || MainActivity.helpVisible)) {
+        if (!(MainActivity.hasDialog || MainActivity.shopVisible || MainActivity.settingsVisible || MainActivity.helpVisible)) {
             MainActivity.stopTime = false;
         }
 
@@ -460,7 +459,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         angleGoalNew = 0;
 
         allowInput = true;
-        hasDialog = false;
+        MainActivity.hasDialog = false;
         discovered.clear();
         stepsMade.clear();
         stars = 0;
@@ -556,13 +555,13 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
 
         if (MainActivity.levelMap > 0) {
-            mapPosition.setVisibility(View.VISIBLE);
+            mapPosition.setVisibility(View.INVISIBLE);
         } else {
             mapPosition.setVisibility(View.INVISIBLE);
         }
 
         setNeedle();
-        MainActivity.title.setText(getString(R.string.level) + " " + (MainActivity.world + 1) + " - " + (MainActivity.level + 1));
+        MainActivity.title.setText((MainActivity.world + 1) + " - " + (MainActivity.level + 1));
         MainActivity.stepsCounter.setText("" + steps);
         MainActivity.timeCounter.setText("" + time);
         hasSword = false;
@@ -1092,7 +1091,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     private boolean checkTrap() {
         Log.d("debug", "checkTrap()");
-        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !hasDialog) {
+        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !MainActivity.hasDialog) {
             gameOver();
             return true;
         }
@@ -1136,7 +1135,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     private boolean checkHole() {
         Log.d("debug", "checkHole()");
-        if (contains(Tiles.HOLE, currentLevel[y][x]) && !hasDialog) {
+        if (contains(Tiles.HOLE, currentLevel[y][x]) && !MainActivity.hasDialog) {
             gameOver();
             return true;
         }
@@ -1145,7 +1144,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
     private boolean checkDarkness() {
         Log.d("debug", "checkDarkness()");
-        if (darkness > 14 && !hasDialog) {
+        if (darkness > 14 && !MainActivity.hasDialog) {
             gameOver();
             return true;
         } else if (darkness < 12) {
@@ -1235,7 +1234,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     private void showDiary(int title, int subtitle, int message, int button) {
         Log.d("debug", "showDiary()");
         MainActivity.stopTime = true;
-        hasDialog = true;
+        MainActivity.hasDialog = true;
 
         MainActivity.diaryTitle = getString(title);
         MainActivity.diarySubtitle = getString(subtitle);
@@ -1261,7 +1260,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             MainActivity.soundPool.play(MainActivity.diaryID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
 
             MainActivity.stopTime = true;
-            hasDialog = true;
+            MainActivity.hasDialog = true;
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
@@ -1413,7 +1412,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         Log.d("debug", "gameOver()");
         allowInput = false;
         MainActivity.stopTime = true;
-        hasDialog = true;
+        MainActivity.hasDialog = true;
         MainActivity.soundPool.play(MainActivity.deathID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
 
         if (MainActivity.vibration) {
@@ -1570,7 +1569,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                             public void onClick(DialogInterface dialog, int which) {
                                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                                 SharedPreferences.saveGame(getContext());
-                                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
+                                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !MainActivity.hasDialog) {
                                     mInterstitialAd.show();
                                 } else {
                                     reset();
@@ -1668,7 +1667,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         SharedPreferences.saveGame(getContext());
-                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
+                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !MainActivity.hasDialog) {
                             mInterstitialAd.show();
                         } else {
                             reset();
@@ -1706,7 +1705,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
 
             MainActivity.stopTime = true;
-            hasDialog = true;
+            MainActivity.hasDialog = true;
 
             if ((MainActivity.level < Worlds.WORLDS[MainActivity.world].length) && (MainActivity.level + 1 > MainActivity.maxLevel[MainActivity.world])) {
                 MainActivity.maxLevel[MainActivity.world] = MainActivity.level + 1;
@@ -2116,7 +2115,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         MainActivity.level++;
-                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
+                        if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !MainActivity.hasDialog) {
                             mInterstitialAd.show();
                         } else {
                             reset();
@@ -2161,7 +2160,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-                    if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog) {
+                    if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !MainActivity.hasDialog) {
                         mInterstitialAd.show();
                     } else {
                         reset();
@@ -2192,7 +2191,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     private void showTutorial(int title, int message, int button) {
         Log.d("debug", "showTutorial()");
         MainActivity.stopTime = true;
-        hasDialog = true;
+        MainActivity.hasDialog = true;
 
         MainActivity.tutorialTitle = getString(title);
         MainActivity.tutorialMessage = getString(message);
@@ -2792,7 +2791,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     }
 
     private void resetLevel() {
-        Log.d("debug", "resetLevel()");
+        Log.d("debug", "replay()");
         if (gameBGM != null && gameBGM.isPlaying()) {
             gameBGM.pause();
         }
@@ -2812,7 +2811,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 MainActivity.resetCount++;
-                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !hasDialog && !hasDialog) {
+                if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0 && !MainActivity.hasDialog) {
                     mInterstitialAd.show();
                 } else {
                     reset();
@@ -3009,7 +3008,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         Log.d("debug", "onClick()");
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
-            case R.id.resetLevel:
+            case R.id.replay:
                 resetLevel();
                 break;
         }

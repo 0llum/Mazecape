@@ -20,8 +20,8 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -39,9 +39,12 @@ import com.ollum.mazecape.Arrays.Movement;
 import com.ollum.mazecape.Arrays.Tiles;
 import com.ollum.mazecape.Classes.OnSwipeTouchListener;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.SharedPreferences;
+import com.ollum.mazecape.Utils.TileUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class EndlessFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
@@ -67,14 +70,13 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
     private LinearLayout navigation;
     private GridView gridViewLevel, gridViewMap;
     private ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
-    private Button resetLevel;
+    private ImageButton replay;
     private int stars = 0;
     private int darkness = 0;
     private int cheat = 0;
     private boolean isAnimating = false;
     private boolean allowInput = true;
     private boolean hasSword = false;
-    private boolean hasDialog = false;
     private ImageView imgSword;
     private String direction = "up";
     private InterstitialAd mInterstitialAd;
@@ -94,6 +96,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
     private int star1X, star1Y, star2X, star2Y, star3X, star3Y;
     private Handler handler;
     private int level = 0;
+    private int levelIndex = 0;
 
     private static void setMargins(View v, int l, int t, int r, int b) {
         Log.d("debug", "setMargins()");
@@ -111,6 +114,12 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
         items = new ArrayList<>();
+
+        Collections.shuffle(Arrays.asList(Endless.LEVEL_1));
+        Collections.shuffle(Arrays.asList(Endless.LEVEL_2));
+        Collections.shuffle(Arrays.asList(Endless.LEVEL_3));
+        Collections.shuffle(Arrays.asList(Endless.LEVEL_4));
+        Collections.shuffle(Arrays.asList(Endless.LEVEL_5));
 
         MainActivity.timeLayout.setVisibility(View.VISIBLE);
         MainActivity.stepsLayout.setVisibility(View.VISIBLE);
@@ -180,8 +189,8 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         imageStar2 = (ImageView) view.findViewById(R.id.imageStar2);
         imageStar3 = (ImageView) view.findViewById(R.id.imageStar3);
 
-        resetLevel = (Button) view.findViewById(R.id.resetLevel);
-        resetLevel.setOnClickListener(this);
+        replay = (ImageButton) view.findViewById(R.id.replay);
+        replay.setOnClickListener(this);
 
         imgSword = (ImageView) view.findViewById(R.id.imgSword);
 
@@ -234,7 +243,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
 
                 final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 MainActivity.stopTime = true;
-                hasDialog = true;
+                MainActivity.hasDialog = true;
                 builder.setTitle(R.string.ads);
                 builder.setMessage(R.string.hate_ads);
                 builder.setPositiveButton(R.string.open_shop, new DialogInterface.OnClickListener() {
@@ -250,7 +259,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
                         transaction.commit();
                         MainActivity.shopVisible = true;
 
-                        hasDialog = false;
+                        MainActivity.hasDialog = false;
                         dialog.dismiss();
                     }
                 });
@@ -259,7 +268,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
                     public void onClick(DialogInterface dialog, int which) {
                         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         MainActivity.stopTime = false;
-                        hasDialog = false;
+                        MainActivity.hasDialog = false;
                         dialog.dismiss();
                     }
                 });
@@ -312,7 +321,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         }
 
 
-        if (!(hasDialog || MainActivity.shopVisible || MainActivity.settingsVisible || MainActivity.helpVisible)) {
+        if (!(MainActivity.hasDialog || MainActivity.shopVisible || MainActivity.settingsVisible || MainActivity.helpVisible)) {
             MainActivity.stopTime = false;
         }
 
@@ -384,15 +393,20 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         }
 
         if (level < 5) {
-            currentLevel = copyLevel(Endless.LEVEL_1[(int) (Math.random() * Endless.LEVEL_1.length)]);
+            levelIndex = ((levelIndex + 1) > Endless.LEVEL_1.length - 1) ? 0 : levelIndex + 1;
+            currentLevel = copyLevel(Endless.LEVEL_1[levelIndex]);
         } else if (level < 15) {
-            currentLevel = copyLevel(Endless.LEVEL_2[(int) (Math.random() * Endless.LEVEL_2.length)]);
-        } else if (level < 20) {
-            currentLevel = copyLevel(Endless.LEVEL_3[(int) (Math.random() * Endless.LEVEL_3.length)]);
+            levelIndex = ((levelIndex + 1) > Endless.LEVEL_2.length - 1) ? 0 : levelIndex + 1;
+            currentLevel = copyLevel(Endless.LEVEL_2[levelIndex]);
         } else if (level < 25) {
-            currentLevel = copyLevel(Endless.LEVEL_4[(int) (Math.random() * Endless.LEVEL_4.length)]);
+            levelIndex = ((levelIndex + 1) > Endless.LEVEL_3.length - 1) ? 0 : levelIndex + 1;
+            currentLevel = copyLevel(Endless.LEVEL_3[levelIndex]);
+        } else if (level < 30) {
+            levelIndex = ((levelIndex + 1) > Endless.LEVEL_4.length - 1) ? 0 : levelIndex + 1;
+            currentLevel = copyLevel(Endless.LEVEL_4[levelIndex]);
         } else {
-            currentLevel = copyLevel(Endless.LEVEL_5[(int) (Math.random() * Endless.LEVEL_5.length)]);
+            levelIndex = ((levelIndex + 1) > Endless.LEVEL_5.length - 1) ? 0 : levelIndex + 1;
+            currentLevel = copyLevel(Endless.LEVEL_5[levelIndex]);
         }
 
         scene = currentLevel[currentLevel.length - 4][2];
@@ -462,7 +476,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         angleGoalNew = 0;
 
         allowInput = true;
-        hasDialog = false;
+        MainActivity.hasDialog = false;
         discovered.clear();
         stepsMade.clear();
         darkness = 0;
@@ -556,7 +570,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         }
 
         if (MainActivity.levelMap > 0) {
-            mapPosition.setVisibility(View.VISIBLE);
+            mapPosition.setVisibility(View.INVISIBLE);
         } else {
             mapPosition.setVisibility(View.INVISIBLE);
         }
@@ -1093,7 +1107,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
 
     private boolean checkTrap() {
         Log.d("debug", "checkTrap()");
-        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !hasDialog) {
+        if (contains(Tiles.TRAP_ACTIVE, currentLevel[y][x]) && !MainActivity.hasDialog) {
             gameOver();
             return true;
         }
@@ -1137,7 +1151,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
 
     private boolean checkHole() {
         Log.d("debug", "checkHole()");
-        if (contains(Tiles.HOLE, currentLevel[y][x]) && !hasDialog) {
+        if (contains(Tiles.HOLE, currentLevel[y][x]) && !MainActivity.hasDialog) {
             gameOver();
             return true;
         }
@@ -1146,7 +1160,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
 
     private boolean checkDarkness() {
         Log.d("debug", "checkDarkness()");
-        if (darkness > 14 && !hasDialog) {
+        if (darkness > 14 && !MainActivity.hasDialog) {
             gameOver();
             return true;
         } else if (darkness < 12) {
@@ -1237,7 +1251,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         Log.d("debug", "gameOver()");
         allowInput = false;
         MainActivity.stopTime = true;
-        hasDialog = true;
+        MainActivity.hasDialog = true;
         MainActivity.soundPool.play(MainActivity.deathID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
 
         if (MainActivity.vibration) {
@@ -1333,15 +1347,22 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
                 public void onClick(DialogInterface dialog, int which) {
                     MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                     SharedPreferences.saveGame(getContext());
+
+                    Collections.shuffle(Arrays.asList(Endless.LEVEL_1));
+                    Collections.shuffle(Arrays.asList(Endless.LEVEL_2));
+                    Collections.shuffle(Arrays.asList(Endless.LEVEL_3));
+                    Collections.shuffle(Arrays.asList(Endless.LEVEL_4));
+                    Collections.shuffle(Arrays.asList(Endless.LEVEL_5));
+
+                    time = 0;
+                    steps = 0;
+                    level = 0;
+                    starsCollected = 0;
+                    stars = 0;
+
                     if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                         mInterstitialAd.show();
                     } else {
-                        time = 0;
-                        steps = 0;
-                        level = 0;
-                        starsCollected = 0;
-                        stars = 0;
-
                         reset();
                     }
                 }
@@ -1987,7 +2008,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
     }
 
     private void resetLevel() {
-        Log.d("debug", "resetLevel()");
+        Log.d("debug", "replay()");
         if (gameBGM != null && gameBGM.isPlaying()) {
             gameBGM.pause();
         }
@@ -2007,6 +2028,19 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
             public void onClick(DialogInterface dialog, int which) {
                 MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                 MainActivity.resetCount++;
+
+                Collections.shuffle(Arrays.asList(Endless.LEVEL_1));
+                Collections.shuffle(Arrays.asList(Endless.LEVEL_2));
+                Collections.shuffle(Arrays.asList(Endless.LEVEL_3));
+                Collections.shuffle(Arrays.asList(Endless.LEVEL_4));
+                Collections.shuffle(Arrays.asList(Endless.LEVEL_5));
+
+                time = 0;
+                steps = 0;
+                level = 0;
+                starsCollected = 0;
+                stars = 0;
+
                 if (mInterstitialAd.isLoaded() && MainActivity.resetCount % 3 == 0) {
                     mInterstitialAd.show();
                 } else {
@@ -2020,11 +2054,6 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
                         Games.Leaderboards.submitScore(MainActivity.mGoogleApiClient, getString(R.string.leaderboard_endless_mode), score);
                     }
 
-                    time = 0;
-                    steps = 0;
-                    level = 0;
-                    starsCollected = 0;
-                    stars = 0;
                     reset();
                 }
             }
@@ -2143,7 +2172,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         Log.d("debug", "onClick()");
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
         switch (v.getId()) {
-            case R.id.resetLevel:
+            case R.id.replay:
                 resetLevel();
                 break;
         }
@@ -2207,5 +2236,43 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
         mediaPlayer.setVolume(volume, volume);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
+    }
+
+    private void checkType() {
+        switch (TileUtils.getTile(currentLevel[y][x]).getType()) {
+            case GOAL:
+                checkWin();
+                break;
+            case STAR:
+                checkStar();
+                break;
+            case FIRE:
+                checkFire();
+                break;
+            case PORTAL:
+                checkPortal();
+                break;
+            case MONSTER:
+                checkMonster();
+                break;
+            case SWORD:
+                checkSword();
+                break;
+            case BRIDGE:
+                checkBridge();
+                break;
+            case TRAP_ACTIVE:
+                checkTrap();
+                break;
+            case SWITCH:
+                checkSwitch();
+                break;
+            case CRACK:
+                checkCrack();
+                break;
+            case HOLE:
+                checkHole();
+                break;
+        }
     }
 }

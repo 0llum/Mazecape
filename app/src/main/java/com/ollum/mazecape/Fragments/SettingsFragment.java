@@ -18,7 +18,7 @@ import android.widget.ToggleButton;
 
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.SharedPreferences;
 
 public class SettingsFragment extends Fragment {
 

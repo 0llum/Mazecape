@@ -12,10 +12,6 @@ import android.widget.TextView;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
 
-import static com.ollum.mazecape.Activities.MainActivity.fragmentManager;
-import static com.ollum.mazecape.Activities.MainActivity.stopTime;
-import static com.ollum.mazecape.Activities.MainActivity.tutorialFragment;
-
 public class TutorialFragment extends Fragment implements View.OnClickListener {
     Button button;
     TextView title, message;
@@ -40,10 +36,11 @@ public class TutorialFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         MainActivity.soundPool.play(MainActivity.clickID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.remove(tutorialFragment);
+        FragmentTransaction transaction = MainActivity.fragmentManager.beginTransaction();
+        transaction.remove(MainActivity.tutorialFragment);
         transaction.commit();
-        fragmentManager.popBackStack();
-        stopTime = false;
+        MainActivity.fragmentManager.popBackStack();
+        MainActivity.stopTime = false;
+        MainActivity.hasDialog = false;
     }
 }

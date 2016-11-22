@@ -60,8 +60,8 @@
     <string name="you_died_after">Du bist nach</string>
     <string name="die_steps">Schritten gestorben</string>
     <string name="retry">Nochmal</string>
-    <string name="level_select">Levelauswahl</string>
-    <string name="world_select">Weltauswahl</string>
+    <string name="level_select">Level</string>
+    <string name="world_select">Welten</string>
     <string name="you_win">Sieg</string>
     <string name="steps">Schritte</string>
     <string name="time">Zeit</string>

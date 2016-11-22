@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.Arrays.Worlds;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;

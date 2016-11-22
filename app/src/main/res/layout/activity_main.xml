@@ -34,60 +34,55 @@
             android:id="@+id/button_settings"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="false"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:src="@drawable/settings_white" />
 
         <ImageButton
             android:id="@+id/button_help"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/button_settings"
             android:layout_toStartOf="@+id/button_settings"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:src="@drawable/info_white" />
 
         <ImageButton
             android:id="@+id/button_shop"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:src="@drawable/market_white" />
 
         <ImageButton
             android:id="@+id/button_achievements"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/button_shop"
             android:layout_toRightOf="@+id/button_shop"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:src="@drawable/achievements_white" />
 
         <ImageButton
             android:id="@+id/button_leaderboard"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/button_achievements"
             android:layout_toRightOf="@+id/button_achievements"
             android:adjustViewBounds="true"
-            android:scaleType="centerInside"
             android:src="@drawable/leaderboards_white" />
     </RelativeLayout>
 

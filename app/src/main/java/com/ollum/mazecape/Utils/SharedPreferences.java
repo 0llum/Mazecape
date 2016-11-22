@@ -1,4 +1,4 @@
-package com.ollum.mazecape.util;
+package com.ollum.mazecape.Utils;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

@@ -39,7 +39,7 @@
     <string name="level_types">Worlds</string>
     <string name="forest_info">Try to finish the level before it gets dark. The longer you take the darker it gets</string>
     <string name="cave_info">Try to finish the level with less steps. The deeper you go the darker it gets</string>
-    <string name="snow_info">The ground is slippery. You can\'t change direction until the path ends</string>
+    <string name="snow_info">The ground is slippery. You can\'t change Direction until the path ends</string>
     <string name="desert_info">Every few steps you\'ll lose your orientation. The map will rotate randomly</string>
     <string name="special_tiles">Special Tiles</string>
     <string name="star_info">Stars will help you on your way. You\'ll find 3 of them in each level</string>
@@ -60,8 +60,8 @@
     <string name="you_died_after">You died after</string>
     <string name="die_steps">steps</string>
     <string name="retry">Retry</string>
-    <string name="level_select">Level Select</string>
-    <string name="world_select">World Select</string>
+    <string name="level_select">Levels</string>
+    <string name="world_select">Worlds</string>
     <string name="you_win">You win</string>
     <string name="steps">Steps</string>
     <string name="time">Time</string>

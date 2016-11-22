@@ -48,9 +48,9 @@ import com.ollum.mazecape.Fragments.StoryFragment;
 import com.ollum.mazecape.Fragments.TutorialFragment;
 import com.ollum.mazecape.Fragments.WorldSelectFragment;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.IabHelper;
-import com.ollum.mazecape.util.IabResult;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.IabHelper;
+import com.ollum.mazecape.Utils.IabResult;
+import com.ollum.mazecape.Utils.SharedPreferences;
 
 import java.util.HashSet;
 
@@ -109,6 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static boolean shopVisible = false;
     public static boolean helpVisible = false;
     public static boolean stopTime = false;
+    public static boolean hasDialog = false;
     public static boolean rated = false;
     public static boolean liked = false;
     public static int torches = 0;

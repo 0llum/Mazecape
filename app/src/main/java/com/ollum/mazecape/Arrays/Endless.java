@@ -16,18 +16,18 @@ public class Endless {
             World1.FOREST_18, World1.FOREST_19, World1.FOREST_24,
             World2.CAVE_09, World2.CAVE_10, World2.CAVE_11, World2.CAVE_16, World2.CAVE_17, World2.CAVE_19, World2.CAVE_21, World2.CAVE_22,
             World3.SNOW_06, World3.SNOW_07, World3.SNOW_08, World3.SNOW_09,
-            World4.DESERT_03, World4.DESERT_04, World4.DESERT_05, World4.DESERT_06
+            World4.DESERT_03, World4.DESERT_04, World4.DESERT_05, World4.DESERT_06, World4.DESERT_07
     };
     public static final String[][][] LEVEL_4 = {
             World1.FOREST_20, World1.FOREST_21, World1.FOREST_22, World1.FOREST_23, World1.FOREST_25, World1.FOREST_26, World1.FOREST_27, World1.FOREST_28,
             World2.CAVE_18, World2.CAVE_20, World2.CAVE_23,
             World3.SNOW_10,
-            World4.DESERT_07
+            World4.DESERT_08, World4.DESERT_09
     };
     public static final String[][][] LEVEL_5 = {
             World1.FOREST_29, World1.FOREST_30,
             World2.CAVE_24, World2.CAVE_25,
             World3.SNOW_11,
-            World4.DESERT_08, World4.DESERT_09
+            World4.DESERT_10, World4.DESERT_11
     };
 }

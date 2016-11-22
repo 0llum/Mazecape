@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.ollum.mazecape.util;
+package com.ollum.mazecape.Utils;
 
 import android.app.Activity;
 import android.app.PendingIntent;

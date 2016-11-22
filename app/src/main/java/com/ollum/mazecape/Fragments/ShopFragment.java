@@ -20,10 +20,10 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.gms.games.Games;
 import com.ollum.mazecape.Activities.MainActivity;
 import com.ollum.mazecape.R;
-import com.ollum.mazecape.util.IabHelper;
-import com.ollum.mazecape.util.IabResult;
-import com.ollum.mazecape.util.Purchase;
-import com.ollum.mazecape.util.SharedPreferences;
+import com.ollum.mazecape.Utils.IabHelper;
+import com.ollum.mazecape.Utils.IabResult;
+import com.ollum.mazecape.Utils.Purchase;
+import com.ollum.mazecape.Utils.SharedPreferences;
 
 public class ShopFragment extends Fragment implements View.OnClickListener, RewardedVideoAdListener {
 

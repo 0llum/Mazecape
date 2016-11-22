@@ -111,6 +111,25 @@ public class World4 {
             {}
     };
     public static final String[][] DESERT_07 = {
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndn", "ndr", "ndl", "ndr", "nlr", "ndl", "ndr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nud", "nud", "nud", "gdn", "nud", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nud", "nud", "nud", "nud", "sup", "nup", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nul", "nur", "ntd", "ylr", "cdl", "ndr", "ntr", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "srt", "ndl", "ndr", "ndl", "nud", "nud", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "pdn", "nud", "nud", "ntl", "ntd", "nul", "nud", "sup", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "zup", "nur", "nul", "nur", "nlr", "nlr", "ntd", "plt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"3", "3", "d", "100"},
+            {"10,9", "3,8"},
+            {},
+            {"3,9", "7,6"}
+    };
+    public static final String[][] DESERT_08 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
@@ -129,7 +148,28 @@ public class World4 {
             {},
             {}
     };
-    public static final String[][] DESERT_08 = {
+    public static final String[][] DESERT_09 = {
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "srt", "nlr", "nlr", "ndl", "fdn", "ndr", "nlr", "ndl", "sdn", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "nlr", "nlr", "nul", "tud", "nur", "ndl", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "ndr", "ydl", "nlr", "ncs", "nlr", "ydl", "nud", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nur", "nul", "nud", "xxx", "nud", "xxx", "nud", "nur", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nrt", "nlr", "ncs", "nlr", "zcs", "nlr", "ncs", "mlr", "glt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "ndr", "ndl", "nud", "xxx", "nud", "xxx", "nud", "ndr", "ndl", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nud", "ydl", "nlr", "ncs", "nlr", "ydl", "nul", "nud", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "nud", "nud", "nur", "ndl", "tud", "ndr", "nlr", "nlr", "nul", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "olt", "wup", "nur", "nlr", "nul", "fup", "nur", "nlr", "nlr", "slt", "ort", "ocs", "ocs"},
+            {"ocs", "ocs", "odl", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odn", "odr", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
+            {"3", "7", "d", "100"},
+            {},
+            {"7,4", "7,10"},
+            {"7,7", "5,5", "7,7", "9,5", "7,7", "5,9", "7,7", "9,9"}
+    };
+    public static final String[][] DESERT_10 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
@@ -151,7 +191,7 @@ public class World4 {
             {},
             {}
     };
-    public static final String[][] DESERT_09 = {
+    public static final String[][] DESERT_11 = {
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs", "ocs"},
             {"ocs", "ocs", "oul", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "oup", "our", "ocs", "ocs"},
