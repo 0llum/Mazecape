@@ -183,12 +183,12 @@ public class SharedPreferences {
         editor.putInt("levelSpeed", 0);
         editor.putInt("levelStars", 0);
         editor.putInt("levelLives", 0);
-        editor.putInt("maxWorld", 0);
-        editor.putInt("world1MaxLevel", 0);
-        editor.putInt("world2MaxLevel", 0);
-        editor.putInt("world3MaxLevel", 0);
-        editor.putInt("world4MaxLevel", 0);
-        editor.putInt("world5MaxLevel", 0);
+        editor.putInt("maxWorld", 3);
+        editor.putInt("world1MaxLevel", 29);
+        editor.putInt("world2MaxLevel", 29);
+        editor.putInt("world3MaxLevel", 29);
+        editor.putInt("world4MaxLevel", 29);
+        editor.putInt("world5MaxLevel", 29);
         editor.putStringSet("stars", MainActivity.starsList);
         editor.putStringSet("diary", MainActivity.diaryList);
         editor.putInt("torches", 0);

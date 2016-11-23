@@ -466,7 +466,7 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 if (currentLevel[i][k].substring(0, 1).equals("n") || currentLevel[i][k].substring(0, 1).equals("o") || currentLevel[i][k].substring(0, 1).equals("r") || currentLevel[i][k].substring(0, 1).equals("b") || currentLevel[i][k].substring(0, 1).equals("q") || currentLevel[i][k].substring(0, 1).equals("y")) {
                     specialTiles.add(R.drawable.blank);
                 } else {
-                    specialTiles.add(getResources().getIdentifier(currentLevel[i][k].substring(1, 2), "drawable", getContext().getPackageName()));
+                    specialTiles.add(getResources().getIdentifier(currentLevel[i][k].substring(0, 1), "drawable", getContext().getPackageName()));
                 }
             }
         }
@@ -737,7 +737,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             y++;
             move();
 
-            startAnimation(0, 0, 0, -MainActivity.width / gridViewColumns);
+            startAnimationNormal(0, 0, 0, -MainActivity.width / gridViewColumns);
+            startAnimationSpecial(0, 0, 0, -MainActivity.width / gridViewColumns);
             TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, -gridViewMap.getHeight() / 7);
             translateAnimation.setDuration(movementSpeed);
             translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
@@ -771,7 +772,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             y--;
             move();
 
-            startAnimation(0, 0, 0, MainActivity.width / gridViewColumns);
+            startAnimationNormal(0, 0, 0, MainActivity.width / gridViewColumns);
+            startAnimationSpecial(0, 0, 0, MainActivity.width / gridViewColumns);
+
             TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, gridViewMap.getHeight() / 7);
             translateAnimation.setDuration(movementSpeed);
             translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
@@ -807,7 +810,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             x--;
             move();
 
-            startAnimation(0, MainActivity.width / gridViewColumns, 0, 0);
+            startAnimationNormal(0, MainActivity.width / gridViewColumns, 0, 0);
+            startAnimationSpecial(0, MainActivity.width / gridViewColumns, 0, 0);
+
             TranslateAnimation translateAnimation = new TranslateAnimation(0, gridViewMap.getWidth() / 7, 0, 0);
             translateAnimation.setDuration(movementSpeed);
             translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
@@ -841,7 +846,9 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             x++;
             move();
 
-            startAnimation(0, -MainActivity.width / gridViewColumns, 0, 0);
+            startAnimationNormal(0, -MainActivity.width / gridViewColumns, 0, 0);
+            startAnimationSpecial(0, -MainActivity.width / gridViewColumns, 0, 0);
+
             TranslateAnimation translateAnimation = new TranslateAnimation(0, -gridViewMap.getWidth() / 7, 0, 0);
             translateAnimation.setDuration(movementSpeed);
             translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
@@ -2608,8 +2615,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         }
     }
 
-    private void startAnimation(float fromX, float toX, float fromY, float toY) {
-        Log.d("debug", "startAnimation()");
+    private void startAnimationNormal(float fromX, float toX, float fromY, float toY) {
+        Log.d("debug", "startAnimationNormal()");
         allowInput = false;
         final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
         translateAnimation.setDuration(movementSpeed);
@@ -2838,6 +2845,38 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
         });
         gridViewNormalTiles.startAnimation(translateAnimation);
+    }
+
+    private void startAnimationSpecial(float fromX, float toX, float fromY, float toY) {
+        Log.d("debug", "startAnimationSpecial()");
+        allowInput = false;
+        final TranslateAnimation translateAnimation = new TranslateAnimation(fromX, toX, fromY, toY);
+        translateAnimation.setDuration(movementSpeed);
+        if (scene.equals("s")) {
+            translateAnimation.setInterpolator(getContext(), android.R.anim.linear_interpolator);
+        } else {
+            translateAnimation.setInterpolator(getContext(), android.R.anim.accelerate_decelerate_interpolator);
+        }
+        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                isAnimating = true;
+                setNeedle();
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
+                animation.setDuration(1);
+                gridViewSpecialTiles.startAnimation(animation);
+
+                isAnimating = false;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
         gridViewSpecialTiles.startAnimation(translateAnimation);
     }
 
