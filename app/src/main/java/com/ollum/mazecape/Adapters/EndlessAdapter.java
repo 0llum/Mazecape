@@ -48,9 +48,9 @@ public class EndlessAdapter extends BaseAdapter {
             holder = (ViewHolder) row.getTag();
         }
 
-        //holder.imageView.setImageResource(GameFragment.items.get(position));
+        //holder.imageView.setImageResource(GameFragment.normalTiles.get(position));
         holder.imageView.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), EndlessFragment.items.get(position), null));
-        //holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), GameFragment.items.get(position)));
+        //holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), GameFragment.normalTiles.get(position)));
 
         return row;
     }

@@ -219,35 +219,35 @@ public class WorldSelectFragment extends Fragment {
                     items.add(new Item("1", getResources().getIdentifier("c" + "blk", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //normalTiles.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 1:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "blk", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //normalTiles.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 2:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "blk", "drawable", getContext().getPackageName()), 4));
-                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //normalTiles.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 case 3:
                     items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
                     items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
                     items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
                     items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
-                    //items.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
+                    //normalTiles.add(new Item("4", getResources().getIdentifier("m" + "blk", "drawable", getContext().getPackageName()), 5));
                     break;
                 /*case 4:
-                    items.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
-                    items.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
-                    items.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
-                    items.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
-                    items.add(new Item("4", getResources().getIdentifier("m" + "xxx", "drawable", getContext().getPackageName()), 5));
+                    normalTiles.add(new Item("0", getResources().getIdentifier("f" + "xxx", "drawable", getContext().getPackageName()), 1));
+                    normalTiles.add(new Item("1", getResources().getIdentifier("c" + "xxx", "drawable", getContext().getPackageName()), 2));
+                    normalTiles.add(new Item("2", getResources().getIdentifier("s" + "xxx", "drawable", getContext().getPackageName()), 3));
+                    normalTiles.add(new Item("3", getResources().getIdentifier("d" + "xxx", "drawable", getContext().getPackageName()), 4));
+                    normalTiles.add(new Item("4", getResources().getIdentifier("m" + "xxx", "drawable", getContext().getPackageName()), 5));
                     break;*/
             }
         }

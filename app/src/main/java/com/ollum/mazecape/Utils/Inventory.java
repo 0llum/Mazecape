@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a block of information about in-app items.
+ * Represents a block of information about in-app normalTiles.
  * An Inventory is returned by such methods as {@link IabHelper#queryInventory}.
  */
 public class Inventory {

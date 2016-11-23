@@ -155,7 +155,7 @@ public class EndlessFragment extends Fragment implements View.OnClickListener, A
 
         mapPosition = (ImageView) view.findViewById(R.id.minimapPosition);
 
-        gridViewLevel = (GridView) view.findViewById(R.id.gridViewLevel);
+        gridViewLevel = (GridView) view.findViewById(R.id.gridViewNormalTiles);
 
         /*gridViewLevel.setOnTouchListener(new View.OnTouchListener() {
             float dX, dY;

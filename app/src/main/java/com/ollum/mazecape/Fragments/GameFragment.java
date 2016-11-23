@@ -31,8 +31,9 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.games.Games;
 import com.ollum.mazecape.Activities.MainActivity;
-import com.ollum.mazecape.Adapters.LevelAdapter;
 import com.ollum.mazecape.Adapters.MapAdapter;
+import com.ollum.mazecape.Adapters.NormalTilesAdapter;
+import com.ollum.mazecape.Adapters.SpecialTilesAdapter;
 import com.ollum.mazecape.Arrays.Darkness;
 import com.ollum.mazecape.Arrays.Movement;
 import com.ollum.mazecape.Arrays.Tiles;
@@ -55,14 +56,15 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     public static Point position;
     public static ArrayList<Point> stepsMade;
     public static ArrayList<Point> discovered;
-    public static List<Integer> items;
+    public static List<Integer> normalTiles;
+    public static List<Integer> specialTiles;
     public static float volumeBGM = MainActivity.volumeMusic;
     public static float volumeFire = 0;
     public static float volumeHeart = 0;
     Vibrator vibrator;
     private RelativeLayout relativeLayout_Container, relativeLayout_UI, relativeLayoutMap, relativeLayoutHeader;
     private LinearLayout navigation;
-    private GridView gridViewLevel, gridViewMap;
+    private GridView gridViewNormalTiles, gridViewSpecialTiles, gridViewMap;
     private ImageView imageViewPlayer, imageViewDarkness, imageViewSandstorm, compass, needleGoal, needleStar1, needleStar2, needleStar3, mapPosition, imageStar1, imageStar2, imageStar3;
     private ImageButton replay;
     private int stars = 0;
@@ -82,7 +84,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
     private boolean mapRevealed = false;
     private int movementSpeed;
     private int minSteps;
-    private LevelAdapter levelAdapter;
+    private NormalTilesAdapter normalTilesAdapter;
+    private SpecialTilesAdapter specialTilesAdapter;
     private float angleGoalOld;
     private float angleGoalNew;
     private int gridViewColumns = 3;
@@ -117,7 +120,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         stepsMade = new ArrayList<>();
         discovered = new ArrayList<>();
-        items = new ArrayList<>();
+        normalTiles = new ArrayList<>();
+        specialTiles = new ArrayList<>();
 
         MainActivity.timeLayout.setVisibility(View.VISIBLE);
         MainActivity.stepsLayout.setVisibility(View.VISIBLE);
@@ -153,9 +157,10 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         mapPosition = (ImageView) view.findViewById(R.id.minimapPosition);
 
-        gridViewLevel = (GridView) view.findViewById(R.id.gridViewLevel);
+        gridViewNormalTiles = (GridView) view.findViewById(R.id.gridViewNormalTiles);
+        gridViewSpecialTiles = (GridView) view.findViewById(R.id.gridViewSpecialTiles);
 
-        /*gridViewLevel.setOnTouchListener(new View.OnTouchListener() {
+        /*gridViewNormalTiles.setOnTouchListener(new View.OnTouchListener() {
             float dX, dY;
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -447,11 +452,22 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             }
         }
 
-        items.clear();
+        normalTiles.clear();
+        specialTiles.clear();
 
-        for (int i = 2; i < GameFragment.currentLevel.length - 6; i++) {
-            for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
-                items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
+        for (int i = 2; i < currentLevel.length - 6; i++) {
+            for (int k = 2; k < currentLevel[i].length - 2; k++) {
+                if (currentLevel[i][k].substring(0, 1).equals("o") || currentLevel[i][k].substring(0, 1).equals("r") || currentLevel[i][k].substring(0, 1).equals("b") || currentLevel[i][k].substring(0, 1).equals("q") || currentLevel[i][k].substring(0, 1).equals("y")) {
+                    normalTiles.add(getResources().getIdentifier(scene + currentLevel[i][k], "drawable", getContext().getPackageName()));
+                } else {
+                    normalTiles.add(getResources().getIdentifier(scene + "n" + currentLevel[i][k].substring(1), "drawable", getContext().getPackageName()));
+                }
+
+                if (currentLevel[i][k].substring(0, 1).equals("n") || currentLevel[i][k].substring(0, 1).equals("o") || currentLevel[i][k].substring(0, 1).equals("r") || currentLevel[i][k].substring(0, 1).equals("b") || currentLevel[i][k].substring(0, 1).equals("q") || currentLevel[i][k].substring(0, 1).equals("y")) {
+                    specialTiles.add(R.drawable.blank);
+                } else {
+                    specialTiles.add(getResources().getIdentifier(currentLevel[i][k].substring(1, 2), "drawable", getContext().getPackageName()));
+                }
             }
         }
 
@@ -487,14 +503,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
         relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
 
-        gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-        gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
-        gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+        gridViewNormalTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+        gridViewNormalTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+        gridViewNormalTiles.setNumColumns(currentLevel[0].length - 4);
+
+        gridViewSpecialTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+        gridViewSpecialTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+        gridViewSpecialTiles.setNumColumns(currentLevel[0].length - 4);
 
         switch (gridViewColumns) {
             case 1:
-                gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
-                gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+                gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
 
                 if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
@@ -503,8 +526,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
                 break;
             case 3:
-                gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
-                gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+                gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
 
                 if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
@@ -513,8 +539,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 }
                 break;
             case 5:
-                gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
-                gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+                gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+
+                gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
 
                 if (!(scene.equals("s") || scene.equals("m"))) {
                     imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
@@ -526,9 +555,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
         imageViewPlayer.setVisibility(View.VISIBLE);
 
-        levelAdapter = new LevelAdapter(getContext(), 0);
+        normalTilesAdapter = new NormalTilesAdapter(getContext(), 0);
+        specialTilesAdapter = new SpecialTilesAdapter(getContext(), 0);
 
-        gridViewLevel.setAdapter(levelAdapter);
+        gridViewNormalTiles.setAdapter(normalTilesAdapter);
+        gridViewSpecialTiles.setAdapter(specialTilesAdapter);
 
         gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
 
@@ -869,8 +900,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         Log.d("debug", "checkSword()");
         if (contains(Tiles.WEAPON, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.WEAPON, currentLevel[y][x])];
-            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-            levelAdapter.notifyDataSetChanged();
+            specialTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, R.drawable.blank);
+            specialTilesAdapter.notifyDataSetChanged();
 
             hasSword = true;
             MainActivity.soundPool.play(MainActivity.swordID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -944,22 +975,29 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
                             switch (gridViewColumns) {
                                 case 1:
-                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
-                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+                                    gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                                    gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
                                     break;
                                 case 3:
-                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
-                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+                                    gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                                    gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
                                     break;
                                 case 5:
-                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
-                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
                                     break;
                             }
 
                             animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
                             animation.setDuration(1);
-                            gridViewLevel.startAnimation(animation);
+                            gridViewNormalTiles.startAnimation(animation);
+                            gridViewSpecialTiles.startAnimation(animation);
                             gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
                             setNeedle();
                         }
@@ -969,7 +1007,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
                         }
                     });
-                    gridViewLevel.startAnimation(animation);
+                    gridViewNormalTiles.startAnimation(animation);
+                    gridViewSpecialTiles.startAnimation(animation);
                     return true;
                 }
             }
@@ -993,73 +1032,73 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                     switch (currentLevel[tileY][tileX].substring(1, 3)) {
                         case "lt":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "up";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "rt":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dn";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "up":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "rt";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "dn":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "lt";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "lr":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ud";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "ud":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "lr";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "ur":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dr";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "dr":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "dl";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "dl":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ul";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "ul":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "ur";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "tr":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "td";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "td":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tl";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "tl":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tu";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                         case "tu":
                             currentLevel[tileY][tileX] = currentLevel[tileY][tileX].substring(0, 1) + "tr";
-                            items.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
-                            levelAdapter.notifyDataSetChanged();
+                            normalTiles.set((tileY - 2) * (currentLevel[0].length - 4) + tileX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[tileY][tileX], "drawable", getContext().getPackageName()));
+                            normalTilesAdapter.notifyDataSetChanged();
                             break;
                     }
                 }
@@ -1077,8 +1116,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             } else {
                 allowInput = true;
                 currentLevel[y][x] = Tiles.BLOOD[getIndex(Tiles.MONSTER, currentLevel[y][x])];
-                items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-                levelAdapter.notifyDataSetChanged();
+                specialTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, R.drawable.x);
+                specialTilesAdapter.notifyDataSetChanged();
                 hasSword = false;
                 imgSword.setVisibility(View.INVISIBLE);
 
@@ -1109,8 +1148,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 public void run() {
                     if (contains(Tiles.BRIDGE, currentLevel[y][x])) {
                         currentLevel[y][x] = Tiles.BRIDGE_HOLE[getIndex(Tiles.BRIDGE, currentLevel[y][x])];
-                        items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-                        levelAdapter.notifyDataSetChanged();
+                        normalTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
+                        normalTilesAdapter.notifyDataSetChanged();
                         MainActivity.soundPool.play(MainActivity.holeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
                         gameOver();
                     }
@@ -1125,8 +1164,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         Log.d("debug", "checkCrack()");
         if (contains(Tiles.CRACK, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.HOLE[getIndex(Tiles.CRACK, currentLevel[y][x])];
-            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-            levelAdapter.notifyDataSetChanged();
+            specialTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, R.drawable.h);
+            specialTilesAdapter.notifyDataSetChanged();
             MainActivity.soundPool.play(MainActivity.holeID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
             return true;
         }
@@ -1198,8 +1237,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         if (contains(Tiles.STAR, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.STAR, currentLevel[y][x])];
 
-            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-            levelAdapter.notifyDataSetChanged();
+            specialTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, R.drawable.blank);
+            specialTilesAdapter.notifyDataSetChanged();
 
             stars++;
             MainActivity.soundPool.play(MainActivity.starID, MainActivity.volumeSound, MainActivity.volumeSound, 1, 0, 1);
@@ -1252,8 +1291,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
         if (contains(Tiles.DIARY, currentLevel[y][x])) {
             currentLevel[y][x] = Tiles.NORMAL[getIndex(Tiles.DIARY, currentLevel[y][x])];
 
-            items.set((y - 2) * (currentLevel[0].length - 4) + x - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[y][x], "drawable", getContext().getPackageName()));
-            levelAdapter.notifyDataSetChanged();
+            specialTiles.set((y - 2) * (currentLevel[0].length - 4) + x - 2, R.drawable.blank);
+            specialTilesAdapter.notifyDataSetChanged();
 
             MainActivity.diaryList.add(MainActivity.world + ", " + (MainActivity.level + 1));
 
@@ -2599,14 +2638,21 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                 relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
                 relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
 
-                gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-                gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
-                gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+                gridViewNormalTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                gridViewNormalTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+                gridViewNormalTiles.setNumColumns(currentLevel[0].length - 4);
+
+                gridViewSpecialTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                gridViewSpecialTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+                gridViewSpecialTiles.setNumColumns(currentLevel[0].length - 4);
 
                 switch (gridViewColumns) {
                     case 1:
-                        gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
-                        gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+                        gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                        gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                        gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                        gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
 
                         if (!(scene.equals("s") || scene.equals("m"))) {
                             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
@@ -2615,8 +2661,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         }
                         break;
                     case 3:
-                        gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
-                        gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+                        gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                        gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                        gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                        gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
 
                         if (!(scene.equals("s") || scene.equals("m"))) {
                             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_small", "drawable", getContext().getPackageName()));
@@ -2625,8 +2674,11 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                         }
                         break;
                     case 5:
-                        gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
-                        gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+                        gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                        gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+
+                        gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                        gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
 
                         if (!(scene.equals("s") || scene.equals("m"))) {
                             imageViewPlayer.setImageResource(getResources().getIdentifier("p" + scene + direction + "_big", "drawable", getContext().getPackageName()));
@@ -2638,7 +2690,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
 
                 animation = new TranslateAnimation(0.0f, 0.0f, 0.0f, 0.0f);
                 animation.setDuration(1);
-                gridViewLevel.startAnimation(animation);
+                gridViewNormalTiles.startAnimation(animation);
+                gridViewSpecialTiles.startAnimation(animation);
 
                 if (!checkDarkness()) {
                     if (!checkTrap()) {
@@ -2690,36 +2743,62 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                             });
                                             imageViewSandstorm.startAnimation(rotateAnimation);
 
-                                            items.clear();
-                                            for (int i = 2; i < GameFragment.currentLevel.length - 6; i++) {
-                                                for (int k = 2; k < GameFragment.currentLevel[i].length - 2; k++) {
-                                                    items.add(getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[i][k], "drawable", getContext().getPackageName()));
+                                            normalTiles.clear();
+                                            specialTiles.clear();
+
+                                            for (int i = 2; i < currentLevel.length - 6; i++) {
+                                                for (int k = 2; k < currentLevel[i].length - 2; k++) {
+                                                    if (currentLevel[i][k].substring(0, 1).equals("o") || currentLevel[i][k].substring(0, 1).equals("r") || currentLevel[i][k].substring(0, 1).equals("b") || currentLevel[i][k].substring(0, 1).equals("q") || currentLevel[i][k].substring(0, 1).equals("y")) {
+                                                        normalTiles.add(getResources().getIdentifier(scene + currentLevel[i][k], "drawable", getContext().getPackageName()));
+                                                    } else {
+                                                        normalTiles.add(getResources().getIdentifier(scene + "n" + currentLevel[i][k].substring(1), "drawable", getContext().getPackageName()));
+                                                    }
+
+                                                    if (currentLevel[i][k].substring(0, 1).equals("n") || currentLevel[i][k].substring(0, 1).equals("o") || currentLevel[i][k].substring(0, 1).equals("r") || currentLevel[i][k].substring(0, 1).equals("b") || currentLevel[i][k].substring(0, 1).equals("q") || currentLevel[i][k].substring(0, 1).equals("y")) {
+                                                        specialTiles.add(R.drawable.blank);
+                                                    } else {
+                                                        specialTiles.add(getResources().getIdentifier(currentLevel[i][k].substring(1, 2), "drawable", getContext().getPackageName()));
+                                                    }
                                                 }
                                             }
 
                                             relativeLayout_Container.getLayoutParams().height = MainActivity.height - MainActivity.height / 8 + MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
                                             relativeLayout_Container.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
 
-                                            gridViewLevel.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
-                                            gridViewLevel.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
-                                            gridViewLevel.setNumColumns(currentLevel[0].length - 4);
+                                            gridViewNormalTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                                            gridViewNormalTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+                                            gridViewNormalTiles.setNumColumns(currentLevel[0].length - 4);
+
+                                            gridViewSpecialTiles.getLayoutParams().width = MainActivity.width * (currentLevel[0].length - 4) / gridViewColumns;
+                                            gridViewSpecialTiles.getLayoutParams().height = MainActivity.width * (currentLevel.length - 8) / gridViewColumns;
+                                            gridViewSpecialTiles.setNumColumns(currentLevel[0].length - 4);
 
                                             switch (gridViewColumns) {
                                                 case 1:
-                                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
-                                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+                                                    gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                                                    gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
+
+                                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y - 1));
+                                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 2));
                                                     break;
                                                 case 3:
-                                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * y);
-                                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+                                                    gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                                                    gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
+
+                                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * y);
+                                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 3));
                                                     break;
                                                 case 5:
-                                                    gridViewLevel.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
-                                                    gridViewLevel.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+                                                    gridViewNormalTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                                                    gridViewNormalTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
+
+                                                    gridViewSpecialTiles.setTranslationY(-MainActivity.width / gridViewColumns * (y + 1));
+                                                    gridViewSpecialTiles.setTranslationX(-MainActivity.width / gridViewColumns * (x - 4));
                                                     break;
                                             }
 
-                                            levelAdapter.notifyDataSetChanged();
+                                            normalTilesAdapter.notifyDataSetChanged();
+                                            specialTilesAdapter.notifyDataSetChanged();
                                             gridViewMap.setAdapter(new MapAdapter(getContext(), 0));
                                         } else {
                                             allowInput = true;
@@ -2758,7 +2837,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        gridViewLevel.startAnimation(translateAnimation);
+        gridViewNormalTiles.startAnimation(translateAnimation);
+        gridViewSpecialTiles.startAnimation(translateAnimation);
     }
 
     private boolean contains(String[] array, String resource) {
@@ -2877,8 +2957,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 int trapY = Integer.parseInt(result[1]);
                                 if (contains(Tiles.TRAP_ACTIVE, currentLevel[trapY][trapX])) {
                                     currentLevel[trapY][trapX] = Tiles.TRAP_INACTIVE[getIndex(Tiles.TRAP_ACTIVE, currentLevel[trapY][trapX])];
-                                    items.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[trapY][trapX], "drawable", getContext().getPackageName()));
-                                    levelAdapter.notifyDataSetChanged();
+                                    specialTiles.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, R.drawable.i);
+                                    specialTilesAdapter.notifyDataSetChanged();
                                     trapActive = false;
                                     checkTrap();
                                 }
@@ -2894,8 +2974,8 @@ public class GameFragment extends Fragment implements View.OnClickListener, Adap
                                 int trapY = Integer.parseInt(result[1]);
                                 if (contains(Tiles.TRAP_INACTIVE, currentLevel[trapY][trapX])) {
                                     currentLevel[trapY][trapX] = Tiles.TRAP_ACTIVE[getIndex(Tiles.TRAP_INACTIVE, currentLevel[trapY][trapX])];
-                                    items.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, getResources().getIdentifier(GameFragment.scene + GameFragment.currentLevel[trapY][trapX], "drawable", getContext().getPackageName()));
-                                    levelAdapter.notifyDataSetChanged();
+                                    specialTiles.set((trapY - 2) * (currentLevel[0].length - 4) + trapX - 2, R.drawable.t);
+                                    specialTilesAdapter.notifyDataSetChanged();
                                     trapActive = true;
                                     checkTrap();
                                 }

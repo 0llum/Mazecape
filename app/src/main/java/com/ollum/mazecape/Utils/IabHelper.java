@@ -51,7 +51,7 @@ import java.util.List;
  * you may call other methods.
  * <p/>
  * After setup is complete, you will typically want to request an inventory of owned
- * items and subscriptions. See {@link #queryInventory}, {@link #queryInventoryAsync}
+ * normalTiles and subscriptions. See {@link #queryInventory}, {@link #queryInventoryAsync}
  * and related methods.
  * <p/>
  * When you are done with this object, don't forget to call {@link #dispose}
@@ -584,7 +584,7 @@ public class IabHelper {
     }
 
     /**
-     * Queries the inventory. This will query all owned items from the server, as well as
+     * Queries the inventory. This will query all owned normalTiles from the server, as well as
      * information on additional skus, if specified. This method may block or take long to execute.
      * Do not call from a UI thread. For that, use the non-blocking version {@link #queryInventoryAsync}.
      *
@@ -604,13 +604,13 @@ public class IabHelper {
             Inventory inv = new Inventory();
             int r = queryPurchases(inv, ITEM_TYPE_INAPP);
             if (r != BILLING_RESPONSE_RESULT_OK) {
-                throw new IabException(r, "Error refreshing inventory (querying owned items).");
+                throw new IabException(r, "Error refreshing inventory (querying owned normalTiles).");
             }
 
             if (querySkuDetails) {
                 r = querySkuDetails(ITEM_TYPE_INAPP, inv, moreItemSkus);
                 if (r != BILLING_RESPONSE_RESULT_OK) {
-                    throw new IabException(r, "Error refreshing inventory (querying prices of items).");
+                    throw new IabException(r, "Error refreshing inventory (querying prices of normalTiles).");
                 }
             }
 
@@ -743,7 +743,7 @@ public class IabHelper {
     }
 
     /**
-     * Same as {@link #consumeAsync}, but for multiple items at once.
+     * Same as {@link #consumeAsync}, but for multiple normalTiles at once.
      *
      * @param purchases The list of PurchaseInfo objects representing the purchases to consume.
      * @param listener  The listener to notify when the consumption operation finishes.
@@ -824,7 +824,7 @@ public class IabHelper {
 
     int queryPurchases(Inventory inv, String itemType) throws JSONException, RemoteException {
         // Query purchases
-        logDebug("Querying owned items, item type: " + itemType);
+        logDebug("Querying owned normalTiles, item type: " + itemType);
         logDebug("Package name: " + mContext.getPackageName());
         boolean verificationFailed = false;
         String continueToken = null;
@@ -835,7 +835,7 @@ public class IabHelper {
                     itemType, continueToken);
 
             int response = getResponseCodeFromBundle(ownedItems);
-            logDebug("Owned items response: " + String.valueOf(response));
+            logDebug("Owned normalTiles response: " + String.valueOf(response));
             if (response != BILLING_RESPONSE_RESULT_OK) {
                 logDebug("getPurchases() failed: " + getResponseDesc(response));
                 return response;
@@ -1061,7 +1061,7 @@ public class IabHelper {
      */
     public interface OnConsumeMultiFinishedListener {
         /**
-         * Called to notify that a consumption of multiple items has finished.
+         * Called to notify that a consumption of multiple normalTiles has finished.
          *
          * @param purchases The purchases that were (or were to be) consumed.
          * @param results   The results of each consumption operation, corresponding to each

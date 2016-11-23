@@ -294,9 +294,9 @@ public class LevelEditorFragment extends Fragment implements AdapterView.OnItemC
                 holder = (ViewHolder) row.getTag();
             }
 
-            //holder.imageView.setImageResource(items.get(position));
+            //holder.imageView.setImageResource(normalTiles.get(position));
             holder.imageView.setImageDrawable(ResourcesCompat.getDrawable(context.getResources(), items.get(position), null));
-            //holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), items.get(position)));
+            //holder.imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), normalTiles.get(position)));
 
             return row;
         }
